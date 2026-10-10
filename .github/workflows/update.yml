@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "15 6 * * *"   # daily, 06:15 UTC
   workflow_dispatch:         # "Run workflow" button in the Actions tab
+  push:                      # any change pushed to main goes live within minutes
+    branches: [main]
+    paths-ignore:            # text-only changes don't affect the site
+      - "**.md"
+      - LICENSE
 
 concurrency:
   group: pages
