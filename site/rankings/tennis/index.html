@@ -63,6 +63,7 @@ table.bt th,table.bt td{text-align:right;padding:6px 8px;border-top:1px solid va
 table.bt th:first-child,table.bt td:first-child{text-align:left}
 table.bt thead th{border-top:0;color:var(--muted);font-weight:500}
 .blurb .badge{margin-right:8px}
+.extlink{font-weight:500;white-space:nowrap}
 .nm .out{margin-left:8px}
 </style>
 </head>
@@ -113,6 +114,7 @@ Site.json('data/rankings.json').then(function(D){
      blurb: meta.official.mode === 'weekly'
        ? 'The ATP ranking published on ' + meta.official.date + ', top 150. Players without a rating have played too few tour matches recently.'
        : 'No current weekly ranking file was available, so this is an estimate for one date: each player\u2019s last official points, plus points earned since and minus points that dropped off. Top 10 is near exact; lower down it can be a few places off because Challenger results are not included.',
+     link:{href:'https://www.atptour.com/en/rankings/singles', text:'Official rankings on atptour.com'},
      val:function(p){return p.official_points == null ? '–' : p.official_points.toLocaleString('en-US')}, unc:null}
   ];
   if (!meta.vrs) MODELS = MODELS.filter(function(m){return m.id !== 'vrs'});
@@ -160,7 +162,10 @@ Site.json('data/rankings.json').then(function(D){
     var m = MODELS.filter(function(x){return x.id === state.model})[0];
     Array.prototype.forEach.call(tabs.children, function(b){b.setAttribute('aria-pressed', b.dataset.id === m.id ? 'true' : 'false')});
     // every blurb is laid out in the same spot (only one visible), so switching systems never moves the table
-    document.getElementById('blurb').innerHTML = Site.stack(MODELS.map(function(x){ return '<span class="badge">' + esc(x.badge) + '</span>' + esc(x.blurb); }), MODELS.indexOf(m));
+    document.getElementById('blurb').innerHTML = Site.stack(MODELS.map(function(x){
+      return '<span class="badge">' + esc(x.badge) + '</span>' + esc(x.blurb) +
+        (x.link ? ' <a class="extlink" href="' + x.link.href + '" target="_blank" rel="noopener">' + esc(x.link.text) + ' \u2197</a>' : '');
+    }), MODELS.indexOf(m));
     Site.inactivityToggle(document.getElementById('inact'), function(){ state.shown = PAGE; render(); }, 'When a player is out', m.id === 'glicko' || m.id === 'openskill');
 
     var list = players.filter(function(p){return rankOf(p, m.id) != null});

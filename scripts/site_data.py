@@ -2,7 +2,7 @@
 """Build the data behind the player, records and tournament pages.
 
     python3 scripts/site_data.py --raw data/raw --rankings data/rankings --prize data/prize_money.json \\
-        --valve vendor/vrs --current docs/tennis/data/rankings.json --out docs/tennis/data --start-year 2015
+        --valve vendor/vrs --current docs/rankings/tennis/data/rankings.json --out docs/rankings/tennis/data --start-year 2015
 
 Writes into --out:
     players/<id>.json   one profile per player: ranks over time, Elo over time, titles, record, recent matches
@@ -56,8 +56,8 @@ def main():
     ap.add_argument("--rankings", default="data/rankings")
     ap.add_argument("--prize", default="data/prize_money.json")
     ap.add_argument("--valve", default=None)
-    ap.add_argument("--current", default="docs/tennis/data/rankings.json")
-    ap.add_argument("--out", default="docs/tennis/data")
+    ap.add_argument("--current", default="docs/rankings/tennis/data/rankings.json")
+    ap.add_argument("--out", default="docs/rankings/tennis/data")
     ap.add_argument("--start-year", type=int, default=2015)
     ap.add_argument("--offline", action="store_true", help="no ECB download for VRS history")
     args = ap.parse_args()

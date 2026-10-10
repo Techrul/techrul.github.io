@@ -3,7 +3,7 @@
 
 Every build (the GitHub workflow runs this):
 
-    python3 scripts/trophies.py --out docs/tennis
+    python3 scripts/trophies.py --out docs/rankings/tennis
 
   downloads each photo listed in data/trophies.json once (cached in data/trophy_images/), copies it to
   <out>/trophies/ and writes <out>/data/trophies.json with the photographer, licence and source page.
@@ -14,7 +14,7 @@ football cup or a war trophy in the same city, so most automatic picks were wron
 
 To look for more (optional), on a machine that can reach Commons:
 
-    env CONTACT_EMAIL=you@yourmail.com python3 scripts/trophies.py --find --tournaments docs/tennis/data/tournaments.json
+    env CONTACT_EMAIL=you@yourmail.com python3 scripts/trophies.py --find --tournaments docs/rankings/tennis/data/tournaments.json
 
   prints candidates (strict filter: the trophy's own name, or a tennis word plus the tournament) and
   their Commons pages. It does not change anything; copy a good one into data/trophies.json by hand.
@@ -195,9 +195,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--find", action="store_true", help="print candidate photos per tournament (changes nothing)")
     ap.add_argument("--choices", default="data/trophies.json")
-    ap.add_argument("--tournaments", default="docs/tennis/data/tournaments.json")
+    ap.add_argument("--tournaments", default="docs/rankings/tennis/data/tournaments.json")
     ap.add_argument("--cache", default="data/trophy_images")
-    ap.add_argument("--out", default="docs/tennis")
+    ap.add_argument("--out", default="docs/rankings/tennis")
     args = ap.parse_args()
     client = Commons(os.environ.get("CONTACT_EMAIL", "set-CONTACT_EMAIL"))
     choices = {}

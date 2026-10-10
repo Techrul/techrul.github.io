@@ -42,16 +42,23 @@ a{color:inherit}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px 64px}
 
 /* top bar */
-.bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:16px 0 18px;border-bottom:1px solid var(--line);margin-bottom:26px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 10px;padding:16px 0 18px;border-bottom:1px solid var(--line);margin-bottom:26px}
 .brand{font-weight:700;text-decoration:none;font-size:1.05rem;letter-spacing:-.01em}
+.crumbs{display:inline-flex;align-items:baseline;gap:8px;white-space:nowrap}
+.crumbs .home{text-decoration:none;color:var(--muted);font-weight:500}
+.crumbs .home:hover{color:var(--ink)}
+.crumbs .sep{color:var(--line)}
+.hdr-tools{display:inline-flex;align-items:center;gap:10px;margin-left:auto;flex:none}
+.ghlink{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;flex:none;border:1.5px solid var(--line);border-radius:999px;color:var(--muted);background:var(--card)}
+.ghlink:hover{color:var(--ink);border-color:var(--muted)}
 .brand small{font-weight:400;color:var(--muted);margin-left:6px}
 .nav{display:flex;flex-wrap:wrap;gap:4px}
-.nav a{text-decoration:none;padding:6px 11px;border-radius:999px;color:var(--muted);font-weight:500}
+.nav a{text-decoration:none;padding:6px 9px;border-radius:999px;color:var(--muted);font-weight:500}
 .nav a[aria-current="page"]{background:var(--ink);color:var(--on-ink)}
 .nav a:hover{color:var(--ink);background:var(--line)}
 .nav a[aria-current="page"]:hover{color:var(--on-ink);background:var(--ink)}
 .bar .spacer{flex:1}
-.find{font:inherit;border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--card);color:var(--ink);width:190px}
+.find{font:inherit;border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--card);color:var(--ink);width:136px}
 .themes{display:inline-flex;flex:none;border:1.5px solid var(--line);border-radius:999px;padding:2px;background:var(--card)}
 .theme{white-space:nowrap;font:inherit;font-size:.86rem;border:0;background:transparent;color:var(--muted);padding:4px 10px;border-radius:999px;cursor:pointer}
 .theme[aria-pressed="true"]{background:var(--ink);color:var(--on-ink)}

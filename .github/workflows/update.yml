@@ -87,21 +87,21 @@ jobs:
       - name: Run VRS on tennis
         continue-on-error: true
         run: |
-          rm -f docs/tennis/data/vrs.json
-          python scripts/vrs_tennis.py --raw data/raw --prize data/prize_money.json --valve vendor/vrs --out docs/tennis/data/vrs.json
+          rm -f docs/rankings/tennis/data/vrs.json
+          python scripts/vrs_tennis.py --raw data/raw --prize data/prize_money.json --valve vendor/vrs --out docs/rankings/tennis/data/vrs.json
 
       - name: Compute ratings
-        run: python scripts/ratings.py --raw data/raw --rankings data/rankings --vrs docs/tennis/data/vrs.json --out docs/tennis/data/rankings.json --start-year 2015
+        run: python scripts/ratings.py --raw data/raw --rankings data/rankings --vrs docs/rankings/tennis/data/vrs.json --out docs/rankings/tennis/data/rankings.json --start-year 2015
 
       - name: Build history, profiles, records and tournaments
-        run: python scripts/site_data.py --raw data/raw --rankings data/rankings --prize data/prize_money.json --valve vendor/vrs --current docs/tennis/data/rankings.json --out docs/tennis/data --start-year 2015
+        run: python scripts/site_data.py --raw data/raw --rankings data/rankings --prize data/prize_money.json --valve vendor/vrs --current docs/rankings/tennis/data/rankings.json --out docs/rankings/tennis/data --start-year 2015
 
       # Photos listed in data/trophies.json (Wikimedia Commons), downloaded once and credited.
       - name: Trophy photos
         continue-on-error: true
         env:
           CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
-        run: python scripts/trophies.py --out docs/tennis
+        run: python scripts/trophies.py --out docs/rankings/tennis
 
       - name: Copy pages
         run: python scripts/build_site.py --site site --out docs

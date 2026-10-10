@@ -3,63 +3,83 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ranking models</title>
-<meta name="description" content="The same match results ranked by Elo, Glicko-2, OpenSkill, Valve's VRS and official systems, for tennis now and CS2 later.">
-<link rel="stylesheet" href="assets/site.css">
-<script src="assets/site.js"></script>
+<title>Techrul</title>
+<meta name="description" content="Techrul's projects. Currently: Different sports, different rankings, a site comparing ranking systems on the same results.">
+<link rel="stylesheet" href="rankings/assets/site.css">
+<script>
+  // same theme choice as the rest of the site (stored per browser)
+  (function () { var t; try { t = localStorage.getItem("theme"); } catch (e) {}
+    document.documentElement.setAttribute("data-theme", ["black", "light", "mocha"].indexOf(t) >= 0 ? t : "black"); })();
+</script>
 <style>
-.hero{padding:22px 0 8px;max-width:760px}
-.hero h1{font-size:clamp(2.2rem,7vw,4rem);line-height:1.02;margin-bottom:14px}
-.sports{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:30px}
-.sport{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
-a.sport:hover{border-color:var(--ink)}
-.sport h2{font-size:1.5rem;margin:0 0 4px}
-.sport .status{font-size:.85rem;color:var(--muted)}
-.number1{list-style:none;margin:16px 0 0;padding:0}
-.number1 li{display:grid;grid-template-columns:110px 1fr;gap:10px;padding:7px 0;border-top:1px solid var(--line);align-items:center}
-.number1 .sys{color:var(--muted);font-size:.9rem;display:flex;align-items:center;gap:8px}
-.number1 .sys i{width:14px;height:3px;border-radius:2px;display:inline-block}
-.sport.soon{opacity:.75}
-.go{display:inline-block;margin-top:14px;font-weight:600}
+.hero{margin:12px 0 30px}
+.hero h1{font-size:clamp(2.4rem,7vw,3.6rem)}
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.project{display:flex;flex-direction:column;gap:10px;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 18px 16px}
+a.project:hover{border-color:var(--muted)}
+.project h2{font-size:1.3rem;margin:0}
+.project p{margin:0;color:var(--muted)}
+.project .tags{display:flex;flex-wrap:wrap;gap:6px}
+.project .now{border-top:1px solid var(--line);padding-top:10px;font-size:.9rem;min-height:3.2em}
+.project .now b{font-weight:600}
+.project .go{margin-top:auto;font-weight:600}
+.project.soon{border-style:dashed;background:transparent;justify-content:center;align-items:flex-start;min-height:180px}
+.dot{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
 </style>
 </head>
-<body data-root="">
+<body>
 <div class="wrap">
-  <header class="bar" data-page="home"></header>
-  <main>
-    <div class="hero">
-      <h1>Same results, different number ones.</h1>
-      <p class="lede">Every rating system reads the same matches and still disagrees about who is best. This site runs several side by side: Elo, Glicko-2, OpenSkill, Valve's VRS, and the official ranking.</p>
+  <header class="bar">
+    <a class="brand" href="./">Techrul</a>
+    <span class="spacer"></span>
+    <div class="themes" role="group" aria-label="Theme">
+      <button class="theme" type="button" data-theme="black">Black</button><button class="theme" type="button" data-theme="light">Light</button><button class="theme" type="button" data-theme="mocha">Mocha</button>
     </div>
-    <div class="sports">
-      <a class="sport" href="tennis/index.html" id="tennis">
-        <h2>Tennis</h2>
-        <span class="status" id="tennis-status">Men's ATP tour, updated daily</span>
-        <ul class="number1" id="tennis-ones" aria-label="Number one in each system"></ul>
-        <span class="go">Open tennis</span>
+    <a class="ghlink" href="https://github.com/Techrul" target="_blank" rel="noopener" title="Techrul on GitHub" aria-label="Techrul on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M6.766 11.328c-2.063-.25-3.516-1.734-3.516-3.656 0-.781.281-1.625.75-2.188-.203-.515-.172-1.609.063-2.062.625-.078 1.468.25 1.968.703.594-.187 1.219-.281 1.985-.281.765 0 1.39.094 1.953.265.484-.437 1.344-.765 1.969-.687.218.422.25 1.515.046 2.047.5.593.766 1.39.766 2.203 0 1.922-1.453 3.375-3.547 3.64.531.344.89 1.094.89 1.954v1.625c0 .468.391.734.86.547C13.781 14.359 16 11.53 16 8.03 16 3.61 12.406 0 7.984 0 3.563 0 0 3.61 0 8.031a7.88 7.88 0 0 0 5.172 7.422c.422.156.828-.125.828-.547v-1.25c-.219.094-.5.156-.75.156-1.031 0-1.64-.562-2.078-1.609-.172-.422-.36-.672-.719-.719-.187-.015-.25-.093-.25-.187 0-.188.313-.328.625-.328.453 0 .844.281 1.25.86.313.452.64.655 1.031.655s.641-.14 1-.5c.266-.265.47-.5.657-.656"/></svg></a>
+  </header>
+  <main>
+    <section class="hero">
+      <h1>Techrul</h1>
+      <p class="lede">Projects and experiments.</p>
+    </section>
+    <div class="projects">
+      <a class="project" href="rankings/">
+        <h2>Different sports, different rankings</h2>
+        <p>The same matches ranked by Elo, Glicko-2, OpenSkill and Valve’s VRS, next to the official rankings. Updated every day.</p>
+        <div class="tags"><span class="badge">Tennis</span><span class="badge">CS2 soon</span></div>
+        <div class="now" id="now">&nbsp;</div>
+        <span class="go">Open rankings →</span>
       </a>
-      <div class="sport soon" aria-disabled="true">
-        <h2>Counter-Strike 2</h2>
-        <span class="status">Coming later</span>
-        <p class="muted" style="margin:16px 0 0">Valve's own Regional Standings next to Elo, Glicko-2 and OpenSkill, with team identity following Valve's three-of-five roster rule. Waiting on match data access.</p>
+      <div class="project soon">
+        <h2>More soon</h2>
+        <p>Other projects will show up here.</p>
       </div>
     </div>
   </main>
-  <footer class="foot" data-auto></footer>
+  <footer class="foot"><p>Rankings data: TennisMyLife and Jeff Sackmann (CC BY-NC-SA 4.0). Not affiliated with the ATP or Valve.</p></footer>
 </div>
 <script>
 (function () {
-  var S = Site;
-  var SYSTEMS = [["elo", "Elo", "elo"], ["glicko", "Glicko-2", "glicko"], ["openskill", "OpenSkill", "openskill"], ["vrs", "VRS", "vrs"], ["official", "Official ATP", "official"]];
-  S.json("tennis/data/rankings.json").then(function (d) {
-    document.getElementById("tennis-status").textContent = "Men's ATP tour, matches through " + S.date(d.meta.data_as_of);
-    var html = SYSTEMS.map(function (s) {
-      var best = d.players.filter(function (p) { return (s[0] === "official" ? p.official_rank : p.ranks[s[0]]) === 1; })[0];
-      if (!best) return "";
-      return '<li><span class="sys"><i style="background:var(--' + s[2] + ')"></i>' + s[1] + "</span><span>" + S.flag(best.iso) + S.esc(best.name) + "</span></li>";
-    }).join("");
-    document.getElementById("tennis-ones").innerHTML = html;
-  }).catch(function () { document.getElementById("tennis-ones").innerHTML = ""; });
+  var root = document.documentElement;
+  function set(t) {
+    root.setAttribute("data-theme", t);
+    document.querySelectorAll(".theme").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.theme === t ? "true" : "false"); });
+  }
+  set(root.getAttribute("data-theme"));
+  document.querySelectorAll(".theme").forEach(function (b) {
+    b.addEventListener("click", function () { set(b.dataset.theme); try { localStorage.setItem("theme", b.dataset.theme); } catch (e) {} });
+  });
+  // today's #1 under each system, from the rankings data (left blank if it can't load)
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  fetch("rankings/tennis/data/rankings.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d) return;
+    var sys = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS"], ["official", "ATP"]];
+    var tops = sys.map(function (s) {
+      var best = d.players.filter(function (p) { return (s[0] === "official" ? p.official_rank : (p.ranks || {})[s[0]]) === 1; })[0];
+      return best ? '<span><i class="dot" style="background:var(--' + s[0] + ')"></i>' + s[1] + ": <b>" + esc(best.name.split(" ").slice(-1)[0]) + "</b></span>" : "";
+    }).filter(Boolean);
+    if (tops.length) document.getElementById("now").innerHTML = "Tennis #1 today: " + tops.join(" · ");
+  }).catch(function () {});
 })();
 </script>
 </body>

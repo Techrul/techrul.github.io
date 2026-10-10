@@ -2,7 +2,7 @@
 
 ## This is in fact vibe-coded but that doesn't affect the accuracy of the rating systems
 
-**[techrul.github.io](https://techrul.github.io/)**
+**[techrul.github.io/rankings](https://techrul.github.io/rankings/)**
 
 I wanted to see what would happen if I ranked the same matches with different ranking systems. Same results, very different number ones. Right now it's only tennis, but CS2 is coming soon.
 
@@ -34,6 +34,8 @@ It updates itself every morning through GitHub Actions.
 - Match results: [TennisMyLife](https://stats.tennismylife.org/), built on [Jeff Sackmann's tennis data](https://github.com/JeffSackmann/tennis_atp)
 - Prize money (for VRS): Wikipedia
 - Trophy photos: Wikimedia Commons, credited on each tournament page
+
+Rankings and stats on the site are shared under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/), like the match data they're built from. Official rankings: [atptour.com](https://www.atptour.com/en/rankings/singles).
 
 Not affiliated with the ATP, TennisMyLife or Valve.
 

@@ -79,7 +79,7 @@ def main():
     # skill models' pre-match probabilities for every match since the first cutoff
     rows = [r for r in ratings.load(args.raw, args.history_from) if r["tourney_level"] in ratings.TOUR_LEVELS]
     preds = {}
-    ratings.run_skill_models(rows, start.replace(tzinfo=None) - timedelta(days=14), preds, inactivity=False)  # textbook models, as published in the README
+    ratings.run_skill_models(rows, start.replace(tzinfo=None) - timedelta(days=14), preds, inactivity=False)  # textbook models, as published in HOW_IT_WORKS.md
     official = {}
     for r in rows:
         wr, lr = r.get("winner_rank") or "", r.get("loser_rank") or ""

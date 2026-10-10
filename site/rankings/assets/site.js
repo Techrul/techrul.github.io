@@ -57,13 +57,14 @@
         .map(function (x) { return '<a href="' + base + "tennis/" + x[1] + '"' + (page === x[0] ? ' aria-current="page"' : "") + ">" + x[2] + "</a>"; }).join("");
     }
     el.innerHTML =
-      '<a class="brand" href="' + base + 'index.html">Ranking models' + (sport ? "<small>" + S.esc(sport === "tennis" ? "Tennis" : sport) + "</small>" : "") + "</a>" +
+      '<span class="crumbs"><a class="home" href="' + base + '../">Techrul</a><span class="sep" aria-hidden="true">/</span>' +
+      '<a class="brand" href="' + base + 'index.html">Ranking models' + (sport ? "<small>" + S.esc(sport === "tennis" ? "Tennis" : sport) + "</small>" : "") + "</a></span>" +
       (nav ? '<nav class="nav" aria-label="Sections">' + nav + "</nav>" : "") +
       '<span class="spacer"></span>' +
       (sport === "tennis" ? '<input class="find" id="find" placeholder="Find a player" aria-label="Find a player" autocomplete="off" spellcheck="false">' : "") +
-      '<div class="themes" role="group" aria-label="Theme">' + THEMES.map(function (t) {
+      '<span class="hdr-tools"><div class="themes" role="group" aria-label="Theme">' + THEMES.map(function (t) {
         return '<button class="theme" type="button" data-theme="' + t + '">' + t.charAt(0).toUpperCase() + t.slice(1) + "</button>";
-      }).join("") + "</div>";
+      }).join("") + "</div>" + S.githubLink() + "</span>";
     setTheme(root.getAttribute("data-theme"));
     el.querySelectorAll(".theme").forEach(function (b) {
       b.addEventListener("click", function () { setTheme(b.dataset.theme); try { localStorage.setItem("theme", b.dataset.theme); } catch (e) {} });
@@ -150,6 +151,15 @@
   S.trophyCredit = function (t) {
     return 'Photo: <a href="' + S.esc(t.page) + '" rel="noopener">' + S.esc(t.author) + "</a>, " +
       (t.licence_url ? '<a href="' + S.esc(t.licence_url) + '" rel="noopener license">' + S.esc(t.licence) + "</a>" : S.esc(t.licence)) + ", via Wikimedia Commons";
+  };
+
+  // ---------------------------------------------------------------- GitHub link
+  // GitHub's "mark-github" icon from Primer Octicons (MIT licence)
+  var GITHUB_PATH = "M6.766 11.328c-2.063-.25-3.516-1.734-3.516-3.656 0-.781.281-1.625.75-2.188-.203-.515-.172-1.609.063-2.062.625-.078 1.468.25 1.968.703.594-.187 1.219-.281 1.985-.281.765 0 1.39.094 1.953.265.484-.437 1.344-.765 1.969-.687.218.422.25 1.515.046 2.047.5.593.766 1.39.766 2.203 0 1.922-1.453 3.375-3.547 3.64.531.344.89 1.094.89 1.954v1.625c0 .468.391.734.86.547C13.781 14.359 16 11.53 16 8.03 16 3.61 12.406 0 7.984 0 3.563 0 0 3.61 0 8.031a7.88 7.88 0 0 0 5.172 7.422c.422.156.828-.125.828-.547v-1.25c-.219.094-.5.156-.75.156-1.031 0-1.64-.562-2.078-1.609-.172-.422-.36-.672-.719-.719-.187-.015-.25-.093-.25-.187 0-.188.313-.328.625-.328.453 0 .844.281 1.25.86.313.452.64.655 1.031.655s.641-.14 1-.5c.266-.265.47-.5.657-.656";
+  S.REPO = "https://github.com/Techrul/techrul.github.io";
+  S.githubLink = function () {
+    return '<a class="ghlink" href="' + S.REPO + '" target="_blank" rel="noopener" title="Source code on GitHub" aria-label="Source code on GitHub">' +
+      '<svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="' + GITHUB_PATH + '"/></svg></a>';
   };
 
   // ---------------------------------------------------------------- inactivity setting

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Player photos from Wikidata and Wikimedia Commons, with credits. Runs in the daily workflow:
 
-    python3 scripts/player_photos.py --players docs/tennis/data/players_index.json --out docs/tennis
+    python3 scripts/player_photos.py --players docs/rankings/tennis/data/players_index.json --out docs/rankings/tennis
 
 1. One Wikidata query: every item with an ATP player ID (property P536) and an image (P18). The match
    data uses ATP's own player codes (e.g. S0AG), so photos are matched by ID, never by name.
@@ -96,10 +96,10 @@ def build(client, wanted, chosen, cache_dir, out_dir, fetch, limit=250):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--players", default="docs/tennis/data/players_index.json")
+    ap.add_argument("--players", default="docs/rankings/tennis/data/players_index.json")
     ap.add_argument("--choices", default="data/player_photos.json")
     ap.add_argument("--cache", default="data/player_images")
-    ap.add_argument("--out", default="docs/tennis")
+    ap.add_argument("--out", default="docs/rankings/tennis")
     ap.add_argument("--max-downloads", type=int, default=250)
     args = ap.parse_args()
     client = Commons(os.environ.get("CONTACT_EMAIL", "set-CONTACT_EMAIL"))

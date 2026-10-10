@@ -2,17 +2,18 @@
 
 A static site that ranks the same ATP match results with Elo, Glicko-2, OpenSkill and Valve's VRS method, next to the official ATP ranking. A GitHub Action rebuilds it every day.
 
-Pages (`site/`, copied into `docs/`):
+Pages (`site/`, copied into `docs/`). The site root is a small homepage (`site/index.html`); the rankings live under `rankings/`:
 
 | Page | What it shows |
 |---|---|
-| `index.html` | Home: pick a sport; #1 under each system |
-| `tennis/index.html` | Rankings table for each system with the rank strip |
-| `tennis/predict.html?a=...&b=...` | Pick two players: each system's win chance (same formulas as the backtest), ranks, head-to-head record and meetings; plus the table of how well each system predicted the last 12 months |
-| `tennis/player.html?id=...` | Player profile: current rank in each system, titles by tier, rank and Elo charts, record by surface/tier/year, recent matches |
-| `tennis/records.html` | Records under each rating system only (tabs for Elo, Glicko-2, OpenSkill, VRS): weeks at #1, highest ratings, biggest upsets, biggest one-week rises, biggest gaps from the official rank. Each section has its own period: 2 weeks, 1 month, 3 or 6 months, 12 months (default), 2 years, all data |
-| `tennis/tournaments.html` | Season calendar (default): events by start date with champion, in progress or expected, a 'today' line, VRS stakes; per-season, tier and surface filters. Table view: every event's stats side by side, per season or all seasons, sortable by any column. Cards view: grouped by tier in calendar order, or one ranked list when sorted by a stat. A 'Stats by' picker (Elo, Glicko-2, OpenSkill, VRS) sets which system the field, favourite, seed and upsets come from |
-| `tennis/tournament.html?key=...` | One tournament year by year: champion, champion's seed, favourite and whether they won, field strength, upsets, VRS stakes, under the system you pick |
+| `index.html` | Techrul's homepage: list of projects |
+| `rankings/index.html` | Rankings home: pick a sport; #1 under each system |
+| `rankings/tennis/index.html` | Rankings table for each system with the rank strip |
+| `rankings/tennis/predict.html?a=...&b=...` | Pick two players: each system's win chance (same formulas as the backtest), ranks, head-to-head record and meetings; plus the table of how well each system predicted the last 12 months |
+| `rankings/tennis/player.html?id=...` | Player profile: current rank in each system, titles by tier, rank and Elo charts, record by surface/tier/year, recent matches |
+| `rankings/tennis/records.html` | Records under each rating system only (tabs for Elo, Glicko-2, OpenSkill, VRS): weeks at #1, highest ratings, biggest upsets, biggest one-week rises, biggest gaps from the official rank. Each section has its own period: 2 weeks, 1 month, 3 or 6 months, 12 months (default), 2 years, all data |
+| `rankings/tennis/tournaments.html` | Season calendar (default): events by start date with champion, in progress or expected, a 'today' line, VRS stakes; per-season, tier and surface filters. Table view: every event's stats side by side, per season or all seasons, sortable by any column. Cards view: grouped by tier in calendar order, or one ranked list when sorted by a stat. A 'Stats by' picker (Elo, Glicko-2, OpenSkill, VRS) sets which system the field, favourite, seed and upsets come from |
+| `rankings/tennis/tournament.html?key=...` | One tournament year by year: champion, champion's seed, favourite and whether they won, field strength, upsets, VRS stakes, under the system you pick |
 
 Themes: Black (default), Light and Catppuccin Mocha. Tiers are shown as text labels. The font (Schibsted Grotesk, SIL Open Font License) is hosted with the site in `site/assets/fonts/` with its licence, so pages make no requests to Google or anyone else. Number cells use tabular digits so columns line up, but this font's tabular set also makes full stops, commas and colons as wide as a digit (stray-looking spaces). So `site.js` wraps that punctuation in number cells and sets it back to normal width: digits stay aligned, spacing stays normal. No player photos (see "Ideas" below).
 
@@ -21,10 +22,10 @@ Themes: Black (default), Light and Catppuccin Mocha. Tiers are shown as text lab
 ```
 scripts/fetch_tml.py     match CSVs -> data/raw, weekly rankings -> data/rankings (never committed)
 scripts/prize_money.py   Wikipedia prize money per event -> data/prize_money.json (cached; new events only)
-scripts/vrs_tennis.py    runs Valve's VRS code on tennis -> docs/tennis/data/vrs.json
-scripts/ratings.py       Elo, Glicko-2, OpenSkill, official -> docs/tennis/data/rankings.json
-scripts/site_data.py     weekly history, profiles, records, tournaments -> docs/tennis/data/
-scripts/trophies.py      trophy photos from Wikimedia Commons (choices in data/trophies.json) -> docs/tennis/trophies/
+scripts/vrs_tennis.py    runs Valve's VRS code on tennis -> docs/rankings/tennis/data/vrs.json
+scripts/ratings.py       Elo, Glicko-2, OpenSkill, official -> docs/rankings/tennis/data/rankings.json
+scripts/site_data.py     weekly history, profiles, records, tournaments -> docs/rankings/tennis/data/
+scripts/trophies.py      trophy photos from Wikimedia Commons (choices in data/trophies.json) -> docs/rankings/tennis/trophies/
 scripts/build_site.py    copies site/ pages and assets into docs/
 .github/workflows/       runs all of it daily and deploys docs/ to GitHub Pages
 ```
@@ -36,11 +37,11 @@ pip install -r requirements.txt
 git clone https://github.com/ValveSoftware/counter-strike_regional_standings vendor/vrs
 env CONTACT_EMAIL=you@example.com python3 scripts/fetch_tml.py --start-year 2015
 env CONTACT_EMAIL=you@example.com python3 scripts/prize_money.py --raw data/raw
-python3 scripts/vrs_tennis.py --raw data/raw --prize data/prize_money.json --valve vendor/vrs --out docs/tennis/data/vrs.json
-python3 scripts/ratings.py --raw data/raw --rankings data/rankings --vrs docs/tennis/data/vrs.json --out docs/tennis/data/rankings.json --start-year 2015
-python3 scripts/site_data.py --raw data/raw --rankings data/rankings --prize data/prize_money.json --valve vendor/vrs --current docs/tennis/data/rankings.json --out docs/tennis/data --start-year 2015
+python3 scripts/vrs_tennis.py --raw data/raw --prize data/prize_money.json --valve vendor/vrs --out docs/rankings/tennis/data/vrs.json
+python3 scripts/ratings.py --raw data/raw --rankings data/rankings --vrs docs/rankings/tennis/data/vrs.json --out docs/rankings/tennis/data/rankings.json --start-year 2015
+python3 scripts/site_data.py --raw data/raw --rankings data/rankings --prize data/prize_money.json --valve vendor/vrs --current docs/rankings/tennis/data/rankings.json --out docs/rankings/tennis/data --start-year 2015
 python3 scripts/build_site.py --site site --out docs
-python3 -m http.server -d docs     # then open http://localhost:8000
+python3 -m http.server -d docs     # then open http://localhost:8000/rankings/
 ```
 
 The pages load their data with fetch, so open them through a web server (as above, or GitHub Pages), not as files.
@@ -156,7 +157,7 @@ The site shows both versions. The toggle appears only where Glicko-2 or OpenSkil
 
 Sinking does not improve predictions (see the table below). It changes what the ranking rewards (being active), not how well it predicts.
 
-### Prediction table (rankings page, `docs/tennis/data/backtest.json`)
+### Prediction table (rankings page, `docs/rankings/tennis/data/backtest.json`)
 
 Built daily by `site_data.py`. Every method predicts the same matches: the last 12 months, where VRS ranks both players and both have an ATP rank on the match row. The skill models update after every match. VRS is rebuilt each Monday from earlier matches only and predicts that week's matches. "Higher ATP rank wins" uses the ranks on the match row and gives no probabilities, so it has no log loss.
 
