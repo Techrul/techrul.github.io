@@ -14,10 +14,10 @@ I wanted to see what would happen if I ranked the same matches with different ra
 
 | System | What it is |
 |---|---|
-| [Elo](https://en.wikipedia.org/wiki/Elo_rating_system) | The classic chess rating. One number per player, which moves after every match. |
+| [Elo](https://en.wikipedia.org/wiki/Elo_rating_system) | The classic chess rating. One number per player, which moves after every match. Can be inaccurate since it doesn't lower inactive players|
 | [Glicko-2](https://www.glicko.net/glicko.html) | Elo with a confidence range, by Mark Glickman ([paper](https://www.glicko.net/glicko/glicko2.pdf)). |
 | [OpenSkill](https://openskill.me/en/stable/) | A Bayesian rating built for teams, used here one-on-one ([library](https://github.com/vivekjoshy/openskill.py)). |
-| [VRS](https://github.com/ValveSoftware/counter-strike_regional_standings) | Valve's CS2 Regional Standings, adjusted to work for tennis. It runs Valve's own code unchanged. |
+| [VRS](https://github.com/ValveSoftware/counter-strike_regional_standings) | Valve's CS2 Regional Standings, adjusted to work for tennis. It runs Valve's own code unchanged. A little goofy, probably don't use this as an actual representation of skill.|
 
 All of them sit next to the [official ATP rankings](https://www.atptour.com/en/rankings/singles). Glicko-2 and OpenSkill also have a toggle for players who aren't playing: the textbook versions barely move someone who's out injured, so by default they slowly sink instead.
 
