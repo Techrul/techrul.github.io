@@ -1,5 +1,7 @@
 # Different sports, different rankings
 
+## This is in fact vibe-coded but that doesn't affect the accuracy of the rating systems
+
 **[techrul.github.io](https://techrul.github.io/)**
 
 I wanted to see what would happen if I ranked the same matches with different ranking systems. Same results, very different number ones. Right now it's only tennis, but CS2 is coming soon.
