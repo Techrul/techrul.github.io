@@ -111,8 +111,11 @@ jobs:
         with:
           path: docs
 
+  # Only main is ever published. Work in progress (e.g. the cs2 branch) can run the build to check it,
+  # but never replaces the live site.
   deploy:
     needs: build
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       pages: write

@@ -15,6 +15,12 @@
 .sysrow .lab{color:var(--muted);font-size:.86rem}
 .sysrow .inact{margin:0}
 .sysrow .inact .hint{display:none}
+.season{display:inline-flex;align-items:center;border:1.5px solid var(--line);border-radius:999px;background:var(--card);overflow:hidden}
+.season select{font:inherit;font-weight:600;color:var(--ink);background:transparent;border:0;padding:6px 6px;text-align:center;cursor:pointer;appearance:none;-webkit-appearance:none}
+.season select option{color:var(--ink);background:var(--card)}
+.sbtn{font:inherit;font-size:1.15rem;line-height:1;width:34px;height:34px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.sbtn:hover:not(:disabled){color:var(--ink);background:var(--head)}
+.sbtn:disabled{opacity:.3;cursor:default}
 .rankno{font-size:.8rem;font-weight:700;color:var(--muted)}
 /* calendar */
 .month{margin-top:28px}
@@ -70,7 +76,13 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
 .tcard .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .tcard .top{justify-content:flex-start;align-items:center;gap:12px}
 .tcard .tname{display:flex;flex-direction:column;gap:3px;min-width:0}
-.tcard .tname .rankno{line-height:1}
+.tcard .tname .season{display:inline-flex;align-items:center;border:1.5px solid var(--line);border-radius:999px;background:var(--card);overflow:hidden}
+.season select{font:inherit;font-weight:600;color:var(--ink);background:transparent;border:0;padding:6px 6px;text-align:center;cursor:pointer;appearance:none;-webkit-appearance:none}
+.season select option{color:var(--ink);background:var(--card)}
+.sbtn{font:inherit;font-size:1.15rem;line-height:1;width:34px;height:34px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.sbtn:hover:not(:disabled){color:var(--ink);background:var(--head)}
+.sbtn:disabled{opacity:.3;cursor:default}
+.rankno{line-height:1}
 .tcard b{font-size:1.05rem;line-height:1.25}
 .tcard .holder{font-size:.9rem}
 .tcard .holder .when{color:var(--muted);display:block;font-size:.8rem}
@@ -90,7 +102,9 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
       <div class="sysrow"><span class="lab">Stats by</span><div class="chips" id="sys" role="group" aria-label="Rating system for field, favourite, seed and upsets"></div><div id="inact"></div></div>
     </div>
     <div class="filters">
-      <div class="sysrow" id="yearwrap"><span class="lab">Season</span><div class="chips" id="year" role="group" aria-label="Season"></div></div>
+      <div class="sysrow" id="yearwrap"><span class="lab">Season</span><div class="season" role="group" aria-label="Season">
+        <button type="button" class="sbtn" id="yprev" aria-label="Previous season">‹</button><select id="ysel" aria-label="Season"></select><button type="button" class="sbtn" id="ynext" aria-label="Next season">›</button>
+      </div></div>
       <div class="sysrow" id="sortwrap"><span class="lab">Sort by</span><div class="chips" id="sort" role="group" aria-label="Sort"></div></div>
     </div>
     <div class="filters">
@@ -290,10 +304,19 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
       chipRow(document.getElementById("view"), [["calendar", "Calendar"], ["table", "Table"], ["cards", "Cards"]], state.view, "view");
       chipRow(document.getElementById("sys"), SYS, state.sys, "sys");
       S.inactivityToggle(document.getElementById("inact"), draw, "When a player is out", state.sys === "glicko" || state.sys === "openskill");
-      var yearEl = document.getElementById("year"), sortEl = document.getElementById("sort");
+      var sortEl = document.getElementById("sort");
       document.getElementById("yearwrap").hidden = cards; document.getElementById("sortwrap").hidden = !cards;
       if (cal && state.year === "all") state.year = years[0];
-      chipRow(yearEl, years.map(function (y) { return [y, String(y)]; }).concat(tab ? [["all", "All seasons"]] : []), state.year, "year");
+      // season picker: older / newer arrows around a dropdown (years run newest first)
+      var opts = years.map(function (y) { return [y, String(y)]; }).concat(tab ? [["all", "All seasons"]] : []);
+      var ysel = document.getElementById("ysel");
+      ysel.innerHTML = opts.map(function (o) { return '<option value="' + o[0] + '"' + (String(o[0]) === String(state.year) ? " selected" : "") + ">" + o[1] + "</option>"; }).join("");
+      var yi = years.indexOf(state.year);
+      document.getElementById("yprev").disabled = yi < 0 || yi >= years.length - 1;
+      document.getElementById("ynext").disabled = yi <= 0;
+      ysel.onchange = function () { state.year = ysel.value === "all" ? "all" : +ysel.value; draw(); };
+      document.getElementById("yprev").onclick = function () { if (yi >= 0 && yi < years.length - 1) { state.year = years[yi + 1]; draw(); } };
+      document.getElementById("ynext").onclick = function () { if (yi > 0) { state.year = years[yi - 1]; draw(); } };
       chipRow(sortEl, SORTS, state.sort, "sort");
       chipRow(document.getElementById("tierf"), TIER_CHIPS, state.tier, "tier");
       chipRow(document.getElementById("surf"), surfaces.map(function (x) { return [x, x === "All" ? "All surfaces" : x]; }), state.surface, "surface");
