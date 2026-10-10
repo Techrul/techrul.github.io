@@ -1,12 +1,16 @@
-# Different sports, different rankings
+# techrul.github.io
 
-## This is in fact vibe-coded but that doesn't affect the accuracy of the rating systems
+My personal site and a home for my projects. Live at **[techrul.github.io](https://techrul.github.io/)**.
+
+## Projects
+
+### Different sports, different rankings
 
 **[techrul.github.io/rankings](https://techrul.github.io/rankings/)**
 
 I wanted to see what would happen if I ranked the same matches with different ranking systems. Same results, very different number ones. Right now it's only tennis, but CS2 is coming soon.
 
-## Ranking systems
+> This is in fact vibe-coded, but that doesn't affect the accuracy of the rating systems.
 
 | System | What it is |
 |---|---|
@@ -15,30 +19,32 @@ I wanted to see what would happen if I ranked the same matches with different ra
 | [OpenSkill](https://openskill.me/en/stable/) | A Bayesian rating built for teams, used here one-on-one ([library](https://github.com/vivekjoshy/openskill.py)). |
 | [VRS](https://github.com/ValveSoftware/counter-strike_regional_standings) | Valve's CS2 Regional Standings, adjusted to work for tennis. It runs Valve's own code unchanged. |
 
-All of them sit next to the official ATP ranking for comparison.
+All of them sit next to the [official ATP rankings](https://www.atptour.com/en/rankings/singles). Glicko-2 and OpenSkill also have a toggle for players who aren't playing: the textbook versions barely move someone who's out injured, so by default they slowly sink instead.
 
-Glicko-2 and OpenSkill also have a toggle for how they treat players who aren't playing. The textbook versions barely move a player who's out injured, so by default they slowly sink instead.
-
-## What's on the site
-
+On the site:
 - **Rankings:** each system's top players, with a strip showing where every system puts them.
 - **Predict:** pick two players and see who each system thinks wins, plus their head-to-head.
 - **Tournaments:** the season calendar, plus stats for every event under every system.
 - **Records:** weeks at #1, biggest upsets, biggest rises and more, for any time period.
 - **Player and tournament pages:** rank history charts, titles and results.
 
-It updates itself every morning through GitHub Actions.
+It updates itself every morning. Data: match results from [TennisMyLife](https://stats.tennismylife.org/), built on [Jeff Sackmann's tennis data](https://github.com/JeffSackmann/tennis_atp); prize money from Wikipedia; trophy photos from Wikimedia Commons. Technical details are in [HOW_IT_WORKS.md](HOW_IT_WORKS.md).
 
-## Data
+### More soon
 
-- Match results: [TennisMyLife](https://stats.tennismylife.org/), built on [Jeff Sackmann's tennis data](https://github.com/JeffSackmann/tennis_atp)
-- Prize money (for VRS): Wikipedia
-- Trophy photos: Wikimedia Commons, credited on each tournament page
+Other projects will show up here.
 
-Rankings and stats on the site are shared under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/), like the match data they're built from. Official rankings: [atptour.com](https://www.atptour.com/en/rankings/singles).
+## What's in this repo
 
-Not affiliated with the ATP, TennisMyLife or Valve.
+| Path | What it is |
+|---|---|
+| `site/index.html` | The homepage |
+| `site/rankings/` | The rankings site's pages |
+| `scripts/` | The data pipeline that fetches results and builds the rankings |
+| `.github/workflows/update.yml` | Rebuilds and deploys the whole site every day with GitHub Actions |
 
-Want the technical details? See [HOW_IT_WORKS.md](HOW_IT_WORKS.md).
+## License
 
-Built with help from Claude.
+Code: [MIT](LICENSE). Rankings and stats shown on the site: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/), like the match data they're built from.
+
+Not affiliated with the ATP, TennisMyLife or Valve. Built with help from Claude.
