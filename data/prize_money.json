@@ -1,0 +1,2090 @@
+{
+ "2025-1536": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "96",
+  "level": "M",
+  "name": "Madrid Masters",
+  "rounds": {
+   "F": 523870.0,
+   "Q1": 6270.0,
+   "Q2": 12090.0,
+   "QF": 165680.0,
+   "R128": 20820.0,
+   "R16": 90445.0,
+   "R32": 52925.0,
+   "R64": 30895.0,
+   "SF": 291040.0,
+   "W": 985030.0
+  },
+  "season_total": [
+   8055385.0,
+   "EUR"
+  ],
+  "source": "table",
+  "title": "2025 Mutua Madrid Open",
+  "url": "https://en.wikipedia.org/wiki/2025_Mutua_Madrid_Open",
+  "year": 2025
+ },
+ "2025-301": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Auckland",
+  "rounds": {
+   "F": 60350.0,
+   "Q1": 1990.0,
+   "Q2": 3650.0,
+   "QF": 20555.0,
+   "R16": 11935.0,
+   "R32": 7295.0,
+   "SF": 35480.0,
+   "W": 103455.0
+  },
+  "season_total": [
+   766290.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2025 ASB Classic",
+  "url": "https://en.wikipedia.org/wiki/2025_ASB_Classic",
+  "year": 2025
+ },
+ "2025-308": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Munich",
+  "season_total": [
+   2747360.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2025 BMW Open",
+  "total": 2500000.0,
+  "url": "https://en.wikipedia.org/wiki/2025_BMW_Open",
+  "year": 2025
+ },
+ "2025-311": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Queen's Club",
+  "rounds": {
+   "F": 253790.0,
+   "Q1": 5655.0,
+   "Q2": 10080.0,
+   "QF": 69100.0,
+   "R16": 36885.0,
+   "R32": 19670.0,
+   "SF": 135255.0,
+   "W": 471755.0
+  },
+  "season_total": [
+   2683820.0,
+   "EUR"
+  ],
+  "source": "table",
+  "title": "2025 Queen's Club Championships",
+  "total": 1415000.0,
+  "total_currency": "USD",
+  "url": "https://en.wikipedia.org/wiki/2025_Queen%27s_Club_Championships",
+  "year": 2025
+ },
+ "2025-314": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Gstaad",
+  "season_total": [
+   622850.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 Swiss Open Gstaad",
+  "total": 622850.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Swiss_Open_Gstaad",
+  "year": 2025
+ },
+ "2025-316": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Bastad",
+  "season_total": [
+   622850.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2025 Swedish Open",
+  "total": 579320.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Swedish_Open",
+  "year": 2025
+ },
+ "2025-319": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Kitzbuhel",
+  "season_total": [
+   622850.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 Generali Open Kitzbühel",
+  "total": 622850.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Generali_Open_Kitzb%C3%BChel",
+  "year": 2025
+ },
+ "2025-321": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Stuttgart",
+  "season_total": [
+   778445.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2025 BOSS Open",
+  "total": 751630.0,
+  "url": "https://en.wikipedia.org/wiki/2025_BOSS_Open",
+  "year": 2025
+ },
+ "2025-322": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Geneva",
+  "rounds": {
+   "F": 52890.0,
+   "Q1": 1745.0,
+   "Q2": 3200.0,
+   "QF": 18015.0,
+   "R16": 10460.0,
+   "R32": 6390.0,
+   "SF": 31090.0,
+   "W": 90675.0
+  },
+  "season_total": [
+   622850.0,
+   "EUR"
+  ],
+  "source": "table",
+  "title": "2025 Geneva Open",
+  "url": "https://en.wikipedia.org/wiki/2025_Geneva_Open",
+  "year": 2025
+ },
+ "2025-328": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Basel",
+  "season_total": [
+   2684645.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 Swiss Indoors",
+  "total": 2684645.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Swiss_Indoors",
+  "year": 2025
+ },
+ "2025-329": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Tokyo",
+  "season_total": [
+   2404500.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 Japan Open Tennis Championships",
+  "total": 2404500.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Japan_Open_Tennis_Championships",
+  "year": 2025
+ },
+ "2025-337": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Vienna",
+  "season_total": [
+   2898475.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 Erste Bank Open",
+  "total": 2898475.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Erste_Bank_Open",
+  "year": 2025
+ },
+ "2025-341": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Metz",
+  "season_total": [
+   622850.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 Moselle Open",
+  "total": 622850.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Moselle_Open",
+  "year": 2025
+ },
+ "2025-352": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "56",
+  "level": "M",
+  "name": "Paris Masters",
+  "rounds": {
+   "F": 516925.0,
+   "Q1": 6570.0,
+   "Q2": 12550.0,
+   "QF": 154170.0,
+   "R16": 82465.0,
+   "R32": 44220.0,
+   "R64": 24500.0,
+   "SF": 282650.0,
+   "W": 946610.0
+  },
+  "season_total": [
+   7703855.0,
+   "EUR"
+  ],
+  "source": "table",
+  "title": "2025 Rolex Paris Masters",
+  "url": "https://en.wikipedia.org/wiki/2025_Rolex_Paris_Masters",
+  "year": 2025
+ },
+ "2025-360": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Marrakech",
+  "season_total": [
+   622850.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 Grand Prix Hassan II",
+  "total": 622850.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Grand_Prix_Hassan_II",
+  "year": 2025
+ },
+ "2025-375": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Montpellier",
+  "season_total": [
+   622850.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 Open Occitanie",
+  "total": 622850.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Open_Occitanie",
+  "year": 2025
+ },
+ "2025-403": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "96",
+  "level": "M",
+  "name": "Miami Masters",
+  "rounds": {
+   "F": 597890.0,
+   "Q1": 7155.0,
+   "Q2": 13795.0,
+   "QF": 189075.0,
+   "R128": 23760.0,
+   "R16": 103225.0,
+   "R32": 60440.0,
+   "R64": 35260.0,
+   "SF": 332160.0,
+   "W": 1124380.0
+  },
+  "season_total": [
+   9193540.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2025 Miami Open",
+  "url": "https://en.wikipedia.org/wiki/2025_Miami_Open",
+  "year": 2025
+ },
+ "2025-404": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "96",
+  "level": "M",
+  "name": "Indian Wells Masters",
+  "rounds": {
+   "F": 638750.0,
+   "Q1": 7640.0,
+   "Q2": 14730.0,
+   "QF": 202000.0,
+   "R128": 25375.0,
+   "R16": 110250.0,
+   "R32": 64500.0,
+   "R64": 37650.0,
+   "SF": 354850.0,
+   "W": 1201125.0
+  },
+  "season_total": [
+   9693540.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2025 BNP Paribas Open",
+  "url": "https://en.wikipedia.org/wiki/2025_BNP_Paribas_Open",
+  "year": 2025
+ },
+ "2025-407": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Rotterdam",
+  "rounds": {
+   "F": 241650.0,
+   "Q1": 5385.0,
+   "Q2": 9600.0,
+   "QF": 65795.0,
+   "R16": 35120.0,
+   "R32": 18730.0,
+   "SF": 128785.0,
+   "W": 449160.0
+  },
+  "season_total": [
+   2563150.0,
+   "EUR"
+  ],
+  "source": "table",
+  "title": "2025 ABN AMRO Open",
+  "url": "https://en.wikipedia.org/wiki/2025_ABN_AMRO_Open",
+  "year": 2025
+ },
+ "2025-410": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "56",
+  "level": "M",
+  "name": "Monte Carlo Masters",
+  "season_total": [
+   6128940.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2025 Monte-Carlo Masters",
+  "total": 6128940.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Monte-Carlo_Masters",
+  "year": 2025
+ },
+ "2025-414": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Hamburg",
+  "season_total": [
+   2320160.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2025 Hamburg Open",
+  "total": 2158560.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Hamburg_Open",
+  "year": 2025
+ },
+ "2025-416": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "96",
+  "level": "M",
+  "name": "Rome Masters",
+  "rounds": {
+   "F": 512260.0,
+   "Q1": 6130.0,
+   "Q2": 11820.0,
+   "QF": 161995.0,
+   "R128": 20360.0,
+   "R16": 88440.0,
+   "R32": 51665.0,
+   "R64": 30255.0,
+   "SF": 284590.0,
+   "W": 963225.0
+  },
+  "season_total": [
+   8055385.0,
+   "EUR"
+  ],
+  "source": "table",
+  "title": "2025 Italian Open",
+  "url": "https://en.wikipedia.org/wiki/2025_Italian_Open",
+  "year": 2025
+ },
+ "2025-418": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "48",
+  "level": "500",
+  "name": "Washington",
+  "rounds": {
+   "F": 224275.0,
+   "Q1": 2800.0,
+   "Q2": 4905.0,
+   "QF": 60740.0,
+   "R16": 32005.0,
+   "R32": 17525.0,
+   "R64": 9345.0,
+   "SF": 116340.0,
+   "W": 420525.0
+  },
+  "season_total": [
+   2574145.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2025 Mubadala Citi DC Open",
+  "url": "https://en.wikipedia.org/wiki/2025_Mubadala_Citi_DC_Open",
+  "year": 2025
+ },
+ "2025-421": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "96",
+  "level": "M",
+  "name": "Canada Masters",
+  "rounds": {
+   "F": 597890.0,
+   "QF": 189075.0,
+   "R128": 23760.0,
+   "R16": 103225.0,
+   "R32": 60400.0,
+   "R64": 35260.0,
+   "SF": 332180.0,
+   "W": 1124380.0
+  },
+  "season_total": [
+   9193540.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2025 National Bank Open",
+  "total": 9193540.0,
+  "total_currency": "USD",
+  "url": "https://en.wikipedia.org/wiki/2025_National_Bank_Open",
+  "year": 2025
+ },
+ "2025-422": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "96",
+  "level": "M",
+  "name": "Cincinnati Masters",
+  "rounds": {
+   "F": 597890.0,
+   "QF": 189075.0,
+   "R128": 23760.0,
+   "R16": 103225.0,
+   "R32": 60400.0,
+   "R64": 35260.0,
+   "SF": 332160.0,
+   "W": 1124380.0
+  },
+  "season_total": [
+   9193540.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2025 Cincinnati Open",
+  "url": "https://en.wikipedia.org/wiki/2025_Cincinnati_Open",
+  "year": 2025
+ },
+ "2025-424": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Dallas",
+  "season_total": [
+   3035960.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 Dallas Open",
+  "total": 3035960.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Dallas_Open",
+  "year": 2025
+ },
+ "2025-425": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Barcelona",
+  "season_total": [
+   3050800.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2025 Barcelona Open Banc Sabadell",
+  "total": 2889200.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Barcelona_Open_Banc_Sabadell",
+  "year": 2025
+ },
+ "2025-429": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Stockholm",
+  "season_total": [
+   733665.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 Stockholm Open",
+  "total": 733665.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Stockholm_Open",
+  "year": 2025
+ },
+ "2025-439": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Umag",
+  "season_total": [
+   622850.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 Croatia Open Umag",
+  "total": 622850.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Croatia_Open_Umag",
+  "year": 2025
+ },
+ "2025-440": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "'s-Hertogenbosch",
+  "season_total": [
+   733665.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2025 Libéma Open",
+  "total": 706850.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Lib%C3%A9ma_Open",
+  "year": 2025
+ },
+ "2025-4462": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Bucharest",
+  "season_total": [
+   622850.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 Țiriac Open",
+  "total": 622850.0,
+  "url": "https://en.wikipedia.org/wiki/2025_%C8%9Airiac_Open",
+  "year": 2025
+ },
+ "2025-451": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Doha",
+  "season_total": [
+   3035960.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 Qatar ExxonMobil Open",
+  "total": 3035960.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Qatar_ExxonMobil_Open",
+  "year": 2025
+ },
+ "2025-4713": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Hangzhou",
+  "season_total": [
+   1049780.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 Hangzhou Open",
+  "total": 1049780.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Hangzhou_Open",
+  "year": 2025
+ },
+ "2025-495": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Dubai",
+  "rounds": {
+   "F": 325780.0,
+   "Q1": 7260.0,
+   "Q2": 12940.0,
+   "QF": 88700.0,
+   "R16": 47350.0,
+   "R32": 25250.0,
+   "SF": 173620.0,
+   "W": 605530.0
+  },
+  "season_total": [
+   3415700.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2025 Dubai Tennis Championships",
+  "url": "https://en.wikipedia.org/wiki/2025_Dubai_Tennis_Championships",
+  "year": 2025
+ },
+ "2025-496": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Marseille",
+  "season_total": [
+   767545.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 Open 13 Provence",
+  "total": 767545.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Open_13_Provence",
+  "year": 2025
+ },
+ "2025-499": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Delray Beach",
+  "season_total": [
+   710735.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 Delray Beach Open",
+  "total": 710735.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Delray_Beach_Open",
+  "year": 2025
+ },
+ "2025-500": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Halle",
+  "season_total": [
+   2683820.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 Halle Open",
+  "total": 2683820.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Halle_Open",
+  "year": 2025
+ },
+ "2025-5014": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "96",
+  "level": "M",
+  "name": "Shanghai",
+  "season_total": [
+   9193540.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 Rolex Shanghai Masters",
+  "total": 9193540.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Rolex_Shanghai_Masters",
+  "year": 2025
+ },
+ "2025-506": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Buenos Aires",
+  "season_total": [
+   688985.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 Argentina Open",
+  "total": 688985.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Argentina_Open",
+  "year": 2025
+ },
+ "2025-5100": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Athens",
+  "rounds": {
+   "F": 68035.0,
+   "Q1": 2240.0,
+   "Q2": 4115.0,
+   "QF": 23170.0,
+   "R16": 13455.0,
+   "R32": 8220.0,
+   "SF": 39995.0,
+   "W": 116690.0
+  },
+  "season_total": [
+   793530.0,
+   "EUR"
+  ],
+  "source": "table",
+  "title": "2025 Hellenic Championship",
+  "url": "https://en.wikipedia.org/wiki/2025_Hellenic_Championship",
+  "year": 2025
+ },
+ "2025-520": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "128",
+  "level": "G",
+  "name": "Roland Garros",
+  "rounds": {
+   "F": 1275000.0,
+   "Q1": 21000.0,
+   "Q2": 29500.0,
+   "Q3": 43000.0,
+   "QF": 440000.0,
+   "R128": 78000.0,
+   "R16": 265000.0,
+   "R32": 168000.0,
+   "R64": 117000.0,
+   "SF": 690000.0,
+   "W": 2550000.0
+  },
+  "season_total": [
+   26334000.0,
+   "EUR"
+  ],
+  "source": "table",
+  "title": "2025 French Open",
+  "total": 56352000.0,
+  "total_currency": "EUR",
+  "url": "https://en.wikipedia.org/wiki/2025_French_Open",
+  "year": 2025
+ },
+ "2025-540": {
+  "checked": "2026-10-07",
+  "currency": "GBP",
+  "draw": "128",
+  "level": "G",
+  "name": "Wimbledon",
+  "rounds": {
+   "F": 1520000.0,
+   "Q1": 15500.0,
+   "Q2": 26000.0,
+   "Q3": 41500.0,
+   "QF": 400000.0,
+   "R16": 240000.0,
+   "R32": 152000.0,
+   "R64": 99000.0,
+   "SF": 775000.0,
+   "W": 3000000.0
+  },
+  "season_total": [
+   24919000.0,
+   "GBP"
+  ],
+  "source": "table",
+  "title": "2025 Wimbledon Championships",
+  "total": 53550000.0,
+  "total_currency": "GBP",
+  "url": "https://en.wikipedia.org/wiki/2025_Wimbledon_Championships",
+  "year": 2025
+ },
+ "2025-560": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "128",
+  "level": "G",
+  "name": "US Open",
+  "rounds": {
+   "F": 2500000.0,
+   "Q1": 27500.0,
+   "Q2": 41800.0,
+   "Q3": 57200.0,
+   "QF": 660000.0,
+   "R128": 110000.0,
+   "R16": 400000.0,
+   "R32": 237000.0,
+   "R64": 154000.0,
+   "SF": 1260000.0,
+   "W": 5000000.0
+  },
+  "season_total": [
+   40412800.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2025 US Open (tennis)",
+  "total": 90000000.0,
+  "total_currency": "USD",
+  "url": "https://en.wikipedia.org/wiki/2025_US_Open_%28tennis%29",
+  "year": 2025
+ },
+ "2025-580": {
+  "checked": "2026-10-07",
+  "currency": "AUD",
+  "draw": "128",
+  "level": "G",
+  "name": "Australian Open",
+  "rounds": {
+   "F": 1900000.0,
+   "Q1": 35000.0,
+   "Q2": 49000.0,
+   "Q3": 72000.0,
+   "QF": 665000.0,
+   "R128": 132000.0,
+   "R16": 420000.0,
+   "R32": 290000.0,
+   "R64": 200000.0,
+   "SF": 1100000.0,
+   "W": 3500000.0
+  },
+  "season_total": [
+   43250000.0,
+   "AUD"
+  ],
+  "source": "table",
+  "title": "2025 Australian Open",
+  "total": 96500000.0,
+  "total_currency": "AUD",
+  "url": "https://en.wikipedia.org/wiki/2025_Australian_Open",
+  "year": 2025
+ },
+ "2025-605": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "8",
+  "level": "F",
+  "name": "ATP Finals",
+  "rounds": {
+   "ALT": 155000.0,
+   "FW": 2237200.0,
+   "PART": 3.0,
+   "RR": 396500.0,
+   "SFW": 1123400.0
+  },
+  "source": "table",
+  "title": "2025 ATP Finals",
+  "url": "https://en.wikipedia.org/wiki/2025_ATP_Finals",
+  "year": 2025
+ },
+ "2025-6242": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "48",
+  "level": "250",
+  "name": "Winston-Salem",
+  "season_total": [
+   828925.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 Winston-Salem Open",
+  "total": 828925.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Winston-Salem_Open",
+  "year": 2025
+ },
+ "2025-6932": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Rio de Janeiro",
+  "season_total": [
+   2574145.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 Rio Open",
+  "total": 2574145.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Rio_Open",
+  "year": 2025
+ },
+ "2025-717": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Houston",
+  "season_total": [
+   710735.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 U.S. Men's Clay Court Championships",
+  "total": 710735.0,
+  "url": "https://en.wikipedia.org/wiki/2025_U.S._Men%27s_Clay_Court_Championships",
+  "year": 2025
+ },
+ "2025-741": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Eastbourne",
+  "season_total": [
+   783690.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 Eastbourne Open",
+  "total": 783690.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Eastbourne_Open",
+  "year": 2025
+ },
+ "2025-747": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Beijing",
+  "rounds": {
+   "F": 404105.0,
+   "Q1": 9005.0,
+   "Q2": 16055.0,
+   "QF": 110030.0,
+   "R16": 58735.0,
+   "R32": 31320.0,
+   "SF": 215360.0,
+   "W": 751075.0
+  },
+  "season_total": [
+   4194080.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2025 China Open (tennis)",
+  "url": "https://en.wikipedia.org/wiki/2025_China_Open_%28tennis%29",
+  "year": 2025
+ },
+ "2025-7480": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Los Cabos",
+  "season_total": [
+   920480.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 Los Cabos Open",
+  "total": 920480.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Los_Cabos_Open",
+  "year": 2025
+ },
+ "2025-7485": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Brussels",
+  "season_total": [
+   733665.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 European Open",
+  "total": 733665.0,
+  "url": "https://en.wikipedia.org/wiki/2025_European_Open",
+  "year": 2025
+ },
+ "2025-7581": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Chengdu",
+  "season_total": [
+   1220805.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 Chengdu Open",
+  "total": 1220805.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Chengdu_Open",
+  "year": 2025
+ },
+ "2025-807": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Acapulco",
+  "season_total": [
+   2763440.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 Abierto Mexicano Telcel",
+  "total": 2763440.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Abierto_Mexicano_Telcel",
+  "year": 2025
+ },
+ "2025-8994": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Mallorca",
+  "season_total": [
+   622850.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2025 Mallorca Championships",
+  "total": 622850.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Mallorca_Championships",
+  "year": 2025
+ },
+ "2025-8996": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Santiago",
+  "season_total": [
+   710735.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 Chile Open",
+  "total": 710735.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Chile_Open",
+  "year": 2025
+ },
+ "2025-8998": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Adelaide",
+  "rounds": {
+   "F": 60250.0,
+   "Q1": 1990.0,
+   "Q2": 3650.0,
+   "QF": 20555.0,
+   "R16": 11935.0,
+   "R32": 7295.0,
+   "SF": 35480.0,
+   "W": 103525.0
+  },
+  "season_total": [
+   766290.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2025 Adelaide International",
+  "url": "https://en.wikipedia.org/wiki/2025_Adelaide_International",
+  "year": 2025
+ },
+ "2025-9410": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Almaty",
+  "season_total": [
+   1085850.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2025 Almaty Open",
+  "total": 1085850.0,
+  "url": "https://en.wikipedia.org/wiki/2025_Almaty_Open",
+  "year": 2025
+ },
+ "2026-1536": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "96",
+  "level": "M",
+  "name": "Madrid Masters",
+  "season_total": [
+   8235540.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2026 Mutua Madrid Open",
+  "total": 8235540.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Mutua_Madrid_Open",
+  "year": 2026
+ },
+ "2026-301": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "250",
+  "name": "Auckland",
+  "season_total": [
+   700045.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 ASB Classic",
+  "total": 700045.0,
+  "url": "https://en.wikipedia.org/wiki/2026_ASB_Classic",
+  "year": 2026
+ },
+ "2026-308": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Munich",
+  "season_total": [
+   2561110.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2026 BMW Open",
+  "total": 2561110.0,
+  "url": "https://en.wikipedia.org/wiki/2026_BMW_Open",
+  "year": 2026
+ },
+ "2026-311": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Queen's Club",
+  "season_total": [
+   2583330.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2026 Queen's Club Championships",
+  "total": 2583330.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Queen%27s_Club_Championships",
+  "year": 2026
+ },
+ "2026-314": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Gstaad",
+  "season_total": [
+   612620.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2026 Swiss Open Gstaad",
+  "total": 612620.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Swiss_Open_Gstaad",
+  "year": 2026
+ },
+ "2026-316": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Bastad",
+  "season_total": [
+   612620.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2026 Swedish Open",
+  "total": 612620.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Swedish_Open",
+  "year": 2026
+ },
+ "2026-319": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Kitzbuhel",
+  "season_total": [
+   612620.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2026 Generali Open Kitzbühel",
+  "total": 612620.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Generali_Open_Kitzb%C3%BChel",
+  "year": 2026
+ },
+ "2026-321": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Stuttgart",
+  "season_total": [
+   757320.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2026 BOSS Open",
+  "total": 757320.0,
+  "url": "https://en.wikipedia.org/wiki/2026_BOSS_Open",
+  "year": 2026
+ },
+ "2026-322": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Geneva",
+  "season_total": [
+   612620.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2026 Geneva Open",
+  "total": 612620.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Geneva_Open",
+  "year": 2026
+ },
+ "2026-329": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Tokyo",
+  "season_total": [
+   2342275.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 Japan Open Tennis Championships",
+  "total": 2342275.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Japan_Open_Tennis_Championships",
+  "year": 2026
+ },
+ "2026-336": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Hong Kong",
+  "season_total": [
+   700045.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 ATP Hong Kong Tennis Open",
+  "total": 700045.0,
+  "url": "https://en.wikipedia.org/wiki/2026_ATP_Hong_Kong_Tennis_Open",
+  "year": 2026
+ },
+ "2026-339": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "250",
+  "name": "Brisbane",
+  "season_total": [
+   800045.0,
+   "USD"
+  ],
+  "source": "total",
+  "title": "2026 Brisbane International",
+  "total": 1691602.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Brisbane_International",
+  "year": 2026
+ },
+ "2026-360": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Marrakech",
+  "season_total": [
+   612620.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2026 Grand Prix Hassan II",
+  "total": 612620.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Grand_Prix_Hassan_II",
+  "year": 2026
+ },
+ "2026-375": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Montpellier",
+  "season_total": [
+   612620.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2026 Open Occitanie",
+  "total": 612620.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Open_Occitanie",
+  "year": 2026
+ },
+ "2026-403": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "96",
+  "level": "M",
+  "name": "Miami Masters",
+  "rounds": {
+   "F": 612340.0,
+   "Q1": 7330.0,
+   "Q2": 14130.0,
+   "QF": 193645.0,
+   "R128": 24335.0,
+   "R16": 105720.0,
+   "R32": 61865.0,
+   "R64": 36110.0,
+   "SF": 340190.0,
+   "W": 1151380.0
+  },
+  "season_total": [
+   9415725.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2026 Miami Open",
+  "total": 9415725.0,
+  "total_currency": "USD",
+  "url": "https://en.wikipedia.org/wiki/2026_Miami_Open",
+  "year": 2026
+ },
+ "2026-404": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "96",
+  "level": "M",
+  "name": "Indian Wells Masters",
+  "rounds": {
+   "F": 612340.0,
+   "Q1": 7330.0,
+   "Q2": 14130.0,
+   "QF": 193645.0,
+   "R128": 24335.0,
+   "R16": 105720.0,
+   "R32": 61865.0,
+   "R64": 36110.0,
+   "SF": 340190.0,
+   "W": 1151380.0
+  },
+  "season_total": [
+   9415725.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2026 BNP Paribas Open",
+  "total": 9415725.0,
+  "total_currency": "USD",
+  "url": "https://en.wikipedia.org/wiki/2026_BNP_Paribas_Open",
+  "year": 2026
+ },
+ "2026-407": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Rotterdam",
+  "rounds": {
+   "F": 247800.0,
+   "Q1": 5525.0,
+   "Q2": 9845.0,
+   "QF": 67470.0,
+   "R16": 36015.0,
+   "R32": 19205.0,
+   "SF": 132060.0,
+   "W": 460555.0
+  },
+  "season_total": [
+   2462660.0,
+   "EUR"
+  ],
+  "source": "table",
+  "title": "2026 ABN AMRO Open",
+  "url": "https://en.wikipedia.org/wiki/2026_ABN_AMRO_Open",
+  "year": 2026
+ },
+ "2026-410": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "56",
+  "level": "M",
+  "name": "Monte Carlo",
+  "rounds": {
+   "F": 532120.0,
+   "Q1": 6765.0,
+   "Q2": 12920.0,
+   "QF": 158700.0,
+   "R16": 84890.0,
+   "R32": 45520.0,
+   "R64": 25220.0,
+   "SF": 290960.0,
+   "W": 974370.0
+  },
+  "season_total": [
+   6309095.0,
+   "EUR"
+  ],
+  "source": "table",
+  "title": "2026 Monte-Carlo Masters",
+  "url": "https://en.wikipedia.org/wiki/2026_Monte-Carlo_Masters",
+  "year": 2026
+ },
+ "2026-414": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Hamburg",
+  "season_total": [
+   2219670.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2026 Hamburg Open",
+  "total": 2219670.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Hamburg_Open",
+  "year": 2026
+ },
+ "2026-416": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Munich",
+  "season_total": [
+   2561110.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2026 BMW Open",
+  "total": 2561110.0,
+  "url": "https://en.wikipedia.org/wiki/2026_BMW_Open",
+  "year": 2026
+ },
+ "2026-418": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Washington",
+  "season_total": [
+   2469450.0,
+   "USD"
+  ],
+  "source": "total",
+  "title": "2026 Mubadala DC Open",
+  "total": 2469450.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Mubadala_DC_Open",
+  "year": 2026
+ },
+ "2026-421": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "96",
+  "level": "M",
+  "name": "Canada Masters",
+  "rounds": {
+   "F": 612340.0,
+   "Q1": 21590.0,
+   "QF": 193645.0,
+   "R128": 24335.0,
+   "R16": 105720.0,
+   "R32": 61865.0,
+   "R64": 36110.0,
+   "SF": 340190.0,
+   "W": 1151420.0
+  },
+  "season_total": [
+   9415724.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2026 National Bank Open",
+  "url": "https://en.wikipedia.org/wiki/2026_National_Bank_Open",
+  "year": 2026
+ },
+ "2026-422": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "96",
+  "level": "M",
+  "name": "Cincinnati Masters",
+  "rounds": {
+   "F": 612340.0,
+   "Q1": 7330.0,
+   "Q2": 14130.0,
+   "QF": 193645.0,
+   "R128": 24335.0,
+   "R16": 105720.0,
+   "R32": 61865.0,
+   "R64": 36110.0,
+   "SF": 340190.0,
+   "W": 1151380.0
+  },
+  "season_total": [
+   9415725.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2026 Cincinnati Open",
+  "url": "https://en.wikipedia.org/wiki/2026_Cincinnati_Open",
+  "year": 2026
+ },
+ "2026-424": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Dallas",
+  "season_total": [
+   2833335.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 Dallas Open",
+  "total": 2833335.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Dallas_Open",
+  "year": 2026
+ },
+ "2026-425": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Barcelona",
+  "season_total": [
+   2950310.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2026 Barcelona Open Banc Sabadell",
+  "total": 2950310.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Barcelona_Open_Banc_Sabadell",
+  "year": 2026
+ },
+ "2026-439": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Umag",
+  "season_total": [
+   612620.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2026 Croatia Open Umag",
+  "total": 612620.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Croatia_Open_Umag",
+  "year": 2026
+ },
+ "2026-440": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "'s-Hertogenbosch",
+  "season_total": [
+   723435.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2026 Libéma Open",
+  "total": 723435.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Lib%C3%A9ma_Open",
+  "year": 2026
+ },
+ "2026-4462": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Bucharest",
+  "season_total": [
+   612620.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2026 Țiriac Open",
+  "total": 612620.0,
+  "url": "https://en.wikipedia.org/wiki/2026_%C8%9Airiac_Open",
+  "year": 2026
+ },
+ "2026-451": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Doha",
+  "season_total": [
+   2833335.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 Qatar ExxonMobil Open",
+  "total": 2833335.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Qatar_ExxonMobil_Open",
+  "year": 2026
+ },
+ "2026-4713": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Hangzhou",
+  "season_total": [
+   1039090.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 Hangzhou Open",
+  "total": 1039090.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Hangzhou_Open",
+  "year": 2026
+ },
+ "2026-495": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Dubai",
+  "rounds": {
+   "F": 333160.0,
+   "Q1": 7430.0,
+   "Q2": 13235.0,
+   "QF": 90710.0,
+   "R16": 48420.0,
+   "R32": 25825.0,
+   "SF": 177555.0,
+   "W": 619160.0
+  },
+  "season_total": [
+   3311005.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2026 Dubai Tennis Championships",
+  "total": 3311005.0,
+  "total_currency": "USD",
+  "url": "https://en.wikipedia.org/wiki/2026_Dubai_Tennis_Championships",
+  "year": 2026
+ },
+ "2026-499": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Delray Beach",
+  "season_total": [
+   700045.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 Delray Beach Open",
+  "total": 700045.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Delray_Beach_Open",
+  "year": 2026
+ },
+ "2026-500": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "32",
+  "level": "500",
+  "name": "Halle",
+  "season_total": [
+   2583330.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2026 Halle Open",
+  "total": 2583330.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Halle_Open",
+  "year": 2026
+ },
+ "2026-5014": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "96",
+  "level": "M",
+  "name": "Shanghai",
+  "season_total": [
+   9415725.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 Rolex Shanghai Masters",
+  "total": 9415725.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Rolex_Shanghai_Masters",
+  "year": 2026
+ },
+ "2026-506": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Buenos Aires",
+  "season_total": [
+   675310.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 Argentina Open",
+  "total": 675310.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Argentina_Open",
+  "year": 2026
+ },
+ "2026-520": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "128",
+  "level": "G",
+  "name": "Roland Garros",
+  "rounds": {
+   "F": 1400000.0,
+   "Q1": 24000.0,
+   "Q2": 33000.0,
+   "Q3": 48000.0,
+   "QF": 470000.0,
+   "R128": 87000.0,
+   "R16": 285000.0,
+   "R32": 187000.0,
+   "R64": 130000.0,
+   "SF": 750000.0,
+   "W": 2800000.0
+  },
+  "source": "table",
+  "title": "2026 French Open",
+  "total": 61723000.0,
+  "total_currency": "EUR",
+  "url": "https://en.wikipedia.org/wiki/2026_French_Open",
+  "year": 2026
+ },
+ "2026-540": {
+  "checked": "2026-10-07",
+  "currency": "GBP",
+  "draw": "128",
+  "level": "G",
+  "name": "Wimbledon",
+  "rounds": {
+   "F": 1800000.0,
+   "Q1": 20000.0,
+   "Q2": 32000.0,
+   "Q3": 50000.0,
+   "QF": 480000.0,
+   "R128": 80000.0,
+   "R16": 300000.0,
+   "R32": 185000.0,
+   "R64": 126000.0,
+   "SF": 900000.0,
+   "W": 3600000.0
+  },
+  "season_total": [
+   30060000.0,
+   "GBP"
+  ],
+  "source": "table",
+  "title": "2026 Wimbledon Championships",
+  "total": 64200000.0,
+  "total_currency": "GBP",
+  "url": "https://en.wikipedia.org/wiki/2026_Wimbledon_Championships",
+  "year": 2026
+ },
+ "2026-560": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "128",
+  "level": "G",
+  "name": "US Open",
+  "rounds": {
+   "F": 2800000.0,
+   "Q1": 32000.0,
+   "Q2": 48000.0,
+   "Q3": 66000.0,
+   "QF": 780000.0,
+   "R128": 140000.0,
+   "R16": 480000.0,
+   "R32": 290000.0,
+   "R64": 190000.0,
+   "SF": 1450000.0,
+   "W": 5500000.0
+  },
+  "source": "table",
+  "title": "2026 US Open (tennis)",
+  "total": 108000000.0,
+  "total_currency": "USD",
+  "url": "https://en.wikipedia.org/wiki/2026_US_Open_%28tennis%29",
+  "year": 2026
+ },
+ "2026-580": {
+  "checked": "2026-10-07",
+  "currency": "AUD",
+  "draw": "128",
+  "level": "G",
+  "name": "Australian Open",
+  "rounds": {
+   "F": 2150000.0,
+   "Q1": 40500.0,
+   "Q2": 57000.0,
+   "Q3": 83500.0,
+   "QF": 750000.0,
+   "R128": 150000.0,
+   "R16": 480000.0,
+   "R32": 327750.0,
+   "R64": 225000.0,
+   "SF": 1250000.0,
+   "W": 4150000.0
+  },
+  "season_total": [
+   49171000.0,
+   "AUD"
+  ],
+  "source": "table",
+  "title": "2026 Australian Open",
+  "total": 111500000.0,
+  "total_currency": "AUD",
+  "url": "https://en.wikipedia.org/wiki/2026_Australian_Open",
+  "year": 2026
+ },
+ "2026-6242": {
+  "checked": "2026-10-07",
+  "draw": "48",
+  "level": "M",
+  "name": "Winston-Salem",
+  "reason": "page found, no prize money table or total",
+  "source": "none",
+  "title": "2026 Winston-Salem Open",
+  "url": "https://en.wikipedia.org/wiki/2026_Winston-Salem_Open",
+  "year": 2026
+ },
+ "2026-6932": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Rio de Janeiro",
+  "season_total": [
+   2469450.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 Rio Open",
+  "total": 2469450.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Rio_Open",
+  "year": 2026
+ },
+ "2026-717": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Houston",
+  "season_total": [
+   700045.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 U.S. Men's Clay Court Championships",
+  "total": 700045.0,
+  "url": "https://en.wikipedia.org/wiki/2026_U.S._Men%27s_Clay_Court_Championships",
+  "year": 2026
+ },
+ "2026-7290": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Estoril",
+  "season_total": [
+   612620.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2026 Estoril Open",
+  "total": 612620.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Estoril_Open",
+  "year": 2026
+ },
+ "2026-741": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Eastbourne",
+  "season_total": [
+   773465.0,
+   "EUR"
+  ],
+  "source": "total",
+  "title": "2026 Eastbourne Open",
+  "total": 773465.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Eastbourne_Open",
+  "year": 2026
+ },
+ "2026-747": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Beijing",
+  "rounds": {
+   "F": 411480.0,
+   "Q1": 9175.0,
+   "Q2": 16345.0,
+   "QF": 112035.0,
+   "R16": 59805.0,
+   "R32": 31895.0,
+   "SF": 219295.0,
+   "W": 764750.0
+  },
+  "season_total": [
+   4089385.0,
+   "USD"
+  ],
+  "source": "table",
+  "title": "2026 China Open (tennis)",
+  "url": "https://en.wikipedia.org/wiki/2026_China_Open_%28tennis%29",
+  "year": 2026
+ },
+ "2026-7480": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Los Cabos",
+  "season_total": [
+   909790.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 Los Cabos Open",
+  "total": 909790.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Los_Cabos_Open",
+  "year": 2026
+ },
+ "2026-7581": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Chengdu",
+  "season_total": [
+   1210115.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 Chengdu Open",
+  "total": 1210115.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Chengdu_Open",
+  "year": 2026
+ },
+ "2026-807": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "32",
+  "level": "500",
+  "name": "Acapulco",
+  "season_total": [
+   2469450.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 Abierto Mexicano Telcel",
+  "total": 2469450.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Abierto_Mexicano_Telcel",
+  "year": 2026
+ },
+ "2026-8994": {
+  "checked": "2026-10-07",
+  "currency": "EUR",
+  "draw": "28",
+  "level": "250",
+  "name": "Mallorca",
+  "season_total": [
+   612620.0,
+   "EUR"
+  ],
+  "source": "season-total",
+  "title": "2026 Mallorca Championships",
+  "total": 612620.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Mallorca_Championships",
+  "year": 2026
+ },
+ "2026-8996": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Santiago",
+  "season_total": [
+   700045.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 Chile Open",
+  "total": 700045.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Chile_Open",
+  "year": 2026
+ },
+ "2026-8998": {
+  "checked": "2026-10-07",
+  "currency": "USD",
+  "draw": "28",
+  "level": "250",
+  "name": "Adelaide",
+  "season_total": [
+   700045.0,
+   "USD"
+  ],
+  "source": "season-total",
+  "title": "2026 Adelaide International",
+  "total": 700045.0,
+  "url": "https://en.wikipedia.org/wiki/2026_Adelaide_International",
+  "year": 2026
+ }
+}

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en" data-theme="black">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tennis records</title>
+<meta name="description" content="Records under each rating system: weeks at #1, highest ratings, biggest upsets, biggest weekly rises and the largest gaps from the official ranking.">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+<style>
+.rk{color:var(--muted);width:2.2em}
+.chance{font-weight:700}
+.head2{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px;margin-bottom:8px}
+.gap{font-weight:700}
+.gap.up{color:var(--up)} .gap.down{color:var(--down)}
+.binact{margin:-2px 0 10px}
+.ctrls{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px}
+.period{font:inherit;font-size:.9rem;font-weight:500;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:999px;padding:6px 30px 6px 12px;cursor:pointer;
+  appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+  background-position:calc(100% - 15px) 52%,calc(100% - 10px) 52%;background-size:5px 5px;background-repeat:no-repeat}
+.period:hover{border-color:var(--muted)}
+.sw{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+</style>
+</head>
+<body data-root="../">
+<div class="wrap">
+  <header class="bar" data-sport="tennis" data-page="records"></header>
+  <main>
+    <h1>Records</h1>
+    <p class="lede" id="period">Loading…</p>
+    <div id="main"></div>
+  </main>
+  <footer class="foot" data-auto></footer>
+</div>
+<script>
+(function () {
+  var S = Site;
+  var ALL = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS"]];
+  var WINS = [["2w", "Last 2 weeks"], ["1m", "Last month"], ["3m", "Last 3 months"], ["6m", "Last 6 months"], ["1y", "Last 12 months"], ["2y", "Last 2 years"], ["all", "All data"]];
+  var FIELD = { no1: "weeks_at_1", peak: "peaks", upset: "upsets", rise: "rises", gap: "disagreements" };
+  var main = document.getElementById("main");
+  function savedWin(id) { var w; try { w = localStorage.getItem("recwin-" + id); } catch (e) {} return WINS.some(function (x) { return x[0] === w; }) ? w : "1y"; }
+  S.json("data/records.json").then(render).catch(function (e) { S.fail(main, e); });
+
+  function table(head, rows, empty) {
+    if (!rows.length) return '<div class="tablewrap"><div class="empty">' + (empty || "Nothing in this period.") + "</div></div>";
+    return '<div class="tablewrap"><table class="t"><thead><tr>' + head.map(function (h) {
+      return "<th" + (h[1] ? ' class="n"' : "") + ">" + h[0] + "</th>";
+    }).join("") + "</tr></thead><tbody>" + rows.join("") + "</tbody></table></div>";
+  }
+  function fmtRating(k, v) { return k === "openskill" ? Number(v).toFixed(1) : S.num(Math.round(v)); }
+
+  var BLOCKS = [
+    { id: "no1", title: "Weeks at #1", note: function (k) {
+        return k === "vrs" ? "VRS history starts once six months of prize money data exist." : "Counted every Monday, among players with 20+ tour matches and one in the last 180 days.";
+      }, draw: function (k, rows) {
+        return table([[""], ["Player"], ["Weeks", 1], ["Longest run", 1], ["First"], ["Last"]], rows.map(function (x, i) {
+          return '<tr data-href="player.html?id=' + encodeURIComponent(x.id) + '"><td class="rk">' + (i + 1) + "</td><td>" + S.player(x) + '</td><td class="n">' + x.weeks + '</td><td class="n">' + x.longest + "</td><td>" + S.date(x.from) + "</td><td>" + S.date(x.to) + "</td></tr>";
+        }));
+      } },
+    { id: "peak", title: "Highest ratings", note: function (k) {
+        return k === "vrs" ? "Each player’s highest weekly VRS points total in this period." : "Each player’s best weekly rating in this period. Numbers only compare within one system.";
+      }, draw: function (k, rows) {
+        return table([[""], ["Player"], [k === "vrs" ? "Points" : "Rating", 1], ["Week of"]], rows.map(function (x, i) {
+          return '<tr data-href="player.html?id=' + encodeURIComponent(x.id) + '"><td class="rk">' + (i + 1) + "</td><td>" + S.player(x) + '</td><td class="n">' + fmtRating(k, x.value) + "</td><td>" + S.date(x.date) + "</td></tr>";
+        }));
+      } },
+    { id: "upset", title: "Biggest upsets", note: function (k) {
+        return "Lowest pre-match chance this system gave the winner. Both players had at least 20 tour-level matches." +
+          (k === "openskill" ? " OpenSkill is very sure of itself one-on-one, so its chances can round to under 0.1%." : "");
+      }, draw: function (k, rows) {
+        return table([["Winner"], ["Beat"], ["Event"], ["Date"], ["Chance", 1]], rows.map(function (u) {
+          return '<tr data-href="player.html?id=' + encodeURIComponent(u.winner.id) + '"><td>' + S.player(u.winner) + "</td><td>" + S.player(u.loser) + '<div class="muted">' + S.esc(u.score) + "</div></td><td>" + S.esc(u.event) + " " + S.tier(u.level) +
+            '<div class="muted">' + S.esc(S.ROUND[u.round] || u.round) + "</div></td><td>" + S.date(u.date) + '</td><td class="n chance">' + S.pct(u.p) + "</td></tr>";
+        }));
+      } },
+    { id: "rise", title: "Biggest one-week rises", note: function (k) {
+        return k === "elo" ? "Largest Elo gain from one Monday to the next." :
+          "Largest gain in the underlying rating (" + (k === "glicko" ? "Glicko-2 rating, not rating minus 2×RD" : "OpenSkill mean, not mean minus 3σ") + "), so a change in uncertainty does not count as a rise.";
+      }, draw: function (k, rows) {
+        return table([[""], ["Player"], ["Gain", 1], ["Week of"]], rows.map(function (x, i) {
+          return '<tr data-href="player.html?id=' + encodeURIComponent(x.id) + '"><td class="rk">' + (i + 1) + "</td><td>" + S.player(x) + '</td><td class="n">+' + fmtRating(k, x.gain) + "</td><td>" + S.date(x.week) + "</td></tr>";
+        }));
+      } },
+    { id: "gap", title: "Biggest disagreements with the official ranking", note: function (k) {
+        return "The widest gap between this system’s rank and the official rank in the same week, for players in the top 10 of one of them. “Out”: weeks since their last tour-level match at the time." +
+          (k === "elo" ? " Elo never lowers an absent player, so long absences show up most here." : "");
+      }, draw: function (k, rows) {
+        return table([[""], ["Player"], ["This system", 1], ["Official", 1], ["Gap", 1], ["Week of"]], rows.map(function (x, i) {
+          var d = x.official_rank - x.system_rank;
+          return '<tr data-href="player.html?id=' + encodeURIComponent(x.id) + '"><td class="rk">' + (i + 1) + "</td><td>" + S.player(x) + S.outDays(x.days_out) + '</td><td class="n">#' + x.system_rank + '</td><td class="n">#' + x.official_rank +
+            '</td><td class="n gap ' + (d > 0 ? "up" : "down") + '">' + (d > 0 ? "+" + d : "−" + Math.abs(d)) + "</td><td>" + S.date(x.week) + "</td></tr>";
+        }));
+      } }
+  ];
+
+  function render(r) {
+    if (!r.windows) r = { period: r.period, windows: { all: r } };  // data built before time windows existed
+    var per = r.period;
+    var wins = WINS.filter(function (w) { return r.windows[w[0]]; });
+    var active = {}, winOf = {};
+    BLOCKS.forEach(function (b) { active[b.id] = "elo"; winOf[b.id] = r.windows[savedWin(b.id)] ? savedWin(b.id) : wins[wins.length - 1][0]; });
+    document.getElementById("period").textContent = "Records under each rating system, from the data on this site (weekly rankings since " + S.monthYear(per.history_from) +
+      (per.vrs_from ? ", VRS since " + S.monthYear(per.vrs_from) : "") + "). Each section has its own time period.";
+
+    main.innerHTML = BLOCKS.map(function (b) {
+      return '<section><div class="head2"><h2>' + b.title + '</h2><div class="ctrls"><select class="period" id="' + b.id + '-win" aria-label="Time period for ' + b.title + '">' +
+        wins.map(function (x) { return '<option value="' + x[0] + '"' + (x[0] === winOf[b.id] ? " selected" : "") + ">" + x[1] + "</option>"; }).join("") +
+        '</select><div class="chips" role="group" aria-label="Rating system" data-block="' + b.id + '"></div></div></div>' +
+        '<div class="binact" id="' + b.id + '-inact" hidden></div><p class="note" id="' + b.id + '-note"></p><div id="' + b.id + '"></div></section>';
+    }).join("") + '<p class="note" style="margin-top:24px">Gap: plus means the system ranks the player higher than the official ranking does.</p>';
+
+    function show(b) {
+      var w = r.windows[winOf[b.id]], data = w[FIELD[b.id]] || {};
+      var sys = ALL.filter(function (x) { return data[x[0]] && data[x[0]].length; });
+      if (!sys.some(function (x) { return x[0] === active[b.id]; }) && sys.length) active[b.id] = sys[0][0];
+      var k = active[b.id];
+      var chips = main.querySelector('[data-block="' + b.id + '"]');
+      chips.innerHTML = sys.map(function (x) {
+        return '<button class="chip" type="button" data-k="' + x[0] + '" aria-pressed="' + (x[0] === k ? "true" : "false") + '"><i class="sw" style="background:var(--' + x[0] + ')"></i>' + x[1] + "</button>";
+      }).join("");
+      chips.onclick = function (e) { var btn = e.target.closest("button"); if (!btn) return; active[b.id] = btn.dataset.k; show(b); };
+      var inact = document.getElementById(b.id + "-inact");
+      inact.hidden = false;
+      S.inactivityToggle(inact, function () { BLOCKS.forEach(show); }, "When a player is out", k === "glicko" || k === "openskill");
+      // all systems' notes share one spot (only the current one visible), so switching never moves the table
+      var pre = winOf[b.id] === "all" ? "All data. " : "Since " + S.date(w.from) + ". ";
+      document.getElementById(b.id + "-note").innerHTML = S.stack(ALL.map(function (x) { return S.esc(pre + b.note(x[0])); }), ALL.map(function (x) { return x[0]; }).indexOf(k));
+      document.getElementById(b.id).innerHTML = b.draw(k, data[S.sysKey(k)] || data[k] || []);
+    }
+
+    BLOCKS.forEach(function (b) {
+      document.getElementById(b.id + "-win").onchange = function (e) {
+        winOf[b.id] = e.target.value;
+        try { localStorage.setItem("recwin-" + b.id, e.target.value); } catch (err) {}
+        show(b);
+      };
+      show(b);
+    });
+
+  }
+})();
+</script>
+</body>
+</html>

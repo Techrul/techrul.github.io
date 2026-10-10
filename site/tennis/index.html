@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en" data-theme="black">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tennis rankings</title>
+<meta name="description" content="The same ATP match results ranked by Elo, Glicko-2, OpenSkill and Valve's VRS method, next to the official ATP ranking.">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+<style>
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px;padding:0}
+.tab{font:inherit;font-weight:500;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer}
+.tab[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.tab:not([aria-pressed="true"]):hover{border-color:var(--muted)}
+.more:hover{background:var(--ink);color:var(--on-ink)}
+.blurb{margin:0 0 4px;max-width:70ch}
+.tools{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin:16px 0 10px}
+input[type=search]{font:inherit;border:1.5px solid var(--line);border-radius:8px;padding:8px 12px;min-width:220px;background:var(--card);color:var(--ink)}
+.key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.88rem;color:var(--muted)}
+.key span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.dot.ring{background:transparent;border:2px solid var(--official)}
+.board{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.row{display:grid;grid-template-columns:44px minmax(0,1fr) 92px 64px 64px 168px;gap:0 10px;align-items:center;padding:9px 14px;border-top:1px solid var(--line)}
+.row.head{border-top:0;background:var(--head);font-size:.82rem;color:var(--muted);font-weight:500}
+.rk{font-weight:700;text-align:right}
+.nm{min-width:0}
+.nm b{font-weight:500;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nm small{color:var(--muted);font-size:.8rem}
+.val{text-align:right;font-weight:500}
+.val small{display:block;color:var(--muted);font-weight:400;font-size:.78rem}
+.off{text-align:right;color:var(--muted)}
+.shift{text-align:right;font-weight:500}
+.shift.up{color:var(--up)} .shift.down{color:var(--down)} .shift.flat{color:var(--muted)}
+.strip{padding:0 10px 0 14px;min-width:0}
+.strip svg{display:block;width:100%;height:22px;overflow:visible}
+.strip .axis{stroke:var(--line);stroke-width:1}
+.strip .ring{fill:var(--card);stroke:var(--official);stroke-width:2}
+.strip .halo{fill:none;stroke-width:1.5}
+.strip .far{opacity:.6}
+.more{display:block;margin:14px auto 0;font:inherit;font-weight:500;padding:9px 18px;border-radius:999px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);cursor:pointer}
+table.bt{border-collapse:collapse;width:100%;font-size:.95rem}
+table.bt th,table.bt td{text-align:right;padding:6px 8px;border-top:1px solid var(--line)}
+table.bt th:first-child,table.bt td:first-child{text-align:left}
+table.bt thead th{border-top:0;color:var(--muted);font-weight:500}
+@media (max-width:720px){
+  .row{grid-template-columns:36px minmax(0,1fr) 78px;grid-template-areas:"rk nm val" ". strip strip" ". meta meta";row-gap:6px;padding:12px 12px}
+  .row.head{display:none}
+  .rk{grid-area:rk;align-self:start;padding-top:2px}
+  .nm{grid-area:nm}
+  .val{grid-area:val}
+  .strip{grid-area:strip}
+  .off,.shift{display:none}
+  .meta{grid-area:meta;display:block!important;color:var(--muted);font-size:.82rem}
+}
+.meta{display:none}
+.predict-link{display:block;margin-top:28px;text-decoration:none}
+.predict-link:hover{border-color:var(--muted)}
+.predict-link b{display:block;margin-bottom:2px}
+.predict-link span{color:var(--muted)}
+table.bt{border-collapse:collapse;width:100%;font-size:.95rem}
+table.bt th,table.bt td{text-align:right;padding:6px 8px;border-top:1px solid var(--line)}
+table.bt th:first-child,table.bt td:first-child{text-align:left}
+table.bt thead th{border-top:0;color:var(--muted);font-weight:500}
+.blurb .badge{margin-right:8px}
+.nm .out{margin-left:8px}
+</style>
+</head>
+<body data-root="../">
+<div class="wrap">
+  <header class="bar" data-sport="tennis" data-page="rankings"></header>
+  <main>
+  <h1>Tennis rankings</h1>
+  <p class="lede">The same ATP match results, ranked by different systems. Pick a system to see how its order compares with the official ranking.</p>
+  <p class="asof" id="asof"></p>
+
+  <div class="tabs" id="tabs" role="group" aria-label="Ranking system"></div>
+  <p class="blurb" id="blurb"></p>
+  <div id="inact"></div>
+
+  <div class="tools">
+    <input type="search" id="q" placeholder="Filter this list" aria-label="Filter players in this list">
+    <div class="key" id="key" aria-label="Strip key"></div>
+  </div>
+
+  <div class="board" id="board" aria-live="polite"></div>
+  <button class="more" id="more" type="button" hidden>Show 50 more</button>
+
+  <a class="card predict-link" href="predict.html"><b>Which system predicts best? And who wins a match-up?</b><span>Compare any two players under every system, and see how often each system picked the winner over the last 12 months →</span></a>
+  <p class="note" style="margin-top:20px">Ratings use tour-level singles results (Grand Slams, Masters 1000, ATP 500 and 250, ATP Finals). Walkovers are skipped. Early seasons only warm the models up, and players need at least 20 matches and a match in the last 180 days to be rated.</p>
+  </main>
+  <footer class="foot" data-auto></footer>
+</div>
+<script>
+Site.json('data/rankings.json').then(function(D){
+  var players = D.players, meta = D.meta;
+  var MAXRANK = 60, PAGE = 50;
+  var MODELS = [
+    {id:'elo', label:'Elo', badge:'Skill model', color:'var(--elo)',
+     blurb:'One number per player. Beating a higher-rated player moves you up more. Everyone starts at 1500, K is 32, and surface and tournament size are ignored.',
+     val:function(p){return p.elo}, unc:null},
+    {id:'glicko', label:'Glicko-2', badge:'Skill model', color:'var(--glicko)',
+     blurb:'Elo with a confidence range (the ± figure). Players are ranked by rating minus twice that range, so few or old results push a player down.',
+     val:function(p){return p[Site.sysKey('glicko')]}, unc:function(p){return '±' + Math.round(p[Site.sysKey('glicko') === 'glicko' ? 'glicko_rd' : 'glicko_rd_pure'])}},
+    {id:'openskill', label:'OpenSkill', badge:'Skill model', color:'var(--openskill)',
+     blurb:'A Bayesian rating with an uncertainty value (σ), built for teams and used here one-on-one. Ranked by the mean minus three σ.',
+     val:function(p){return p[Site.sysKey('openskill')].toFixed(1)}, unc:function(p){return 'σ ' + p[Site.sysKey('openskill') === 'openskill' ? 'openskill_sigma' : 'openskill_sigma_pure'].toFixed(2)}},
+    {id:'vrs', label:'VRS', badge:'Valve\u2019s CS2 method, applied to tennis', color:'var(--vrs)',
+     blurb:'Valve\u2019s Regional Standings code, run unchanged on tennis results. It looks only at the last 6 months, weights recent results most, and rewards prize money won and beating players who win prize money. Players who have been out for a while drop fast.',
+     val:function(p){return p.vrs == null ? '\u2013' : p.vrs.toLocaleString('en-US')}, unc:null},
+    {id:'official', label:'Official ATP', color:'var(--official)',
+     badge: meta.official.mode === 'weekly' ? 'Official ranking of ' + meta.official.date : 'Estimated for ' + meta.official.date,
+     blurb: meta.official.mode === 'weekly'
+       ? 'The ATP ranking published on ' + meta.official.date + ', top 150. Players without a rating have played too few tour matches recently.'
+       : 'No current weekly ranking file was available, so this is an estimate for one date: each player\u2019s last official points, plus points earned since and minus points that dropped off. Top 10 is near exact; lower down it can be a few places off because Challenger results are not included.',
+     val:function(p){return p.official_points == null ? '–' : p.official_points.toLocaleString('en-US')}, unc:null}
+  ];
+  if (!meta.vrs) MODELS = MODELS.filter(function(m){return m.id !== 'vrs'});
+  var state = {model:'elo', shown:PAGE, q:''};
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function rankOf(p,id){return id === 'official' ? p.official_rank : p.ranks[Site.sysKey(id)]}
+  // Square-root scale: gives the top ranks more room, where most of the disagreement is.
+  function pos(rank){return (Math.sqrt((Math.min(rank,MAXRANK) - 1) / (MAXRANK - 1)) * 100).toFixed(2) + '%'}
+
+  document.getElementById('asof').textContent =
+    'Match data through ' + Site.date(meta.data_as_of) + ', ' + meta.matches_used.toLocaleString('en-US') +
+    ' matches since ' + meta.start_year + '. Updated ' + meta.generated + '.';
+
+  var tabs = document.getElementById('tabs');
+  MODELS.forEach(function(m){
+    var b = document.createElement('button');
+    b.className = 'tab'; b.type = 'button'; b.textContent = m.label; b.dataset.id = m.id;
+    b.addEventListener('click', function(){state.model = m.id; state.shown = PAGE; render()});
+    tabs.appendChild(b);
+  });
+
+  var key = document.getElementById('key');
+  key.innerHTML = '<span>Rank strip: where each system places the player, #1 on the left, ' + MAXRANK + '+ on the right.</span>' + MODELS.map(function(m){
+    return '<span><i class="dot' + (m.id==='official' ? ' ring' : '') + '" style="background:' + (m.id==='official' ? 'transparent' : m.color) + '"></i>' + esc(m.label) + '</span>';
+  }).join('');
+
+  // Inline SVG: cx in %, cy fixed, so every dot sits exactly on the line at any zoom level.
+  function strip(p, selId){
+    var order = MODELS.filter(function(m){return m.id !== selId}).concat(MODELS.filter(function(m){return m.id === selId}));
+    var parts = order.map(function(m){
+      var r = rankOf(p, m.id); if (r == null) return '';
+      var x = pos(r), sel = m.id === selId, far = r > MAXRANK;
+      var t = '<title>' + esc(m.label) + ': #' + r + '</title>';
+      var col = m.id === 'official' ? 'var(--official)' : m.color;
+      var dot = m.id === 'official'
+        ? '<circle class="ring" cx="' + x + '" cy="11" r="' + (sel ? 5.5 : 4.5) + '"/>'
+        : '<circle cx="' + x + '" cy="11" r="' + (sel ? 6 : 5) + '" style="fill:' + col + '"/>';
+      var halo = sel ? '<circle class="halo" cx="' + x + '" cy="11" r="9" style="stroke:' + col + '"/>' : '';
+      return '<g' + (far ? ' class="far"' : '') + '>' + t + halo + dot + '</g>';
+    }).join('');
+    return '<div class="strip"><svg role="img" aria-label="Rank under each system"><line class="axis" x1="0" x2="100%" y1="11" y2="11"/>' + parts + '</svg></div>';
+  }
+
+  function render(){
+    var m = MODELS.filter(function(x){return x.id === state.model})[0];
+    Array.prototype.forEach.call(tabs.children, function(b){b.setAttribute('aria-pressed', b.dataset.id === m.id ? 'true' : 'false')});
+    // every blurb is laid out in the same spot (only one visible), so switching systems never moves the table
+    document.getElementById('blurb').innerHTML = Site.stack(MODELS.map(function(x){ return '<span class="badge">' + esc(x.badge) + '</span>' + esc(x.blurb); }), MODELS.indexOf(m));
+    Site.inactivityToggle(document.getElementById('inact'), function(){ state.shown = PAGE; render(); }, 'When a player is out', m.id === 'glicko' || m.id === 'openskill');
+
+    var list = players.filter(function(p){return rankOf(p, m.id) != null});
+    list.sort(function(a,b){return rankOf(a,m.id) - rankOf(b,m.id)});
+    var q = state.q.trim().toLowerCase();
+    if (q) list = list.filter(function(p){return p.name.toLowerCase().indexOf(q) !== -1});
+
+    var html = '<div class="row head"><span class="rk">#</span><span>Player</span><span class="val">' + esc(m.label === 'Official ATP' ? 'Points' : 'Rating') + '</span><span class="off">Official</span><span class="shift" title="Official rank minus this system’s rank. Plus means this system ranks the player higher.">vs official</span><span>Rank strip</span></div>';
+    var slice = list.slice(0, state.shown);
+    if (!slice.length) html += '<div class="empty">No players match that search.</div>';
+    slice.forEach(function(p){
+      var r = rankOf(p, m.id);
+      var shift = '', cls = 'flat';
+      if (m.id !== 'official' && p.official_rank != null){
+        var d = p.official_rank - r;
+        if (d > 0){shift = '+' + d; cls = 'up'} else if (d < 0){shift = '−' + Math.abs(d); cls = 'down'} else {shift = '0'}
+      }
+      var sub = p.matches_52w + ' tour matches in 12 months' + (p.rated === false ? ' \u00b7 not rated' : (p.matches_52w < 10 ? ' \u00b7 few matches' : ''));
+      var out = Site.outTag(p.last_match, meta.data_as_of);
+      var offTxt = p.official_rank != null ? '#' + p.official_rank : '–';
+      html += '<div class="row" data-href="player.html?id=' + encodeURIComponent(p.id) + '">' +
+        '<span class="rk">' + r + '</span>' +
+        '<span class="nm"><b>' + Site.flag(p.iso) + '<a class="plink" href="player.html?id=' + encodeURIComponent(p.id) + '">' + esc(p.name) + '</a>' + out + '</b><small>' + esc(sub) + '</small></span>' +
+        '<span class="val">' + esc(m.val(p)) + (m.unc ? '<small>' + esc(m.unc(p)) + '</small>' : '') + '</span>' +
+        '<span class="off">' + offTxt + '</span>' +
+        '<span class="shift ' + cls + '">' + shift + '</span>' +
+        strip(p, m.id) +
+        '<span class="meta">Official ' + offTxt + (shift ? ' · ' + shift + ' vs official' : '') + '</span>' +
+        '</div>';
+    });
+    document.getElementById('board').innerHTML = html;
+    var more = document.getElementById('more');
+    more.hidden = list.length <= state.shown;
+  }
+
+  document.getElementById('more').addEventListener('click', function(){state.shown += PAGE; render()});
+  document.getElementById('q').addEventListener('input', function(e){state.q = e.target.value; state.shown = PAGE; render()});
+
+
+  render();
+}).catch(function(err){ Site.fail(document.getElementById('board'), err); });
+</script>
+</body>
+</html>

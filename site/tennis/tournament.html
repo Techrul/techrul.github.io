@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" data-theme="black">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tournament</title>
+<meta name="description" content="One tennis tournament year by year: champion, VRS stakes, field strength and how the Elo favourite did.">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+<style>
+.hero{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px}
+.real{display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px 20px}
+.tphoto{margin:0;width:200px}
+.tphoto img{display:block;width:200px;height:200px;object-fit:cover;border-radius:12px;background:var(--head)}
+.tphoto figcaption{font-size:.7rem;line-height:1.3;color:var(--muted);margin-top:4px}
+.tphoto figcaption a{color:inherit}
+.sysrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;min-height:40px;margin-top:10px}
+.sysrow .lab{color:var(--muted);font-size:.86rem}
+.sysrow .inact{margin:0}
+.sysrow .inact .hint{display:none}
+.thead{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 6px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:18px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.tile .k{color:var(--muted);font-size:.84rem}
+.tile .v{font-size:1.7rem;font-weight:700;line-height:1.15}
+.tile .s{color:var(--muted);font-size:.8rem}
+.yes{color:var(--up);font-weight:600} .no{color:var(--down);font-weight:600}
+td .muted{font-size:.84rem}
+</style>
+</head>
+<body data-root="../">
+<div class="wrap">
+  <header class="bar" data-sport="tennis" data-page="tournament"></header>
+  <main id="main"><p class="note">Loading…</p></main>
+  <footer class="foot" data-auto></footer>
+</div>
+<script>
+(function () {
+  var S = Site, key = S.param("key"), main = document.getElementById("main");
+  var SYS = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS"]], NAME = { elo: "Elo", glicko: "Glicko-2", openskill: "OpenSkill", vrs: "VRS" };
+  var sys; try { sys = localStorage.getItem("tsys") || "elo"; } catch (e) { sys = "elo"; }
+  Promise.all([S.json("data/tournaments.json"), S.trophies()]).then(function (res) {
+    var data = res[0], list = data.tournaments || data, photo = (res[1] || {})[key];
+    var t = list.filter(function (x) { return x.key === key; })[0];
+    if (!t) { main.innerHTML = S.back("tournaments.html", "Tournaments") + '<div class="empty">Tournament not found. <a href="tournaments.html">See all tournaments</a>.</div>'; return; }
+    document.title = t.name + " · Tennis";
+    function draw() {
+      var nm = NAME[sys];
+      function st(e) { return (e.sys || {})[S.sysKey(sys)] || null; }
+      function fmt(v) { return v == null ? "–" : sys === "openskill" ? Number(v).toFixed(1) : S.num(Math.round(v)); }
+      var done = t.editions.filter(function (e) { return e.champion && st(e); });
+      var favWon = done.filter(function (e) { return st(e).favourite_won; }).length;
+      var vrs = t.editions.filter(function (e) { return e.vrs_weight != null; })[0];
+      var avgField = done.length ? done.reduce(function (a, e) { return a + st(e).field; }, 0) / done.length : null;
+      var worst = done.filter(function (e) { return st(e).seed != null; }).sort(function (a, b) { return st(b).seed - st(a).seed; })[0];
+      function tile(k, v, s_) { return '<div class="tile"><div class="k">' + k + '</div><div class="v">' + v + '</div><div class="s">' + (s_ || "&nbsp;") + "</div></div>"; }
+      var rows = t.editions.map(function (e) {
+        var x = st(e), fin = !!e.champion;
+        return '<tr><td><b>' + e.year + "</b>" + (e.name !== t.name ? '<div class="muted">' + S.esc(e.name) + "</div>" : "") + "</td>" +
+          (fin ? "<td>" + S.player(e.champion) + '<div class="muted">beat ' + S.esc(e.runner_up ? e.runner_up.name : "–") + " " + S.esc(e.score || "") + "</div></td>"
+               : '<td class="muted">' + (e.status === "no_final" ? "Final not in the data" : "In progress") + "</td>") +
+          '<td class="n">' + (x && fin && x.seed != null ? "#" + x.seed : "–") + "</td>" +
+          "<td>" + (x && fin ? S.player(x.favourite) + '<div class="' + (x.favourite_won ? 'yes">Won' : 'no">Did not win') + "</div>" : "–") + "</td>" +
+          '<td class="n">' + (x && fin ? fmt(x.field) : "–") + "</td>" +
+          '<td class="n">' + (x ? x.upsets + '<div class="muted">of ' + x.predicted + "</div>" : "–") + "</td>" +
+          '<td class="n">' + (e.vrs_weight != null ? e.vrs_weight.toFixed(2) : "–") + "</td></tr>";
+      }).join("");
+      main.innerHTML = S.back("tournaments.html", "Back") +
+        '<div class="hero">' +
+        '<div><div class="thead">' + S.tier(t.level, true) + S.SURFACE(t.surface) + "</div><h1>" + S.esc(t.name) + "</h1>" +
+        '<p class="lede">' + t.editions.length + " edition" + (t.editions.length > 1 ? "s" : "") + " in the data.</p></div></div>" +
+        '<div class="sysrow"><span class="lab">Stats by</span><div class="chips" id="sys" role="group" aria-label="Rating system">' + SYS.map(function (x) {
+          return '<button class="chip" type="button" data-v="' + x[0] + '" aria-pressed="' + (x[0] === sys ? "true" : "false") + '">' + x[1] + "</button>";
+        }).join("") + '</div><div id="inact"></div></div>' +
+        '<div class="tiles">' +
+          tile("VRS stakes", vrs ? vrs.vrs_weight.toFixed(2) : "–", vrs ? vrs.year + ", 1.00 = biggest pool" : "No prize data yet") +
+          tile("Average field (" + nm + ")", avgField != null ? fmt(avgField) : "–", "Top 8 entrants") +
+          tile(nm + " favourite won", done.length ? favWon + " of " + done.length : "–", done.length ? Math.round(favWon / done.length * 100) + "% of editions" : "No " + nm + " data") +
+          tile("Longest shot to win", worst ? "#" + st(worst).seed : "–", worst ? S.esc(worst.champion.name) + ", " + worst.year + " (" + nm + " seed)" : "") +
+        "</div>" +
+        (photo ? '<section class="real"><figure class="tphoto"><img src="' + S.esc(photo.src) + '" alt="The ' + S.esc(t.name) + ' men\u2019s singles trophy" loading="lazy"><figcaption>' +
+          S.trophyCredit(photo) + '</figcaption></figure><div><h2>The real trophy</h2><p class="note">A photo of the actual ' + S.esc(t.name) + " men\u2019s singles trophy.</p></div></section>" : "") +
+        '<section><h2>Year by year</h2><p class="note">Seed: where ' + nm + " placed the champion among this draw’s entrants the week it started (#1 = the favourite). Upsets: wins " + nm + " gave under a 25% chance, out of the matches it rated." +
+        (sys === "vrs" ? " VRS figures start in mid-2025, when six months of prize money data exist." : "") + "</p>" +
+        '<div class="tablewrap"><table class="t"><thead><tr><th>Year</th><th>Champion</th><th class="n">Seed</th><th>Favourite</th><th class="n">Field</th><th class="n">Upsets</th><th class="n">VRS stakes</th></tr></thead><tbody>' +
+        rows + "</tbody></table></div></section>";
+      document.getElementById("sys").onclick = function (e) {
+        var b = e.target.closest("button"); if (!b) return;
+        sys = b.dataset.v; try { localStorage.setItem("tsys", sys); } catch (err) {}
+        draw();
+      };
+      S.inactivityToggle(document.getElementById("inact"), draw, "When a player is out", sys === "glicko" || sys === "openskill");
+    }
+    draw();
+  }).catch(function (e) { S.fail(main, e); });
+})();
+</script>
+</body>
+</html>

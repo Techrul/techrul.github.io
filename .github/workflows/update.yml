@@ -1,0 +1,125 @@
+name: Update rankings
+
+on:
+  schedule:
+    - cron: "15 6 * * *"   # daily, 06:15 UTC
+  workflow_dispatch:         # "Run workflow" button in the Actions tab
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  VALVE_COMMIT: eec4853d7bcf0f1f7efe7f0d901234bef7e98b75   # review Valve's changes before moving this
+
+# Action versions run on Node 24 (GitHub removed Node 20 from its runners on 23 Sep 2026).
+# Optional steps (prize money, VRS, trophy photos) are allowed to fail: the site still updates
+# without them. Only the match data, ratings, pages and deploy must succeed.
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write        # only for the keepalive commit below
+    steps:
+      - uses: actions/checkout@v5
+
+      # GitHub pauses scheduled workflows in public repos after 60 days without repository activity.
+      # If the repo has been quiet for 45 days, commit a one-line date file so the daily update keeps running.
+      - name: Keep the daily schedule alive
+        if: github.event_name == 'schedule'
+        continue-on-error: true
+        run: |
+          last=$(git log -1 --format=%ct)
+          if [ $(( $(date +%s) - last )) -gt $(( 45 * 86400 )) ]; then
+            date -u +%Y-%m-%d > .github/keepalive
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add .github/keepalive
+            git commit -m "Keep scheduled updates running"
+            git push
+          else
+            echo "Last commit $(( ($(date +%s) - last) / 86400 )) days ago; nothing to do"
+          fi
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - run: pip install -r requirements.txt
+
+      # Raw match files and the prize money cache are kept privately between runs, never committed or
+      # uploaded. data/prize_money.json in the repo is the starting copy; a cached newer one replaces it.
+      - uses: actions/cache@v5
+        with:
+          path: |
+            data/raw
+            data/rankings
+            data/prize_money.json
+            data/trophy_images
+          key: data-${{ github.run_id }}
+          restore-keys: data-
+
+      - name: Fetch match data
+        env:
+          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+        run: python scripts/fetch_tml.py --start-year 2015 --raw data/raw
+
+      - name: Look up prize money for new events (Wikipedia)
+        continue-on-error: true
+        env:
+          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+        run: python scripts/prize_money.py --raw data/raw
+
+      - name: Get Valve's VRS code (pinned commit, model folder only)
+        continue-on-error: true
+        run: |
+          git clone --filter=blob:none --no-checkout https://github.com/ValveSoftware/counter-strike_regional_standings vendor/vrs
+          git -C vendor/vrs sparse-checkout set model
+          git -C vendor/vrs checkout "$VALVE_COMMIT"
+
+      # The old file is removed first, so if this step fails the site shows no VRS rather than stale VRS.
+      - name: Run VRS on tennis
+        continue-on-error: true
+        run: |
+          rm -f docs/tennis/data/vrs.json
+          python scripts/vrs_tennis.py --raw data/raw --prize data/prize_money.json --valve vendor/vrs --out docs/tennis/data/vrs.json
+
+      - name: Compute ratings
+        run: python scripts/ratings.py --raw data/raw --rankings data/rankings --vrs docs/tennis/data/vrs.json --out docs/tennis/data/rankings.json --start-year 2015
+
+      - name: Build history, profiles, records and tournaments
+        run: python scripts/site_data.py --raw data/raw --rankings data/rankings --prize data/prize_money.json --valve vendor/vrs --current docs/tennis/data/rankings.json --out docs/tennis/data --start-year 2015
+
+      # Photos listed in data/trophies.json (Wikimedia Commons), downloaded once and credited.
+      - name: Trophy photos
+        continue-on-error: true
+        env:
+          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+        run: python scripts/trophies.py --out docs/tennis
+
+      - name: Copy pages
+        run: python scripts/build_site.py --site site --out docs
+
+      # Only the generated site goes to Pages.
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
