@@ -43,6 +43,12 @@ Other projects will show up here.
 | `scripts/` | The data pipeline that fetches results and builds the rankings |
 | `.github/workflows/update.yml` | Rebuilds and deploys the whole site every day with GitHub Actions |
 
+FAQ:
+
+##Why is there a Mocha theme?
+
+Cause [Catppuccin Mocha](https://catppuccin.com/) is my favorite theme.
+
 ## License
 
 Code: [MIT](LICENSE). Rankings and stats shown on the site: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/), like the match data they're built from.
