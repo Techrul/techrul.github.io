@@ -205,7 +205,7 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
       }).join("");
       if (!nowPlaced) html += '<section class="month"><div class="cal">' + nowRow + "</div></section>";
       return '<p class="note" style="margin-top:14px">' + (thisSeason ? '<button class="jump" type="button" id="jump">Jump to today</button> · ' : "") +
-        "Field: average " + SYS_NAME[state.sys] + " rating of the draw’s eight best players when it started. VRS stakes: how much a result counts in VRS (1.00 = the biggest prize pool). Faded rows are not played yet and placed at last year’s dates.</p>" + html;
+        "Field: average " + SYS_NAME[state.sys] + " rating of the draw’s eight best players when it started. VRS stakes: how much a result counts in VRS (1.00 = the biggest prize pool). Faded rows are not played yet and placed at last year’s dates.</p>" link:{href:'https://www.atptour.com/en/tournaments', text:'Official calendar on atptour.com'},+ html;
     }
 
     // ---------------------------------------------------------------- table (sortable)
