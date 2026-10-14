@@ -68,6 +68,7 @@ h1{font-size:clamp(1.9rem,5vw,2.8rem);line-height:1.08;margin:0 0 8px;font-weigh
 h2{font-size:1.25rem;margin:0 0 4px;letter-spacing:-.01em}
 .lede{margin:0 0 4px;max-width:62ch;color:var(--muted)}
 .note{color:var(--muted);font-size:.9rem;margin:0 0 14px}
+.extlink{font-weight:500;white-space:nowrap}
 section{margin-top:36px}
 
 /* generic pieces */
