@@ -43,11 +43,11 @@ Other projects will show up here.
 | `scripts/` | The data pipeline that fetches results and builds the rankings |
 | `.github/workflows/update.yml` | Rebuilds and deploys the whole site every day with GitHub Actions |
 
-FAQ:
+# FAQ:
 
-##Why is there a Mocha theme?
+## Q: Why is there a Mocha theme?
 
-Cause [Catppuccin Mocha](https://catppuccin.com/) is my favorite theme.
+A: Cause [Catppuccin Mocha](https://catppuccin.com/) is my favorite theme.
 
 ## License
 
