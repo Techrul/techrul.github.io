@@ -1,0 +1,23 @@
+# techrul.github.io
+#
+# Search engines and AI search/assistant fetchers are welcome, so the site can still be found
+# and linked. Crawlers that collect pages for AI model training are asked to stay out.
+# robots.txt is a request, not a lock: well-behaved bots follow it, bad ones ignore it.
+
+# AI training crawlers
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: meta-externalagent
+User-agent: Bytespider
+User-agent: Amazonbot
+User-agent: CCBot
+User-agent: ICC-Crawler
+User-agent: Diffbot
+User-agent: webzio-extended
+Disallow: /
+
+# Everyone else
+User-agent: *
+Allow: /
