@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Techrul</title>
-<meta name="description" content="Techrul's projects. Currently: Different sports, different rankings, a site comparing ranking systems on the same results.">
+<meta name="description" content="Techrul's projects: Different sports, different rankings, a site comparing ranking systems on the same results, and snackutils, a tiny Python utilities library.">
 <link rel="stylesheet" href="rankings/assets/site.css">
 <script>
   // same theme choice as the rest of the site (stored per browser)
@@ -24,6 +24,10 @@ a.project:hover{border-color:var(--muted)}
 .project .now b{font-weight:600}
 .project .go{margin-top:auto;font-weight:600}
 .project.soon{border-style:dashed;background:transparent;justify-content:center;align-items:flex-start;min-height:180px}
+.project .now code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.85rem;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+.project .links{margin-top:auto;display:flex;gap:16px}
+.project .links a{font-weight:600;text-decoration:none}
+.project .links a:hover{text-decoration:underline}
 .dot{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
 </style>
 </head>
@@ -50,6 +54,13 @@ a.project:hover{border-color:var(--muted)}
         <div class="now" id="now">&nbsp;</div>
         <span class="go">Open rankings →</span>
       </a>
+      <div class="project">
+        <h2>snackutils</h2>
+        <p>Tiny, dependency-free Python utilities that might save you a few lines: a magic 8-ball, coin flips, dice rolls, OS detection and quick averages.</p>
+        <div class="tags"><span class="badge">Python</span><span class="badge">PyPI</span><span class="badge">MIT</span></div>
+        <div class="now"><code>pip install snackutils</code> <span id="snackver"></span></div>
+        <div class="links"><a href="https://github.com/Techrul/snackutils" target="_blank" rel="noopener">GitHub →</a><a href="https://pypi.org/project/snackutils/" target="_blank" rel="noopener">PyPI →</a></div>
+      </div>
       <div class="project soon">
         <h2>More soon</h2>
         <p>Other projects will show up here.</p>
@@ -79,6 +90,10 @@ a.project:hover{border-color:var(--muted)}
       return best ? '<span><i class="dot" style="background:var(--' + s[0] + ')"></i>' + s[1] + ": <b>" + esc(best.name.split(" ").slice(-1)[0]) + "</b></span>" : "";
     }).filter(Boolean);
     if (tops.length) document.getElementById("now").innerHTML = "Tennis #1 today: " + tops.join(" · ");
+  }).catch(function () {});
+  // latest snackutils version from PyPI (left blank if it can't load)
+  fetch("https://pypi.org/pypi/snackutils/json").then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (d && d.info && d.info.version) document.getElementById("snackver").textContent = "· latest v" + d.info.version;
   }).catch(function () {});
 })();
 </script>
