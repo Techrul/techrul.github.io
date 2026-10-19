@@ -123,6 +123,7 @@ def main():
 
     # 4. Placements of one finished tournament: prize money per team?
     done = [t for t in tours if t.get("pagename") and str(t.get("enddate", "9999")) < today.isoformat()]
+    places = []
     if done:
         page = done[0]["pagename"]
         places = get("placement", conditions=f"[[pagename::{page}]]", limit=50)
@@ -131,6 +132,18 @@ def main():
             print("  placement fields:", sorted(places[0].keys()))
             for p in places[:6]:
                 print(f"  {p.get('placement')!s:6} {p.get('opponentname')!s:25} prize {p.get('prizemoney')}")
+
+    # One example of each record type, so the adapter can be written against real data.
+    print("\n--- Example records (data from Liquipedia, CC BY-SA 3.0, https://liquipedia.net/) ---")
+    if top:
+        m = dict(top[0])
+        if m.get("match2games"):
+            m["match2games"] = m["match2games"][:1] + [f"... {len(top[0]['match2games']) - 1} more games"]
+        print("match:", json.dumps(m, ensure_ascii=False, indent=1))
+    if tours:
+        print("tournament:", json.dumps(tours[0], ensure_ascii=False, indent=1))
+    if done and places:
+        print("placement:", json.dumps(places[0], ensure_ascii=False, indent=1))
 
     print(f"\nDone: {_count} requests. Raw responses in {OUT}/")
 
