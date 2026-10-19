@@ -6,4 +6,4 @@ __pycache__/
 .env
 data/trophy_images/
 docs/
-data/cs2/
+data/cs2/probe/

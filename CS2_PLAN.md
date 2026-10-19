@@ -87,8 +87,9 @@ Later option: a player-level OpenSkill (OpenSkill is built for teams of individu
   tournaments and placements (a few more). Target: under 15 requests.
 - Backfill (first run, or after the Actions cache is lost): capped per run, e.g. 40 requests, continuing the
   next day where it stopped. Nothing is ever re-fetched while it is cached.
-- The Actions cache can be evicted (7 days unused, 10 GB per repo). If that is a risk, store the compact
-  normalised match file in the repo instead; CC BY-SA allows that with credit.
+- Decided: the fetched data is committed to the repo (`data/cs2/`, one file per month, CC BY-SA 3.0 with its
+  own README), not kept in the Actions cache, which is dropped after 7 days unused. Finished months never
+  change, so daily commits only touch the current month and the event files.
 
 ## Pages (mirroring tennis)
 
@@ -119,7 +120,10 @@ CC BY-SA 3.0 (they are derived from Liquipedia's); the code stays MIT.
    else is built until this answers the open questions. Run it with
    `env LIQUIPEDIA_API_KEY=... CONTACT_EMAIL=... python3 scripts/cs2_probe.py`; responses are saved to
    `data/cs2/probe/` (git-ignored). Checked offline against a fake API only so far.
-2. Client + fetcher with caching and the request cap.
+2. Client + fetcher with caching and the request cap. **Built:** `scripts/lp_api.py`, `scripts/fetch_cs2.py`,
+   offline tests in `tests/test_fetch_cs2.py` (paging, request cap and resume, 429 back-off, hourly pacing,
+   time limit, months settling). History from Jan 2023 (2023 = burn-in, rankings shown from 2024).
+   On this branch `.github/workflows/cs2-fetch.yml` runs it when the fetcher changes and commits the data.
 3. Adapter + roster identity + tests.
 4. Move the engines into `engines.py`; tennis output must stay byte-identical.
 5. CS2 ratings, VRS run, Valve standings reader, check 1.

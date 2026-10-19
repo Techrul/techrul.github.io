@@ -1,0 +1,52 @@
+name: CS2 fetch (cs2 branch)
+
+# Runs scripts/fetch_cs2.py when the fetcher or this file changes on the cs2 branch, then commits data/cs2/ to
+# the branch. The first run loads history from Jan 2023 over several hours (paced at 45 requests an hour;
+# Liquipedia allows 60) and stops cleanly before the job time limit; the next run continues from there.
+# Never touches main or the live site. On main this becomes a step of the daily update instead.
+on:
+  push:
+    branches: [cs2]
+    paths:
+      - scripts/fetch_cs2.py
+      - scripts/lp_api.py
+      - .github/workflows/cs2-fetch.yml
+
+concurrency:
+  group: liquipedia        # never two Liquipedia jobs at once (shared hourly limit)
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    permissions:
+      contents: write        # only to commit data/cs2/ to the cs2 branch
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Tests (offline)
+        run: python tests/test_fetch_cs2.py
+
+      - name: Fetch from Liquipedia
+        env:
+          LIQUIPEDIA_API_KEY: ${{ secrets.LIQUIPEDIA_API_KEY }}
+          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+        run: |
+          python scripts/fetch_cs2.py --start 2023-01 --max-requests 250 --per-hour 45 --max-minutes 320 2>&1 | tee fetch.log
+          { echo '```'; tail -n 40 fetch.log; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Save data to the cs2 branch
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp fetch.log data/cs2/last_fetch.log 2>/dev/null || true
+          git add data/cs2
+          git commit -m "CS2 data from Liquipedia" || exit 0
+          for i in 1 2 3; do git pull --rebase -q origin cs2 && git push -q && exit 0; sleep 5; done
+          exit 1
