@@ -54,7 +54,17 @@ def get(datapoint, **params):
             if r.headers.get("Content-Encoding") == "gzip":
                 body = gzip.decompress(body)
     except urllib.error.HTTPError as e:
-        sys.exit(f"HTTP {e.code} from Liquipedia: {e.read()[:300]!r}")
+        body = e.read()
+        if body[:2] == b"\x1f\x8b":
+            body = gzip.decompress(body)
+        text = body.decode("utf-8", "replace")
+        try:
+            text = json.dumps(json.loads(text), indent=1)
+        except ValueError:
+            pass
+        wanted = ("retry-after", "x-ratelimit", "ratelimit", "cf-", "server", "date", "content-type")
+        heads = {k: v for k, v in e.headers.items() if k.lower().startswith(wanted)}
+        sys.exit(f"HTTP {e.code} from Liquipedia (no retry).\nheaders: {json.dumps(heads, indent=1)}\nbody:\n{text[:3000]}")
     data = json.loads(body)
     os.makedirs(OUT, exist_ok=True)
     with open(os.path.join(OUT, f"{_count:02d}_{datapoint}.json"), "w", encoding="utf-8") as fh:
