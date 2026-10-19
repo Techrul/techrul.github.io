@@ -126,13 +126,29 @@ CC BY-SA 3.0 (they are derived from Liquipedia's); the code stays MIT.
 6. Pages, credits, workflow steps (`continue-on-error`, so CS2 trouble never stops tennis).
 7. Merge, then send Liquipedia the link.
 
-## Open questions (the probe answers most)
+## Probe results (19 Oct 2026, from GitHub Actions, `CS2_PROBE_RESULT.txt` on this branch)
 
-- Is `publishertier` how Liquipedia marks Valve-ranked events? Without a ranked flag, Valve's code drops every
-  match from 2025 on. Fallback: treat tier 1-3 as ranked and say so on the site.
-- Do matches list all five players per side, or only some? Matches without 5 + 5 are dropped by Valve's code
-  and can't be tied to a roster.
-- Do placements carry prize money in USD per team?
+- **Valve-ranked flag: `publishertier`, very likely.** Values seen: `Major Championship`, `Tier 1`, `Tier 2`,
+  `Tier 1 Qualifier`, `Tier 2 Qualifier`, `Wildcard`, and blank (25% of last month's matches). It is Valve's own
+  classification, not Liquipedia's tier: XSE Pro League is Liquipedia tier 2 but publisher `Tier 1`, ESL Pro
+  League is tier 1 but `Wildcard`. Plan: `valveRanked = publishertier != ""`, confirmed by check 1.
+- **Lineups: yes.** 947 of 1,000 recent matches list exactly 5 + 5 players (all 20 recent tier-1 matches do).
+  Most of the rest are forfeits (`walkover`: 75 `ff`, 1 `dq`). Player ids: the `name` field (Liquipedia page
+  name, e.g. `KSCERATO`), shown with `displayname`; nationality as a country name in `flag`.
+- **Prize money per team: yes.** `placement` records carry `prizemoney` (USD) per team, plus
+  `extradata.playershare` (the players' part; Valve's input splits prize and club share, and adds them back
+  together) and the five players (`opponentplayers.p1..p5`). Tournaments have `prizepool` (USD) and `type`
+  (Offline/Online). Placements even link the Valve standings a team qualified through.
+- **Volume:** a month of finished matches is more than one 1,000-row page (tier 4 63%, tier 3 33%, tier 1 3%;
+  a third are qualifiers; 22 showmatches). Budget: a few requests a day; history over several runs.
+- **Matches:** `winner` "1"/"2", series `bestof`, per-map scores in `match2games`, start time as a Unix
+  `extradata.timestamp`, opponent `status` "S" for a played score. Future events exist as placeholder pages
+  (prize pool 0), so anything unfinished is skipped.
+- **Rate limit:** the first request ever returned HTTP 429; the same request a minute later worked. The fetcher
+  treats 429 as "stop for this run, keep what we have, continue tomorrow", never as an error that fails the build.
+
+## Open questions
+
 - How far back? CS2 came out 27 Sep 2023. Suggestion: fetch from Jan 2023, use 2023 as burn-in, show from 2024.
 - Which tiers? More tiers bring VRS closer to Valve's (Valve ranks a few hundred teams) but cost requests.
   Start with 1-3 and widen if check 1 shows big gaps at the lower end.
