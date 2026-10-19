@@ -120,7 +120,9 @@ def main():
     print("  matches per (tier, tier type):", dict(tiers.most_common(20)))
 
     # 3. Recent tier 1-2 tournaments, every field: prize pool, LAN/online, Valve status.
-    tours = get("tournament", conditions=f"([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[enddate::>{month_ago}]]",
+    # (finished ones only: future events have placeholder pages with no prize pool yet)
+    tours = get("tournament", conditions=f"([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[enddate::>{month_ago}]]"
+                                         f" AND [[enddate::<{today.isoformat()}]]",
                 limit=20, order="enddate DESC")
     print(f"\nTournaments: {len(tours)}")
     if tours:
@@ -140,8 +142,10 @@ def main():
         print(f"\nPlacements for {page}: {len(places)}")
         if places:
             print("  placement fields:", sorted(places[0].keys()))
-            for p in places[:6]:
-                print(f"  {p.get('placement')!s:6} {p.get('opponentname')!s:25} prize {p.get('prizemoney')}")
+            for p in places[:8]:
+                print(f"  {p.get('placement')!s:6} {p.get('opponentname')!s:25} prize {p.get('prizemoney')} "
+                      f"players {len(p.get('opponentplayers') or {})}")
+            print("  placements with prize money:", sum(1 for p in places if p.get("prizemoney")), "of", len(places))
 
     # One example of each record type, so the adapter can be written against real data.
     print("\n--- Example records (data from Liquipedia, CC BY-SA 3.0, https://liquipedia.net/) ---")
