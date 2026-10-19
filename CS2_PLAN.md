@@ -1,0 +1,147 @@
+# CS2 plan (work in progress, `cs2` branch)
+
+Goal: add Counter-Strike 2 to "Different sports, different rankings": the same matches ranked by Elo, Glicko-2,
+OpenSkill and Valve's VRS method, next to Valve's own published standings. Built so a third game (chess first)
+needs one new adapter, not a rewrite.
+
+Nothing here goes live until it is merged into `main`. The workflow only deploys from `main`
+(`deploy: if: github.ref == 'refs/heads/main'`), and pushes only start it on `main`. The branch can still be
+built by hand from the Actions tab ("Run workflow", branch `cs2`) to check it; that run never replaces the site.
+
+## What we know
+
+### Liquipedia API (LiquipediaDB v3)
+
+- Access: free plan, Counter-Strike wiki (`wiki=counterstrike`). Approved Oct 2026. Other wikis would need asking.
+- Base URL `https://api.liquipedia.net/api/v3/<datapoint>`. Key sent as `Authorization: Apikey <key>`, with
+  `Accept-Encoding: gzip` and a User-Agent naming the project. (Taken from a third-party client, `liquipydia`;
+  confirm against the official docs after logging in.)
+- Datapoints used: `match` (match2 records), `tournament`, `placement`. Parameters: `wiki`, `conditions`
+  (`[[field::value]] AND ...`, with `>`/`<`/`!` prefixes), `query` (fields to return), `limit`, `offset`, `order`.
+- Rate limit from the API terms: **60 requests per hour** on LiquipediaDB, and "reuse or cache results for as
+  long as possible". Scraping pages is not allowed and gets the IP banned.
+- Licence: CC BY-SA 3.0. Credit Liquipedia next to the data with a link, and send them the link once live.
+
+match2 fields (Module:Match on Liquipedia Commons): `match2id, date, dateexact, finished, winner, resulttype,
+walkover, bestof, tournament, parent, liquipediatier, liquipediatiertype, publishertier, type, extradata, ...`;
+each opponent has `name, template, score, status, placement` and a player list (`name, displayname, flag`);
+each game has `map, winner, scores, ...`.
+
+### Valve's VRS code (counter-strike_regional_standings, pinned commit eec4853, 5 Oct 2026)
+
+- Input: `{matches, events}`, the format `vrs_tennis.py` already writes. For CS it is the native format, so no
+  tricks: a team is its five players, an event has a prize pool, `lan` flag, `finished` flag and a prize
+  distribution (placement, prize, team).
+- Rules in the code that matter for us:
+  - a match is dropped unless **both sides list exactly 5 players**;
+  - from 1 Jan 2025 a match is dropped unless it has **`valveRanked: true`**;
+  - matches from unfinished events and showmatches are dropped; pools are capped at $1M;
+  - two rosters are the same team when they share **3 of 5 players**;
+  - rosters with no wins are left out of the standings.
+- Valve publishes its **official standings** in the same repo, monthly (first Monday): `live/<year>/
+  standings_global_<date>.md` (rank, points, team, roster) plus regional files. These are the CS2 "official
+  ranking", the way the ATP ranking is for tennis.
+
+## How it fits together
+
+```
+scripts/lp_api.py         small Liquipedia client: key from LIQUIPEDIA_API_KEY, gzip, User-Agent, 429 back-off,
+                          hard cap on requests per run, every response saved to the cache
+scripts/fetch_cs2.py      cache -> data/cs2/ (matches, tournaments, placements); only asks for what changed
+scripts/cs2_adapter.py    Liquipedia records -> common match format + Valve's input format
+scripts/engines.py        Elo / Glicko-2 / OpenSkill moved out of ratings.py, game-agnostic (tennis unchanged)
+scripts/cs2_ratings.py    runs the engines, Valve's code (vrs_runner.js, as for tennis) and reads Valve's standings
+scripts/cs2_site_data.py  history, team pages, records, events -> docs/rankings/cs2/data/
+site/rankings/cs2/        pages (copied by build_site.py like the tennis ones)
+```
+
+### The common match format (the part chess reuses)
+
+```
+{ "id", "date", "event", "tier", "sides": [[player ids], [player ids]], "winner": 0|1, "forfeit": bool,
+  "names": [side 0 name, side 1 name] }
+```
+
+Tennis: one player per side. CS2: five. Chess: one. The engines only see sides and a winner. Everything
+game-specific (tiers, prize money, rosters, rounds) stays in that game's adapter.
+
+### Team identity
+
+All four systems use Valve's rule, so "a team" means the same thing in every column: each match's five players
+are matched to an existing roster sharing 3 of 5, otherwise a new roster starts. Elo, Glicko-2 and OpenSkill
+rate the roster; the name shown is the latest one used. One Python function copies Valve's `sharesRoster`
+logic, with a test that it groups the sample data in Valve's repo the same way Valve's code does.
+
+Later option: a player-level OpenSkill (OpenSkill is built for teams of individuals), shown as an extra.
+
+### What counts as a match
+
+- A match is a series (Bo1/Bo3/Bo5), as in Valve's code. Map-level Elo can be an extra later.
+- Forfeits and walkovers are skipped by the skill models, as in tennis; Valve's code handles its own.
+- Tiers: Liquipedia tiers 1-3 plus their qualifiers to start with (see open questions).
+- LAN = tournament `type` Offline (or Hybrid with an offline stage).
+
+### Daily request budget (60 per hour)
+
+- Normal day: matches from the last 14 days that changed (a few requests at up to 1,000 rows each), new
+  tournaments and placements (a few more). Target: under 15 requests.
+- Backfill (first run, or after the Actions cache is lost): capped per run, e.g. 40 requests, continuing the
+  next day where it stopped. Nothing is ever re-fetched while it is cached.
+- The Actions cache can be evicted (7 days unused, 10 GB per repo). If that is a risk, store the compact
+  normalised match file in the repo instead; CC BY-SA allows that with credit.
+
+## Pages (mirroring tennis)
+
+| Page | Notes |
+|---|---|
+| `rankings/cs2/index.html` | Table per system (Elo, Glicko-2, OpenSkill, VRS ours, Valve official), rank strip |
+| `rankings/cs2/team.html?id=` | Roster history, rank in each system, recent matches, link to the team's Liquipedia page |
+| `rankings/cs2/predict.html` | Two teams, each system's win chance, head-to-head, backtest table |
+| `rankings/cs2/records.html` | Same sections as tennis, per system |
+| `rankings/cs2/events.html` | Events with field strength, favourite, upsets, VRS stakes |
+
+Credit on every CS2 page, next to the data: "Match data from Liquipedia (CC BY-SA 3.0)" with links to Liquipedia
+and its copyright page; team pages also link to the team's Liquipedia page. The published CS2 data files are
+CC BY-SA 3.0 (they are derived from Liquipedia's); the code stays MIT.
+
+## Checks before merging
+
+1. Our VRS (Valve's code on Liquipedia data) vs Valve's published standings for the same date: rank correlation
+   for the top 50, and which teams differ and why. This is the CS2 version of tennis's ATP-style check.
+2. Roster grouping matches Valve's code on Valve's sample data.
+3. Backtest table (last 12 months) for every system, as for tennis.
+4. A run with the API unreachable keeps the last good data, and tennis still builds and deploys.
+5. Request count per run logged and under budget.
+
+## Steps
+
+1. **Probe** (`scripts/cs2_probe.py`, 4 requests, hard cap 6): confirm the fields below on real data. Nothing
+   else is built until this answers the open questions. Run it with
+   `env LIQUIPEDIA_API_KEY=... CONTACT_EMAIL=... python3 scripts/cs2_probe.py`; responses are saved to
+   `data/cs2/probe/` (git-ignored). Checked offline against a fake API only so far.
+2. Client + fetcher with caching and the request cap.
+3. Adapter + roster identity + tests.
+4. Move the engines into `engines.py`; tennis output must stay byte-identical.
+5. CS2 ratings, VRS run, Valve standings reader, check 1.
+6. Pages, credits, workflow steps (`continue-on-error`, so CS2 trouble never stops tennis).
+7. Merge, then send Liquipedia the link.
+
+## Open questions (the probe answers most)
+
+- Is `publishertier` how Liquipedia marks Valve-ranked events? Without a ranked flag, Valve's code drops every
+  match from 2025 on. Fallback: treat tier 1-3 as ranked and say so on the site.
+- Do matches list all five players per side, or only some? Matches without 5 + 5 are dropped by Valve's code
+  and can't be tied to a roster.
+- Do placements carry prize money in USD per team?
+- How far back? CS2 came out 27 Sep 2023. Suggestion: fetch from Jan 2023, use 2023 as burn-in, show from 2024.
+- Which tiers? More tiers bring VRS closer to Valve's (Valve ranks a few hundred teams) but cost requests.
+  Start with 1-3 and widen if check 1 shows big gaps at the lower end.
+- Does the free plan have its own limit beyond the 60 per hour in the terms? And how long does free access last
+  (the API page says usually for a limited time)?
+
+## Sources
+
+- Liquipedia API terms: https://liquipedia.net/api-terms-of-use
+- Liquipedia API plans and free access: https://liquipedia.net/api
+- match2 fields: https://liquipedia.net/commons/Module:Match
+- Valve's code and standings: https://github.com/ValveSoftware/counter-strike_regional_standings
