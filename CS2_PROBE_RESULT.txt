@@ -1,5 +1,412 @@
-CS2 probe, 2026-10-19 23:06 UTC, commit 85c6a24
+CS2 probe, 2026-10-19 23:07 UTC, commit 756dba3
 
 [1/6] match [[liquipediatier::1]] AND [[finished::1]] AND [[date::>2026-09-19]]
-HTTP 429 from Liquipedia: b'\x1f\x8b\x08\x00\x00\x00\x00\x00\x02\x03\x85V\x07s\xeb8\x0e\xfe+\xd8^%\xbd^\x1cY3N\xb9\xdb\xbc\x92d\xf2\xda\xecM\xa5%\xc8\xe2\x85"\xb4$h[\xbb\xfb\xfe\xfb\x81\xb4\x958\xd7\xd6\xdd":\xbe\x0fP\xf9\xc5\xe9\xe5\xc9\xfb_\xaf\xce\xe0\x97\xf7o\xdfT%k6X]+Fx\xa3{\xcd\xd8@&\xbf~\x0bz\xc0F\xab\xb2\xd8\t\x94=\xb2\x82\xbaS\xce#\xcf\x03\xb7\xd9\x8b\xfd5\xabz\x9c\xaf5n\x06r\x0c5YF\xcb\xf3/7\xba\xe1n\xde\xe0Z\xd7\x98\xa5??k\xabY+\x93\xf9Z\x19\x9c?\xfc\xb2*=\x8f\x06\x81\xc7\x01\xe7\x8c[.j\xef\xab%5\xe3\x1f\xbdr+mgO\x1e\x0c[P\x81\xe9\xa8W\xdb\x9d\x95\xd9\xf3\x07r\xf1\xc8h\x8bY\x87z\xd5\xf1\xeca\xfe\xec\xa8\x15\xbf\x99\xd7\xbf\xe3\xec\xe1\x0b9\xae\xc9\x90\x9b}\xf5\xe4\xc9\x93\xa3A5\x8d\xb6\xab\xd9\x03x(\x8a\x9f\xbb\x87\x7f\xdc\xd7}\xf49w\xa8<\xd9?\x1a\xed\x07\xa3\xc6\x99%\x8b\x9f\xcb"\x05\'1\xd6N\x0f\x0c\xde\xd5\xf3\x8ey\xf0\xb3\xa2\x902\x18\x83v\x85>\xaf\r\x85\xa65\xcaa^S_pp\xd6\xb3'
-exit: failed (1)
+
+Tier 1, last 30 days (full records): 20 matches
+  players per side (side A, side B): {(5, 5): 20}
+  with exactly 5 + 5 players: 20 of 20
+  liquipediatier: {'1': 20}
+  liquipediatiertype: {'': 20}
+  publishertier: {'Tier 1': 14, 'Wildcard': 6}
+  type: {'Offline': 20}
+  bestof: {'3': 18, '5': 2}
+  resulttype: {'': 20}
+  walkover: {'': 20}
+  extradata keys: {'overturned': 20, 'timezoneoffset': 20, 'featured': 20, 'timestamp': 20, 'hidden': 20, 'timezoneid': 20}
+  match fields: ['bestof', 'date', 'dateexact', 'extradata', 'finished', 'game', 'icon', 'icondark', 'icondarkurl', 'iconurl', 'links', 'liquipediatier', 'liquipediatiertype', 'match2bracketdata', 'match2bracketid', 'match2games', 'match2id', 'match2opponents', 'mode', 'namespace', 'objectname', 'pageid', 'pagename', 'parent', 'patch', 'publishertier', 'resulttype', 'section', 'series', 'shortname', 'status', 'stream', 'tickername', 'tournament', 'type', 'vod', 'walkover', 'wiki', 'winner']
+  opponent fields: ['extradata', 'icon', 'id', 'match2players', 'name', 'placement', 'score', 'status', 'teamtemplate', 'template', 'type']
+  player fields: ['displayname', 'extradata', 'flag', 'id', 'name', 'opid']
+[2/6] match [[finished::1]] AND [[date::>2026-09-19]]
+
+All tiers, last 30 days: 1000 matches
+  players per side (side A, side B): {(5, 5): 947, (0, 5): 15, (5, 0): 9, (5, 4): 7, (4, 5): 5, (0, 0): 5}
+  with exactly 5 + 5 players: 947 of 1000
+  liquipediatier: {'4': 635, '3': 330, '1': 31, '2': 4}
+  liquipediatiertype: {'': 624, 'Qualifier': 334, 'Showmatch': 22, 'Online Stage': 13, 'Monthly': 7}
+  publishertier: {'Tier 2': 421, '': 250, 'Tier 2 Qualifier': 208, 'Tier 1 Qualifier': 74, 'Wildcard': 33, 'Tier 1': 14}
+  type: {'Online': 746, 'Offline': 254}
+  bestof: {'None': 1000}
+  resulttype: {'None': 1000}
+  walkover: {'': 924, 'ff': 75, 'dq': 1}
+  extradata keys: {}
+  (hit the 1,000 row page size: more than that per month)
+  matches per (tier, tier type): {('4', ''): 400, ('4', 'Qualifier'): 215, ('3', ''): 189, ('3', 'Qualifier'): 119, ('1', ''): 31, ('3', 'Showmatch'): 22, ('4', 'Online Stage'): 13, ('4', 'Monthly'): 7, ('2', ''): 4}
+[3/6] tournament ([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[enddate::>2026-09-19]]
+
+Tournaments: 20
+  tournament fields: ['banner', 'bannerdark', 'bannerdarkurl', 'bannerurl', 'enddate', 'endpatch', 'extradata', 'format', 'game', 'icon', 'icondark', 'icondarkurl', 'iconurl', 'liquipediatier', 'liquipediatiertype', 'locations', 'maps', 'mode', 'name', 'namespace', 'next', 'next2', 'objectname', 'organizers', 'pageid', 'pagename', 'participantsnumber', 'patch', 'previous', 'previous2', 'prizepool', 'publishertier', 'serieslist', 'seriespage', 'shortname', 'sortdate', 'sponsors', 'startdate', 'status', 'tickername', 'type', 'wiki']
+  CS2 Major Championship Winter 2028            tier 1 type Offline pool 1250000 publishertier 'Major Championship'
+  FISSURE Playground #13                        tier 1 type Offline pool 0 publishertier 'Tier 1'
+  Esports World Cup 2028                        tier 1 type Offline pool 0 publishertier 'Tier 1'
+  FISSURE Playground #12                        tier 1 type Offline pool 0 publishertier 'Tier 1'
+  CS2 Major Championship Summer 2028            tier 1 type Offline pool 1250000 publishertier 'Major Championship'
+  FISSURE Playground #11                        tier 1 type Offline pool 0 publishertier 'Tier 1'
+  PGL March 2028                                tier 1 type Offline pool 0 publishertier 'Tier 1'
+  FISSURE Playground #10                        tier 1 type Offline pool 0 publishertier 'Tier 1'
+  extradata keys: {'enddatetext': 20, 'startdatetext': 20, 'series2': 1}
+
+--- Example records (data from Liquipedia, CC BY-SA 3.0, https://liquipedia.net/) ---
+match: {
+ "pageid": 368756,
+ "pagename": "Thunderpick/World_Championship/2026",
+ "namespace": 0,
+ "objectname": "368756_oyckLEjvba_R02-M001",
+ "match2id": "oyckLEjvba_R02-M001",
+ "match2bracketid": "oyckLEjvba",
+ "status": "",
+ "winner": "2",
+ "walkover": "",
+ "resulttype": "",
+ "finished": 1,
+ "mode": "team",
+ "type": "Offline",
+ "section": "Playoffs",
+ "game": "cs2",
+ "patch": "",
+ "date": "2026-10-18 15:55:00",
+ "dateexact": 1,
+ "stream": {
+  "twitch_en_1": "Thunderpick",
+  "youtube": "Thunderpick",
+  "twitch": "Thunderpick",
+  "kick": "Thunderpick",
+  "kick_en_1": "Thunderpick",
+  "youtube_en_1": "Thunderpick"
+ },
+ "links": {
+  "stats": {
+   "1": {
+    "1": "https://www.hltv.org/?pageid=188&matchid=242084",
+    "2": 1
+   },
+   "2": {
+    "1": "https://www.hltv.org/?pageid=188&matchid=242090",
+    "2": 2
+   },
+   "3": {
+    "1": "https://www.hltv.org/?pageid=188&matchid=242103",
+    "2": 3
+   },
+   "4": {
+    "1": "https://www.hltv.org/?pageid=188&matchid=242111",
+    "2": 4
+   },
+   "5": {
+    "1": "https://www.hltv.org/?pageid=188&matchid=242114",
+    "2": 5
+   }
+  },
+  "hltv": {
+   "1": {
+    "1": "https://www.hltv.org/matches/2399417/match",
+    "2": 0
+   }
+  }
+ },
+ "bestof": 5,
+ "vod": "",
+ "tournament": "Thunderpick World Championship 2026",
+ "parent": "Thunderpick/World_Championship/2026",
+ "tickername": "Thunderpick World Champ. '26",
+ "shortname": "",
+ "series": "",
+ "icon": "Thunderpick World Championship 2025 icon lightmode.png",
+ "iconurl": "https://liquipedia.net/commons/images/thumb/e/e5/Thunderpick_World_Championship_2025_icon_lightmode.png/400px-Thunderpick_World_Championship_2025_icon_lightmode.png",
+ "icondark": "Thunderpick World Championship 2025 icon darkmode.png",
+ "icondarkurl": "https://liquipedia.net/commons/images/thumb/1/1f/Thunderpick_World_Championship_2025_icon_darkmode.png/400px-Thunderpick_World_Championship_2025_icon_darkmode.png",
+ "liquipediatier": "1",
+ "liquipediatiertype": "",
+ "publishertier": "Tier 1",
+ "extradata": {
+  "overturned": false,
+  "timezoneoffset": "+02:00",
+  "featured": true,
+  "timestamp": 1792338900,
+  "hidden": false,
+  "timezoneid": "CEST"
+ },
+ "match2bracketdata": {
+  "loweredges": [
+   {
+    "opponentIndex": 0,
+    "lowerMatchIndex": 0
+   },
+   {
+    "opponentIndex": 1,
+    "lowerMatchIndex": 1
+   }
+  ],
+  "coordinates": {
+   "sectionIndex": 0,
+   "depthCount": 2,
+   "matchIndexInRound": 0,
+   "roundIndex": 1,
+   "rootIndex": 0,
+   "semanticDepth": 1,
+   "semanticRoundIndex": 1,
+   "depth": 0,
+   "roundCount": 2,
+   "sectionCount": 1
+  },
+  "bracketsection": "upper",
+  "lowerMatchIds": [
+   "oyckLEjvba_R01-M001",
+   "oyckLEjvba_R01-M002"
+  ],
+  "toupper": "oyckLEjvba_R01-M001",
+  "bracketindex": 2,
+  "inheritedheader": "!r1!x",
+  "header": "!r1!x",
+  "type": "bracket",
+  "bracketreset": "",
+  "bracketType": "Bracket/4",
+  "tolower": "oyckLEjvba_R01-M002",
+  "thirdplace": "oyckLEjvba_RxMTP"
+ },
+ "match2opponents": [
+  {
+   "id": 1,
+   "type": "team",
+   "name": "BetBoom Team",
+   "template": "betboom team 2024",
+   "icon": "BetBoom Team 2024 allmode.png",
+   "score": 2,
+   "status": "S",
+   "placement": 2,
+   "match2players": [
+    {
+     "id": 1,
+     "opid": 1,
+     "name": "S1ren",
+     "displayname": "s1ren",
+     "flag": "Russia",
+     "extradata": []
+    },
+    {
+     "id": 2,
+     "opid": 1,
+     "name": "Zorte",
+     "displayname": "zorte",
+     "flag": "Russia",
+     "extradata": []
+    },
+    {
+     "id": 3,
+     "opid": 1,
+     "name": "Magnojez",
+     "displayname": "Magnojez",
+     "flag": "Russia",
+     "extradata": []
+    },
+    {
+     "id": 4,
+     "opid": 1,
+     "name": "Boombl4",
+     "displayname": "Boombl4",
+     "flag": "Russia",
+     "extradata": []
+    },
+    {
+     "id": 5,
+     "opid": 1,
+     "name": "D1Ledez",
+     "displayname": "d1Ledez",
+     "flag": "Russia",
+     "extradata": []
+    }
+   ],
+   "extradata": [],
+   "teamtemplate": {
+    "template": "betboom team 2024",
+    "page": "BetBoom Team",
+    "name": "BetBoom Team",
+    "shortname": "BB",
+    "bracketname": "BetBoom Team",
+    "image": "BetBoom Team 2024 allmode.png",
+    "imagedark": "BetBoom Team 2024 allmode.png",
+    "legacyimage": "",
+    "legacyimagedark": "",
+    "imageurl": "https://liquipedia.net/commons/images/thumb/5/5b/BetBoom_Team_2024_allmode.png/400px-BetBoom_Team_2024_allmode.png",
+    "imagedarkurl": "https://liquipedia.net/commons/images/thumb/5/5b/BetBoom_Team_2024_allmode.png/400px-BetBoom_Team_2024_allmode.png",
+    "legacyimageurl": "",
+    "legacyimagedarkurl": ""
+   }
+  },
+  {
+   "id": 2,
+   "type": "team",
+   "name": "FURIA",
+   "template": "furia 2025",
+   "icon": "FURIA Esports allmode.png",
+   "score": 3,
+   "status": "S",
+   "placement": 1,
+   "match2players": [
+    {
+     "id": 1,
+     "opid": 2,
+     "name": "Yuurih",
+     "displayname": "yuurih",
+     "flag": "Brazil",
+     "extradata": []
+    },
+    {
+     "id": 2,
+     "opid": 2,
+     "name": "KSCERATO",
+     "displayname": "KSCERATO",
+     "flag": "Brazil",
+     "extradata": []
+    },
+    {
+     "id": 3,
+     "opid": 2,
+     "name": "FalleN",
+     "displayname": "FalleN",
+     "flag": "Brazil",
+     "extradata": []
+    },
+    {
+     "id": 4,
+     "opid": 2,
+     "name": "Molodoy",
+     "displayname": "molodoy",
+     "flag": "Kazakhstan",
+     "extradata": []
+    },
+    {
+     "id": 5,
+     "opid": 2,
+     "name": "YEKINDAR",
+     "displayname": "YEKINDAR",
+     "flag": "Latvia",
+     "extradata": []
+    }
+   ],
+   "extradata": [],
+   "teamtemplate": {
+    "template": "furia 2025",
+    "page": "FURIA",
+    "name": "FURIA",
+    "shortname": "FURIA",
+    "bracketname": "FURIA",
+    "image": "FURIA Esports allmode.png",
+    "imagedark": "FURIA Esports allmode.png",
+    "legacyimage": "",
+    "legacyimagedark": "",
+    "imageurl": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/400px-FURIA_Esports_allmode.png",
+    "imagedarkurl": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/400px-FURIA_Esports_allmode.png",
+    "legacyimageurl": "",
+    "legacyimagedarkurl": ""
+   }
+  }
+ ],
+ "match2games": [
+  {
+   "map": "Dust II",
+   "subgroup": "1",
+   "match2gameid": 1,
+   "scores": [
+    6,
+    13
+   ],
+   "participants": [],
+   "opponents": [
+    {
+     "status": "S",
+     "score": 6
+    },
+    {
+     "status": "S",
+     "score": 13
+    }
+   ],
+   "status": "",
+   "winner": "2",
+   "walkover": "",
+   "resulttype": "",
+   "date": "2026-10-18 15:55:00",
+   "mode": "team",
+   "type": "Offline",
+   "game": "cs2",
+   "patch": "",
+   "vod": "",
+   "length": "",
+   "extradata": {
+    "dateexact": true,
+    "t1halfs": {
+     "1": 4,
+     "2": 2
+    },
+    "t2halfs": {
+     "1": 8,
+     "2": 5
+    },
+    "timestamp": 1792338900,
+    "t2sides": {
+     "1": "t",
+     "2": "ct"
+    },
+    "t1sides": {
+     "1": "ct",
+     "2": "t"
+    }
+   }
+  },
+  "... 4 more games"
+ ],
+ "wiki": "counterstrike"
+}
+tournament: {
+ "pageid": 367689,
+ "pagename": "Majors/2028/Winter",
+ "namespace": 0,
+ "objectname": "367689_tournament_CS2 Major Championship Winter 2028",
+ "name": "CS2 Major Championship Winter 2028",
+ "shortname": "",
+ "tickername": "",
+ "banner": "Valve logo.svg",
+ "bannerurl": "https://liquipedia.net/commons/images/a/ab/Valve_logo.svg",
+ "bannerdark": "",
+ "bannerdarkurl": "",
+ "icon": "Counter-Strike 2 default lightmode.png",
+ "iconurl": "https://liquipedia.net/commons/images/thumb/5/57/Counter-Strike_2_default_lightmode.png/373px-Counter-Strike_2_default_lightmode.png",
+ "icondark": "Counter-Strike 2 default darkmode.png",
+ "icondarkurl": "https://liquipedia.net/commons/images/thumb/d/da/Counter-Strike_2_default_darkmode.png/373px-Counter-Strike_2_default_darkmode.png",
+ "seriespage": "",
+ "serieslist": [],
+ "previous": "Majors/2028/Summer",
+ "previous2": "",
+ "next": "",
+ "next2": "",
+ "game": "cs2",
+ "mode": "",
+ "patch": "",
+ "endpatch": "",
+ "type": "Offline",
+ "organizers": "{\"organizer1\":\"Valve Corporation\"}",
+ "startdate": "2028-11-20",
+ "enddate": "2028-12-10",
+ "sortdate": "2028-12-10",
+ "locations": {
+  "city1": "<abbr title=\"To be determined (or to be decided)\">TBD</abbr>",
+  "region1": "World"
+ },
+ "prizepool": 1250000,
+ "participantsnumber": 32,
+ "liquipediatier": "1",
+ "liquipediatiertype": "",
+ "publishertier": "Major Championship",
+ "status": "unconfirmed",
+ "maps": "Ancient;Anubis;Cache;Dust II;Inferno;Mirage;Nuke",
+ "format": "",
+ "sponsors": "[]",
+ "extradata": {
+  "enddatetext": "2028-12-10",
+  "startdatetext": "2028-11-20"
+ },
+ "wiki": "counterstrike"
+}
+
+Done: 3 requests. Raw responses in data/cs2/probe/
+exit: ok
