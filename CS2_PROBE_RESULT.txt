@@ -1,4 +1,4 @@
-CS2 probe, 2026-10-19 23:07 UTC, commit 756dba3
+CS2 probe, 2026-10-19 23:08 UTC, commit a55ee42
 
 [1/6] match [[liquipediatier::1]] AND [[finished::1]] AND [[date::>2026-09-19]]
 
@@ -31,19 +31,32 @@ All tiers, last 30 days: 1000 matches
   extradata keys: {}
   (hit the 1,000 row page size: more than that per month)
   matches per (tier, tier type): {('4', ''): 400, ('4', 'Qualifier'): 215, ('3', ''): 189, ('3', 'Qualifier'): 119, ('1', ''): 31, ('3', 'Showmatch'): 22, ('4', 'Online Stage'): 13, ('4', 'Monthly'): 7, ('2', ''): 4}
-[3/6] tournament ([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[enddate::>2026-09-19]]
+[3/6] tournament ([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[enddate::>2026-09-19]] AND [[enddate::<2026-10-19]]
 
-Tournaments: 20
+Tournaments: 9
   tournament fields: ['banner', 'bannerdark', 'bannerdarkurl', 'bannerurl', 'enddate', 'endpatch', 'extradata', 'format', 'game', 'icon', 'icondark', 'icondarkurl', 'iconurl', 'liquipediatier', 'liquipediatiertype', 'locations', 'maps', 'mode', 'name', 'namespace', 'next', 'next2', 'objectname', 'organizers', 'pageid', 'pagename', 'participantsnumber', 'patch', 'previous', 'previous2', 'prizepool', 'publishertier', 'serieslist', 'seriespage', 'shortname', 'sortdate', 'sponsors', 'startdate', 'status', 'tickername', 'type', 'wiki']
-  CS2 Major Championship Winter 2028            tier 1 type Offline pool 1250000 publishertier 'Major Championship'
-  FISSURE Playground #13                        tier 1 type Offline pool 0 publishertier 'Tier 1'
-  Esports World Cup 2028                        tier 1 type Offline pool 0 publishertier 'Tier 1'
-  FISSURE Playground #12                        tier 1 type Offline pool 0 publishertier 'Tier 1'
-  CS2 Major Championship Summer 2028            tier 1 type Offline pool 1250000 publishertier 'Major Championship'
-  FISSURE Playground #11                        tier 1 type Offline pool 0 publishertier 'Tier 1'
-  PGL March 2028                                tier 1 type Offline pool 0 publishertier 'Tier 1'
-  FISSURE Playground #10                        tier 1 type Offline pool 0 publishertier 'Tier 1'
-  extradata keys: {'enddatetext': 20, 'startdatetext': 20, 'series2': 1}
+  Thunderpick World Championship 2026           tier 1 type Offline pool 1000000 publishertier 'Tier 1'
+  Forge of Legends 2026                         tier 1 type Offline pool 500000 publishertier 'Tier 1'
+  ESL Pro League Season 24                      tier 1 type Offline pool 1000000 publishertier 'Wildcard'
+  PGL Fall 2026                                 tier 1 type Offline pool 1250000 publishertier 'Tier 1'
+  XSE Pro League Season 9                       tier 2 type Offline pool 0 publishertier 'Tier 1'
+  Stake Ranked Episode 4                        tier 2 type Offline pool 100000 publishertier 'Tier 2'
+  1win Private Club #1                          tier 2 type Offline pool 100000 publishertier 'Tier 2'
+  Logitech G Play Connect 2026                  tier 2 type Offline pool 100000 publishertier 'Tier 2'
+  extradata keys: {'enddatetext': 9, 'startdatetext': 9, 'series2': 1}
+[4/6] placement [[pagename::Thunderpick/World_Championship/2026]]
+
+Placements for Thunderpick/World_Championship/2026: 8
+  placement fields: ['date', 'extradata', 'game', 'icon', 'icondark', 'icondarkurl', 'iconurl', 'imagedarkurl', 'imageurl', 'individualprizemoney', 'lastvsdata', 'liquipediatier', 'liquipediatiertype', 'mode', 'namespace', 'objectname', 'opponentname', 'opponentplayers', 'opponenttemplate', 'opponenttype', 'pageid', 'pagename', 'parent', 'placement', 'prizemoney', 'prizepoolindex', 'publishertier', 'qualifier', 'qualifierpage', 'qualifierurl', 'series', 'startdate', 'tournament', 'type', 'weight', 'wiki']
+  5-6    9z Team                   prize 30000 players 19
+  3      Aurora Gaming             prize 100000 players 19
+  2      BetBoom Team              prize 250000 players 19
+  1      FURIA                     prize 500000 players 19
+  5-6    Legacy                    prize 30000 players 19
+  7-8    Ninjas in Pyjamas         prize 20000 players 19
+  7-8    PARIVISION                prize 20000 players 19
+  4      Team Falcons              prize 50000 players 19
+  placements with prize money: 8 of 8
 
 --- Example records (data from Liquipedia, CC BY-SA 3.0, https://liquipedia.net/) ---
 match: {
@@ -358,24 +371,24 @@ match: {
  "wiki": "counterstrike"
 }
 tournament: {
- "pageid": 367689,
- "pagename": "Majors/2028/Winter",
+ "pageid": 368756,
+ "pagename": "Thunderpick/World_Championship/2026",
  "namespace": 0,
- "objectname": "367689_tournament_CS2 Major Championship Winter 2028",
- "name": "CS2 Major Championship Winter 2028",
+ "objectname": "368756_tournament_Thunderpick World Championship 2026",
+ "name": "Thunderpick World Championship 2026",
  "shortname": "",
- "tickername": "",
- "banner": "Valve logo.svg",
- "bannerurl": "https://liquipedia.net/commons/images/a/ab/Valve_logo.svg",
- "bannerdark": "",
- "bannerdarkurl": "",
- "icon": "Counter-Strike 2 default lightmode.png",
- "iconurl": "https://liquipedia.net/commons/images/thumb/5/57/Counter-Strike_2_default_lightmode.png/373px-Counter-Strike_2_default_lightmode.png",
- "icondark": "Counter-Strike 2 default darkmode.png",
- "icondarkurl": "https://liquipedia.net/commons/images/thumb/d/da/Counter-Strike_2_default_darkmode.png/373px-Counter-Strike_2_default_darkmode.png",
+ "tickername": "Thunderpick World Champ. '26",
+ "banner": "Thunderpick World Championship 2026 lightmode.png",
+ "bannerurl": "https://liquipedia.net/commons/images/thumb/a/a7/Thunderpick_World_Championship_2026_lightmode.png/400px-Thunderpick_World_Championship_2026_lightmode.png",
+ "bannerdark": "Thunderpick World Championship 2026 darkmode.png",
+ "bannerdarkurl": "https://liquipedia.net/commons/images/thumb/f/fd/Thunderpick_World_Championship_2026_darkmode.png/400px-Thunderpick_World_Championship_2026_darkmode.png",
+ "icon": "Thunderpick World Championship 2025 icon lightmode.png",
+ "iconurl": "https://liquipedia.net/commons/images/thumb/e/e5/Thunderpick_World_Championship_2025_icon_lightmode.png/400px-Thunderpick_World_Championship_2025_icon_lightmode.png",
+ "icondark": "Thunderpick World Championship 2025 icon darkmode.png",
+ "icondarkurl": "https://liquipedia.net/commons/images/thumb/1/1f/Thunderpick_World_Championship_2025_icon_darkmode.png/400px-Thunderpick_World_Championship_2025_icon_darkmode.png",
  "seriespage": "",
  "serieslist": [],
- "previous": "Majors/2028/Summer",
+ "previous": "",
  "previous2": "",
  "next": "",
  "next2": "",
@@ -384,29 +397,103 @@ tournament: {
  "patch": "",
  "endpatch": "",
  "type": "Offline",
- "organizers": "{\"organizer1\":\"Valve Corporation\"}",
- "startdate": "2028-11-20",
- "enddate": "2028-12-10",
- "sortdate": "2028-12-10",
+ "organizers": "{\"organizer1\":\"GAM3RS X\"}",
+ "startdate": "2026-10-14",
+ "enddate": "2026-10-18",
+ "sortdate": "2026-10-18",
  "locations": {
-  "city1": "<abbr title=\"To be determined (or to be decided)\">TBD</abbr>",
-  "region1": "World"
+  "venue1": "BLAST Arena Studios",
+  "country1": "mt",
+  "region1": "Europe",
+  "city1": "Attard"
  },
- "prizepool": 1250000,
- "participantsnumber": 32,
+ "prizepool": 1000000,
+ "participantsnumber": 8,
  "liquipediatier": "1",
  "liquipediatiertype": "",
- "publishertier": "Major Championship",
- "status": "unconfirmed",
+ "publishertier": "Tier 1",
+ "status": "",
  "maps": "Ancient;Anubis;Cache;Dust II;Inferno;Mirage;Nuke",
  "format": "",
- "sponsors": "[]",
+ "sponsors": "{\"sponsor1\":\"[https:\\/\\/thunderpick.io Thunderpick]\"}",
  "extradata": {
-  "enddatetext": "2028-12-10",
-  "startdatetext": "2028-11-20"
+  "enddatetext": "2026-10-18",
+  "startdatetext": "2026-10-14"
+ },
+ "wiki": "counterstrike"
+}
+placement: {
+ "pageid": 368756,
+ "pagename": "Thunderpick/World_Championship/2026",
+ "namespace": 0,
+ "objectname": "368756_ranking_9z team",
+ "tournament": "Thunderpick World Championship 2026",
+ "series": "",
+ "parent": "Thunderpick/World_Championship/2026",
+ "imageurl": "https://liquipedia.net/commons/images/thumb/7/7f/9z_Team_2024_lightmode.png/400px-9z_Team_2024_lightmode.png",
+ "imagedarkurl": "https://liquipedia.net/commons/images/thumb/9/9b/9z_Team_2024_darkmode.png/400px-9z_Team_2024_darkmode.png",
+ "startdate": "2026-10-14 00:00:00",
+ "date": "2026-10-16 14:00:00",
+ "placement": "5-6",
+ "prizemoney": 30000,
+ "individualprizemoney": 3000,
+ "prizepoolindex": 1,
+ "weight": 60000,
+ "mode": "team",
+ "type": "Offline",
+ "liquipediatier": "1",
+ "liquipediatiertype": "",
+ "publishertier": "Tier 1",
+ "icon": "Thunderpick World Championship 2025 icon lightmode.png",
+ "iconurl": "https://liquipedia.net/commons/images/thumb/e/e5/Thunderpick_World_Championship_2025_icon_lightmode.png/400px-Thunderpick_World_Championship_2025_icon_lightmode.png",
+ "icondark": "Thunderpick World Championship 2025 icon darkmode.png",
+ "icondarkurl": "https://liquipedia.net/commons/images/thumb/1/1f/Thunderpick_World_Championship_2025_icon_darkmode.png/400px-Thunderpick_World_Championship_2025_icon_darkmode.png",
+ "game": "cs2",
+ "lastvsdata": {
+  "opponenttype": "team",
+  "opponentname": "Aurora Gaming",
+  "score": 2,
+  "opponenttemplate": "aurora gaming 2025"
+ },
+ "opponentname": "9z Team",
+ "opponenttemplate": "9z team 2024",
+ "opponenttype": "team",
+ "opponentplayers": {
+  "c1dn": "BIT",
+  "p1flag": "Uruguay",
+  "p2flag": "Chile",
+  "p3flag": "Argentina",
+  "p4flag": "Argentina",
+  "p5flag": "Uruguay",
+  "c1": "BIT",
+  "p2dn": "HUASOPEEK",
+  "p1dn": "max",
+  "c1role1": "coach",
+  "c1flag": "Brazil",
+  "p5dn": "dgt",
+  "p4dn": "meyern",
+  "p5": "Dgt",
+  "p4": "Meyern",
+  "p2": "HUASOPEEK",
+  "p3": "Luchov",
+  "p3dn": "luchov",
+  "p1": "Max"
+ },
+ "qualifier": "VRS Global (Aug. 2026)",
+ "qualifierpage": "",
+ "qualifierurl": "https://github.com/ValveSoftware/counter-strike_regional_standings/tree/main/invitation/2026/standings_global_2026_08_03.md",
+ "extradata": {
+  "playershare": 15000,
+  "prizepoints2": "",
+  "prizepoints": "",
+  "opponentaliases": {
+   "1": "9z team 2024",
+   "2": "9z team orig",
+   "3": "9z team 2023"
+  }
  },
  "wiki": "counterstrike"
 }
 
-Done: 3 requests. Raw responses in data/cs2/probe/
+Done: 4 requests. Raw responses in data/cs2/probe/
 exit: ok
