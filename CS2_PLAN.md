@@ -135,7 +135,32 @@ CC BY-SA 3.0 (they are derived from Liquipedia's); the code stays MIT.
    - 1,191 Valve-ranked events since 2025: 641 have a prize pool, 638 have per-team prize money (the rest are
      zero-prize cups and qualifiers).
    - 350 matches have no winner (winner 0): skipped.
-3. Adapter + roster identity + tests.
+3. Adapter + roster identity + tests. **Built:** `scripts/cs2_adapter.py` (rosters, common format, Valve input),
+   `scripts/countries.py` (Liquipedia country names -> ISO codes for Valve's regions; all 122 names in the data
+   map), `scripts/cs2_vrs.py` (Valve's code on our data + comparison with Valve's published standings),
+   `tests/test_cs2_adapter.py` + `tests/valve_rosters.js`.
+   - Check 2 passed: on Valve's sample data our roster grouping gives every one of 3,766 matches the same
+     roster ids as Valve's own JavaScript (576 rosters).
+   - Check 1, Valve's code on Liquipedia data vs Valve's published global standings, top 50 (takes ~4 s a date):
+
+     | Date | Spearman | Same #1 | Within 3 places | Within 10 |
+     |---|---|---|---|---|
+     | 2025-03-03 | 0.965 | yes | 33 | 45 |
+     | 2025-06-02 | 0.983 | yes | 38 | 49 |
+     | 2025-09-01 | 0.985 | yes | 43 | 49 |
+     | 2025-12-01 | 0.922 | yes | 32 | 46 |
+     | 2026-02-02 | 0.959 | yes | 38 | 47 |
+     | 2026-04-06 | 0.987 | yes | 42 | 49 |
+     | 2026-06-01 | 0.994 | yes | 47 | 50 |
+     | 2026-08-03 | 0.994 | yes | 47 | 49 |
+     | 2026-10-05 | 0.988 | yes | 43 | 50 |
+
+     On 5 Oct 2026 the top 3 are identical and Spirit's points match exactly (2046). Our points run about
+     20 higher further down: Valve's data and Liquipedia's differ a little in which smaller events and
+     prize amounts are included. `publishertier` as the ranked flag is confirmed.
+   - Not done yet: Valve's qualifier links (a qualifier inherits half of the main event's prize pool through
+     `qualifiedEvents`); Liquipedia has the links (`qualifier` on placements). Worth trying if it closes the
+     remaining gap.
 4. Move the engines into `engines.py`; tennis output must stay byte-identical.
 5. CS2 ratings, VRS run, Valve standings reader, check 1.
 6. Pages, credits, workflow steps (`continue-on-error`, so CS2 trouble never stops tennis).
