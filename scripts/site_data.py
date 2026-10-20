@@ -515,7 +515,7 @@ def main():
 
         # where a system and the official ranking disagree most, among players in either's top 10
         gaps = {s_: {} for s_ in SKILL + ("vrs",)}
-        for pid in set(hist) | set(vrs_hist):
+        for pid in sorted(set(hist) | set(vrs_hist)):  # sorted: same order (and same ties) every run
             for w, off in official_hist[pid].items():
                 if w < first_w:
                     continue
@@ -529,7 +529,7 @@ def main():
                     if pid not in gaps[system] or abs(gap) > abs(gaps[system][pid][0]):
                         gaps[system][pid] = (gap, rk, off, w)
         gap_rows = {system: [{**person(p), "system_rank": rk, "official_rank": off, "week": weeks[w], "days_out": days_out(p, w)}
-                             for p, (g, rk, off, w) in sorted(d.items(), key=lambda kv: -abs(kv[1][0]))[:15]]
+                             for p, (g, rk, off, w) in sorted(d.items(), key=lambda kv: (-abs(kv[1][0]), kv[0]))[:15]]
                     for system, d in gaps.items() if d}
         return {
             "from": weeks[first_w] if first_w < len(weeks) else None,
