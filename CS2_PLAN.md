@@ -103,10 +103,12 @@ Later option: a player-level OpenSkill (OpenSkill is built for teams of individu
 
 Naming (decided 20 Oct 2026): two VRS columns. **VRS (live)** is Valve's code on our Liquipedia data, recalculated
 daily on the same matches as the other systems (fair comparison, weekly history, backtest). **Valve official · <date>**
-is Valve's published monthly standings, which decide invites. Each tab explains the difference and links out:
-Valve's repository, [Liquipedia's VRS page](https://liquipedia.net/counterstrike/Valve_Regional_Standings) and
-[HLTV's live Valve ranking](https://www.hltv.org/valve-ranking/teams) (HLTV recalculates daily on Valve's data,
-including events still in progress; on 20 Oct 2026 its top 3 points were within 1-25 of ours).
+is Valve's published monthly standings, which decide invites. Each tab explains the difference and links out.
+VRS (live) links to the two other live versions: [Liquipedia's unofficial VRS](https://liquipedia.net/counterstrike/Valve_Regional_Standings)
+(the same method on the same data as ours, so the closest cross-check) and
+[HLTV's live Valve ranking](https://www.hltv.org/valve-ranking/teams) (recalculated daily on Valve's data, including
+events still in progress; on 20 Oct 2026 its top 3 points were within 1-44 of ours). Valve official links to
+Valve's repository.
 
 Credit on every CS2 page, next to the data: "Match data from Liquipedia (CC BY-SA 3.0)" with links to Liquipedia
 and its copyright page; team pages also link to the team's Liquipedia page. The published CS2 data files are
