@@ -124,6 +124,17 @@ CC BY-SA 3.0 (they are derived from Liquipedia's); the code stays MIT.
    offline tests in `tests/test_fetch_cs2.py` (paging, request cap and resume, 429 back-off, hourly pacing,
    time limit, months settling). History from Jan 2023 (2023 = burn-in, rankings shown from 2024).
    On this branch `.github/workflows/cs2-fetch.yml` runs it when the fetcher changes and commits the data.
+   **First load (19-20 Oct 2026):** 206 requests over about 4.5 hours, no errors. 83,131 matches (Jan 2023 to
+   Oct 2026, about 1,800 a month, no duplicates), 5,709 tournaments, 3,488 events with prize money, 28,049
+   players. `data/cs2/` is 52 MB on disk (about 7x smaller compressed in git).
+   - Lineups: 93-95% of matches have exactly 5 + 5 players every year; walkovers 4-8% (`ff`, a few `dq`).
+   - Valve tier (`publishertier`): blank for 98% of 2023-2024 matches, 50% tagged in 2025, 78% in 2026. That
+     fits Valve's code, which only checks the ranked flag from 1 Jan 2025: before that every match counts.
+     Values also include `Major`, `RMR Event`, `Major Qualifier` (older Valve events).
+   - Every match's event has a tournament record except 9 matches (7 small events from 2022-23).
+   - 1,191 Valve-ranked events since 2025: 641 have a prize pool, 638 have per-team prize money (the rest are
+     zero-prize cups and qualifiers).
+   - 350 matches have no winner (winner 0): skipped.
 3. Adapter + roster identity + tests.
 4. Move the engines into `engines.py`; tennis output must stay byte-identical.
 5. CS2 ratings, VRS run, Valve standings reader, check 1.
