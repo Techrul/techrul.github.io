@@ -81,11 +81,11 @@ jobs:
           CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
         run: python scripts/prize_money.py --raw data/raw
 
-      - name: Get Valve's VRS code (pinned commit, model folder only)
+      - name: Get Valve's VRS code and published standings (pinned commit, model and live folders)
         continue-on-error: true
         run: |
           git clone --filter=blob:none --no-checkout https://github.com/ValveSoftware/counter-strike_regional_standings vendor/vrs
-          git -C vendor/vrs sparse-checkout set model
+          git -C vendor/vrs sparse-checkout set model live
           git -C vendor/vrs checkout "$VALVE_COMMIT"
 
       # The old file is removed first, so if this step fails the site shows no VRS rather than stale VRS.
@@ -107,6 +107,39 @@ jobs:
         env:
           CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
         run: python scripts/trophies.py --out docs/rankings/tennis
+
+      # ---------------------------------------------------------------- CS2 (all optional: CS2 trouble never stops tennis)
+      # Liquipedia's API: recent weeks every day, plus any month not fetched yet; at most 30 requests (their limit is
+      # 60 an hour). Stops early, keeping what it has, if Liquipedia rate-limits it. The data is committed below.
+      - name: Fetch CS2 data (Liquipedia)
+        continue-on-error: true
+        env:
+          LIQUIPEDIA_API_KEY: ${{ secrets.LIQUIPEDIA_API_KEY }}
+          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+        run: python -u scripts/fetch_cs2.py --start 2023-01 --max-requests 30 --per-hour 45 --max-minutes 20
+
+      - name: CS2 ratings
+        id: cs2
+        continue-on-error: true
+        run: python scripts/cs2_ratings.py --data data/cs2 --valve vendor/vrs --out docs/rankings/cs2/data/rankings.json
+
+      - name: CS2 history, team pages, records and events
+        if: steps.cs2.outcome == 'success'
+        continue-on-error: true
+        run: python scripts/cs2_site_data.py --data data/cs2 --valve vendor/vrs --current docs/rankings/cs2/data/rankings.json --out docs/rankings/cs2/data
+
+      # Liquipedia's data is CC BY-SA: keeping it in the repo (not only in the Actions cache, which is dropped after
+      # 7 days unused) means a lost cache never means fetching everything again.
+      - name: Save CS2 data
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/cs2
+          git diff --cached --quiet && { echo "no new CS2 data"; exit 0; }
+          git commit -m "CS2 data from Liquipedia"
+          git pull --rebase -q origin main && git push
 
       - name: Copy pages
         run: python scripts/build_site.py --site site --out docs
