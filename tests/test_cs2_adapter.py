@@ -77,6 +77,23 @@ def test_common_format_and_valve_input():
     assert ad.valve_input(data, datetime(2026, 3, 2, 12, tzinfo=timezone.utc))["events"][0]["finished"] is False
 
 
+def test_short_names():
+    cases = {"Team Vitality": "Vitality", "G2 Esports": "G2", "FaZe Clan": "FaZe", "BetBoom Team": "BetBoom",
+             "Aimclub (Romanian team)": "Aimclub", "KUUSAMO.gg": "KUUSAMO", "DENDELE CS": "DENDELE",
+             "Natus Vincere": "Natus Vincere", "Team A": "Team A", "33": "33", "Team Spirit Academy": "Spirit Academy"}
+    for full, short in cases.items():
+        assert ad.short_name(full) == short, (full, ad.short_name(full), short)
+
+
+def test_regions_follow_valve_rule():
+    table = {"ru": 0, "fr": 0, "br": 1, "us": 1, "cn": 2, "au": 2, "za": -1}  # Valve's groups (see load_valve_regions)
+    assert ad.valve_region(["ru"] * 5, table) == 0
+    assert ad.valve_region(["br", "br", "fr", "fr", "cn"], table) == 0      # tie Europe/Americas -> Europe
+    assert ad.valve_region(["br", "br", "fr", "fr", "za"], table) == 1      # Africa joins the lowest-priority region present
+    assert ad.valve_region(["za"] * 5, table) == 2                          # only Africa -> Asia (Valve's default)
+    assert ad.valve_region(["world"] * 5, table) is None
+
+
 def test_matches_valve_on_sample(valve_dir):
     sample = os.path.join(valve_dir, "data", "matchdata_sample_20230829.json")
     if not (os.path.exists(sample) and shutil.which("node")):

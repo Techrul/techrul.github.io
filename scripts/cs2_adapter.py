@@ -16,6 +16,7 @@ For CS2 an entity is a roster id ("r12"), one per side.
 import glob
 import json
 import os
+import re
 from collections import defaultdict
 from datetime import datetime, timezone
 
@@ -199,6 +200,59 @@ def valve_input(data, as_of, window_days=200):
     for e in events:
         e["lan"] = lan_of[e["eventId"]]
     return {"matches": out, "events": events}
+
+
+# ----------------------------------------------------------------------------- names and regions
+_SUFFIXES = (" Esports Club", " Esport Club", " Esports", " eSports", " esports", " E-Sports", " e-Sports", " Esport",
+             " Gaming", " Team", " Clan", " Club", " CS", ".gg")
+
+
+def short_name(name):
+    """Liquipedia's full team name -> the short name Valve and HLTV use: 'Team Vitality' -> 'Vitality',
+    'G2 Esports' -> 'G2', 'Aimclub (Romanian team)' -> 'Aimclub'. Leaves at least two characters."""
+    s = re.sub(r"\s*\([^)]*\)$", "", (name or "").strip()) or (name or "")  # Liquipedia's disambiguation
+    for suf in _SUFFIXES:
+        if s.endswith(suf) and len(s) - len(suf) >= 2:
+            s = s[:-len(suf)]
+            break
+    if s.startswith("Team ") and len(s) >= 7:
+        s = s[5:]
+    return s
+
+
+REGIONS = ("Europe", "Americas", "Asia")  # Valve's order; ties go to the first (its region priority 3, 2, 1)
+
+
+def load_valve_regions(valve_dir):
+    """Country code -> Valve's region group, read from Valve's own table (model/util/region.js): 0 Europe
+    (EU and MENA), 1 Americas (NA and SA), 2 Asia (everything else), -1 Africa (counted with the team's
+    lowest-priority region present, as in Valve's setPluralityRegion)."""
+    path = os.path.join(valve_dir, "model", "util", "region.js")
+    with open(path, encoding="utf-8") as fh:
+        text = fh.read()
+    group = {"EU": 0, "MENA": 0, "NA": 1, "SA": 1, "AF": -1}
+    return {cc.lower(): group.get(reg, 2) for cc, reg in re.findall(r"countrycode\s*:\s*'(\w+)'\s*,\s*region\s*:\s*'(\w+)'", text)}
+
+
+def valve_region(isos, table):
+    """Valve's plurality rule (team.js setPluralityRegion) on a list of country codes -> 0, 1, 2 or None."""
+    priority = (3, 2, 1)
+    counts, low = [0, 0, 0], 0
+    for cc in isos:
+        if not cc or cc == "world" or cc not in table:
+            continue
+        g = table[cc]
+        if g < 0:
+            low += 1
+        else:
+            counts[g] += 1
+    if not any(counts) and not low:
+        return None
+    present = [priority[i] for i in range(3) if counts[i] > 0]
+    lowest = min(present) if present else 1  # all low-priority: Valve's default is its lowest priority (Asia)
+    counts[priority.index(lowest)] += low
+    top = max(counts)
+    return max((i for i in range(3) if counts[i] == top), key=lambda i: priority[i])
 
 
 def parse_valve_standings(path):

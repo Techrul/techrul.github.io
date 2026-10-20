@@ -144,11 +144,25 @@ def main():
             for s in c["sides"]:
                 m12[s[0]] += 1
 
+    try:
+        region_table = ad.load_valve_regions(args.valve)
+    except OSError:
+        region_table = None
+
     teams = []
     for p in sorted(pool | extra):
         r = roster[p]
-        t = {"id": p, "name": r.name, "players": r.players,
-             "flags": [ad.countries.iso(data.flags.get(x)) for x in r.players],
+        flags = [ad.countries.iso(data.flags.get(x)) for x in r.players]
+        # region: Valve's own (from the VRS run, based on the team's recent regulars) when the team is in it,
+        # else Valve's plurality rule on the current five
+        region = None
+        if p in vrs and isinstance(vrs[p].get("region"), list) and 1 in vrs[p]["region"]:
+            region = ad.REGIONS[vrs[p]["region"].index(1)]
+        elif region_table:
+            g = ad.valve_region(flags, region_table)
+            region = ad.REGIONS[g] if g is not None else None
+        t = {"id": p, "name": r.name, "short": ad.short_name(r.name), "region": region, "players": r.players,
+             "flags": flags,
              "liquipedia": "https://liquipedia.net/counterstrike/" + r.name.replace(" ", "_"),
              "matches": count.get(p, 0), "matches_12m": m12[p],
              "last_match": last_match[p].strftime("%Y-%m-%d") if p in last_match else None,
@@ -162,7 +176,7 @@ def main():
                       "openskill_pure": round(oskp_score[p], 2), "openskill_sigma_pure": round(oskp[p].sigma, 3)})
         if p in vrs:
             v = vrs[p]
-            t.update({"vrs": v["points"], "region": v.get("region")})
+            t["vrs"] = v["points"]
             t["ranks"]["vrs"] = v["rank"]
         if p in official:
             o = official[p]
