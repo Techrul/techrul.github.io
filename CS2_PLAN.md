@@ -114,6 +114,23 @@ Credit on every CS2 page, next to the data: "Match data from Liquipedia (CC BY-S
 and its copyright page; team pages also link to the team's Liquipedia page. The published CS2 data files are
 CC BY-SA 3.0 (they are derived from Liquipedia's); the code stays MIT.
 
+## Matching the tennis section (inventory, 20 Oct 2026)
+
+Everything tennis has, and what it becomes for CS2 (pages under `site/rankings/cs2/`, data from
+`scripts/cs2_ratings.py` + `scripts/cs2_site_data.py` into `docs/rankings/cs2/data/`):
+
+| Tennis | CS2 |
+|---|---|
+| `index.html`: tabs per system, blurb + badge per system, sink/pure toggle, filter box, rank strip (every system's rank on one line), "vs official", Out N wk tag, show 50 more | Same, plus region filter (Valve's regions). Official = Valve's latest published standings |
+| `player.html`: rank tiles + best rank, titles by tier, rank-over-time chart (1y/3y/all), Elo chart with peak, record (all / surface / tier / year), recent matches with Elo pre-match chance, data-coverage note | `team.html`: same; current five with flags instead of age/hand; record by LAN/online instead of surface; titles = tier 1-3 event wins |
+| `predict.html`: two-player picker, each system's win chance (same formulas as the backtest), verdict, head-to-head, prediction table with Best badge | Same for teams; official = "higher Valve rank wins" |
+| `records.html`: weeks at #1, highest ratings, biggest upsets, one-week rises, biggest disagreements with official; 7 time windows | Same; "official" history = Valve's monthly standings, each in force until the next |
+| `tournaments.html` (calendar / table / cards, season picker, tier filter, Stats by system) + `tournament.html` (editions year by year) | `events.html` + `event.html`: Liquipedia tier 1 (S) and 2 (A) main events (~35 a season), editions grouped by series (page name without year/season); filters by tier and LAN/online instead of surface |
+| `rankings/index.html` sport card with #1 per system; root homepage card | CS2 card the same way |
+| `site.js`: header nav + "Find a player", footer credits, tier pills, inactivity toggle text, Out tag | Sport-aware: "Find a team", Liquipedia credit (CC BY-SA 3.0), CS2 tiers, "team" wording, weekly sink |
+| Workflow: required steps (data, ratings, pages) vs optional ones (continue-on-error) | All CS2 steps optional: CS2 trouble never stops tennis; fetched data committed daily |
+| Inactivity: sink while out (default) / pure, as on tennis | Same (decided 20 Oct 2026: no CS2-only grace period) |
+
 ## Checks before merging
 
 1. Our VRS (Valve's code on Liquipedia data) vs Valve's published standings for the same date: rank correlation

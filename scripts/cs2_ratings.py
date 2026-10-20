@@ -31,6 +31,9 @@ import cs2_vrs  # noqa: E402
 import engines  # noqa: E402
 from engines import G2_SCALE, INACTIVE_RESET_YEARS  # noqa: E402
 
+MIN_MATCHES, ACTIVE_DAYS = 15, 90  # listed: this many matches and one in the last ACTIVE_DAYS days (also cs2_site_data.py)
+PERIODS_PER_YEAR = 52               # Glicko-2 rating periods are weeks for CS2
+
 CREDIT = {"source": "Liquipedia", "url": "https://liquipedia.net/counterstrike/",
           "licence": "CC BY-SA 3.0", "licence_url": "https://liquipedia.net/commons/Liquipedia:Copyrights"}
 
@@ -40,7 +43,8 @@ def engine_rows(common):
         if c["walkover"]:
             continue
         w, lo = c["sides"][c["winner"]][0], c["sides"][1 - c["winner"]][0]
-        yield {"w": w, "l": lo, "date": datetime.fromtimestamp(c["time"], timezone.utc).replace(tzinfo=None),
+        # whole days, as for tennis: weekly checkpoints then fall on Monday 00:00 and line up with event dates
+        yield {"w": w, "l": lo, "date": datetime.strptime(c["date"], "%Y-%m-%d"),
                "period": (c["time"] // 86400 + 3) // 7, "key": c["id"]}  # week number, weeks start on Monday
 
 
@@ -75,8 +79,8 @@ def main():
     ap.add_argument("--data", default="data/cs2")
     ap.add_argument("--valve", default="vendor/vrs", help="clone of ValveSoftware/counter-strike_regional_standings")
     ap.add_argument("--out", default="docs/rankings/cs2/data/rankings.json")
-    ap.add_argument("--min-matches", type=int, default=15)
-    ap.add_argument("--active-days", type=int, default=90)
+    ap.add_argument("--min-matches", type=int, default=MIN_MATCHES)
+    ap.add_argument("--active-days", type=int, default=ACTIVE_DAYS)
     ap.add_argument("--backtest-months", type=int, default=12)
     ap.add_argument("--no-vrs", action="store_true")
     args = ap.parse_args()
@@ -91,8 +95,8 @@ def main():
 
     # Glicko-2 rating periods are weeks for CS2 (teams play several matches a week; monthly periods left
     # ratings stale within the month: 60.5% vs 62.8% winners picked over the last 12 months)
-    elo, g2, osk, last_match, count, bt = engines.run(engine_rows(common), backtest_from, periods_per_year=52)
-    _e, g2p, oskp, _l, _c, btp = engines.run(engine_rows(common), backtest_from, inactivity=False, periods_per_year=52)
+    elo, g2, osk, last_match, count, bt = engines.run(engine_rows(common), backtest_from, periods_per_year=PERIODS_PER_YEAR)
+    _e, g2p, oskp, _l, _c, btp = engines.run(engine_rows(common), backtest_from, inactivity=False, periods_per_year=PERIODS_PER_YEAR)
 
     g2_score = {p: (g2[p].mu - 2 * g2[p].phi) * G2_SCALE + 1500 for p in g2}
     osk_score = {p: osk[p].ordinal() for p in osk}
