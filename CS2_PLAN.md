@@ -161,8 +161,28 @@ CC BY-SA 3.0 (they are derived from Liquipedia's); the code stays MIT.
    - Not done yet: Valve's qualifier links (a qualifier inherits half of the main event's prize pool through
      `qualifiedEvents`); Liquipedia has the links (`qualifier` on placements). Worth trying if it closes the
      remaining gap.
-4. Move the engines into `engines.py`; tennis output must stay byte-identical.
-5. CS2 ratings, VRS run, Valve standings reader, check 1.
+4. Move the engines into `engines.py`; tennis output must stay byte-identical. **Done.** Checked on TML's
+   2015-2026 files (GitHub copy): `rankings.json` and all 789 `site_data.py` outputs identical before and after,
+   with a fixed hash seed. That check found an old tie-order quirk in the tennis records ("disagreements" ties
+   depended on Python's hash seed, so the order could change between runs); fixed separately, it now gives the
+   same output for any seed. The engine also takes numbered rating periods (`periods_per_year`).
+5. CS2 ratings, VRS run, Valve standings reader, check 1. **First version:** `scripts/cs2_ratings.py` ->
+   `rankings/cs2/data/rankings.json` (17 s). Teams listed: 15+ matches and one in the last 90 days, plus the top
+   100 of our VRS or Valve's standings (414 teams on 19 Oct 2026, from 10,505 rosters). Valve's 5 Oct standings:
+   362 of 380 teams matched to our rosters; our VRS: 561 of 564.
+   - **Glicko-2 uses weekly rating periods for CS2** (monthly for tennis). With monthly periods it picked 60.5%
+     of winners over the last 12 months, against 62.3% for Elo; teams play several matches a week and the
+     ratings went stale within the month. Weekly: 62.7%, and the best log loss of the three.
+
+     | Last 12 months, 19,421 matches | Picked the winner | Log loss |
+     |---|---|---|
+     | Elo | 62.3% | 0.639 |
+     | Glicko-2 (weekly periods) | 62.7% | 0.631 |
+     | Glicko-2 pure | 62.6% | 0.632 |
+     | OpenSkill | 63.8% | 0.654 |
+     | OpenSkill pure | 63.7% | 0.653 |
+
+   - Still to do: weekly history, team pages, records, events (`cs2_site_data.py`), VRS backtest.
 6. Pages, credits, workflow steps (`continue-on-error`, so CS2 trouble never stops tennis).
 7. Merge, then send Liquipedia the link.
 

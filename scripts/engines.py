@@ -89,11 +89,14 @@ def months_between(a, b):
     return (int(b[:4]) - int(a[:4])) * 12 + int(b[4:6]) - int(a[4:6])
 
 
-def run(matches, backtest_from, preds=None, weekly=None, inactivity=True):
+def run(matches, backtest_from, preds=None, weekly=None, inactivity=True, periods_per_year=12):
     """Elo, Glicko-2 and OpenSkill over `matches`, oldest first. Each match is a dict:
         w, l     winner and loser (any hashable id: a tennis player, a CS2 roster, a chess player)
         date     naive datetime (UTC), used for weekly ticks and inactivity
-        period   'YYYYMM' Glicko-2 rating period (tennis: the tournament's start month)
+        period   Glicko-2 rating period: 'YYYYMM' (tennis: the tournament's start month), or an integer period
+                 number (CS2: week number); periods with no matches in between still count as periods
+    periods_per_year: how many rating periods make a year (12 for months, 52 for weeks); sets how fast an
+                 inactive player's uncertainty grows per period (INACTIVE_RESET_YEARS either way)
         key      optional; preds[key] gets each model's pre-match win chance for the winner
     weekly(monday, elo, g2, osk, last_match, count) is called once per week, before that week's matches.
     inactivity=True grows Glicko-2 / OpenSkill uncertainty while a player is not playing (see constants)."""
@@ -104,7 +107,8 @@ def run(matches, backtest_from, preds=None, weekly=None, inactivity=True):
     pending = defaultdict(list)
     period = None
     bt = {m: {"n": 0, "correct": 0, "logloss": 0.0} for m in ("elo", "glicko", "openskill")}
-    extra = G2_INACTIVE_C2 if inactivity else 0.0
+    per_period = G2_INACTIVE_C2 if periods_per_year == 12 else G2_PHI_MAX ** 2 / (periods_per_year * INACTIVE_RESET_YEARS)
+    extra = per_period if inactivity else 0.0
 
     def flush():
         snap = {k: (v.mu, v.phi) for k, v in g2.items()}
@@ -143,8 +147,8 @@ def run(matches, backtest_from, preds=None, weekly=None, inactivity=True):
             period = per
         if per != period:
             flush()
-            # months with no tour matches at all (the December break) are still rating periods
-            for _ in range(months_between(period, per) - 1):
+            # periods with no matches at all (tennis: the December break) are still rating periods
+            for _ in range((per - period if isinstance(per, int) else months_between(period, per)) - 1):
                 flush()
             period = per
         w, l = r["w"], r["l"]
