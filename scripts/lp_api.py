@@ -15,6 +15,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from collections import deque
+from datetime import datetime, timedelta, timezone
 
 BASE = "https://api.liquipedia.net/api/v3/"
 PAGE = 1000  # rows per request (the API's maximum page size)
@@ -73,7 +74,8 @@ class Client:
             self._times.popleft()
         if len(self._times) >= self.per_hour:
             wait = 3600 - (now - self._times[0]) + 1
-            self.log(f"  pacing: {self.per_hour} requests in the last hour, waiting {wait / 60:.0f} min")
+            until = (datetime.now(timezone.utc) + timedelta(seconds=wait)).strftime("%H:%M UTC")
+            self.log(f"  pacing: {self.per_hour} requests in the last hour, waiting {wait / 60:.0f} min (until {until})")
             self._sleep_until(wait)
             return self._wait_turn()
         if self._times and now - self._times[-1] < self.min_gap:
@@ -90,6 +92,7 @@ class Client:
             self._wait_turn()
             self.sent += 1
             self._times.append(self.clock())
+            self.log(f"  request {self.sent}: {datapoint} {params.get('conditions', '')[:110]} offset {params.get('offset', 0)}")
             try:
                 with self.opener(urllib.request.Request(url, headers=headers), timeout=90) as r:
                     text = _decode(r.read())

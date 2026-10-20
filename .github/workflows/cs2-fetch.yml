@@ -37,7 +37,7 @@ jobs:
           LIQUIPEDIA_API_KEY: ${{ secrets.LIQUIPEDIA_API_KEY }}
           CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
         run: |
-          python scripts/fetch_cs2.py --start 2023-01 --max-requests 250 --per-hour 45 --max-minutes 320 2>&1 | tee fetch.log
+          python -u scripts/fetch_cs2.py --start 2023-01 --max-requests 250 --per-hour 45 --max-minutes 320 2>&1 | tee fetch.log
           { echo '```'; tail -n 40 fetch.log; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Save data to the cs2 branch
