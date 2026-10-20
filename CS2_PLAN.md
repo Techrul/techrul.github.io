@@ -209,7 +209,11 @@ Everything tennis has, and what it becomes for CS2 (pages under `site/rankings/c
      | OpenSkill pure | 63.7% | 0.653 |
 
    - Still to do: weekly history, team pages, records, events (`cs2_site_data.py`), VRS backtest.
-6. Pages, credits, workflow steps (`continue-on-error`, so CS2 trouble never stops tennis).
+6. Pages, credits, workflow steps (`continue-on-error`, so CS2 trouble never stops tennis). **Done (20 Oct 2026):**
+   six pages mirroring tennis (see "Matching the tennis section"), sport-aware `site.js`, CS2 cards on the overview
+   and the homepage, CS2 steps and the data commit in `update.yml`, CS2 section in HOW_IT_WORKS.md. Checked: every
+   CS2 and tennis page loads without script errors, 805 team/event links on the CS2 pages all resolve, no sideways
+   scrolling at phone width. Weekly VRS history makes `cs2_site_data.py` take about 7 minutes.
 7. Merge, then send Liquipedia the link.
 
 ## Probe results (19 Oct 2026, from GitHub Actions, `CS2_PROBE_RESULT.txt` on this branch)
