@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" data-theme="black">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Team</title>
+<meta name="description" content="A CS2 team's ranking under every system over time, its players, titles, record and recent matches.">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+<style>
+.facts{color:var(--muted);margin:0 0 22px}
+.facts .roster{font-size:.95rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.tile .sys{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.86rem}
+.tile .sys i{width:14px;height:3px;border-radius:2px;display:inline-block}
+.tile .big{font-size:2rem;font-weight:700;line-height:1.1;margin-top:4px}
+.tile .sub{color:var(--muted);font-size:.82rem}
+.tiersum{display:flex;flex-wrap:wrap;gap:6px 18px;margin:4px 0 16px;color:var(--muted)}
+.tiersum span{display:inline-flex;align-items:center;gap:6px}
+.tiersum b{color:var(--ink)}
+.titles{background:var(--card);border:1px solid var(--line);border-radius:10px}
+.trow{display:grid;grid-template-columns:150px 1fr;gap:8px 14px;padding:12px 14px;border-top:1px solid var(--line)}
+.trow:first-child{border-top:0}
+.tt{display:flex;flex-wrap:wrap;gap:6px}
+.coverage{border:1px solid var(--line);border-left:3px solid var(--muted);border-radius:8px;padding:10px 14px;margin:0 0 20px;color:var(--muted);font-size:.9rem;max-width:80ch}
+.coverage b{color:var(--ink);font-weight:600}
+.tit{display:inline-flex;align-items:center;text-decoration:none;font-size:.88rem;border:1px solid var(--line);border-radius:6px;padding:3px 9px}
+a.tit:hover{border-color:var(--ink)}
+.tit b{font-weight:600;margin-right:5px}
+@media (max-width:520px){.trow{grid-template-columns:1fr}}
+.head2{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px}
+.bar2{height:6px;background:var(--line);border-radius:3px;min-width:60px}
+.bar2 i{display:block;height:6px;border-radius:3px;background:var(--ink)}
+.ph{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px}
+.ph h1 .region{font-size:.8rem;vertical-align:6px}
+.cmp{font-weight:500;text-decoration:none;border:1.5px solid var(--line);border-radius:999px;padding:6px 14px;white-space:nowrap}
+.cmp:hover{border-color:var(--muted)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+</style>
+</head>
+<body data-root="../">
+<div class="wrap">
+  <header class="bar" data-sport="cs2" data-page="team"></header>
+  <main id="main"><p class="note">Loading team…</p></main>
+  <footer class="foot" data-auto></footer>
+</div>
+<script>
+(function () {
+  var S = Site, id = S.param("id");
+  var main = document.getElementById("main");
+  if (!id) { main.innerHTML = '<div class="empty">No team chosen. Use "Find a team" above, or pick one from the rankings.</div>'; return; }
+  var SYSTEMS = [
+    { key: "elo", label: "Elo", color: "elo", col: 1 },
+    { key: "glicko", label: "Glicko-2", color: "glicko", col: 2 },
+    { key: "openskill", label: "OpenSkill", color: "openskill", col: 3 },
+    { key: "vrs", label: "VRS (live)", color: "vrs", col: 5 },
+    { key: "official", label: "Valve official", color: "official", col: 6 }
+  ];
+  var TIERS = ["1", "2", "3"], TIER_NAME = { "1": "S-Tier", "2": "A-Tier", "3": "B-Tier", "4": "C-Tier" };
+  var range = 156;
+  function colOf(s) { var k = S.sysKey(s.key); return k === "glicko_pure" ? 7 : k === "openskill_pure" ? 8 : s.col; }
+  Promise.all([S.json("data/teams/" + encodeURIComponent(id) + ".json"), S.json("data/history_meta.json")]).then(function (res) {
+    render(res[0], res[1]);
+  }).catch(function () {
+    main.innerHTML = '<div class="empty">No profile for this team: it has too few matches in the data, or the roster has changed since. <a href="index.html">See the rankings</a>.</div>';
+  });
+
+  function render(p, meta) {
+    document.title = p.name + " · CS2";
+    var c = p.current || {}, ranks = c.ranks || {};
+    var asOf = meta.weeks[meta.weeks.length - 1];
+    var dataFrom = meta.matches_from || meta.weeks[0], dataTo = meta.matches_to || asOf;
+    var roster = '<span class="roster">' + p.players.map(function (n, i) { return "<span>" + S.flag(p.flags[i] === "world" ? "" : p.flags[i]) + S.esc(n) + "</span>"; }).join("") + "</span>";
+    var other = p.names.filter(function (n) { return n !== p.full; });
+    var facts = [p.full !== p.name ? p.full : null, other.length ? "Also played as " + other.slice(0, 3).join(", ") : null,
+      p.last_match ? "Last match " + S.date(p.last_match) : null].filter(Boolean).map(S.esc).join(" · ");
+    var tiles = SYSTEMS.map(function (s) {
+      var k = S.sysKey(s.key);
+      var r = s.key === "official" ? c.official_rank : ranks[k];
+      var v = s.key === "official" ? c.official_points : c[k];
+      var sub = s.key === "official" ? (v != null ? S.num(v) + " points" : "Not on Valve’s list") : s.key === "vrs" ? (v != null ? S.num(v) + " points" : "Not ranked now") : (v != null ? "Rating " + (s.key === "openskill" ? Number(v).toFixed(1) : S.num(v)) : "Not rated now");
+      var best = p.best_rank && p.best_rank[k] ? "Best #" + p.best_rank[k] : "";
+      return '<div class="tile"><div class="sys"><i style="background:var(--' + s.color + ')"></i>' + s.label + '</div><div class="big">' + (r ? "#" + r : "–") +
+        '</div><div class="sub">' + [sub, best].filter(Boolean).join(" · ") + "</div></div>";
+    }).join("");
+
+    // titles (S-, A- and B-tier main events won)
+    var byTier = {}; p.titles.forEach(function (t) { byTier[t.tier] = (byTier[t.tier] || 0) + 1; });
+    var tierSum = TIERS.filter(function (k) { return byTier[k]; }).map(function (k) { return "<span>" + S.cs2tier(k) + " <b>" + byTier[k] + "</b></span>"; }).join("");
+    var cab = TIERS.filter(function (k) { return byTier[k]; }).map(function (k) {
+      var list = p.titles.filter(function (t) { return t.tier === k; });
+      return '<div class="trow"><div class="tl">' + S.cs2tier(k) + '</div><div class="tt">' + list.map(function (t) {
+        var inner = (/major/i.test(t.valve) ? S.cs2tier(k, t.valve) + " " : "") + "<b>" + t.year + "</b> " + S.esc(t.name);
+        return t.key ? '<a class="tit" href="event.html?key=' + encodeURIComponent(t.key) + '">' + inner + "</a>" : '<span class="tit">' + inner + "</span>";
+      }).join("") + "</div></div>";
+    }).join("");
+
+    // record
+    function wl(key, label) {
+      var r = p.record[key]; if (!r) return "";
+      var n = r[0] + r[1], pct = n ? r[0] / n : 0;
+      return "<tr><td>" + label + '</td><td class="n">' + r[0] + '</td><td class="n">' + r[1] + '</td><td class="n">' + (n ? (pct * 100).toFixed(0) + "%" : "–") +
+        '</td><td style="width:30%"><div class="bar2" role="img" aria-label="' + (pct * 100).toFixed(0) + '% won"><i style="width:' + (pct * 100).toFixed(1) + '%"></i></div></td></tr>';
+    }
+    var recRows = wl("all", "All matches") + wl("lan:LAN", "LAN") + wl("lan:Online", "Online") +
+      ["1", "2", "3", "4"].map(function (k) { return wl("tier:" + k, TIER_NAME[k] + " events"); }).join("");
+    var years = Object.keys(p.record).filter(function (k) { return k.indexOf("year:") === 0; }).sort().reverse();
+    var yearRows = years.map(function (k) { return wl(k, k.slice(5)); }).join("");
+    var thead = '<thead><tr><th></th><th class="n">Won</th><th class="n">Lost</th><th class="n">Win %</th><th></th></tr></thead>';
+
+    var recent = p.recent.map(function (m) {
+      var opp = m.opp_link ? '<a class="plink" href="team.html?id=' + encodeURIComponent(m.opp) + '">' + S.esc(m.opp_name) + "</a>" : S.esc(m.opp_name);
+      return "<tr><td>" + S.date(m.date) + "</td><td>" + S.esc(m.event) + ' <span class="muted">' + S.esc(TIER_NAME[m.tier] || "") + "</span></td><td>" + opp +
+        '</td><td><span class="' + (m.won ? "win\">Won" : "loss\">Lost") + '</span><div class="muted">' + S.esc(m.score) + '</div></td><td class="n">' +
+        (m.p == null ? "–" : Math.round(m.p * 100) + "%") + "</td></tr>";
+    }).join("");
+
+    main.innerHTML =
+      S.back("index.html", "Back") +
+      '<div class="ph"><h1>' + S.esc(p.name) + (c.region ? '<span class="region">' + S.esc(c.region) + "</span>" : "") + '</h1><a class="cmp" href="predict.html?a=' + encodeURIComponent(p.id) + '">Compare with another team →</a></div>' +
+      '<p class="facts">' + roster + "<br>" + facts + S.outTag(p.last_match, asOf) + ' · <a class="extlink" href="' + S.esc(p.liquipedia) + '" target="_blank" rel="noopener">Liquipedia ↗</a></p>' +
+      '<div class="coverage"><b>Data covers ' + S.date(dataFrom) + " to " + S.date(dataTo) + ", this roster only.</b> A team here is a roster under Valve’s rule: its current five and earlier lineups that share three of them. " +
+      "Matches by the organisation with a different core are a different team, so these are not the organisation’s all-time totals.</div>" +
+      '<div class="tiles" aria-label="Current rank in each system">' + tiles + "</div>" +
+      '<div id="inact"></div>' +
+      '<section><h2>Titles <small class="muted" style="font-weight:400;font-size:.9rem">' + p.titles.length + " since " + S.monthYear(dataFrom) + "</small></h2>" + (p.titles.length
+        ? '<div class="tiersum">' + tierSum + "</div><div class=\"titles\">" + cab + "</div>"
+        : '<p class="note">No S-, A- or B-tier titles since ' + S.monthYear(dataFrom) + ".</p>") +
+      (p.finals_lost ? '<p class="note" style="margin-top:12px">Also ' + p.finals_lost + " final" + (p.finals_lost > 1 ? "s" : "") + " lost.</p>" : "") + "</section>" +
+      '<section><div class="head2"><h2>Rank over time</h2><div class="chips" id="range" role="group" aria-label="Time range"></div></div>' +
+      '<p class="note">Lower is better. Valve’s line steps once a month, when Valve publishes new standings. Glicko-2 and OpenSkill follow the inactive-teams setting above.</p><div id="rank-chart"></div></section>' +
+      '<section><h2>Elo rating over time</h2>' + (p.peak_elo ? '<p class="note">Highest Elo in the data: ' + p.peak_elo.value + " on " + S.date(p.peak_elo.date) + ". The marked point is the highest in the range shown.</p>" : "") + '<div id="elo-chart"></div></section>' +
+      '<section class="cols"><div><h2>Record</h2><p class="note">Series won and lost since ' + (years.length ? years[years.length - 1].slice(5) : "") + ".</p><div class=\"tablewrap\"><table class=\"t\">" + thead + "<tbody>" + recRows + "</tbody></table></div></div>" +
+      '<div><h2>By year</h2><p class="note">Most recent first.</p><div class="tablewrap"><table class="t">' + thead + "<tbody>" + yearRows + "</tbody></table></div></div></section>" +
+      '<section><h2>Recent matches</h2><p class="note">Pre-match chance is what Elo gave this team before the match.</p><div class="tablewrap"><table class="t"><thead><tr><th>Date</th><th>Event</th><th>Opponent</th><th>Result</th><th class="n">Pre-match chance</th></tr></thead><tbody>' + recent + "</tbody></table></div></section>";
+
+    S.inactivityToggle(document.getElementById("inact"), function () { render(p, meta); }, "Glicko-2 and OpenSkill, when a team is out");
+
+    var hist = p.history;
+    if (!hist.length) { document.getElementById("rank-chart").innerHTML = '<div class="empty">No ranking history: this team has not been near the top 200 of any system.</div>'; document.getElementById("elo-chart").innerHTML = ""; return; }
+    var first = hist[0][0], last = meta.weeks.length - 1;
+    var rows = {}; hist.forEach(function (h) { rows[h[0]] = h; });
+    var ranges = [["1 year", 52], ["All", 100000]];
+    var state = { weeks: range > 52 ? 100000 : range };
+    var rangeEl = document.getElementById("range");
+    rangeEl.innerHTML = ranges.map(function (r) { return '<button class="chip" type="button" data-w="' + r[1] + '">' + r[0] + "</button>"; }).join("");
+    function draw() {
+      rangeEl.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", +b.dataset.w === state.weeks ? "true" : "false"); });
+      var start = Math.max(first, last - state.weeks), idx = [];
+      for (var w = start; w <= last; w++) idx.push(w);
+      var dates = idx.map(function (w) { return meta.weeks[w]; });
+      S.lineChart(document.getElementById("rank-chart"), {
+        label: "Rank over time for " + p.name, scale: "rank", height: 300, dates: dates,
+        series: SYSTEMS.map(function (s) {
+          return { key: s.key, label: s.label, color: s.color, values: idx.map(function (w) { return rows[w] ? rows[w][colOf(s)] : null; }) };
+        })
+      });
+      var elo = idx.map(function (w) { return rows[w] ? rows[w][4] : null; });
+      var peakI = null; elo.forEach(function (v, i) { if (v != null && (peakI == null || v > elo[peakI])) peakI = i; });
+      S.lineChart(document.getElementById("elo-chart"), {
+        label: "Elo rating over time for " + p.name, scale: "linear", height: 220, dates: dates,
+        series: [{ key: "elo", label: "Elo", color: "elo", values: elo }],
+        mark: peakI != null ? { index: peakI, label: "High " + elo[peakI] } : null
+      });
+    }
+    rangeEl.addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) { state.weeks = range = +b.dataset.w; draw(); } });
+    draw();
+  }
+})();
+</script>
+</body>
+</html>

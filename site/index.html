@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Techrul</title>
-<meta name="description" content="Techrul's projects: Different sports, different rankings, a site comparing ranking systems on the same results, and snackutils, a tiny Python utilities library.">
+<meta name="description" content="Techrul's projects: Different sports, different rankings, a site comparing ranking systems on the same tennis and CS2 results, and snackutils, a tiny Python utilities library.">
 <link rel="stylesheet" href="rankings/assets/site.css">
 <script>
   // same theme choice as the rest of the site (stored per browser)
@@ -50,8 +50,8 @@ a.project:hover{border-color:var(--muted)}
       <a class="project" href="rankings/">
         <h2>Different sports, different rankings</h2>
         <p>The same matches ranked by Elo, Glicko-2, OpenSkill and Valve’s VRS, next to the official rankings. Updated every day.</p>
-        <div class="tags"><span class="badge">Tennis</span><span class="badge">CS2 soon</span></div>
-        <div class="now" id="now">&nbsp;</div>
+        <div class="tags"><span class="badge">Tennis</span><span class="badge">CS2</span></div>
+        <div class="now" id="now"></div>
         <span class="go">Open rankings →</span>
       </a>
       <div class="project">
@@ -89,9 +89,18 @@ a.project:hover{border-color:var(--muted)}
       var best = d.players.filter(function (p) { return (s[0] === "official" ? p.official_rank : (p.ranks || {})[s[0]]) === 1; })[0];
       return best ? '<span><i class="dot" style="background:var(--' + s[0] + ')"></i>' + s[1] + ": <b>" + esc(best.name.split(" ").slice(-1)[0]) + "</b></span>" : "";
     }).filter(Boolean);
-    if (tops.length) document.getElementById("now").innerHTML = "Tennis #1 today: " + tops.join(" · ");
+    if (tops.length) document.getElementById("now").insertAdjacentHTML("afterbegin", "<div>Tennis #1 today: " + tops.join(" · ") + "</div>");
   }).catch(function () {});
   // latest snackutils version from PyPI (left blank if it can't load)
+  // CS2 #1 under Elo and in Valve's own list
+  fetch("rankings/cs2/data/rankings.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d) return;
+    var top = function (f) { return d.teams.filter(f)[0]; };
+    var elo = top(function (t) { return t.ranks.elo === 1; }), valve = top(function (t) { return t.official_rank === 1; });
+    var parts = [elo ? '<span><i class="dot" style="background:var(--elo)"></i>Elo: <b>' + esc(elo.short) + "</b></span>" : "",
+                 valve ? '<span><i class="dot" style="background:var(--official)"></i>Valve: <b>' + esc(valve.short) + "</b></span>" : ""].filter(Boolean);
+    if (parts.length) document.getElementById("now").insertAdjacentHTML("beforeend", "<div>CS2 #1 today: " + parts.join(" · ") + "</div>");
+  }).catch(function () {});
   fetch("https://pypi.org/pypi/snackutils/json").then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
     if (d && d.info && d.info.version) document.getElementById("snackver").textContent = "· latest v" + d.info.version;
   }).catch(function () {});

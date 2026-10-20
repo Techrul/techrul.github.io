@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en" data-theme="black">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS2 rankings</title>
+<meta name="description" content="The same Counter-Strike 2 matches ranked by Elo, Glicko-2, OpenSkill and Valve's VRS method, next to Valve's official standings, with teams following Valve's three-of-five roster rule.">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+<style>
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px;padding:0}
+.tab{font:inherit;font-weight:500;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer}
+.tab[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.tab:not([aria-pressed="true"]):hover{border-color:var(--muted)}
+.more:hover{background:var(--ink);color:var(--on-ink)}
+.blurb{margin:0 0 4px;max-width:70ch}
+.tools{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin:16px 0 10px}
+input[type=search]{font:inherit;border:1.5px solid var(--line);border-radius:8px;padding:8px 12px;min-width:220px;background:var(--card);color:var(--ink)}
+.key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.88rem;color:var(--muted)}
+.key span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.dot.ring{background:transparent;border:2px solid var(--official)}
+.board{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.row{display:grid;grid-template-columns:44px minmax(0,1fr) 92px 64px 64px 168px;gap:0 10px;align-items:center;padding:9px 14px;border-top:1px solid var(--line)}
+.row.head{border-top:0;background:var(--head);font-size:.82rem;color:var(--muted);font-weight:500}
+.rk{font-weight:700;text-align:right}
+.rk small{display:block;font-weight:400;font-size:.72rem;color:var(--muted)}
+.nm{min-width:0}
+.nm b{font-weight:500;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nm small{color:var(--muted);font-size:.8rem;display:block}
+.val{text-align:right;font-weight:500}
+.val small{display:block;color:var(--muted);font-weight:400;font-size:.78rem}
+.off{text-align:right;color:var(--muted)}
+.shift{text-align:right;font-weight:500}
+.shift.up{color:var(--up)} .shift.down{color:var(--down)} .shift.flat{color:var(--muted)}
+.strip{padding:0 10px 0 14px;min-width:0}
+.strip svg{display:block;width:100%;height:22px;overflow:visible}
+.strip .axis{stroke:var(--line);stroke-width:1}
+.strip .ring{fill:var(--card);stroke:var(--official);stroke-width:2}
+.strip .halo{fill:none;stroke-width:1.5}
+.strip .far{opacity:.6}
+.more{display:block;margin:14px auto 0;font:inherit;font-weight:500;padding:9px 18px;border-radius:999px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);cursor:pointer}
+@media (max-width:720px){
+  .row{grid-template-columns:36px minmax(0,1fr) 78px;grid-template-areas:"rk nm val" ". strip strip" ". meta meta";row-gap:6px;padding:12px 12px}
+  .row.head{display:none}
+  .rk{grid-area:rk;align-self:start;padding-top:2px}
+  .nm{grid-area:nm}
+  .val{grid-area:val}
+  .strip{grid-area:strip}
+  .off,.shift{display:none}
+  .meta{grid-area:meta;display:block!important;color:var(--muted);font-size:.82rem}
+}
+.meta{display:none}
+.predict-link{display:block;margin-top:28px;text-decoration:none}
+.predict-link:hover{border-color:var(--muted)}
+.predict-link b{display:block;margin-bottom:2px}
+.predict-link span{color:var(--muted)}
+.blurb .badge{margin-right:8px}
+.nm .out{margin-left:8px}
+.regions{margin:0 0 6px}
+</style>
+</head>
+<body data-root="../">
+<div class="wrap">
+  <header class="bar" data-sport="cs2" data-page="rankings"></header>
+  <main>
+  <h1>CS2 rankings</h1>
+  <p class="lede">The same Counter-Strike 2 matches, ranked by different systems. A team is a roster under Valve’s rule: its latest five players, plus earlier lineups that share three of them. Pick a system to see how its order compares with Valve’s official standings.</p>
+  <p class="asof" id="asof"></p>
+
+  <div class="tabs" id="tabs" role="group" aria-label="Ranking system"></div>
+  <p class="blurb" id="blurb"></p>
+  <div id="inact"></div>
+
+  <div class="tools">
+    <div class="chips regions" id="regions" role="group" aria-label="Region"></div>
+    <input type="search" id="q" placeholder="Filter by team or player" aria-label="Filter teams or players in this list">
+  </div>
+  <div class="key" id="key" aria-label="Strip key" style="margin-bottom:10px"></div>
+
+  <div class="board" id="board" aria-live="polite"></div>
+  <button class="more" id="more" type="button" hidden>Show 50 more</button>
+
+  <a class="card predict-link" href="predict.html"><b>Which system predicts best? And who wins a match-up?</b><span>Compare any two teams under every system, and see how often each system picked the winner over the last 12 months →</span></a>
+  <p class="note" style="margin-top:20px" id="rules"></p>
+  </main>
+  <footer class="foot" data-auto></footer>
+</div>
+<script>
+Site.json('data/rankings.json').then(function(D){
+  var teams = D.teams, meta = D.meta;
+  var MAXRANK = 60, PAGE = 50;
+  var offDate = meta.official ? Site.date(meta.official.date) : '';
+  var MODELS = [
+    {id:'elo', label:'Elo', badge:'Skill model', color:'var(--elo)',
+     blurb:'One number per team. Beating a higher-rated team moves you up more. Everyone starts at 1500, K is 32; a series win is a win, whatever the event or map score.',
+     val:function(p){return p.elo}, unc:null},
+    {id:'glicko', label:'Glicko-2', badge:'Skill model', color:'var(--glicko)',
+     blurb:'Elo with a confidence range (the ± figure), updated once a week. Teams are ranked by rating minus twice that range, so few or old results push a team down.',
+     val:function(p){return p[Site.sysKey('glicko')]}, unc:function(p){return '±' + Math.round(p[Site.sysKey('glicko') === 'glicko' ? 'glicko_rd' : 'glicko_rd_pure'])}},
+    {id:'openskill', label:'OpenSkill', badge:'Skill model', color:'var(--openskill)',
+     blurb:'A Bayesian rating with an uncertainty value (σ). Here it rates each roster as one entity. Ranked by the mean minus three σ.',
+     val:function(p){return p[Site.sysKey('openskill')].toFixed(1)}, unc:function(p){return 'σ ' + p[Site.sysKey('openskill') === 'openskill' ? 'openskill_sigma' : 'openskill_sigma_pure'].toFixed(2)}},
+    {id:'vrs', label:'VRS (live)', badge:'Valve’s method, recalculated daily', color:'var(--vrs)',
+     blurb:'Valve’s own code, run unchanged on the same results as the other systems, up to the latest match: a live preview of Valve’s next update. It rewards prize money and beating teams that win it; teams that stop playing drop fast.',
+     links:[{href:'https://liquipedia.net/counterstrike/Valve_Regional_Standings', text:'Liquipedia’s unofficial VRS'}, {href:'https://www.hltv.org/valve-ranking/teams', text:'HLTV’s live Valve ranking'}],
+     val:function(p){return p.vrs == null ? '–' : p.vrs.toLocaleString('en-US')}, unc:null},
+    {id:'official', label:'Valve official', color:'var(--official)', badge:'Published ' + offDate,
+     blurb:'Valve’s standings of ' + offDate + ', which decide tournament invites. Valve updates them on the first Monday of each month. Teams are matched to rosters by three of five players.',
+     links:[{href:'https://github.com/ValveSoftware/counter-strike_regional_standings', text:'Valve’s standings on GitHub'}],
+     val:function(p){return p.official_points == null ? '–' : p.official_points.toLocaleString('en-US')}, unc:null}
+  ];
+  if (!meta.vrs) MODELS = MODELS.filter(function(m){return m.id !== 'vrs'});
+  if (!meta.official) MODELS = MODELS.filter(function(m){return m.id !== 'official'});
+  var REGIONS = [['all', 'All regions'], ['Europe', 'Europe'], ['Americas', 'Americas'], ['Asia', 'Asia']];
+  var state = {model:'elo', shown:PAGE, q:'', region:'all'};
+  try { var r0 = localStorage.getItem('cs2region'); if (REGIONS.some(function(x){return x[0] === r0})) state.region = r0; } catch (e) {}
+  var esc = Site.esc;
+  function rankOf(p,id){return id === 'official' ? p.official_rank : p.ranks[Site.sysKey(id)]}
+  function pos(rank){return (Math.sqrt((Math.min(rank,MAXRANK) - 1) / (MAXRANK - 1)) * 100).toFixed(2) + '%'}
+
+  document.getElementById('asof').textContent =
+    'Match data through ' + Site.date(meta.data_as_of) + ', ' + meta.matches_used.toLocaleString('en-US') +
+    ' matches since January 2023. Updated ' + meta.generated + '.';
+  document.getElementById('rules').textContent = 'Ratings use every finished match on Liquipedia with five players a side (all tiers, Valve-ranked or not; no showmatches), counting a series as one result. Walkovers are skipped. 2023 only warms the models up. Teams need ' +
+    meta.listing.min_matches + ' matches and one in the last ' + meta.listing.active_days + ' days to be rated; teams in the top 100 of VRS or Valve’s list are shown either way. Regions follow Valve’s rule: where most of a team’s players come from.';
+
+  var tabs = document.getElementById('tabs');
+  MODELS.forEach(function(m){
+    var b = document.createElement('button');
+    b.className = 'tab'; b.type = 'button'; b.textContent = m.label; b.dataset.id = m.id;
+    b.addEventListener('click', function(){state.model = m.id; state.shown = PAGE; render()});
+    tabs.appendChild(b);
+  });
+  var regions = document.getElementById('regions');
+  regions.innerHTML = REGIONS.map(function(r){return '<button class="chip" type="button" data-v="' + r[0] + '">' + r[1] + '</button>'}).join('');
+  regions.onclick = function(e){var b = e.target.closest('button'); if (!b) return; state.region = b.dataset.v; state.shown = PAGE; try { localStorage.setItem('cs2region', state.region); } catch (err) {} render()};
+
+  var key = document.getElementById('key');
+  key.innerHTML = '<span>Rank strip: where each system places the team, #1 on the left, ' + MAXRANK + '+ on the right (global ranks).</span>' + MODELS.map(function(m){
+    return '<span><i class="dot' + (m.id==='official' ? ' ring' : '') + '" style="background:' + (m.id==='official' ? 'transparent' : m.color) + '"></i>' + esc(m.label) + '</span>';
+  }).join('');
+
+  function strip(p, selId){
+    var order = MODELS.filter(function(m){return m.id !== selId}).concat(MODELS.filter(function(m){return m.id === selId}));
+    var parts = order.map(function(m){
+      var r = rankOf(p, m.id); if (r == null) return '';
+      var x = pos(r), sel = m.id === selId, far = r > MAXRANK;
+      var t = '<title>' + esc(m.label) + ': #' + r + '</title>';
+      var col = m.id === 'official' ? 'var(--official)' : m.color;
+      var dot = m.id === 'official'
+        ? '<circle class="ring" cx="' + x + '" cy="11" r="' + (sel ? 5.5 : 4.5) + '"/>'
+        : '<circle cx="' + x + '" cy="11" r="' + (sel ? 6 : 5) + '" style="fill:' + col + '"/>';
+      var halo = sel ? '<circle class="halo" cx="' + x + '" cy="11" r="9" style="stroke:' + col + '"/>' : '';
+      return '<g' + (far ? ' class="far"' : '') + '>' + t + halo + dot + '</g>';
+    }).join('');
+    return '<div class="strip"><svg role="img" aria-label="Rank under each system"><line class="axis" x1="0" x2="100%" y1="11" y2="11"/>' + parts + '</svg></div>';
+  }
+  function roster(p){
+    return '<span class="roster">' + p.players.map(function(n, i){return '<span>' + Site.flag(p.flags[i] === 'world' ? '' : p.flags[i]) + esc(n) + '</span>'}).join('') + '</span>';
+  }
+
+  function render(){
+    var m = MODELS.filter(function(x){return x.id === state.model})[0];
+    Array.prototype.forEach.call(tabs.children, function(b){b.setAttribute('aria-pressed', b.dataset.id === m.id ? 'true' : 'false')});
+    regions.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed', b.dataset.v === state.region ? 'true' : 'false')});
+    document.getElementById('blurb').innerHTML = Site.stack(MODELS.map(function(x){
+      return '<span class="badge">' + esc(x.badge) + '</span>' + esc(x.blurb) +
+        (x.links ? ' ' + x.links.map(function(l){return '<a class="extlink" href="' + l.href + '" target="_blank" rel="noopener">' + esc(l.text) + ' ↗</a>'}).join(' · ') : '');
+    }), MODELS.indexOf(m));
+    Site.inactivityToggle(document.getElementById('inact'), function(){ state.shown = PAGE; render(); }, 'When a team is out', m.id === 'glicko' || m.id === 'openskill');
+
+    var list = teams.filter(function(p){return rankOf(p, m.id) != null});
+    list.sort(function(a,b){return rankOf(a,m.id) - rankOf(b,m.id)});
+    if (state.region !== 'all') list = list.filter(function(p){return p.region === state.region});
+    list.forEach(function(p, i){p._pos = i + 1});
+    var q = state.q.trim().toLowerCase();
+    if (q) list = list.filter(function(p){return p.short.toLowerCase().indexOf(q) !== -1 || p.name.toLowerCase().indexOf(q) !== -1 || p.players.some(function(x){return x.toLowerCase().indexOf(q) !== -1})});
+
+    var regional = state.region !== 'all';
+    var html = '<div class="row head"><span class="rk">' + (regional ? '#' : '#') + '</span><span>Team' + (regional ? ' (' + esc(state.region) + ')' : '') + '</span><span class="val">' + (m.id === 'official' || m.id === 'vrs' ? 'Points' : 'Rating') + '</span><span class="off">Valve</span><span class="shift" title="Valve’s rank minus this system’s rank. Plus means this system ranks the team higher.">vs Valve</span><span>Rank strip</span></div>';
+    var slice = list.slice(0, state.shown);
+    if (!slice.length) html += '<div class="empty">No teams match that search.</div>';
+    slice.forEach(function(p){
+      var r = rankOf(p, m.id);
+      var shift = '', cls = 'flat';
+      if (m.id !== 'official' && p.official_rank != null){
+        var d = p.official_rank - r;
+        if (d > 0){shift = '+' + d; cls = 'up'} else if (d < 0){shift = '−' + Math.abs(d); cls = 'down'} else {shift = '0'}
+      }
+      var sub = p.matches_12m + ' matches in 12 months' + (p.rated === false ? ' · not rated' : (p.matches_12m < 10 ? ' · few matches' : ''));
+      var out = Site.outTag(p.last_match, meta.data_as_of);
+      var offTxt = p.official_rank != null ? '#' + p.official_rank : '–';
+      var href = 'team.html?id=' + encodeURIComponent(p.id);
+      html += '<div class="row" data-href="' + href + '">' +
+        '<span class="rk">' + (regional ? p._pos + '<small>#' + r + '</small>' : r) + '</span>' +
+        '<span class="nm"><b><a class="plink" href="' + href + '"' + (p.short !== p.name ? ' title="' + esc(p.name) + '"' : '') + '>' + esc(p.short) + '</a>' + (p.region && !regional ? '<span class="region">' + esc(p.region) + '</span>' : '') + out + '</b>' + roster(p) + '<small>' + esc(sub) + '</small></span>' +
+        '<span class="val">' + esc(m.val(p)) + (m.unc ? '<small>' + esc(m.unc(p)) + '</small>' : '') + '</span>' +
+        '<span class="off">' + offTxt + '</span>' +
+        '<span class="shift ' + cls + '">' + shift + '</span>' +
+        strip(p, m.id) +
+        '<span class="meta">Valve ' + offTxt + (shift ? ' · ' + shift + ' vs Valve' : '') + '</span>' +
+        '</div>';
+    });
+    document.getElementById('board').innerHTML = html;
+    document.getElementById('more').hidden = list.length <= state.shown;
+  }
+
+  document.getElementById('more').addEventListener('click', function(){state.shown += PAGE; render()});
+  document.getElementById('q').addEventListener('input', function(e){state.q = e.target.value; state.shown = PAGE; render()});
+  render();
+}).catch(function(err){ Site.fail(document.getElementById('board'), err); });
+</script>
+</body>
+</html>

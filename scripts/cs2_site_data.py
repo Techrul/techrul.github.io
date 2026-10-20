@@ -70,6 +70,14 @@ def series_name(name):
     return re.sub(r"\s+", " ", re.sub(r"\b(19|20)\d\d\b|\bSeason \d+\b", "", name)).strip(" :-") or name
 
 
+def common_name(editions):
+    """The name most editions share ('Intel Extreme Masters Cologne', not the one year it was '... Cologne Major');
+    on a tie, the most recent. `editions` are oldest first."""
+    names = [series_name(e["name"]) for e in editions]
+    counts = Counter(names)
+    return max(counts, key=lambda n: (counts[n], max(i for i, x in enumerate(names) if x == n)))
+
+
 def vrs_stakes(pool):
     pool = min(max(float(pool or 0), 1.0), 1_000_000.0)
     return round(1 / (1 + abs(math.log10(pool / 1_000_000))), 3)  # Valve's curveFunction on the event's prize pool
@@ -441,7 +449,7 @@ def main():
         eds.sort(key=lambda e: e["start"])
         latest = eds[-1]
         ev_out.append({
-            "key": key, "name": series_name(latest["name"]), "tier": Counter(e["tier"] for e in eds).most_common(1)[0][0],
+            "key": key, "name": common_name(eds), "tier": Counter(e["tier"] for e in eds).most_common(1)[0][0],
             "month": int(latest["start"][5:7]),
             "editions": [{"page": e["page"], "year": int(e["start"][:4]), "date": e["start"], "end": e["end"], "name": e["name"],
                           "tier": e["tier"], "valve": e["valve"], "lan": e["lan"], "pool": e["pool"], "teams": e["teams"],

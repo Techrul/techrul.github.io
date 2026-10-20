@@ -39,6 +39,20 @@
     var link = (opts && opts.nolink) ? name : '<a class="plink" href="' + S.base() + 'tennis/player.html?id=' + encodeURIComponent(p.id) + '">' + name + "</a>";
     return S.flag(p.iso) + link;
   };
+  // which sport the page belongs to ("tennis", "cs2" or "" on the overview), from the header's data-sport
+  S.sport = function () { var h = document.querySelector("header.bar"); return h ? h.dataset.sport || "" : ""; };
+  S.team = function (t, opts) {
+    if (!t) return "–";
+    var name = S.esc(t.name || t.id), title = t.full && t.full !== t.name ? ' title="' + S.esc(t.full) + '"' : "";
+    return (opts && opts.nolink) ? "<span" + title + ">" + name + "</span>" :
+      '<a class="plink" href="' + S.base() + "cs2/team.html?id=" + encodeURIComponent(t.id) + '"' + title + ">" + name + "</a>";
+  };
+  // CS2 event tiers: Liquipedia's S/A/B/C (tiers 1-4); Valve's Majors get their own label
+  var CS2_TIER = { "1": ["S-Tier", "silver"], "2": ["A-Tier", "bronze"], "3": ["B-Tier", "slate"], "4": ["C-Tier", "slate"] };
+  S.cs2tier = function (tier, valve) {
+    var major = /major/i.test(valve || "") && !/qualifier/i.test(valve || ""), x = major ? ["Major", "gold"] : CS2_TIER[tier] || ["Other", "slate"];
+    return '<span class="tierpill" style="--tc:var(--' + x[1] + ')">' + x[0] + "</span>";
+  };
   S.TIERS = { G: "Grand Slam", F: "ATP Finals", M: "Masters 1000", "500": "ATP 500", "250": "ATP 250" };
   S.SURFACE = function (s) {
     var k = (s || "").toLowerCase();
@@ -52,16 +66,18 @@
     if (!el) return;
     var base = S.base(), page = el.dataset.page, sport = el.dataset.sport;
     var nav = "";
-    if (sport === "tennis") {
-      nav = [["rankings", "index.html", "Rankings"], ["predict", "predict.html", "Predict"], ["tournaments", "tournaments.html", "Tournaments"], ["records", "records.html", "Records"]]
-        .map(function (x) { return '<a href="' + base + "tennis/" + x[1] + '"' + (page === x[0] ? ' aria-current="page"' : "") + ">" + x[2] + "</a>"; }).join("");
+    if (sport === "tennis" || sport === "cs2") {
+      nav = [["rankings", "index.html", "Rankings"], ["predict", "predict.html", "Predict"],
+        sport === "cs2" ? ["events", "events.html", "Events"] : ["tournaments", "tournaments.html", "Tournaments"], ["records", "records.html", "Records"]]
+        .map(function (x) { return '<a href="' + base + sport + "/" + x[1] + '"' + (page === x[0] ? ' aria-current="page"' : "") + ">" + x[2] + "</a>"; }).join("");
     }
     el.innerHTML =
       '<span class="crumbs"><a class="home" href="' + base + '../">Techrul</a><span class="sep" aria-hidden="true">/</span>' +
-      '<a class="brand" href="' + base + 'index.html">Ranking models' + (sport ? "<small>" + S.esc(sport === "tennis" ? "Tennis" : sport) + "</small>" : "") + "</a></span>" +
+      '<a class="brand" href="' + base + 'index.html">Ranking models' + (sport ? "<small>" + S.esc(sport === "tennis" ? "Tennis" : sport === "cs2" ? "CS2" : sport) + "</small>" : "") + "</a></span>" +
       (nav ? '<nav class="nav" aria-label="Sections">' + nav + "</nav>" : "") +
       '<span class="spacer"></span>' +
-      (sport === "tennis" ? '<input class="find" id="find" placeholder="Find a player" aria-label="Find a player" autocomplete="off" spellcheck="false">' : "") +
+      (sport === "tennis" ? '<input class="find" id="find" placeholder="Find a player" aria-label="Find a player" autocomplete="off" spellcheck="false">' :
+       sport === "cs2" ? '<input class="find" id="find" placeholder="Find a team" aria-label="Find a team" autocomplete="off" spellcheck="false">' : "") +
       '<span class="hdr-tools"><div class="themes" role="group" aria-label="Theme">' + THEMES.map(function (t) {
         return '<button class="theme" type="button" data-theme="' + t + '">' + t.charAt(0).toUpperCase() + t.slice(1) + "</button>";
       }).join("") + "</div>" + S.githubLink() + "</span>";
@@ -70,7 +86,14 @@
       b.addEventListener("click", function () { setTheme(b.dataset.theme); try { localStorage.setItem("theme", b.dataset.theme); } catch (e) {} });
     });
     var find = el.querySelector("#find");
-    if (find) {
+    if (find && sport === "cs2") {
+      S.json(base + "cs2/data/teams_index.json").then(function (list) {
+        S.autocomplete(find, list.map(function (t) {
+          return { id: t.id, name: t.name, hint: [t.official ? "Valve #" + t.official : null, t.elo_rank ? "Elo #" + t.elo_rank : null, t.region].filter(Boolean).join(" \u00b7 "),
+            also: (t.players || []).join(" ") + " " + (t.full || "") };
+        }), function (item) { location.href = base + "cs2/team.html?id=" + encodeURIComponent(item.id); }, { empty: "No team or player by that name" });
+      }).catch(function () { find.remove(); });
+    } else if (find) {
       S.json(base + "tennis/data/players_index.json").then(function (list) {
         S.autocomplete(find, list.map(function (p) {
           return { id: p.id, name: p.name, iso: p.iso, hint: [p.official ? "ATP #" + p.official : null, p.elo_rank ? "Elo #" + p.elo_rank : null].filter(Boolean).join(" \u00b7 ") };
@@ -94,7 +117,7 @@
     wrap.appendChild(list);
     input.setAttribute("role", "combobox"); input.setAttribute("aria-autocomplete", "list");
     input.setAttribute("aria-controls", lid); input.setAttribute("aria-expanded", "false");
-    items.forEach(function (it) { it._f = fold(it.name); });
+    items.forEach(function (it) { it._f = fold(it.name); it._a = it.also ? fold(it.also) : ""; });
     var shown = [], sel = -1;
     function mark(name, q) {
       if (!q) return S.esc(name);
@@ -107,7 +130,7 @@
       var scored = [];
       items.forEach(function (it, idx) {
         var i = it._f.indexOf(q);
-        if (i < 0) return;
+        if (i < 0) { if (it._a && q && it._a.indexOf(q) >= 0) scored.push([3, idx, it]); return; }  // e.g. a CS2 player's team
         var wordStart = i === 0 || it._f[i - 1] === " " || it._f[i - 1] === "-";
         scored.push([i === 0 ? 0 : wordStart ? 1 : 2, idx, it]);  // name start, then a word start (surname), then anywhere
       });
@@ -117,7 +140,7 @@
       list.innerHTML = shown.length ? shown.map(function (it, i) {
         return '<div class="ac-item" role="option" id="' + lid + "-" + i + '" data-i="' + i + '" aria-selected="' + (i === sel ? "true" : "false") + '"><span>' + S.flag(it.iso) + mark(it.name, q) + "</span>" +
           (it.hint ? '<span class="ac-hint">' + S.esc(it.hint) + "</span>" : "") + "</div>";
-      }).join("") : '<div class="ac-empty">No player by that name</div>';
+      }).join("") : '<div class="ac-empty">' + S.esc(opts.empty || "No player by that name") + "</div>";
       list.hidden = false; input.setAttribute("aria-expanded", "true");
       input.setAttribute("aria-activedescendant", sel >= 0 ? lid + "-" + sel : "");
     }
@@ -173,10 +196,13 @@
     el.classList.add("inact");
     el.style.visibility = show === false ? "hidden" : "";
     el.setAttribute("aria-hidden", show === false ? "true" : "false");
-    el.innerHTML = '<span class="lab">' + S.esc(label || "When a player is out") + '</span><div class="chips" role="group" aria-label="How Glicko-2 and OpenSkill treat players who are not playing">' +
+    var cs2 = S.sport() === "cs2";
+    el.innerHTML = '<span class="lab">' + S.esc(label || (cs2 ? "When a team is out" : "When a player is out")) + '</span><div class="chips" role="group" aria-label="How Glicko-2 and OpenSkill treat ' + (cs2 ? "teams" : "players") + ' who are not playing">' +
       [["grow", "Sink while out"], ["pure", "Pure model"]].map(function (x) {
         return '<button class="chip" type="button" data-v="' + x[0] + '" aria-pressed="' + (cur === x[0] ? "true" : "false") + '"' + (show === false ? ' tabindex="-1"' : "") + ">" + x[1] + "</button>";
-      }).join("") + "</div>" + '<span class="hint">' + S.stack([
+      }).join("") + "</div>" + '<span class="hint">' + S.stack(cs2 ? [
+        "The model grows less sure of a team each week it doesn\u2019t play, so absent teams slide down.",
+        "The textbook model: a rating barely changes while a team is out."] : [
         "The model grows less sure of a player each month they don\u2019t play, so absent players slide down.",
         "The textbook model: a rating barely changes while a player is out."], cur === "grow" ? 0 : 1) + "</span>";
     el.onclick = function (e) {
@@ -189,7 +215,7 @@
   S.outTag = function (lastIso, asOfIso) {
     if (!lastIso || !asOfIso) return "";
     var days = Math.round((Date.parse(asOfIso) - Date.parse(lastIso)) / 864e5);
-    return days >= 28 ? '<span class="out" title="No tour-level match since ' + S.date(lastIso) + '">Out ' + Math.floor(days / 7) + " wk</span>" : "";
+    return days >= 28 ? '<span class="out" title="No ' + (S.sport() === "cs2" ? "" : "tour-level ") + "match since " + S.date(lastIso) + '">Out ' + Math.floor(days / 7) + " wk</span>" : "";
   };
   S.outDays = function (days) { return days != null && days >= 28 ? '<span class="out">Out ' + Math.floor(days / 7) + " wk</span>" : ""; };
 
@@ -370,7 +396,14 @@
   S.footer = function () {
     var el = document.querySelector("footer.foot[data-auto]");
     if (!el) return;
-    el.innerHTML = "<p>Match data: TennisMyLife (stats.tennismylife.org), built on Jeff Sackmann's Tennis Abstract data (CC BY-NC-SA 4.0). " +
+    var sport = S.sport();
+    var cs2 = '<p>CS2 match data: <a href="https://liquipedia.net/counterstrike/" rel="noopener">Liquipedia</a>, licensed <a href="https://liquipedia.net/commons/Liquipedia:Copyrights" rel="noopener license">CC BY-SA 3.0</a>; ' +
+      "the CS2 rankings and records derived from it are shared under the same licence. VRS: Valve\u2019s public counter-strike_regional_standings code, run unchanged; Valve\u2019s official standings from the same repository.</p>";
+    if (sport === "cs2") {
+      el.innerHTML = cs2 + "<p>Non-commercial project, not affiliated with Valve, Liquipedia or HLTV.</p>";
+      return;
+    }
+    el.innerHTML = (sport ? "" : cs2) + "<p>Match data: TennisMyLife (stats.tennismylife.org), built on Jeff Sackmann's Tennis Abstract data (CC BY-NC-SA 4.0). " +
       "Prize money: Wikipedia (CC BY-SA 4.0). Trophy photos: Wikimedia Commons contributors, credited on each tournament page. VRS: Valve's public counter-strike_regional_standings code, run unchanged. " +
       "Derived rankings and records on this site are shared under CC BY-NC-SA 4.0.</p>" +
       "<p>Non-commercial project, not affiliated with the ATP, TennisMyLife or Valve.</p>";

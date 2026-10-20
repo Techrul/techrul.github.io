@@ -155,3 +155,8 @@ tr[data-href]:hover>td,.row[data-href]:hover,.ev[data-href]:hover{background:var
   .bar .spacer{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* CS2: Valve region label and a team's five players */
+.region{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.03em;line-height:1;padding:3px 6px;border-radius:5px;border:1px solid var(--line);color:var(--muted);margin-left:8px;vertical-align:2px;white-space:nowrap}
+.roster{color:var(--muted);font-size:.8rem}
+.roster .flag{margin-right:3px}
+.roster span+span::before{content:" \00b7\00a0"}

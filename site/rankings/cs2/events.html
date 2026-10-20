@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en" data-theme="black">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS2 events</title>
+<meta name="description" content="The CS2 season's S- and A-tier events as a calendar: champions, field strength and VRS stakes under each rating system, events in progress and what is coming next.">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+<style>
+.filters{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;margin:16px 0 4px}
+.views{margin-top:6px}
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;margin:14px 0 0}
+.sysrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;min-height:40px}
+.sysrow .lab{color:var(--muted);font-size:.86rem}
+.sysrow .inact{margin:0}
+.sysrow .inact .hint{display:none}
+.season{display:inline-flex;align-items:center;border:1.5px solid var(--line);border-radius:999px;background:var(--card);overflow:hidden}
+.season select{font:inherit;font-weight:600;color:var(--ink);background:transparent;border:0;padding:6px 6px;text-align:center;cursor:pointer;appearance:none;-webkit-appearance:none}
+.season select option{color:var(--ink);background:var(--card)}
+.sbtn{font:inherit;font-size:1.15rem;line-height:1;width:34px;height:34px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.sbtn:hover:not(:disabled){color:var(--ink);background:var(--head)}
+.sbtn:disabled{opacity:.3;cursor:default}
+.rankno{font-size:.8rem;font-weight:700;color:var(--muted)}
+/* calendar */
+.month{margin-top:28px}
+.month h2{display:flex;align-items:baseline;gap:10px}
+.month h2 small{color:var(--muted);font-weight:400;font-size:.9rem}
+.cal{background:var(--card);border:1px solid var(--line);border-radius:10px;margin-top:10px;overflow:hidden}
+.ev{display:grid;grid-template-columns:76px 128px minmax(0,1fr) minmax(0,1.1fr) 78px 70px;gap:4px 14px;align-items:center;padding:11px 14px;border-top:1px solid var(--line)}
+.ev.hd{padding:8px 14px;background:var(--head);color:var(--muted);font-size:.78rem;font-weight:500}
+.ev.hd span:nth-last-child(-n+2){text-align:right}
+.ev .fld{text-align:right}
+.ev .lbl{display:none}
+.ev:first-child{border-top:0}
+.ev .when{font-weight:600}
+.ev .when small{display:block;color:var(--muted);font-weight:400;font-size:.78rem}
+.ev .nm a{text-decoration:none;font-weight:600}
+.ev .nm a:hover{text-decoration:underline}
+.ev .nm .surface{display:flex;margin-top:2px}
+.ev .res{font-size:.92rem}
+.ev .res .muted{font-size:.84rem}
+.ev .stk{text-align:right}
+.ev .stk small{display:block;color:var(--muted);font-size:.72rem}
+.ev.expected{opacity:.62}
+.ev.live{background:color-mix(in srgb,var(--up) 9%,var(--card))}
+.livedot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--up);margin-right:6px;box-shadow:0 0 0 3px color-mix(in srgb,var(--up) 30%,transparent)}
+.now{display:flex;align-items:center;gap:10px;padding:7px 14px;border-top:1px solid var(--line);color:var(--up);font-size:.8rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.now::after{content:"";flex:1;height:2px;background:var(--up);border-radius:1px}
+.cal .now:first-child{border-top:0}
+.jump{font:inherit;font-size:.86rem;border:0;background:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0}
+.legend2{display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--muted);font-size:.84rem;margin-top:10px}
+@media (max-width:720px){
+  .ev{grid-template-columns:62px minmax(0,1fr) 64px;grid-template-areas:"when nm stk" "when tier fld" "when res res"}
+  .ev .when{grid-area:when;align-self:start} .ev .tr{grid-area:tier} .ev .nm{grid-area:nm} .ev .res{grid-area:res} .ev .stk{grid-area:stk;align-self:start} .ev .fld{grid-area:fld;align-self:start}
+  .ev.hd{display:none} .ev .lbl{display:block;color:var(--muted);font-size:.68rem;font-weight:400}
+}
+/* table view */
+table.st th button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:inherit;white-space:nowrap}
+table.st th button:hover{color:var(--ink)}
+table.st th[aria-sort] button{color:var(--ink);font-weight:600}
+table.st th[aria-sort="ascending"] button::after{content:" \2191"}
+table.st th[aria-sort="descending"] button::after{content:" \2193"}
+table.st th,table.st td{padding:8px 8px;vertical-align:middle}
+table.st td.nw{white-space:nowrap}
+table.st .won,table.st .lost{font-size:.8rem;display:block}
+table.st td.ev-name{white-space:normal;min-width:150px}
+table.st td.ev-name a{text-decoration:none;font-weight:600}
+.won{color:var(--up);font-weight:600} .lost{color:var(--down);font-weight:600}
+/* gallery */
+.tier h2{display:flex;align-items:center;gap:10px;margin-top:8px}
+.tier h2 small{color:var(--muted);font-weight:400;font-size:.9rem}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:12px}
+.tcard{display:flex;flex-direction:column;gap:10px;text-decoration:none;background:var(--card);border:1px solid var(--line);border-top:3px solid var(--tc);border-radius:10px;padding:14px}
+.tcard:hover{border-color:var(--ink);border-top-color:var(--tc)}
+.tcard .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.tcard .top{justify-content:flex-start;align-items:center;gap:12px}
+.tcard .tname{display:flex;flex-direction:column;gap:3px;min-width:0}
+.tcard .tname .season{display:inline-flex;align-items:center;border:1.5px solid var(--line);border-radius:999px;background:var(--card);overflow:hidden}
+.season select{font:inherit;font-weight:600;color:var(--ink);background:transparent;border:0;padding:6px 6px;text-align:center;cursor:pointer;appearance:none;-webkit-appearance:none}
+.season select option{color:var(--ink);background:var(--card)}
+.sbtn{font:inherit;font-size:1.15rem;line-height:1;width:34px;height:34px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.sbtn:hover:not(:disabled){color:var(--ink);background:var(--head)}
+.sbtn:disabled{opacity:.3;cursor:default}
+.rankno{line-height:1}
+.tcard b{font-size:1.05rem;line-height:1.25}
+.tcard .holder{font-size:.9rem}
+.tcard .holder .when{color:var(--muted);display:block;font-size:.8rem}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;border-top:1px solid var(--line);padding-top:10px;margin-top:auto}
+.stats div{font-size:.78rem;color:var(--muted)}
+.stats strong{display:block;font-size:1.15rem;color:var(--ink);font-weight:700}
+</style>
+</head>
+<body data-root="../">
+<div class="wrap">
+  <header class="bar" data-sport="cs2" data-page="events"></header>
+  <main>
+    <h1>Events</h1>
+    <p class="lede" id="lede"></p>
+    <div class="chips views" id="view" role="group" aria-label="View"></div>
+    <div class="controls">
+      <div class="sysrow"><span class="lab">Stats by</span><div class="chips" id="sys" role="group" aria-label="Rating system for field, favourite, seed and upsets"></div><div id="inact"></div></div>
+    </div>
+    <div class="filters">
+      <div class="sysrow" id="yearwrap"><span class="lab">Season</span><div class="season" role="group" aria-label="Season">
+        <button type="button" class="sbtn" id="yprev" aria-label="Previous season">‹</button><select id="ysel" aria-label="Season"></select><button type="button" class="sbtn" id="ynext" aria-label="Next season">›</button>
+      </div></div>
+      <div class="sysrow" id="sortwrap"><span class="lab">Sort by</span><div class="chips" id="sort" role="group" aria-label="Sort"></div></div>
+    </div>
+    <div class="filters">
+      <div class="chips" id="tierf" role="group" aria-label="Tier"></div>
+      <div class="chips" id="surf" role="group" aria-label="LAN or online"></div>
+    </div>
+    <div id="main"></div>
+  </main>
+  <footer class="foot" data-auto></footer>
+</div>
+<script>
+(function () {
+  var S = Site;
+  var TIERS = [["major", "Majors"], ["1", "S-Tier"], ["2", "A-Tier"]];
+  var TIER_CHIPS = [["all", "All tiers"], ["major", "Majors"], ["1", "S-Tier"], ["2", "A-Tier"]];
+  var SYS = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS (live)"]];
+  var SYS_NAME = { elo: "Elo", glicko: "Glicko-2", openskill: "OpenSkill", vrs: "VRS" };
+  function isMajor(e) { return /major/i.test(e.valve || "") && !/qualifier/i.test(e.valve || ""); }
+  function level(t) { return t.editions.some(isMajor) ? "major" : t.tier; }
+  var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var TIER_COLOR = { major: "gold", "1": "silver", "2": "bronze" };
+  var DAY = 864e5;
+  function pref(k, d) { try { return localStorage.getItem(k) || d; } catch (e) { return d; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  var view0 = pref("tview", "calendar");
+  var state = { view: view0 === "gallery" ? "cards" : view0, year: null, tier: "all", surface: "All", sort: "cal", sys: pref("tsys", "elo") };
+  var LAN = { All: "LAN and online", LAN: "LAN", Online: "Online" };
+  var draw = function () {};
+  function iso(t) { var d = new Date(t); return d.getUTCFullYear() + "-" + String(d.getUTCMonth() + 1).padStart(2, "0") + "-" + String(d.getUTCDate()).padStart(2, "0"); }
+  function short(isoD) { var p = isoD.split("-"); return +p[2] + " " + MON[+p[1] - 1]; }
+  function chipRow(el, items, cur, key) {
+    el.innerHTML = items.map(function (x) { return '<button class="chip" type="button" data-v="' + S.esc(x[0]) + '" aria-pressed="' + (String(cur) === String(x[0]) ? "true" : "false") + '">' + S.esc(x[1]) + "</button>"; }).join("");
+    el.onclick = function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      state[key] = key === "year" && b.dataset.v !== "all" ? +b.dataset.v : b.dataset.v;
+      if (key === "view") save("tview", b.dataset.v);
+      if (key === "sys") save("tsys", b.dataset.v);
+      draw();
+    };
+  }
+  // the selected system's numbers for one edition (Glicko-2 / OpenSkill follow the sink-while-out setting)
+  function st(e) { return (e.sys || {})[S.sysKey(state.sys)] || null; }
+  function fmtField(v) { return v == null ? "–" : state.sys === "openskill" ? Number(v).toFixed(1) : S.num(Math.round(v)); }
+  function href(t) { return "event.html?key=" + encodeURIComponent(t.key); }
+
+  S.json("data/events.json").then(function (data) {
+    var list = data.series;
+    var today = Date.now(), todayIso = iso(today);
+    var years = Array.from(new Set([].concat.apply([], list.map(function (t) { return t.editions.map(function (e) { return e.year; }); })))).sort(function (a, b) { return b - a; });
+    state.year = years[0];
+    var surfaces = ["All", "LAN", "Online"];
+    function keep(t, e) { return (state.tier === "all" || (e ? (isMajor(e) ? "major" : e.tier) : level(t)) === state.tier) && (state.surface === "All" || (e ? (e.lan ? "LAN" : "Online") : (t.editions[0].lan ? "LAN" : "Online")) === state.surface); }
+
+    // ---------------------------------------------------------------- calendar
+    function entries(year) {
+      var out = [];
+      list.forEach(function (t) {
+        var ed = t.editions.filter(function (e) { return e.year === year; });
+        ed.forEach(function (e) { out.push({ t: t, e: e, date: e.date, kind: e.status || (e.champion ? "finished" : "live") }); });
+        if (!ed.length && year === years[0]) {
+          var prev = t.editions.filter(function (e) { return e.year === year - 1; })[0];
+          if (prev) {
+            var exp = iso(Date.parse(prev.date) + 364 * DAY);  // same week, same weekday, one year on
+            if (exp.slice(0, 4) === String(year) && Date.parse(exp) >= today - 6 * DAY) out.push({ t: t, e: prev, date: exp, kind: "expected" });
+          }
+        }
+      });
+      return out.filter(function (x) { return keep(x.t, x.e); })
+        .sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : (a.t.tier < b.t.tier ? -1 : 0); });
+    }
+    function calRow(x) {
+      var t = x.t, e = x.e, res, s_ = st(e), done = x.kind === "finished";
+      if (done) res = S.team(e.champion) + '<div class="muted">beat ' + S.esc(e.runner_up ? e.runner_up.name : "–") + " " + S.esc(e.score || "") + "</div>";
+      else if (x.kind === "live") res = '<span class="livedot" aria-hidden="true"></span><b>In progress</b>';
+      else res = '<span class="muted">Expected · placed at ' + e.year + "’s dates</span>" + (e.champion ? '<div class="muted">' + e.year + ": " + S.esc(e.champion.name) + "</div>" : "");
+      var stk = (e.vrs_weight != null ? e.vrs_weight.toFixed(2) : "–") + (x.kind === "expected" && e.vrs_weight != null ? "<small>" + e.year + "</small>" : "") + '<span class="lbl">VRS stakes</span>';
+      var fld = (done && s_ ? fmtField(s_.field) : "–") + '<span class="lbl">Field</span>';
+      return '<div class="ev ' + x.kind + '" data-href="' + href(t) + '"><div class="when">' + (x.kind === "expected" ? "~" : "") + short(x.date) + "<small>" + (x.kind === "expected" ? "expected" : "start") + "</small></div>" +
+        '<div class="tr">' + S.cs2tier(e.tier, e.valve) + '</div><div class="nm"><a href="' + href(t) + '">' + S.esc(x.kind === "expected" ? t.name : e.name) + "</a>" + '<span class="muted" style="display:block;font-size:.82rem">' + (e.lan ? "LAN" : "Online") + (e.pool ? " · $" + S.num(e.pool) : "") + "</span></div>" +
+        '<div class="res">' + res + '</div><div class="fld cn">' + fld + '</div><div class="stk cn">' + stk + "</div></div>";
+    }
+    function drawCalendar() {
+      var items = entries(state.year);
+      if (!items.length) return '<div class="empty">No events match these filters.</div>';
+      var thisSeason = String(state.year) === todayIso.slice(0, 4), nowPlaced = !thisSeason;
+      var byMonth = {};
+      items.forEach(function (x) { var m = +x.date.slice(5, 7); (byMonth[m] = byMonth[m] || []).push(x); });
+      var nowRow = '<div class="now" id="now">Today · ' + short(todayIso) + "</div>";
+      var HEAD = '<div class="ev hd" aria-hidden="true"><span>Start</span><span>Tier</span><span>Event</span><span>Champion</span><span>Field (' + SYS_NAME[state.sys] + ")</span><span>VRS stakes</span></div>";
+      var html = Object.keys(byMonth).map(Number).sort(function (a, b) { return a - b; }).map(function (m) {
+        var rows = byMonth[m].map(function (x) {
+          var pre = "";
+          if (!nowPlaced && x.date > todayIso && x.kind !== "live") { pre = nowRow; nowPlaced = true; }
+          return pre + calRow(x);
+        }).join("");
+        var done = byMonth[m].filter(function (x) { return x.kind === "finished"; }).length;
+        return '<section class="month"><h2>' + MONTHS[m - 1] + " <small>" + byMonth[m].length + " event" + (byMonth[m].length > 1 ? "s" : "") +
+          (done && done < byMonth[m].length ? ", " + done + " finished" : "") + '</small></h2><div class="cal">' + HEAD + rows + "</div></section>";
+      }).join("");
+      if (!nowPlaced) html += '<section class="month"><div class="cal">' + nowRow + "</div></section>";
+      return '<p class="note" style="margin-top:14px">' + (thisSeason ? '<button class="jump" type="button" id="jump">Jump to today</button> · ' : "") +
+        "S- and A-tier main events on Liquipedia (qualifiers and smaller events count for the ratings but are not listed). Field: average " + SYS_NAME[state.sys] + " rating of the eight best teams in the event when it started. VRS stakes: how much a result counts in VRS (1.00 = a $1M prize pool). Faded rows are not played yet and placed at last year’s dates. " +
+        '<a class="extlink" href="https://liquipedia.net/counterstrike/S-Tier_Tournaments" target="_blank" rel="noopener">Full calendar on Liquipedia ↗</a></p>' + html;
+    }
+
+    // ---------------------------------------------------------------- table (sortable)
+    var tsort = { key: "date", dir: 1, touched: false };
+    var COLS = [
+      ["date", "Start", function (x) { return x.e.date; }, false],
+      ["name", "Event", function (x) { return x.e.name; }, false],
+      ["level", "Tier", function (x) { return isMajor(x.e) ? 0 : +x.e.tier; }, false],
+      ["pool", "Prize pool", function (x) { return x.e.pool || null; }, true],
+      ["champ", "Champion", function (x) { return x.e.champion ? x.e.champion.name : null; }, false],
+      ["seed", "Seed", function (x) { var s_ = st(x.e); return s_ && x.e.champion ? s_.seed : null; }, true],
+      ["fav", "Favourite", function (x) { var s_ = st(x.e); return s_ && x.e.champion ? s_.favourite.name : null; }, false],
+      ["field", "Field", function (x) { var s_ = st(x.e); return s_ && x.e.champion ? s_.field : null; }, true],
+      ["upsets", "Upsets", function (x) { var s_ = st(x.e); return s_ ? s_.upsets : null; }, true],
+      ["vrs", "VRS stakes", function (x) { return x.e.vrs_weight; }, true]
+    ];
+    function drawTable() {
+      var rows = [];
+      list.forEach(function (t) { t.editions.forEach(function (e) { if ((state.year === "all" || e.year === state.year) && keep(t, e)) rows.push({ t: t, e: e }); }); });
+      if (!rows.length) return '<div class="empty">No events match these filters.</div>';
+      var col = COLS.filter(function (c) { return c[0] === tsort.key; })[0];
+      if (!tsort.touched) tsort.dir = state.year === "all" ? -1 : 1;  // newest first across seasons, in order within one
+      rows.sort(function (a, b) {
+        var va = col[2](a), vb = col[2](b);
+        if (va == null && vb == null) return 0;
+        if (va == null) return 1;  // blanks always last
+        if (vb == null) return -1;
+        return (va < vb ? -1 : va > vb ? 1 : 0) * tsort.dir;
+      });
+      var nm = SYS_NAME[state.sys];
+      var head = COLS.map(function (c) {
+        var label = c[0] === "seed" || c[0] === "fav" || c[0] === "field" || c[0] === "upsets" ? c[1] + " <small class=\"muted\">(" + nm + ")</small>" : c[1];
+        return "<th" + (c[3] ? ' class="n"' : "") + (c[0] === tsort.key ? ' aria-sort="' + (tsort.dir > 0 ? "ascending" : "descending") + '"' : "") + '><button type="button" data-k="' + c[0] + '">' + label + "</button></th>";
+      }).join("");
+      var body = rows.map(function (x) {
+        var e = x.e, t = x.t, done = !!e.champion, s_ = st(e);
+        return '<tr data-href="' + href(t) + '"><td class="nw">' + short(e.date) + (state.year === "all" ? " " + e.year : "") + '</td><td class="ev-name"><a href="' + href(t) + '">' + S.esc(e.name) + '</a></td><td class="nw">' + S.cs2tier(e.tier, e.valve) + "</td>" + '<td class="n">' + (e.pool ? "$" + S.num(e.pool) : "–") + "</td>" +
+          "<td>" + (done ? S.team(e.champion) : '<span class="muted">In progress</span>') + "</td>" +
+          '<td class="n">' + (s_ && done && s_.seed != null ? "#" + s_.seed : "–") + "</td>" +
+          "<td>" + (s_ && done ? S.team(s_.favourite) + '<span class="' + (s_.favourite_won ? 'won">Won' : 'lost">Lost') + "</span>" : "–") + "</td>" +
+          '<td class="n">' + (s_ && done ? fmtField(s_.field) : "–") + "</td>" +
+          '<td class="n">' + (s_ ? s_.upsets + '<span class="muted">/' + s_.predicted + "</span>" : "–") + "</td>" +
+          '<td class="n">' + (e.vrs_weight != null ? e.vrs_weight.toFixed(2) : "–") + "</td></tr>";
+      }).join("");
+      return '<p class="note" style="margin-top:14px">' + rows.length + " events. Click a column to sort (blanks stay at the bottom) or a row to open the event. Seed: where " + nm + " placed the champion among the teams in the event (#1 = the favourite). " +
+        "Field: average " + nm + " rating of the eight best teams. Upsets: series wins " + nm + " gave under 25%, out of the matches it rated. " + years[years.length - 1] + " only warms the models up, so it has no field or seed figures.</p>" +
+        '<div class="tablewrap"><table class="t st"><thead><tr>' + head + "</tr></thead><tbody>" + body + "</tbody></table></div>";
+    }
+
+    // ---------------------------------------------------------------- cards (sort by a stat = one ranked list)
+    var SORTS = [["cal", "Calendar order"], ["vrs", "VRS stakes"], ["field", "Field"], ["upsets", "Upset rate"]];
+    function latest(t) { return t.editions[0] || {}; }
+    function lastWith(t, f) { for (var i = 0; i < t.editions.length; i++) { var e = t.editions[i]; if (e.champion && f(e) != null) return e; } return null; }
+    function statOf(t) {
+      if (state.sort === "vrs") { var e1 = lastWith(t, function (e) { return e.vrs_weight; }); return e1 ? [e1.vrs_weight, e1] : null; }
+      if (state.sort === "field") { var e2 = lastWith(t, function (e) { return st(e) && st(e).field; }); return e2 ? [st(e2).field, e2] : null; }
+      if (state.sort === "upsets") { var e3 = lastWith(t, function (e) { return st(e) && st(e).predicted ? st(e).upsets / st(e).predicted : null; }); return e3 ? [st(e3).upsets / st(e3).predicted, e3] : null; }
+      return null;
+    }
+    function card(t, rankNo) {
+      var last = latest(t), champ = last.champion, v = lastWith(t, function (e) { return e.vrs_weight; }), f = lastWith(t, function (e) { return st(e) && st(e).field; });
+      var u = lastWith(t, function (e) { return st(e) && st(e).predicted ? 1 : null; });
+      return '<a class="tcard" style="--tc:var(--' + TIER_COLOR[level(t)] + ')" href="' + href(t) + '">' +
+        '<div class="top"><div class="tname">' + (rankNo ? '<span class="rankno">#' + rankNo + "</span>" : "") + "<b>" + S.esc(t.name) + "</b>" + '<span class="muted" style="font-size:.82rem">' + (last.lan ? "LAN" : "Online") + (last.pool ? " · $" + S.num(last.pool) : "") + "</span></div></div>" +
+        '<div class="holder"><span class="when">' + (champ ? last.year + " champion" : last.year + ": in progress") + "</span>" + (champ ? S.esc(champ.name) : "&nbsp;") + "</div>" +
+        '<div class="stats"><div><strong class="cn">' + (v ? v.vrs_weight.toFixed(2) : "–") + "</strong>VRS stakes" + (v && v.year !== last.year ? " (" + v.year + ")" : "") + "</div>" +
+        '<div><strong class="cn">' + (f ? fmtField(st(f).field) : "–") + "</strong>Field (" + SYS_NAME[state.sys] + ")" + (f && f.year !== last.year ? " (" + f.year + ")" : "") + "</div>" +
+        '<div><strong class="cn">' + (u ? Math.round(st(u).upsets / st(u).predicted * 100) + "%" : "–") + "</strong>Upset rate" + (u && u.year !== last.year ? " (" + u.year + ")" : "") + "</div>" +
+        '<div><strong>' + (u && st(u).seed != null ? "#" + st(u).seed : "–") + "</strong>Champion’s seed</div></div></a>";
+    }
+    function drawCards() {
+      var shown = list.filter(function (t) { return keep(t, null); });
+      if (!shown.length) return '<div class="empty">No tournaments match these filters.</div>';
+      var note = '<p class="note" style="margin-top:14px">Each card shows the latest edition with data. Upset rate: share of matches ' + SYS_NAME[state.sys] + " gave the winner under 25%. " +
+        (state.sort === "cal" ? "Grouped by tier; pick a sort above to rank all events in one list." : "Ranked across all tiers; events without this number are at the end.") + "</p>";
+      if (state.sort === "cal") {
+        shown.sort(function (a, b) { return a.month - b.month || (latest(a).date.slice(5) < latest(b).date.slice(5) ? -1 : 1); });
+        return note + TIERS.map(function (tier) {
+          var items = shown.filter(function (t) { return level(t) === tier[0]; });
+          if (!items.length) return "";
+          return '<section class="tier"><h2>' + tier[1] + " <small>" + items.length + '</small></h2><div class="gallery">' + items.map(function (t) { return card(t); }).join("") + "</div></section>";
+        }).join("");
+      }
+      var withV = shown.map(function (t) { return [t, statOf(t)]; });
+      withV.sort(function (a, b) { return (b[1] ? b[1][0] : -1e9) - (a[1] ? a[1][0] : -1e9); });
+      return note + '<div class="gallery">' + withV.map(function (x, i) { return card(x[0], x[1] ? i + 1 : null); }).join("") + "</div>";
+    }
+
+    var LEDES = [
+      "The season’s S- and A-tier events in order, by start date, with each event’s champion, field and VRS stakes. Click any event for every edition.",
+      "Every event with its numbers side by side, for one season or all of them. Click a column to sort.",
+      "One card per event series with its latest numbers. Sort by a stat to rank them all in one list."
+    ];
+    draw = function () {
+      var cal = state.view === "calendar", tab = state.view === "table", cards = state.view === "cards";
+      document.getElementById("lede").innerHTML = S.stack(LEDES, cal ? 0 : tab ? 1 : 2);
+      chipRow(document.getElementById("view"), [["calendar", "Calendar"], ["table", "Table"], ["cards", "Cards"]], state.view, "view");
+      chipRow(document.getElementById("sys"), SYS, state.sys, "sys");
+      S.inactivityToggle(document.getElementById("inact"), draw, "When a team is out", state.sys === "glicko" || state.sys === "openskill");
+      var sortEl = document.getElementById("sort");
+      document.getElementById("yearwrap").hidden = cards; document.getElementById("sortwrap").hidden = !cards;
+      if (cal && state.year === "all") state.year = years[0];
+      // season picker: older / newer arrows around a dropdown (years run newest first)
+      var opts = years.map(function (y) { return [y, String(y)]; }).concat(tab ? [["all", "All seasons"]] : []);
+      var ysel = document.getElementById("ysel");
+      ysel.innerHTML = opts.map(function (o) { return '<option value="' + o[0] + '"' + (String(o[0]) === String(state.year) ? " selected" : "") + ">" + o[1] + "</option>"; }).join("");
+      var yi = years.indexOf(state.year);
+      document.getElementById("yprev").disabled = yi < 0 || yi >= years.length - 1;
+      document.getElementById("ynext").disabled = yi <= 0;
+      ysel.onchange = function () { state.year = ysel.value === "all" ? "all" : +ysel.value; draw(); };
+      document.getElementById("yprev").onclick = function () { if (yi >= 0 && yi < years.length - 1) { state.year = years[yi + 1]; draw(); } };
+      document.getElementById("ynext").onclick = function () { if (yi > 0) { state.year = years[yi - 1]; draw(); } };
+      chipRow(sortEl, SORTS, state.sort, "sort");
+      chipRow(document.getElementById("tierf"), TIER_CHIPS, state.tier, "tier");
+      chipRow(document.getElementById("surf"), surfaces.map(function (x) { return [x, LAN[x]]; }), state.surface, "surface");
+      document.getElementById("main").innerHTML = cal ? drawCalendar() : tab ? drawTable() : drawCards();
+      var j = document.getElementById("jump");
+      if (j) j.onclick = function () { var n = document.getElementById("now"); if (n) n.scrollIntoView({ behavior: "smooth", block: "center" }); };
+      var th = document.querySelector("table.st thead");
+      if (th) th.onclick = function (e) {
+        var b = e.target.closest("button"); if (!b) return;
+        var numeric = COLS.filter(function (c) { return c[0] === b.dataset.k; })[0][3];
+        tsort.touched = true;
+        if (tsort.key === b.dataset.k) tsort.dir = -tsort.dir; else { tsort.key = b.dataset.k; tsort.dir = numeric ? -1 : 1; }
+        draw();
+      };
+    };
+    draw();
+  }).catch(function (e) { S.fail(document.getElementById("main"), e); });
+})();
+</script>
+</body>
+</html>

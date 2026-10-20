@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en" data-theme="black">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Predict a CS2 match</title>
+<meta name="description" content="Pick two CS2 teams and see each ranking system's win chance, their ranks and their head-to-head record, plus how well each system predicts matches.">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+<style>
+.pick{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:end;margin:18px 0 6px}
+.pick label{display:block;color:var(--muted);font-size:.84rem;margin-bottom:4px}
+.pick input{font:inherit;width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--card);color:var(--ink)}
+.pick input:focus{border-color:var(--muted);outline:none}
+.swap{font:inherit;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;width:42px;height:42px;cursor:pointer}
+.swap:hover{border-color:var(--muted)}
+.vs{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:center;margin-top:22px}
+.vs .side{font-size:1.35rem;font-weight:700;line-height:1.2;min-width:0}
+.vs .side small{display:block;font-size:.85rem;font-weight:400;color:var(--muted);margin-top:2px}
+.vs .side .roster{display:block;font-size:.8rem;font-weight:400;margin-top:2px}
+.vs .b{text-align:right}
+.vs .mid{color:var(--muted);font-weight:600}
+.sys{display:grid;grid-template-columns:150px 64px minmax(0,1fr) 64px;gap:6px 14px;align-items:center;padding:12px 14px;border-top:1px solid var(--line)}
+.sys:first-child{border-top:0}
+.sys .nm{font-weight:600;display:flex;align-items:center;gap:8px}
+.sys .nm i{width:14px;height:3px;border-radius:2px;display:inline-block;flex:none}
+.sys .nm small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
+.sys .pa{text-align:left;font-weight:700} .sys .pb{text-align:right;font-weight:700}
+.sys .pa small,.sys .pb small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
+.split{position:relative;height:12px;border-radius:6px;background:var(--line);overflow:hidden}
+.split i{position:absolute;left:0;top:0;bottom:0;border-radius:6px 0 0 6px}
+.split::after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--muted);opacity:.6}
+.na{color:var(--muted);font-size:.9rem}
+.verdict{margin:14px 0 0;font-size:1.02rem}
+.h2h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:10px}
+.h2h b{font-size:1.6rem}
+@media (max-width:640px){
+  .pick{grid-template-columns:1fr;}
+  .swap{justify-self:center}
+  .sys{grid-template-columns:52px minmax(0,1fr) 52px;grid-template-areas:"nm nm nm" "pa bar pb"}
+  .sys .nm{grid-area:nm} .sys .pa{grid-area:pa} .sys .pb{grid-area:pb} .sys .split{grid-area:bar}
+}
+</style>
+</head>
+<body data-root="../">
+<div class="wrap">
+  <header class="bar" data-sport="cs2" data-page="predict"></header>
+  <main>
+    <h1>Predict a match</h1>
+    <p class="lede">Pick two teams to see what each system thinks of the match-up, using today’s ratings. Then see which system has actually predicted best.</p>
+    <div class="pick">
+      <div><label for="pa">Team 1</label><input id="pa" autocomplete="off" spellcheck="false" placeholder="Type a team or player"></div>
+      <button class="swap" type="button" id="swap" title="Swap teams" aria-label="Swap teams">⇄</button>
+      <div><label for="pb">Team 2</label><input id="pb" autocomplete="off" spellcheck="false" placeholder="Type a team or player"></div>
+    </div>
+    <div id="out" aria-live="polite"></div>
+    <section class="card" id="acc-card" style="margin-top:40px">
+      <h2>Which system predicts best?</h2>
+      <p class="note" id="btnote"></p>
+      <div class="tablewrap" style="border:0"><table class="t bt" id="bt"></table></div>
+    </section>
+  </main>
+  <footer class="foot" data-auto></footer>
+</div>
+<script>
+(function () {
+  var S = Site, G2 = 173.7178, OS_BETA = 25 / 6;
+  var VRS_G = 1 / Math.sqrt(1 + 3 * Math.pow(Math.log(10) / 400, 2) * 75 * 75 / (Math.PI * Math.PI));  // Valve's formula, RD 75
+  var TIER_NAME = { "1": "S-Tier", "2": "A-Tier", "3": "B-Tier", "4": "C-Tier" };
+  function phiN(x) {
+    var t = 1 / (1 + 0.3275911 * Math.abs(x) / Math.SQRT2), y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x / 2);
+    return x >= 0 ? (1 + y) / 2 : (1 - y) / 2;
+  }
+  var SYSTEMS = [
+    { key: "elo", label: "Elo", p: function (a, b) { return a.elo == null || b.elo == null ? null : 1 / (1 + Math.pow(10, (b.elo - a.elo) / 400)); } },
+    { key: "glicko", label: "Glicko-2", p: function (a, b) {
+        var k = S.inactivity() === "pure" ? "_pure" : "", ra = a["glicko_r" + k], rb = b["glicko_r" + k], da = a["glicko_rd" + k], db = b["glicko_rd" + k];
+        if (ra == null || rb == null) return null;
+        var phi = Math.sqrt(da * da + db * db) / G2, g = 1 / Math.sqrt(1 + 3 * phi * phi / (Math.PI * Math.PI));
+        return 1 / (1 + Math.exp(-g * (ra - rb) / G2));
+      } },
+    { key: "openskill", label: "OpenSkill", p: function (a, b) {
+        var k = S.inactivity() === "pure" ? "_pure" : "", ma = a["openskill_mu" + k], mb = b["openskill_mu" + k], sa = a["openskill_sigma" + k], sb = b["openskill_sigma" + k];
+        if (ma == null || mb == null) return null;
+        return phiN((ma - mb) / Math.sqrt(2 * OS_BETA * OS_BETA + sa * sa + sb * sb));
+      } },
+    { key: "vrs", label: "VRS (live)", p: function (a, b) { return a.vrs == null || b.vrs == null ? null : 1 / (1 + Math.pow(10, -VRS_G * (a.vrs - b.vrs) / 400)); } },
+    { key: "official", label: "Valve official", p: null }
+  ];
+  function rankOf(p, key) { return key === "official" ? p.official_rank : (p.ranks || {})[S.sysKey(key)]; }
+  function nm(t) { return t.short; }
+  function roster(t) { return '<span class="roster">' + t.players.map(function (n, i) { return "<span>" + S.flag(t.flags[i] === "world" ? "" : t.flags[i]) + S.esc(n) + "</span>"; }).join("") + "</span>"; }
+  function link(t) { return '<a class="plink" href="team.html?id=' + encodeURIComponent(t.id) + '"' + (t.short !== t.name ? ' title="' + S.esc(t.name) + '"' : "") + ">" + S.esc(t.short) + "</a>"; }
+
+  Promise.all([S.json("data/rankings.json"), S.json("data/backtest.json").catch(function () { return null; })]).then(function (res) {
+    var teams = res[0].teams, byId = {};
+    teams.forEach(function (p) { byId[p.id] = p; });
+    var order = teams.slice().sort(function (a, b) { return (a.ranks.elo || 9999) - (b.ranks.elo || 9999) || (a.official_rank || 9999) - (b.official_rank || 9999); });
+    var ia = document.getElementById("pa"), ib = document.getElementById("pb");
+    var A = byId[S.param("a")] || order[0], B = byId[S.param("b")] || (A === order[0] ? order[1] : order[0]);
+    ia.value = nm(A); ib.value = nm(B);
+    var h2hData = null;
+    S.json("data/h2h.json").then(function (d) { h2hData = d; draw(); }).catch(function () { h2hData = { pairs: {}, events: {}, missing: true }; draw(); });
+
+    function update() { history.replaceState(null, "", "?a=" + encodeURIComponent(A.id) + "&b=" + encodeURIComponent(B.id)); draw(); }
+    var choices = order.map(function (p) {
+      return { id: p.id, name: p.short, also: p.players.join(" ") + " " + p.name,
+        hint: [p.ranks.elo ? "Elo #" + p.ranks.elo : null, p.official_rank ? "Valve #" + p.official_rank : null, p.region].filter(Boolean).join(" · ") };
+    });
+    S.autocomplete(ia, choices, function (it) { A = byId[it.id]; update(); }, { selectOnFocus: true, empty: "No team or player by that name" });
+    S.autocomplete(ib, choices, function (it) { B = byId[it.id]; update(); }, { selectOnFocus: true, empty: "No team or player by that name" });
+    ia.addEventListener("blur", function () { setTimeout(function () { ia.value = nm(A); }, 150); });
+    ib.addEventListener("blur", function () { setTimeout(function () { ib.value = nm(B); }, 150); });
+    document.getElementById("swap").onclick = function () { var t = A; A = B; B = t; ia.value = nm(A); ib.value = nm(B); update(); };
+
+    function pct(x) { return x < 0.005 ? "<1%" : x > 0.995 ? ">99%" : Math.round(x * 100) + "%"; }
+    function draw() {
+      var out = document.getElementById("out");
+      if (A.id === B.id) { out.innerHTML = '<div class="empty">Pick two different teams.</div>'; return; }
+      var favA = 0, favB = 0, counted = 0;
+      var rows = SYSTEMS.map(function (s) {
+        var ra = rankOf(A, s.key), rb = rankOf(B, s.key);
+        var ranks = "<small>" + (ra ? "#" + ra : "unranked") + "</small>", ranksB = "<small>" + (rb ? "#" + rb : "unranked") + "</small>";
+        var sw = '<i style="background:var(--' + s.key + ')"></i>';
+        var sub = s.key === "glicko" || s.key === "openskill" ? (S.inactivity() === "pure" ? "pure model" : "sink while out") : s.key === "official" ? "no win chances" : s.key === "vrs" ? "Valve’s method" : "";
+        var head = '<div class="nm">' + sw + "<span>" + s.label + (sub ? "<small>" + sub + "</small>" : "") + "</span></div>";
+        if (!s.p) {
+          var higher = ra && rb ? (ra < rb ? A : B) : null;
+          if (higher) { counted++; if (higher === A) favA++; else favB++; }
+          return '<div class="sys">' + head + '<div class="pa">' + (ra ? "#" + ra : "–") + "<small>rank</small></div><div class=\"na\">" + (higher ? "Ranks " + S.esc(nm(higher)) + " higher" : "Not both ranked") + '</div><div class="pb">' + (rb ? "#" + rb : "–") + "<small>rank</small></div></div>";
+        }
+        var p = s.p(A, B);
+        if (p == null) return '<div class="sys">' + head + '<div class="pa">–' + ranks + '</div><div class="na">Not rated by this system right now</div><div class="pb">–' + ranksB + "</div></div>";
+        counted++; if (p > 0.5) favA++; else if (p < 0.5) favB++;
+        return '<div class="sys">' + head + '<div class="pa">' + pct(p) + ranks + '</div><div class="split" role="img" aria-label="' + S.esc(nm(A)) + " " + pct(p) + ", " + S.esc(nm(B)) + " " + pct(1 - p) + '"><i style="width:' + (p * 100).toFixed(1) + "%;background:var(--" + s.key + ')"></i></div><div class="pb">' + pct(1 - p) + ranksB + "</div></div>";
+      }).join("");
+      var verdict = counted ? (favA === counted ? "Every system favours " + S.esc(nm(A)) + "." : favB === counted ? "Every system favours " + S.esc(nm(B)) + "." :
+        "Split decision: " + favA + " of " + counted + " favour " + S.esc(nm(A)) + ", " + favB + " favour " + S.esc(nm(B)) + ".") : "";
+
+      var key = [A.id, B.id].sort().join("|"), aFirst = key.indexOf(A.id) === 0;
+      var meets = h2hData && h2hData.pairs[key] ? h2hData.pairs[key].slice().reverse() : [];
+      var wa = meets.filter(function (m) { return (m[2] === 0) === aFirst; }).length, wb = meets.length - wa;
+      var h2h = !h2hData ? '<p class="note">Loading head-to-head…</p>' : !meets.length ? '<p class="note">No meetings between these two rosters in the data' + (h2hData.missing ? " (head-to-head data not built yet)" : "") + ".</p>" :
+        '<div class="h2h"><b>' + wa + "–" + wb + "</b><span>" + (wa === wb ? "Level" : S.esc(nm(wa > wb ? A : B)) + " leads") + " in series between these two rosters</span></div>" +
+        '<div class="tablewrap"><table class="t"><thead><tr><th>Date</th><th>Event</th><th>Winner</th><th>Score</th></tr></thead><tbody>' + meets.map(function (m) {
+          var ev = h2hData.events[m[1]] || [m[1], "", null], winner = (m[2] === 0) === aFirst ? A : B;
+          var evName = ev[2] ? '<a class="plink" href="event.html?key=' + encodeURIComponent(ev[2]) + '">' + S.esc(ev[0]) + "</a>" : S.esc(ev[0]);
+          return "<tr><td>" + S.date(m[0]) + "</td><td>" + evName + ' <span class="muted">' + S.esc(TIER_NAME[ev[1]] || "") + "</span></td><td>" + S.esc(nm(winner)) + '</td><td class="muted">' + S.esc(m[3]) + "</td></tr>";
+        }).join("") + "</tbody></table></div>";
+
+      out.innerHTML =
+        '<div class="vs"><div class="side">' + link(A) + roster(A) + "<small>Valve " + (A.official_rank ? "#" + A.official_rank : "unranked") + (A.region ? " · " + S.esc(A.region) : "") + S.outTag(A.last_match, res[0].meta.data_as_of) + '</small></div><div class="mid">vs</div><div class="side b">' + link(B) + roster(B) +
+        "<small>Valve " + (B.official_rank ? "#" + B.official_rank : "unranked") + (B.region ? " · " + S.esc(B.region) : "") + S.outTag(B.last_match, res[0].meta.data_as_of) + "</small></div></div>" +
+        '<div class="card" style="padding:0;margin-top:14px">' + rows + "</div>" +
+        '<div id="inact" style="margin-top:12px"></div>' +
+        '<p class="verdict">' + verdict + '</p><p class="note">Win chances are for a whole series, using each system’s ratings as of ' + S.date(res[0].meta.data_as_of) + ", with no map, LAN or best-of adjustments, the same way the accuracy table below was scored.</p>" +
+        "<section><h2>Head-to-head</h2>" + h2h + "</section>";
+      S.inactivityToggle(document.getElementById("inact"), draw, "Glicko-2 and OpenSkill, when a team is out");
+    }
+    draw();
+
+    var B_ = res[1];
+    if (!B_ || !B_.matches) { document.getElementById("acc-card").hidden = true; return; }
+    var M = B_.methods, ROWS = [["Elo", "elo"], ["Glicko-2, sink while out", "glicko"], ["Glicko-2, pure", "glicko_pure"], ["OpenSkill, sink while out", "openskill"], ["OpenSkill, pure", "openskill_pure"], ["VRS (live)", "vrs"], ["Higher Valve rank wins", "official"]];
+    document.getElementById("btnote").textContent = "Every method predicted the same " + B_.matches.toLocaleString("en-US") + " matches (" + S.date(B_.from) + " to " + S.date(B_.to) + "): those where both teams were on Valve’s list and in VRS, using only results from before each match. " +
+      "The skill models update after every match; VRS is rebuilt each Monday and predicts that week; Valve’s list is the one in force at the time. Lower log loss is better; Valve’s list gives no probabilities, so it has none. Differences of a point or so are within noise.";
+    var best = Math.max.apply(null, ROWS.map(function (r) { return M[r[1]] ? M[r[1]].accuracy || 0 : 0; }));
+    document.getElementById("bt").innerHTML = '<thead><tr><th>Method</th><th class="n">Picked the winner</th><th class="n">Log loss</th></tr></thead><tbody>' + ROWS.filter(function (r) { return M[r[1]]; }).map(function (r) {
+      var b = M[r[1]];
+      return "<tr><td>" + r[0] + (b.accuracy === best ? ' <span class="badge">Best</span>' : "") + '</td><td class="n">' + (b.accuracy == null ? "–" : (b.accuracy * 100).toFixed(1) + "%") + '</td><td class="n">' + (b.log_loss == null ? "–" : b.log_loss.toFixed(3)) + "</td></tr>";
+    }).join("") + "</tbody>";
+  }).catch(function (e) { S.fail(document.getElementById("out"), e); });
+})();
+</script>
+</body>
+</html>

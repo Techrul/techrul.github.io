@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ranking models</title>
-<meta name="description" content="The same match results ranked by Elo, Glicko-2, OpenSkill, Valve's VRS and official systems, for tennis now and CS2 later.">
+<meta name="description" content="The same match results ranked by Elo, Glicko-2, OpenSkill, Valve's VRS and official systems, for tennis and Counter-Strike 2.">
 <link rel="stylesheet" href="assets/site.css">
 <script src="assets/site.js"></script>
 <style>
@@ -29,7 +29,7 @@ a.sport:hover{border-color:var(--ink)}
   <main>
     <div class="hero">
       <h1>Same results, different number ones.</h1>
-      <p class="lede">Every rating system reads the same matches and still disagrees about who is best. This site runs several side by side: Elo, Glicko-2, OpenSkill, Valve's VRS, and the official ATP ranking.</p>
+      <p class="lede">Every rating system reads the same matches and still disagrees about who is best. This site runs several side by side: Elo, Glicko-2, OpenSkill, Valve's VRS, and the official ranking of each sport.</p>
     </div>
     <div class="sports">
       <a class="sport" href="tennis/index.html" id="tennis">
@@ -38,11 +38,12 @@ a.sport:hover{border-color:var(--ink)}
         <ul class="number1" id="tennis-ones" aria-label="Number one in each system"></ul>
         <span class="go">Open tennis</span>
       </a>
-      <div class="sport soon" aria-disabled="true">
+      <a class="sport" href="cs2/index.html" id="cs2">
         <h2>Counter-Strike 2</h2>
-        <span class="status">Coming later</span>
-        <p class="muted" style="margin:16px 0 0">Valve's own Regional Standings next to Elo, Glicko-2 and OpenSkill, with team identity following Valve's three-of-five roster rule. Got API access! Implementing soon.</p>
-      </div>
+        <span class="status" id="cs2-status">Teams under Valve's three-of-five roster rule, updated daily</span>
+        <ul class="number1" id="cs2-ones" aria-label="Number one in each system"></ul>
+        <span class="go">Open CS2</span>
+      </a>
     </div>
   </main>
   <footer class="foot" data-auto></footer>
@@ -60,6 +61,15 @@ a.sport:hover{border-color:var(--ink)}
     }).join("");
     document.getElementById("tennis-ones").innerHTML = html;
   }).catch(function () { document.getElementById("tennis-ones").innerHTML = ""; });
+  var CS2 = [["elo", "Elo", "elo"], ["glicko", "Glicko-2", "glicko"], ["openskill", "OpenSkill", "openskill"], ["vrs", "VRS (live)", "vrs"], ["official", "Valve official", "official"]];
+  S.json("cs2/data/rankings.json").then(function (d) {
+    document.getElementById("cs2-status").textContent = "Liquipedia results, matches through " + S.date(d.meta.data_as_of);
+    document.getElementById("cs2-ones").innerHTML = CS2.map(function (s) {
+      var best = d.teams.filter(function (t) { return (s[0] === "official" ? t.official_rank : t.ranks[s[0]]) === 1; })[0];
+      if (!best) return "";
+      return '<li><span class="sys"><i style="background:var(--' + s[2] + ')"></i>' + s[1] + "</span><span>" + S.esc(best.short) + "</span></li>";
+    }).join("");
+  }).catch(function () { document.getElementById("cs2-ones").innerHTML = ""; });
 })();
 </script>
 </body>
