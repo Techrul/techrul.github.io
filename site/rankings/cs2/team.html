@@ -25,9 +25,9 @@
 .tt{display:flex;flex-wrap:wrap;gap:6px}
 .coverage{border:1px solid var(--line);border-left:3px solid var(--muted);border-radius:8px;padding:10px 14px;margin:0 0 20px;color:var(--muted);font-size:.9rem;max-width:80ch}
 .coverage b{color:var(--ink);font-weight:600}
-.tit{display:inline-flex;align-items:center;text-decoration:none;font-size:.88rem;border:1px solid var(--line);border-radius:6px;padding:3px 9px}
+.tit{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:.88rem;border:1px solid var(--line);border-radius:6px;padding:3px 9px}
 a.tit:hover{border-color:var(--ink)}
-.tit b{font-weight:600;margin-right:5px}
+.tit b{font-weight:600}
 @media (max-width:520px){.trow{grid-template-columns:1fr}}
 .head2{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px}
 .bar2{height:6px;background:var(--line);border-radius:3px;min-width:60px}
@@ -85,13 +85,14 @@ a.tit:hover{border-color:var(--ink)}
         '</div><div class="sub">' + [sub, best].filter(Boolean).join(" · ") + "</div></div>";
     }).join("");
 
-    // titles (S-, A- and B-tier main events won)
+    // titles (S-, A- and B-tier main events won); the year is shown once, in front, so drop it from the name
+    function noYear(name, y) { var n = name.replace(new RegExp("\\s*\\b" + y + "\\b", "g"), "").replace(/\s+([:#])/g, function (m, c) { return c === "#" ? " #" : c; }).trim(); return n || name; }
     var byTier = {}; p.titles.forEach(function (t) { byTier[t.tier] = (byTier[t.tier] || 0) + 1; });
     var tierSum = TIERS.filter(function (k) { return byTier[k]; }).map(function (k) { return "<span>" + S.cs2tier(k) + " <b>" + byTier[k] + "</b></span>"; }).join("");
     var cab = TIERS.filter(function (k) { return byTier[k]; }).map(function (k) {
       var list = p.titles.filter(function (t) { return t.tier === k; });
       return '<div class="trow"><div class="tl">' + S.cs2tier(k) + '</div><div class="tt">' + list.map(function (t) {
-        var inner = (/major/i.test(t.valve) ? S.cs2tier(k, t.valve) + " " : "") + "<b>" + t.year + "</b> " + S.esc(t.name);
+        var inner = (/major/i.test(t.valve) ? S.cs2tier(k, t.valve) + " " : "") + "<b>" + t.year + "</b> " + S.esc(noYear(t.name, t.year));
         return t.key ? '<a class="tit" href="event.html?key=' + encodeURIComponent(t.key) + '">' + inner + "</a>" : '<span class="tit">' + inner + "</span>";
       }).join("") + "</div></div>";
     }).join("");
