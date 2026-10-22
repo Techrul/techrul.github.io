@@ -1,0 +1,17 @@
+refresh: matches since 2026-10-01, events since 2026-08-23
+  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-09-30]] AND [[date::<2026-10-23]] offset 0
+  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-09-30]] AND [[date::<2026-10-23]] offset 1000
+  request 3: tournament [[enddate::>2026-08-22]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-10-23]] offset 0
+  request 4: placement [[prizemoney::>0]] AND [[date::>2026-08-22]] AND [[date::<2026-10-23]] offset 0
+  1528 matches, 311 tournaments, 806 prize rows
+  request 5: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-08-31]] AND [[date::<2026-10-01]] offset 0
+  request 6: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-08-31]] AND [[date::<2026-10-01]] offset 1000
+  request 7: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-08-31]] AND [[date::<2026-10-01]] offset 2000
+  2026-09 matches: 2451
+  request 8: tournament [[enddate::>2026-08-31]] AND [[enddate::<2026-10-01]] offset 0
+  2026-09 tournaments: 145
+  request 9: placement [[prizemoney::>0]] AND [[date::>2026-08-31]] AND [[date::<2026-10-01]] offset 0
+  2026-09 placements: 406
+finished: everything up to date
+requests used: 9
+83292 matches stored, 5711 tournaments, 3488 events with prize money, 28068 players; 46 of 46 months fetched (2023-01 to 2026-10)
