@@ -139,7 +139,8 @@ jobs:
           git add data/cs2
           git diff --cached --quiet && { echo "no new CS2 data"; exit 0; }
           git commit -m "CS2 data from Liquipedia"
-          git pull --rebase -q origin main && git push
+          # --autostash: the cache step above replaces data/prize_money.json, which would otherwise block the pull
+          git pull --rebase --autostash -q origin main && git push
 
       - name: Copy pages
         run: python scripts/build_site.py --site site --out docs
