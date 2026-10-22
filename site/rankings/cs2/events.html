@@ -208,7 +208,8 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
       if (!nowPlaced) html += '<section class="month"><div class="cal">' + nowRow + "</div></section>";
       return '<p class="note" style="margin-top:14px">' + (thisSeason ? '<button class="jump" type="button" id="jump">Jump to today</button> · ' : "") +
         "S- and A-tier main events on Liquipedia (qualifiers and smaller events count for the ratings but are not listed). Field: average " + SYS_NAME[state.sys] + " rating of the eight best teams in the event when it started. VRS stakes: how much a result counts in VRS (1.00 = a $1M prize pool). Faded rows are not played yet and placed at last year’s dates. " +
-        '<a class="extlink" href="https://liquipedia.net/counterstrike/S-Tier_Tournaments" target="_blank" rel="noopener">Full calendar on Liquipedia ↗</a></p>' + html;
+        '<a class="extlink" href="https://liquipedia.net/counterstrike/S-Tier_Tournaments" target="_blank" rel="noopener">Full calendar on Liquipedia ↗</a> · ' +
+        '<a class="extlink" href="https://www.hltv.org/events" target="_blank" rel="noopener">Events on HLTV ↗</a></p>' + html;
     }
 
     // ---------------------------------------------------------------- table (sortable)

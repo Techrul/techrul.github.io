@@ -92,14 +92,15 @@ a.project:hover{border-color:var(--muted)}
     if (tops.length) document.getElementById("now").insertAdjacentHTML("afterbegin", "<div>Tennis #1 today: " + tops.join(" · ") + "</div>");
   }).catch(function () {});
   // latest snackutils version from PyPI (left blank if it can't load)
-  // CS2 #1 under Elo and in Valve's own list
+  // CS2 #1 under each system, the same way as tennis above
   fetch("rankings/cs2/data/rankings.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
     if (!d) return;
-    var top = function (f) { return d.teams.filter(f)[0]; };
-    var elo = top(function (t) { return t.ranks.elo === 1; }), valve = top(function (t) { return t.official_rank === 1; });
-    var parts = [elo ? '<span><i class="dot" style="background:var(--elo)"></i>Elo: <b>' + esc(elo.short) + "</b></span>" : "",
-                 valve ? '<span><i class="dot" style="background:var(--official)"></i>Valve: <b>' + esc(valve.short) + "</b></span>" : ""].filter(Boolean);
-    if (parts.length) document.getElementById("now").insertAdjacentHTML("beforeend", "<div>CS2 #1 today: " + parts.join(" · ") + "</div>");
+    var sys = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS"], ["official", "Valve"]];
+    var tops = sys.map(function (s) {
+      var best = d.teams.filter(function (t) { return (s[0] === "official" ? t.official_rank : (t.ranks || {})[s[0]]) === 1; })[0];
+      return best ? '<span><i class="dot" style="background:var(--' + s[0] + ')"></i>' + s[1] + ": <b>" + esc(best.short) + "</b></span>" : "";
+    }).filter(Boolean);
+    if (tops.length) document.getElementById("now").insertAdjacentHTML("beforeend", "<div>CS2 #1 today: " + tops.join(" · ") + "</div>");
   }).catch(function () {});
   fetch("https://pypi.org/pypi/snackutils/json").then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
     if (d && d.info && d.info.version) document.getElementById("snackver").textContent = "· latest v" + d.info.version;
