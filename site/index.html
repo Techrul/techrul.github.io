@@ -29,6 +29,13 @@ a.project:hover{border-color:var(--muted)}
 .project .links a{font-weight:600;text-decoration:none}
 .project .links a:hover{text-decoration:underline}
 .dot{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.ones{width:100%;border-collapse:collapse;font-size:.88rem}
+.ones caption{text-align:left;color:var(--muted);font-size:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding-bottom:4px}
+.ones thead th{color:var(--muted);font-weight:500;font-size:.8rem;text-align:left;padding:0 6px 4px 0}
+.ones tbody th{font-weight:400;color:var(--muted);text-align:left;white-space:nowrap;padding:3px 10px 3px 0}
+.ones td{font-weight:600;padding:3px 6px 3px 0;overflow-wrap:anywhere}
+.ones tbody tr+tr th,.ones tbody tr+tr td{border-top:1px solid var(--line)}
+.onesnote{margin:6px 0 0;color:var(--muted);font-size:.75rem}
 </style>
 </head>
 <body>
@@ -82,26 +89,24 @@ a.project:hover{border-color:var(--muted)}
   });
   // today's #1 under each system, from the rankings data (left blank if it can't load)
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
-  fetch("rankings/tennis/data/rankings.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
-    if (!d) return;
-    var sys = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS"], ["official", "ATP"]];
-    var tops = sys.map(function (s) {
-      var best = d.players.filter(function (p) { return (s[0] === "official" ? p.official_rank : (p.ranks || {})[s[0]]) === 1; })[0];
-      return best ? '<span><i class="dot" style="background:var(--' + s[0] + ')"></i>' + s[1] + ": <b>" + esc(best.name.split(" ").slice(-1)[0]) + "</b></span>" : "";
-    }).filter(Boolean);
-    if (tops.length) document.getElementById("now").insertAdjacentHTML("afterbegin", "<div>Tennis #1 today: " + tops.join(" · ") + "</div>");
-  }).catch(function () {});
+  // #1 under each system, tennis and CS2 side by side (a column stays empty if its data can't load)
+  var SYS = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS"], ["official", "Official"]];
+  function load(path) { return fetch(path, { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  function top(list, s) { return list.filter(function (x) { return (s === "official" ? x.official_rank : (x.ranks || {})[s]) === 1; })[0]; }
+  Promise.all([load("rankings/tennis/data/rankings.json"), load("rankings/cs2/data/rankings.json")]).then(function (res) {
+    var ten = res[0], cs = res[1];
+    if (!ten && !cs) return;
+    var rows = SYS.map(function (s) {
+      var a = ten ? top(ten.players, s[0]) : null, b = cs ? top(cs.teams, s[0]) : null;
+      if (!a && !b) return "";
+      var label = s[0] === "official" ? "Official" : s[1];
+      return '<tr><th scope="row"><i class="dot" style="background:var(--' + s[0] + ')"></i>' + label + "</th>" +
+        "<td>" + (a ? esc(a.name.split(" ").slice(-1)[0]) : "\u2013") + "</td><td>" + (b ? esc(b.short) : "\u2013") + "</td></tr>";
+    }).join("");
+    document.getElementById("now").innerHTML = '<table class="ones"><caption>#1 today</caption><thead><tr><td></td><th scope="col">Tennis</th><th scope="col">CS2</th></tr></thead><tbody>' + rows + "</tbody></table>" +
+      '<p class="onesnote">Official: ATP for tennis, Valve\u2019s standings for CS2.</p>';
+  });
   // latest snackutils version from PyPI (left blank if it can't load)
-  // CS2 #1 under each system, the same way as tennis above
-  fetch("rankings/cs2/data/rankings.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
-    if (!d) return;
-    var sys = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS"], ["official", "Valve"]];
-    var tops = sys.map(function (s) {
-      var best = d.teams.filter(function (t) { return (s[0] === "official" ? t.official_rank : (t.ranks || {})[s[0]]) === 1; })[0];
-      return best ? '<span><i class="dot" style="background:var(--' + s[0] + ')"></i>' + s[1] + ": <b>" + esc(best.short) + "</b></span>" : "";
-    }).filter(Boolean);
-    if (tops.length) document.getElementById("now").insertAdjacentHTML("beforeend", "<div>CS2 #1 today: " + tops.join(" · ") + "</div>");
-  }).catch(function () {});
   fetch("https://pypi.org/pypi/snackutils/json").then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
     if (d && d.info && d.info.version) document.getElementById("snackver").textContent = "· latest v" + d.info.version;
   }).catch(function () {});
