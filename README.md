@@ -8,7 +8,7 @@ My personal site and a home for my projects. Live at **[techrul.github.io](https
 
 **[techrul.github.io/rankings](https://techrul.github.io/rankings/)**
 
-I wanted to see what would happen if I ranked the same matches with different ranking systems. Same results, very different number ones. Right now it's only tennis, but CS2 is coming soon.
+I wanted to see what would happen if I ranked the same matches with different ranking systems. Same results, very different number ones. It covers tennis and CS2.
 
 > This is in fact vibe-coded, but that doesn't affect the accuracy of the rating systems.
 
@@ -19,7 +19,7 @@ I wanted to see what would happen if I ranked the same matches with different ra
 | [OpenSkill](https://openskill.me/en/stable/) | A Bayesian rating built for teams, used here one-on-one ([library](https://github.com/vivekjoshy/openskill.py)). |
 | [VRS](https://github.com/ValveSoftware/counter-strike_regional_standings) | Valve's CS2 Regional Standings, adjusted to work for tennis. It runs Valve's own code unchanged. A little goofy, probably don't use this as an actual representation of skill.|
 
-All of them sit next to the [official ATP rankings](https://www.atptour.com/en/rankings/singles). Glicko-2 and OpenSkill also have a toggle for players who aren't playing: the textbook versions barely move someone who's out injured, so by default they slowly sink instead.
+All of them sit next to the [official ATP rankings](https://www.atptour.com/en/rankings/singles) for tennis and [Valve's own standings](https://github.com/ValveSoftware/counter-strike_regional_standings) for CS2, where a team is a roster under Valve's three-of-five rule. Glicko-2 and OpenSkill also have a toggle for players who aren't playing: the textbook versions barely move someone who's out injured, so by default they slowly sink instead.
 
 On the site:
 - **Rankings:** each system's top players, with a strip showing where every system puts them.
@@ -28,7 +28,7 @@ On the site:
 - **Records:** weeks at #1, biggest upsets, biggest rises and more, for any time period.
 - **Player and tournament pages:** rank history charts, titles and results.
 
-It updates itself every morning. Data: match results from [TennisMyLife](https://stats.tennismylife.org/), built on [Jeff Sackmann's tennis data](https://github.com/JeffSackmann/tennis_atp); prize money from Wikipedia; trophy photos from Wikimedia Commons. Technical details are in [HOW_IT_WORKS.md](HOW_IT_WORKS.md).
+It updates itself every morning. Data: match results from [TennisMyLife](https://stats.tennismylife.org/), built on [Jeff Sackmann's tennis data](https://github.com/JeffSackmann/tennis_atp); prize money from Wikipedia; trophy photos from Wikimedia Commons; CS2 results from [Liquipedia](https://liquipedia.net/counterstrike/) (CC BY-SA 3.0). Technical details are in [HOW_IT_WORKS.md](HOW_IT_WORKS.md).
 
 ### More soon
 

@@ -16,14 +16,15 @@ import argparse
 import csv
 import glob
 import json
-import math
 import os
 import re
 import sys
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 
-from openskill.models import PlackettLuce
+import engines  # noqa: E402
+from engines import (ELO_K, G2, G2_INACTIVE_C2, G2_PHI_MAX, G2_SCALE, G2_TAU, INACTIVE_RESET_YEARS,  # noqa: E402,F401
+                     OSK_INACTIVE_TAU2, OSK_SIGMA_MAX, g2_update, g_fn, months_between)
 
 TOUR_LEVELS = {"G", "M", "500", "250", "F"}  # Slams, Masters 1000, 500s, 250s, ATP Finals
 ROUND_ORDER = {"RR": 0, "R128": 1, "R64": 2, "R32": 3, "R16": 4, "QF": 5, "SF": 6, "BR": 7, "F": 8}
@@ -38,21 +39,6 @@ POINTS = {
 }
 FIRST_ROUND_POINTS = {"G": 10, "M": 10, "500": 0, "250": 0}
 BEST_N = 19
-
-ELO_K = 32
-G2_TAU = 0.5
-G2_SCALE = 173.7178
-
-# Inactivity (the site's default; inactivity=False gives the textbook models, also published). Elo has no uncertainty,
-# so only Glicko-2 and OpenSkill change: for every month (Glicko-2) or week (OpenSkill) a player has
-# no match, their uncertainty grows, at a rate that would take it from zero back to a newcomer's
-# level in INACTIVE_RESET_YEARS. Both rank by a cautious value (rating - 2 RD, mu - 3 sigma), so
-# absent players slide down gradually. Uncertainty never goes above a newcomer's.
-INACTIVE_RESET_YEARS = 5
-G2_PHI_MAX = 350 / G2_SCALE
-G2_INACTIVE_C2 = G2_PHI_MAX ** 2 / (12 * INACTIVE_RESET_YEARS)    # added to phi^2 per month without a match
-OSK_SIGMA_MAX = 25 / 3
-OSK_INACTIVE_TAU2 = OSK_SIGMA_MAX ** 2 / (52 * INACTIVE_RESET_YEARS)  # added to sigma^2 per week without a match
 
 
 def first_round_label(draw_size):
@@ -97,156 +83,14 @@ def load(raw_dir, start_year):
     return out
 
 
-# ----------------------------------------------------------------------------- Glicko-2
-class G2:
-    __slots__ = ("mu", "phi", "sigma")
-
-    def __init__(self):
-        self.mu, self.phi, self.sigma = 0.0, 350 / G2_SCALE, 0.06
-
-
-def g_fn(phi):
-    return 1 / math.sqrt(1 + 3 * phi * phi / math.pi ** 2)
-
-
-def g2_update(p, games, extra=0.0):
-    """One Glicko-2 rating period. extra: added to phi^2 when the player had no games (inactivity variant)."""
-    if not games:
-        p.phi = min(math.sqrt(p.phi ** 2 + p.sigma ** 2 + extra), G2_PHI_MAX)
-        return
-    v_inv = d_sum = 0.0
-    for muj, phij, s in games:
-        gj = g_fn(phij)
-        e = 1 / (1 + math.exp(-gj * (p.mu - muj)))
-        v_inv += gj ** 2 * e * (1 - e)
-        d_sum += gj * (s - e)
-    v = 1 / v_inv
-    delta = v * d_sum
-    a = math.log(p.sigma ** 2)
-
-    def f(x):
-        ex = math.exp(x)
-        return (ex * (delta ** 2 - p.phi ** 2 - v - ex)) / (2 * (p.phi ** 2 + v + ex) ** 2) - (x - a) / G2_TAU ** 2
-
-    A = a
-    if delta ** 2 > p.phi ** 2 + v:
-        B = math.log(delta ** 2 - p.phi ** 2 - v)
-    else:
-        k = 1
-        while f(a - k * G2_TAU) < 0:
-            k += 1
-        B = a - k * G2_TAU
-    fA, fB = f(A), f(B)
-    for _ in range(100):
-        if abs(B - A) < 1e-6:
-            break
-        C = A + (A - B) * fA / (fB - fA)
-        fC = f(C)
-        if fC * fB <= 0:
-            A, fA = B, fB
-        else:
-            fA /= 2
-        B, fB = C, fC
-    sigma_new = math.exp(A / 2)
-    phi_star = math.sqrt(p.phi ** 2 + sigma_new ** 2)
-    phi_new = 1 / math.sqrt(1 / phi_star ** 2 + 1 / v)
-    p.mu += phi_new ** 2 * d_sum
-    p.phi, p.sigma = phi_new, sigma_new
-
-
-# ----------------------------------------------------------------------------- skill models
-def months_between(a, b):
-    """'YYYYMM' strings -> number of month steps from a to b."""
-    return (int(b[:4]) - int(a[:4])) * 12 + int(b[4:6]) - int(a[4:6])
-
-
+# ----------------------------------------------------------------------------- skill models (scripts/engines.py)
 def run_skill_models(matches, backtest_from, preds=None, weekly=None, inactivity=True):
-    """weekly(monday, elo, g2, osk, last_match, count) is called once per week, before that week's matches.
-    inactivity=True grows Glicko-2 / OpenSkill uncertainty while a player is not playing (see constants)."""
-    elo = defaultdict(lambda: 1500.0)
-    g2 = defaultdict(G2)
-    model = PlackettLuce()
-    osk = {}
-    pending = defaultdict(list)
-    period = None
-    bt = {m: {"n": 0, "correct": 0, "logloss": 0.0} for m in ("elo", "glicko", "openskill")}
-    extra = G2_INACTIVE_C2 if inactivity else 0.0
-
-    def flush():
-        snap = {k: (v.mu, v.phi) for k, v in g2.items()}
-        for k in list(g2):
-            g2_update(g2[k], [(snap[o][0], snap[o][1], s) for o, s in pending.get(k, [])], extra)
-        pending.clear()
-
-    def record(name, p_winner):
-        p = min(max(p_winner, 1e-6), 1 - 1e-6)
-        bt[name]["n"] += 1
-        bt[name]["correct"] += 1 if p > 0.5 else 0
-        bt[name]["logloss"] += -math.log(p)
-
-    last_match = {}
-    count = defaultdict(int)
-    next_week = None
-
-    def tick(monday):
-        # OpenSkill: one week of extra uncertainty for everyone without a match in the week just ended
-        if inactivity:
-            since = monday - timedelta(days=7)
-            for pid, rt in osk.items():
-                if last_match.get(pid, since) < since:
-                    rt.sigma = min(math.sqrt(rt.sigma ** 2 + OSK_INACTIVE_TAU2), OSK_SIGMA_MAX)
-        if weekly is not None:
-            weekly(monday, elo, g2, osk, last_match, count)
-
-    for r in matches:
-        if r["_walkover"] or r["tourney_level"] not in TOUR_LEVELS:
-            continue
-        if next_week is None:
-            next_week = r["_date"] + timedelta(days=(7 - r["_date"].weekday()) % 7 or 7)
-        while next_week <= r["_date"]:
-            tick(next_week)
-            next_week += timedelta(days=7)
-        per = r["tourney_date"][:6]
-        if period is None:
-            period = per
-        if per != period:
-            flush()
-            # months with no tour matches at all (the December break) are still rating periods
-            for _ in range(months_between(period, per) - 1):
-                flush()
-            period = per
-        w, l = r["winner_id"], r["loser_id"]
-        if w not in osk:
-            osk[w] = model.rating()
-        if l not in osk:
-            osk[l] = model.rating()
-        _ = g2[w], g2[l]
-
-        if r["_date"] >= backtest_from:
-            p_elo = 1 / (1 + 10 ** ((elo[l] - elo[w]) / 400))
-            record("elo", p_elo)
-            phi = math.sqrt(g2[w].phi ** 2 + g2[l].phi ** 2)
-            record("glicko", 1 / (1 + math.exp(-g_fn(phi) * (g2[w].mu - g2[l].mu))))
-            p_osk = model.predict_win([[osk[w]], [osk[l]]])[0]
-            record("openskill", p_osk)
-            if preds is not None:  # per-match winner probabilities, for comparisons in other scripts
-                p_g2 = 1 / (1 + math.exp(-g_fn(phi) * (g2[w].mu - g2[l].mu)))
-                preds[(r["tourney_id"], r["round"], w, l)] = {"elo": p_elo, "glicko": p_g2, "openskill": p_osk}
-
-        e = 1 / (1 + 10 ** ((elo[l] - elo[w]) / 400))
-        elo[w] += ELO_K * (1 - e)
-        elo[l] -= ELO_K * (1 - e)
-        pending[w].append((l, 1.0))
-        pending[l].append((w, 0.0))
-        (nw,), (nl,) = model.rate([[osk[w]], [osk[l]]], ranks=[0, 1])
-        osk[w], osk[l] = nw, nl
-        for pid in (w, l):
-            last_match[pid] = r["_date"]
-            count[pid] += 1
-    flush()
-    if weekly is not None and last_match:
-        weekly(max(last_match.values()), elo, g2, osk, last_match, count)  # state after the latest matches
-    return elo, g2, osk, last_match, count, bt
+    """Tennis rows -> engines.run: tour-level matches without walkovers; Glicko-2 periods are tournament start
+    months; preds are keyed (tourney_id, round, winner_id, loser_id)."""
+    rows = ({"w": r["winner_id"], "l": r["loser_id"], "date": r["_date"], "period": r["tourney_date"][:6],
+             "key": (r["tourney_id"], r["round"], r["winner_id"], r["loser_id"])}
+            for r in matches if not r["_walkover"] and r["tourney_level"] in TOUR_LEVELS)
+    return engines.run(rows, backtest_from, preds, weekly, inactivity)
 
 
 # ----------------------------------------------------------------------------- points ledger

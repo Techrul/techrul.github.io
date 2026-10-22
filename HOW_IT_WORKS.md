@@ -224,3 +224,52 @@ Not checked:
 - The site's robots.txt blocks /api/, so the fetch script only uses the direct /data/ file links.
 - Whether the website history files (before 2020) match the layout of the GitHub copies used in testing.
 - The ATP points table is the 2024 table applied to the last 52 weeks only.
+
+## Counter-Strike 2 (`rankings/cs2/`)
+
+The same idea for CS2: every finished match on [Liquipedia](https://liquipedia.net/counterstrike/) since January 2023,
+ranked by Elo, Glicko-2, OpenSkill and Valve's VRS code, next to Valve's own published standings. Pages mirror tennis:
+Rankings (with a region filter), Team, Predict, Records, Events and Event. The design notes and checks are in
+[CS2_PLAN.md](CS2_PLAN.md).
+
+```
+scripts/lp_api.py         Liquipedia API client: key, gzip, request cap, 45-an-hour pacing, 429 back-off
+scripts/fetch_cs2.py      matches, tournaments, prize money -> data/cs2/ (committed; CC BY-SA 3.0, see its README)
+scripts/cs2_adapter.py    rosters under Valve's 3-of-5 rule, the engines' match format, Valve's input format, regions
+scripts/engines.py        Elo, Glicko-2, OpenSkill (shared with tennis)
+scripts/cs2_ratings.py    every system + Valve's latest standings -> docs/rankings/cs2/data/rankings.json
+scripts/cs2_site_data.py  weekly history, weekly VRS, Valve's standings over time, events, team profiles,
+                          records, prediction table, head-to-head -> docs/rankings/cs2/data/
+scripts/cs2_vrs.py        by hand: VRS on our data for one date, compared with Valve's list for that date
+```
+
+Run it locally (needs `LIQUIPEDIA_API_KEY`; the first fetch loads the history over several hours at 45 requests an hour):
+
+```bash
+git clone https://github.com/ValveSoftware/counter-strike_regional_standings vendor/vrs
+env LIQUIPEDIA_API_KEY=... CONTACT_EMAIL=you@example.com python3 scripts/fetch_cs2.py --max-requests 40
+python3 scripts/cs2_ratings.py --valve vendor/vrs --out docs/rankings/cs2/data/rankings.json
+python3 scripts/cs2_site_data.py --valve vendor/vrs --current docs/rankings/cs2/data/rankings.json --out docs/rankings/cs2/data
+python3 tests/test_fetch_cs2.py && python3 tests/test_cs2_adapter.py vendor/vrs
+```
+
+On GitHub: add the repository secret `LIQUIPEDIA_API_KEY`. The daily workflow fetches at most 30 requests (recent weeks,
+plus any month not fetched yet), commits `data/cs2/`, and builds the CS2 pages. Every CS2 step may fail without stopping
+the tennis update; without fresh CS2 data the CS2 pages say they could not load it. The weekly VRS history takes about
+7 minutes (Valve's code runs once per week since January 2024).
+
+How it differs from tennis, and why:
+- **A team is a roster**, grouped exactly as Valve's code does (newest lineup first; earlier lineups join it with 3 of 5
+  players). Checked against Valve's own JavaScript on Valve's sample data: identical on all 3,766 matches.
+- **A match is a series** (Bo1/Bo3/Bo5); map scores are not used, as in Valve's code.
+- **Glicko-2 rating periods are weeks**, not months: teams play several times a week, and monthly periods left the
+  ratings stale within the month (60.5% vs 62.7% winners picked over 12 months). The inactivity setting works as for
+  tennis, per week instead of per month, with the same 5-year rate.
+- **Official = Valve's published standings** (first Monday of each month, from Valve's repository), each in force until
+  the next, matched to rosters by 3 of 5 players.
+- **VRS (live)** is Valve's code on our Liquipedia data. Valve's ranked flag is Liquipedia's `publishertier` (blank =
+  not ranked; Valve's code only checks it from 2025). Against Valve's own lists on 9 dates (Mar 2025 to Oct 2026) the top
+  50 correlate 0.92 to 0.99 and the #1 always matches.
+- **Regions** (Europe, Americas, Asia) are Valve's: from the VRS run, else Valve's plurality rule on the current five.
+- **Events page**: Liquipedia S- and A-tier main events (about 35 a season), editions grouped by series. All tiers count
+  for the ratings. Upset records only count S-, A- and B-tier events (tennis: tour level only).

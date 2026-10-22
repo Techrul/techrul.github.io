@@ -4,7 +4,8 @@
 const fs = require("fs");
 const path = require("path");
 
-const [valveDir, dataFile, outFile] = process.argv.slice(2);
+// Optional 4th argument "--players": also list each roster's five players (used for CS2; tennis output unchanged).
+const [valveDir, dataFile, outFile, flag] = process.argv.slice(2);
 if (!valveDir || !dataFile || !outFile) {
     console.error("usage: node vrs_runner.js <valve repo> <matchdata.json> <out.json>");
     process.exit(2);
@@ -24,6 +25,8 @@ const out = teams
         region: t.region,
         matches: t.matchesPlayed,
         modifiers: t.modifiers,
+        ...(flag === "--players" ? { players: t.players.map(p => p.playerId), team_id: t.teamMatches.length ?
+            (t.teamMatches[0].teamNumber === 1 ? t.teamMatches[0].match.team1Id : t.teamMatches[0].match.team2Id) : null } : {}),
     }))
     .sort((a, b) => a.rank - b.rank);
 

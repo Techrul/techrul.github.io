@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" data-theme="black">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Event</title>
+<meta name="description" content="One CS2 event series edition by edition: champion, prize money, VRS stakes, field strength and how each system's favourite did.">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+<style>
+.hero{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px}
+.sysrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;min-height:40px;margin-top:10px}
+.sysrow .lab{color:var(--muted);font-size:.86rem}
+.sysrow .inact{margin:0}
+.sysrow .inact .hint{display:none}
+.thead{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 6px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:18px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.tile .k{color:var(--muted);font-size:.84rem}
+.tile .v{font-size:1.7rem;font-weight:700;line-height:1.15}
+.tile .s{color:var(--muted);font-size:.8rem}
+.yes{color:var(--up);font-weight:600} .no{color:var(--down);font-weight:600}
+td .muted{font-size:.84rem}
+</style>
+</head>
+<body data-root="../">
+<div class="wrap">
+  <header class="bar" data-sport="cs2" data-page="event"></header>
+  <main id="main"><p class="note">Loading…</p></main>
+  <footer class="foot" data-auto></footer>
+</div>
+<script>
+(function () {
+  var S = Site, key = S.param("key"), main = document.getElementById("main");
+  var SYS = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS (live)"]], NAME = { elo: "Elo", glicko: "Glicko-2", openskill: "OpenSkill", vrs: "VRS" };
+  var sys; try { sys = localStorage.getItem("tsys") || "elo"; } catch (e) { sys = "elo"; }
+  S.json("data/events.json").then(function (data) {
+    var list = data.series;
+    var t = list.filter(function (x) { return x.key === key; })[0];
+    if (!t) { main.innerHTML = S.back("events.html", "Events") + '<div class="empty">Event not found. <a href="events.html">See all events</a>.</div>'; return; }
+    document.title = t.name + " · CS2";
+    function draw() {
+      var nm = NAME[sys];
+      function st(e) { return (e.sys || {})[S.sysKey(sys)] || null; }
+      function fmt(v) { return v == null ? "–" : sys === "openskill" ? Number(v).toFixed(1) : S.num(Math.round(v)); }
+      var done = t.editions.filter(function (e) { return e.champion && st(e); });
+      var favWon = done.filter(function (e) { return st(e).favourite_won; }).length;
+      var vrs = t.editions.filter(function (e) { return e.vrs_weight != null; })[0];
+      var avgField = done.length ? done.reduce(function (a, e) { return a + st(e).field; }, 0) / done.length : null;
+      var worst = done.filter(function (e) { return st(e).seed != null; }).sort(function (a, b) { return st(b).seed - st(a).seed; })[0];
+      function tile(k, v, s_) { return '<div class="tile"><div class="k">' + k + '</div><div class="v">' + v + '</div><div class="s">' + (s_ || "&nbsp;") + "</div></div>"; }
+      var rows = t.editions.map(function (e) {
+        var x = st(e), fin = !!e.champion;
+        return '<tr><td><b>' + e.year + "</b>" + '<div class="muted"><a href="' + S.esc(e.liquipedia) + '" target="_blank" rel="noopener">' + S.esc(e.name) + " \u2197</a></div>" + "</td>" +
+          (fin ? "<td>" + S.team(e.champion) + '<div class="muted">beat ' + S.esc(e.runner_up ? e.runner_up.name : "–") + " " + S.esc(e.score || "") + "</div></td>"
+               : '<td class="muted">In progress</td>') +
+          '<td class="n">' + (e.pool ? "$" + S.num(e.pool) : "–") + "</td>" +
+          '<td class="n">' + (x && fin && x.seed != null ? "#" + x.seed : "–") + "</td>" +
+          "<td>" + (x && fin ? S.team(x.favourite) + '<div class="' + (x.favourite_won ? 'yes">Won' : 'no">Did not win') + "</div>" : "–") + "</td>" +
+          '<td class="n">' + (x && fin ? fmt(x.field) : "–") + "</td>" +
+          '<td class="n">' + (x ? x.upsets + '<div class="muted">of ' + x.predicted + "</div>" : "–") + "</td>" +
+          '<td class="n">' + (e.vrs_weight != null ? e.vrs_weight.toFixed(2) : "–") + "</td></tr>";
+      }).join("");
+      var latest = t.editions[0], prizes = (t.editions.filter(function (e) { return e.prizes && e.prizes.length; })[0] || {});
+      main.innerHTML = S.back("events.html", "Back") +
+        '<div class="hero">' +
+        '<div><div class="thead">' + S.cs2tier(latest.tier, latest.valve) + '<span class="muted">' + (latest.lan ? "LAN" : "Online") + "</span></div><h1>" + S.esc(t.name) + "</h1>" +
+        '<p class="lede">' + t.editions.length + " edition" + (t.editions.length > 1 ? "s" : "") + " in the data (S- and A-tier main events since 2023).</p></div></div>" +
+        '<div class="sysrow"><span class="lab">Stats by</span><div class="chips" id="sys" role="group" aria-label="Rating system">' + SYS.map(function (x) {
+          return '<button class="chip" type="button" data-v="' + x[0] + '" aria-pressed="' + (x[0] === sys ? "true" : "false") + '">' + x[1] + "</button>";
+        }).join("") + '</div><div id="inact"></div></div>' +
+        '<div class="tiles">' +
+          tile("VRS stakes", vrs ? vrs.vrs_weight.toFixed(2) : "–", vrs ? vrs.year + ", 1.00 = a $1M pool" : "No prize pool listed") +
+          tile("Average field (" + nm + ")", avgField != null ? fmt(avgField) : "–", "Eight best teams") +
+          tile(nm + " favourite won", done.length ? favWon + " of " + done.length : "–", done.length ? Math.round(favWon / done.length * 100) + "% of editions" : "No " + nm + " data") +
+          tile("Longest shot to win", worst ? "#" + st(worst).seed : "–", worst ? S.esc(worst.champion.name) + ", " + worst.year + " (" + nm + " seed)" : "") +
+        "</div>" +
+        '<section><h2>Edition by edition</h2><p class="note">Seed: where ' + nm + " placed the champion among the event’s teams the week it started (#1 = the favourite). Upsets: series wins " + nm + " gave under a 25% chance, out of the matches it rated. 2023 editions have no figures: that year only warms the models up." +
+        "</p>" +
+        '<div class="tablewrap"><table class="t"><thead><tr><th>Year</th><th>Champion</th><th class="n">Prize pool</th><th class="n">Seed</th><th>Favourite</th><th class="n">Field</th><th class="n">Upsets</th><th class="n">VRS stakes</th></tr></thead><tbody>' +
+        rows + "</tbody></table></div></section>" +
+        (prizes.prizes ? '<section><h2>Prize money, ' + prizes.year + '</h2><p class="note">Top places, in US dollars, from Liquipedia.</p><div class="tablewrap"><table class="t"><thead><tr><th>Place</th><th>Team</th><th class="n">Prize</th></tr></thead><tbody>' +
+          prizes.prizes.map(function (x) { return "<tr><td>" + S.esc(x.place) + "</td><td>" + S.esc(x.team) + '</td><td class="n">$' + S.num(x.prize) + "</td></tr>"; }).join("") + "</tbody></table></div></section>" : "");
+      document.getElementById("sys").onclick = function (e) {
+        var b = e.target.closest("button"); if (!b) return;
+        sys = b.dataset.v; try { localStorage.setItem("tsys", sys); } catch (err) {}
+        draw();
+      };
+      S.inactivityToggle(document.getElementById("inact"), draw, "When a team is out", sys === "glicko" || sys === "openskill");
+    }
+    draw();
+  }).catch(function (e) { S.fail(main, e); });
+})();
+</script>
+</body>
+</html>
