@@ -15,3 +15,4 @@ the site) is shared under the same licence.
 | `placements.json` | Event page -> teams with prize money (USD), players' share, roster |
 | `players.json` | Player (Liquipedia page name) -> nationality |
 | `state.json` | Which months were fetched when (a month is final once fetched 21 days after it ended) |
+| `last_fetch.log` | Output of the latest daily fetch (requests made, anything Liquipedia refused) |

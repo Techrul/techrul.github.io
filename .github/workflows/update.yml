@@ -116,7 +116,12 @@ jobs:
         env:
           LIQUIPEDIA_API_KEY: ${{ secrets.LIQUIPEDIA_API_KEY }}
           CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
-        run: python -u scripts/fetch_cs2.py --start 2023-01 --max-requests 30 --per-hour 45 --max-minutes 20
+        # 5-minute limit: a normal day takes under a minute. If Liquipedia answers 429 (rate limited), the fetcher would
+        # wait 15 minutes before retrying; with this limit it stops at once instead, and tomorrow's run catches up.
+        # The output is kept in data/cs2/last_fetch.log (committed below) so a failed day can be diagnosed.
+        run: |
+          set -o pipefail
+          python -u scripts/fetch_cs2.py --start 2023-01 --max-requests 30 --per-hour 45 --max-minutes 5 2>&1 | tee data/cs2/last_fetch.log
 
       - name: CS2 ratings
         id: cs2
