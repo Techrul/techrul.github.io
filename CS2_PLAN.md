@@ -149,7 +149,7 @@ Everything tennis has, and what it becomes for CS2 (pages under `site/rankings/c
 2. Client + fetcher with caching and the request cap. **Built:** `scripts/lp_api.py`, `scripts/fetch_cs2.py`,
    offline tests in `tests/test_fetch_cs2.py` (paging, request cap and resume, 429 back-off, hourly pacing,
    time limit, months settling). History from Jan 2023 (2023 = burn-in, rankings shown from 2024).
-   On this branch `.github/workflows/cs2-fetch.yml` runs it when the fetcher changes and commits the data.
+   (On the cs2 branch a separate workflow ran it for the first load; on main the daily workflow fetches.)
    **First load (19-20 Oct 2026):** 206 requests over about 4.5 hours, no errors. 83,131 matches (Jan 2023 to
    Oct 2026, about 1,800 a month, no duplicates), 5,709 tournaments, 3,488 events with prize money, 28,049
    players. `data/cs2/` is 52 MB on disk (about 7x smaller compressed in git).
@@ -216,7 +216,7 @@ Everything tennis has, and what it becomes for CS2 (pages under `site/rankings/c
    scrolling at phone width. Weekly VRS history makes `cs2_site_data.py` take about 7 minutes.
 7. Merge, then send Liquipedia the link.
 
-## Probe results (19 Oct 2026, from GitHub Actions, `CS2_PROBE_RESULT.txt` on this branch)
+## Probe results (19 Oct 2026; the probe script and its workflow were removed before merging)
 
 - **Valve-ranked flag: `publishertier`, very likely.** Values seen: `Major Championship`, `Tier 1`, `Tier 2`,
   `Tier 1 Qualifier`, `Tier 2 Qualifier`, `Wildcard`, and blank (25% of last month's matches). It is Valve's own
