@@ -37,6 +37,13 @@ a.tit:hover{border-color:var(--ink)}
 .cmp{font-weight:500;text-decoration:none;border:1.5px solid var(--line);border-radius:999px;padding:6px 14px;white-space:nowrap}
 .cmp:hover{border-color:var(--muted)}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.lineup{list-style:none;margin:14px 0 18px;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.lineup a{display:flex;flex-direction:column;gap:2px;height:100%;box-sizing:border-box;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.lineup a:hover{border-color:var(--ink)}
+.lineup .pf .flag{font-size:1.5rem;line-height:1;margin:0}
+.lineup .pn{font-size:1.2rem;font-weight:700;margin-top:6px;overflow-wrap:anywhere}
+.lineup .pc{color:var(--muted);font-size:.8rem}
+@media (max-width:640px){.lineup{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body data-root="../">
@@ -71,7 +78,11 @@ a.tit:hover{border-color:var(--ink)}
     var c = p.current || {}, ranks = c.ranks || {};
     var asOf = meta.weeks[meta.weeks.length - 1];
     var dataFrom = meta.matches_from || meta.weeks[0], dataTo = meta.matches_to || asOf;
-    var roster = '<span class="roster">' + p.players.map(function (n, i) { return "<span>" + S.flag(p.flags[i] === "world" ? "" : p.flags[i]) + S.esc(n) + "</span>"; }).join("") + "</span>";
+    var lineup = '<ul class="lineup" aria-label="Players">' + p.players.map(function (n, i) {
+      var iso = p.flags[i] === "world" ? "" : p.flags[i], land = S.country(iso);
+      return '<li><a href="' + S.esc(S.plink(n)) + '" target="_blank" rel="noopener" title="' + S.esc(S.pname(n)) + ' on Liquipedia"><span class="pf">' + (S.flag(iso) || '<span class="flag">🌐</span>') +
+        '</span><span class="pn">' + S.esc(S.pname(n)) + '</span><span class="pc">' + S.esc(land || "–") + "</span></a></li>";
+    }).join("") + "</ul>";
     var other = p.names.filter(function (n) { return n !== p.full; });
     var facts = [p.full !== p.name ? p.full : null, other.length ? "Also played as " + other.slice(0, 3).join(", ") : null,
       p.last_match ? "Last match " + S.date(p.last_match) : null].filter(Boolean).map(S.esc).join(" · ");
@@ -120,7 +131,7 @@ a.tit:hover{border-color:var(--ink)}
     main.innerHTML =
       S.back("index.html", "Back") +
       '<div class="ph"><h1>' + S.esc(p.name) + (c.region ? '<span class="region">' + S.esc(c.region) + "</span>" : "") + '</h1><a class="cmp" href="predict.html?a=' + encodeURIComponent(p.id) + '">Compare with another team →</a></div>' +
-      '<p class="facts">' + roster + "<br>" + facts + S.outTag(p.last_match, asOf) + ' · <a class="extlink" href="' + S.esc(p.liquipedia) + '" target="_blank" rel="noopener">Liquipedia ↗</a></p>' +
+      lineup + '<p class="facts">' + facts + S.outTag(p.last_match, asOf) + ' · <a class="extlink" href="' + S.esc(p.liquipedia) + '" target="_blank" rel="noopener">Liquipedia ↗</a></p>' +
       '<div class="coverage"><b>Data covers ' + S.date(dataFrom) + " to " + S.date(dataTo) + ", this roster only.</b> A team here is a roster under Valve’s rule: its current five and earlier lineups that share three of them. " +
       "Matches by the organisation with a different core are a different team, so these are not the organisation’s all-time totals.</div>" +
       '<div class="tiles" aria-label="Current rank in each system">' + tiles + "</div>" +

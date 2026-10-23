@@ -89,7 +89,7 @@
   ];
   function rankOf(p, key) { return key === "official" ? p.official_rank : (p.ranks || {})[S.sysKey(key)]; }
   function nm(t) { return t.short; }
-  function roster(t) { return '<span class="roster">' + t.players.map(function (n, i) { return "<span>" + S.flag(t.flags[i] === "world" ? "" : t.flags[i]) + S.esc(n) + "</span>"; }).join("") + "</span>"; }
+  function roster(t) { return '<span class="roster">' + t.players.map(function (n, i) { return "<span>" + S.flag(t.flags[i] === "world" ? "" : t.flags[i]) + S.esc(S.pname(n)) + "</span>"; }).join("") + "</span>"; }
   function link(t) { return '<a class="plink" href="team.html?id=' + encodeURIComponent(t.id) + '"' + (t.short !== t.name ? ' title="' + S.esc(t.name) + '"' : "") + ">" + S.esc(t.short) + "</a>"; }
 
   Promise.all([S.json("data/rankings.json"), S.json("data/backtest.json").catch(function () { return null; })]).then(function (res) {

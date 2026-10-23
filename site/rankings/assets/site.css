@@ -89,7 +89,10 @@ table.t td.n,table.t th.n{text-align:right}
 .muted{color:var(--muted)}
 .win{color:var(--up);font-weight:600} .loss{color:var(--down);font-weight:600}
 .plink{text-decoration:none;font-weight:500} .plink:hover{text-decoration:underline}
-.flag{margin-right:5px}
+/* Flag emoji drawn from a flags-only Twemoji font (Windows has no flag emoji). Font: Twemoji Country Flags
+   (country-flag-emoji-polyfill, MIT), artwork Twemoji by Twitter, CC BY 4.0. Only downloaded on pages that show a flag. */
+@font-face{font-family:"Twemoji Country Flags";unicode-range:U+1F1E6-1F1FF,U+1F3F4,U+E0062-E0063,U+E0065,U+E0067,U+E006C,U+E006E,U+E0073-E0074,U+E0077,U+E007F;src:url("fonts/TwemojiCountryFlags.woff2") format("woff2");font-display:swap}
+.flag{margin-right:5px;font-family:"Twemoji Country Flags","Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
 .surface{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:var(--muted)}
 .surface i{width:9px;height:9px;border-radius:2px;display:inline-block}
 .empty{padding:28px 16px;color:var(--muted)}
