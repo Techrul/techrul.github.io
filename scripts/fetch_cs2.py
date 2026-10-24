@@ -289,15 +289,18 @@ def main():
     status = 0
     try:
         run(client, store, today, args.start, backfill=not args.no_backfill)
-        print("finished: everything up to date")
+        outcome = "finished: everything up to date"
     except lp_api.StopRun as e:
-        print(f"stopped early ({e}); the next run continues from here")
+        outcome = f"stopped early ({e}); the next run continues from here"
     except lp_api.ApiError as e:
-        print(f"error: {e}")
+        outcome = f"error: {e}"
         status = 1
+    print(outcome)
     store.save()
     print(f"requests used: {client.sent}")
     print(summary(store, args.start, today))
+    if os.environ.get("GITHUB_ACTIONS"):  # one line on the run's page, readable without opening the log
+        print(f"::notice title=CS2 fetch::{outcome}; {client.sent} requests; {summary(store, args.start, today)}")
     sys.exit(status)
 
 

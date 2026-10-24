@@ -24,6 +24,7 @@
   // CS2 players are Liquipedia page names: "Lucky_(French_player)" -> "Lucky"
   S.pname = function (page) { return String(page || "").replace(/_\([^)]*\)$/, "").replace(/_/g, " "); };
   S.plink = function (page) { return "https://liquipedia.net/counterstrike/" + encodeURIComponent(String(page).replace(/ /g, "_")).replace(/%2F/g, "/"); };
+  S.hltv = function (q) { return "https://www.hltv.org/search?query=" + encodeURIComponent(q); };  // HLTV's IDs aren't available, so search by name
   S.country = (function () { var dn = null; try { dn = new Intl.DisplayNames(["en"], { type: "region" }); } catch (e) {} return function (iso) { try { return iso && iso.length === 2 && dn ? dn.of(iso.toUpperCase()) : ""; } catch (e) { return ""; } }; })();
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   S.date = function (iso) { if (!iso) return "–"; var p = iso.split("-"); return +p[2] + " " + MONTHS[+p[1] - 1] + " " + p[0]; };
