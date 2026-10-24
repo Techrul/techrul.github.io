@@ -48,7 +48,9 @@
 .now{display:flex;align-items:center;gap:10px;padding:7px 14px;border-top:1px solid var(--line);color:var(--up);font-size:.8rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 .now::after{content:"";flex:1;height:2px;background:var(--up);border-radius:1px}
 .cal .now:first-child{border-top:0}
-.jump{font:inherit;font-size:.86rem;border:0;background:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0}
+.jump{font:inherit;font-weight:600;display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--ink);background:var(--ink);color:var(--on-ink);border-radius:999px;padding:7px 16px;margin-top:16px;cursor:pointer}
+.jump:hover{opacity:.85}
+.jump::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--up)}
 .legend2{display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--muted);font-size:.84rem;margin-top:10px}
 @media (max-width:720px){
   .ev{grid-template-columns:62px minmax(0,1fr) 64px;grid-template-areas:"when nm stk" "when tier fld" "when res res"}
@@ -204,7 +206,7 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
           (done && done < byMonth[m].length ? ", " + done + " finished" : "") + '</small></h2><div class="cal">' + HEAD + rows + "</div></section>";
       }).join("");
       if (!nowPlaced) html += '<section class="month"><div class="cal">' + nowRow + "</div></section>";
-      return '<p class="note" style="margin-top:14px">' + (thisSeason ? '<button class="jump" type="button" id="jump">Jump to today</button> · ' : "") +
+      return (thisSeason ? '<button class="jump" type="button" id="jump">Jump to today ↓</button>' : "") + '<p class="note" style="margin-top:14px">' +
         "Field: average " + SYS_NAME[state.sys] + " rating of the draw’s eight best players when it started. VRS stakes: how much a result counts in VRS (1.00 = the biggest prize pool). Faded rows are not played yet and placed at last year’s dates. " +
         '<a class="extlink" href="https://www.atptour.com/en/tournaments" target="_blank" rel="noopener">Official calendar on atptour.com ↗</a></p>' + html;
     }
