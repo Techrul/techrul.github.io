@@ -67,6 +67,7 @@ jobs:
             data/rankings
             data/prize_money.json
             data/trophy_images
+            data/manifest.json
           key: data-${{ github.run_id }}
           restore-keys: data-
 
