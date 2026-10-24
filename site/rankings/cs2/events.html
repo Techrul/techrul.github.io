@@ -48,9 +48,9 @@
 .now{display:flex;align-items:center;gap:10px;padding:7px 14px;border-top:1px solid var(--line);color:var(--up);font-size:.8rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 .now::after{content:"";flex:1;height:2px;background:var(--up);border-radius:1px}
 .cal .now:first-child{border-top:0}
-.jump{font:inherit;font-weight:600;display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--ink);background:var(--ink);color:var(--on-ink);border-radius:999px;padding:7px 16px;margin-top:16px;cursor:pointer}
-.jump:hover{opacity:.85}
-.jump::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--up)}
+.jump{font:inherit;font-weight:600;display:inline-flex;align-items:center;gap:8px;border:2px solid var(--up);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 16px;margin-top:16px;cursor:pointer}
+.jump:hover{background:var(--head)}
+.jump::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--up)}
 .legend2{display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--muted);font-size:.84rem;margin-top:10px}
 @media (max-width:720px){
   .ev{grid-template-columns:62px minmax(0,1fr) 64px;grid-template-areas:"when nm stk" "when tier fld" "when res res"}
