@@ -84,7 +84,7 @@ a.tit:hover{border-color:var(--ink)}
       var iso = p.flags[i] === "world" ? "" : p.flags[i], land = S.country(iso), nm = S.esc(S.pname(n));
       return '<li><span class="pf">' + (S.flag(iso) || '<span class="flag">🌐</span>') + '</span><span class="pn">' + nm + '</span><span class="pc">' + S.esc(land || "–") +
         '</span><span class="pl"><a href="' + S.esc(S.plink(n)) + '" target="_blank" rel="noopener" aria-label="' + nm + ' on Liquipedia">Liquipedia ↗</a>' +
-        '<a href="' + S.esc(S.hltv(S.pname(n))) + '" target="_blank" rel="noopener" aria-label="Search HLTV for ' + nm + '">HLTV ↗</a></span></li>";
+        '<a href="' + S.esc(S.hltv(S.pname(n))) + '" target="_blank" rel="noopener" aria-label="Search HLTV for ' + nm + '">HLTV ↗</a></span></li>';
     }).join("") + "</ul>";
     var other = p.names.filter(function (n) { return n !== p.full; });
     var facts = [p.full !== p.name ? p.full : null, other.length ? "Also played as " + other.slice(0, 3).join(", ") : null,

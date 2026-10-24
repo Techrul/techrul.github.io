@@ -147,6 +147,10 @@ jobs:
           # --autostash: the cache step above replaces data/prize_money.json, which would otherwise block the pull
           git pull --rebase --autostash -q origin main && git push
 
+      # A syntax error in any page's script would leave it stuck on "Loading…"; better to keep the old site live.
+      - name: Check page scripts
+        run: node tests/check_pages.js site
+
       - name: Copy pages
         run: python scripts/build_site.py --site site --out docs
 
