@@ -251,7 +251,7 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
           '<td class="n">' + (e.vrs_weight != null ? e.vrs_weight.toFixed(2) : "–") + "</td></tr>";
       }).join("");
       return '<p class="note" style="margin-top:14px">' + rows.length + " events. Click a column to sort (blanks stay at the bottom) or a row to open the event. Seed: where " + nm + " placed the champion among the entrants (#1 = the favourite). " +
-        "Field: average " + nm + " rating of the eight best entrants. Upsets: wins " + nm + " gave under 25%, out of the matches it rated. " + years[years.length - 1] + " only warms the models up, and VRS figures need prize money data (from 2025).</p>" +
+        "Field: average " + nm + " rating of the eight best entrants. Upsets: wins " + nm + " gave under 35%, out of the matches it rated. " + years[years.length - 1] + " only warms the models up, and VRS figures need prize money data (from 2025).</p>" +
         '<div class="tablewrap"><table class="t st"><thead><tr>' + head + "</tr></thead><tbody>" + body + "</tbody></table></div>";
     }
 
@@ -279,7 +279,7 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
     function drawCards() {
       var shown = list.filter(function (t) { return keep(t, null); });
       if (!shown.length) return '<div class="empty">No tournaments match these filters.</div>';
-      var note = '<p class="note" style="margin-top:14px">Each card shows the latest edition with data. Upset rate: share of matches ' + SYS_NAME[state.sys] + " gave the winner under 25%. " +
+      var note = '<p class="note" style="margin-top:14px">Each card shows the latest edition with data. Upset rate: share of matches ' + SYS_NAME[state.sys] + " gave the winner under 35%. " +
         (state.sort === "cal" ? "Grouped by tier; pick a sort above to rank all events in one list." : "Ranked across all tiers; events without this number are at the end.") + "</p>";
       if (state.sort === "cal") {
         shown.sort(function (a, b) { return a.month - b.month || (latest(a).date.slice(5) < latest(b).date.slice(5) ? -1 : 1); });

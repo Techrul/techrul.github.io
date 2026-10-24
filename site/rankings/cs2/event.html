@@ -91,7 +91,7 @@ td .muted{font-size:.84rem}
           tile(nm + " favourite won", done.length ? favWon + " of " + done.length : "–", done.length ? Math.round(favWon / done.length * 100) + "% of editions" : "No " + nm + " data") +
           tile("Longest shot to win", worst ? "#" + st(worst).seed : "–", worst ? S.esc(worst.champion.name) + ", " + worst.year + " (" + nm + " seed)" : "") +
         "</div>" +
-        '<section><h2>Edition by edition</h2><p class="note">Seed: where ' + nm + " placed the champion among the event’s teams the week it started (#1 = the favourite). Upsets: series wins " + nm + " gave under a 25% chance, out of the matches it rated. 2023 editions have no figures: that year only warms the models up." +
+        '<section><h2>Edition by edition</h2><p class="note">Seed: where ' + nm + " placed the champion among the event’s teams the week it started (#1 = the favourite). Upsets: series wins " + nm + " gave under a 35% chance, out of the matches it rated. 2023 editions have no figures: that year only warms the models up." +
         "</p>" +
         '<div class="tablewrap"><table class="t"><thead><tr><th>Year</th><th>Champion</th><th class="n">Prize pool</th><th class="n">Seed</th><th>Favourite</th><th class="n">Field</th><th class="n">Upsets</th><th class="n">VRS stakes</th></tr></thead><tbody>' +
         rows + "</tbody></table></div></section>" +
@@ -123,7 +123,7 @@ td .muted{font-size:.84rem}
     }
     function matchList(ed, ms) {
       if (!ms.length) return '<p class="note">No matches recorded.</p>';
-      var nm = NAME[sys], key = S.sysKey(sys), DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], ups = 0, rated = 0;
+      var nm = NAME[sys], key = S.sysKey(sys), DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], ups = 0, big = 0, rated = 0;
       function side(x, won) { return '<span class="' + (won ? "w" : "l") + '">' + (x.link ? S.team(x) : S.esc(x.name)) + "</span>"; }
       var out = [], day = null;
       ms.forEach(function (m, i) {
@@ -135,17 +135,17 @@ td .muted{font-size:.84rem}
             '<div class="tablewrap"><table class="t mt"><tbody>');
         }
         var a = m.teams[0], b = m.teams[1], p = m.p[key], final = ed.champion && i === ms.length - 1;
-        if (p != null) { rated++; if (p < 0.25) ups++; }
+        if (p != null) { rated++; if (p < 0.35) ups++; if (p < 0.2) big++; }
         var hh = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
         out.push("<tr><td class=\"muted\" style=\"width:1%;white-space:nowrap\">" + hh + '</td><td class="tm r">' + side(a, m.winner === 1) + '</td><td class="sc">' +
           (a.score != null ? a.score : "") + "–" + (b.score != null ? b.score : "") + '</td><td class="tm">' + side(b, m.winner === 2) +
-          (final ? '<span class="tag">Final</span>' : "") + (p != null && p < 0.25 ? '<span class="tag up" title="' + nm + ' gave the winner under 25%">Upset</span>' : "") +
+          (final ? '<span class="tag">Final</span>' : "") + (p != null && p < 0.35 ? '<span class="tag up" title="' + nm + ' gave the winner ' + (p < 0.2 ? "under 20%" : "under 35%") + '">' + (p < 0.2 ? "Big upset" : "Upset") + "</span>" : "") +
           '</td><td class="muted bo" style="width:1%;white-space:nowrap">' + (m.bo ? "Bo" + m.bo : "") + '</td><td class="n ch">' +
           (p != null ? Math.round(p * 100) + "%" : "–") + "</td></tr>");
       });
       out.push("</tbody></table></div>");
-      return '<p class="note">' + ms.length + " matches" + (rated ? ", " + ups + " upset" + (ups === 1 ? "" : "s") + " by " + nm : "") +
-        ". Times are in your time zone. The right-hand number is " + nm + "’s pre-match chance for the team that won (bold).</p>" + out.join("");
+      return '<p class="note">' + ms.length + " matches" + (rated ? ", " + ups + " upset" + (ups === 1 ? "" : "s") + (big ? " (" + big + " big)" : "") + " by " + nm : "") +
+        ". Times are in your time zone. The right-hand number is " + nm + "’s pre-match chance for the team that won (bold). Upset: under 35%; big upset: under 20%.</p>" + out.join("");
     }
     draw();
   }).catch(function (e) { S.fail(main, e); });

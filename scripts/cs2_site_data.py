@@ -30,6 +30,8 @@ import tempfile
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
 
+UPSET = 0.35  # a win the system gave the winner under 35% counts as an upset
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import cs2_adapter as ad  # noqa: E402
 import cs2_ratings as cr  # noqa: E402
@@ -439,7 +441,7 @@ def main():
             ps = [x for x in ps if x is not None]
             out[system] = {"field": round(st["field"], 1 if system.startswith("openskill") else 0), "favourite": person(st["fav"]),
                            "favourite_won": st["fav"] == e["champion"], "seed": st["seed"],
-                           "upsets": sum(1 for x in ps if x < 0.25), "predicted": len(ps)}
+                           "upsets": sum(1 for x in ps if x < UPSET), "predicted": len(ps)}
         return out
     groups = defaultdict(list)
     for page in tracked:

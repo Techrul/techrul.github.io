@@ -20,6 +20,8 @@ import sys
 from collections import Counter, defaultdict
 from datetime import timedelta
 
+UPSET = 0.35  # a win the system gave the winner under 35% counts as an upset
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ratings  # noqa: E402
 
@@ -299,14 +301,14 @@ def main():
                        "name": name, "level": level, "surface": surface, "draw": ms[0].get("draw_size"),
                        "champion": final["winner_id"] if final else None, "runner_up": final["loser_id"] if final else None,
                        "score": final["score"] if final else None}
-        # each system's view of the draw (from the weekly runs) plus its upsets: wins it gave under 25%
+        # each system's view of the draw (from the weekly runs) plus its upsets: wins it gave under 35%
         sysd = {}
         for system, st in ev_stats.get(tid, {}).items():
             keys_ = [(tid, m["round"], m["winner_id"], m["loser_id"]) for m in ms]
             ps = [vrs_pred.get(k_) if system == "vrs" else preds.get(k_, {}).get(system) for k_ in keys_]
             ps = [x for x in ps if x is not None]
             sysd[system] = {"field": round(st["field"], 1 if system.startswith("openskill") else 0), "fav": st["fav"],
-                            "seed": st["seed"], "upsets": sum(1 for x in ps if x < 0.25), "predicted": len(ps)}
+                            "seed": st["seed"], "upsets": sum(1 for x in ps if x < UPSET), "predicted": len(ps)}
         events[tid]["sys"] = sysd
         events[tid]["matches"] = len(ms)
         if "elo" in sysd:  # Elo figures also kept at the top level (older pages read these)

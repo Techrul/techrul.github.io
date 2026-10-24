@@ -54,7 +54,7 @@ The pages load their data with fetch, so open them through a web server (as abov
 - VRS history: Valve's code is rerun for each week once six months of priced events exist (with prize money for 2025-2026, that is from mid-2025).
 - Records only cover the data on the site, so they are labelled as such, not as all-time records. Records that don't depend on a rating system (titles, streaks, ages) are left out on purpose.
 - Weekly rises use the underlying rating (Glicko-2 rating, OpenSkill mean), not the ranked value, so a shrinking uncertainty is not counted as a rise.
-- Tournament stats: VRS stakes = Valve's prize-pool factor, 1/(1+|log10(pool/$1M)|) on the scaled pool (1.00 = the biggest event). Field Elo = mean Elo of the draw's top 8 entrants on the Monday it started (finished editions only). Elo seed = the champion's place by Elo among the entrants. Upset = a win Elo gave under 25%.
+- Tournament stats: VRS stakes = Valve's prize-pool factor, 1/(1+|log10(pool/$1M)|) on the scaled pool (1.00 = the biggest event). Field Elo = mean Elo of the draw's top 8 entrants on the Monday it started (finished editions only). Elo seed = the champion's place by Elo among the entrants. Upset = a win Elo gave under 35%.
 - Every player with a tour-level match gets a profile, so every link works (612 profiles, about 5 MB, for 2020-2026).
 
 Checked on 2020-2026 data: all 178 internal links on the main pages load; rank-strip dots sit exactly on the line (0.00 px offset); official rank history matches known history where it can be checked (Djokovic's run at #1 ending Feb 2022, when Medvedev took over).
@@ -177,7 +177,7 @@ Differences of a point or so are within noise at this sample size.
 
 ### Tournament stats under each system
 
-For each event and each system (Elo, Glicko-2 and OpenSkill in both inactivity versions, VRS), `site_data.py` takes the ratings on the Monday of the start week. Field = mean of the 8 best entrants' ranking values (Glicko-2 rating - 2 RD, OpenSkill mu - 3 sigma, VRS points). Favourite = the best entrant; seed = the champion's position. Upsets = wins that system gave under 25%, out of the matches it rated (VRS: matches in weeks with a VRS snapshot, from mid-2025). Values only compare within one system.
+For each event and each system (Elo, Glicko-2 and OpenSkill in both inactivity versions, VRS), `site_data.py` takes the ratings on the Monday of the start week. Field = mean of the 8 best entrants' ranking values (Glicko-2 rating - 2 RD, OpenSkill mu - 3 sigma, VRS points). Favourite = the best entrant; seed = the champion's position. Upsets = wins that system gave under 35%, out of the matches it rated (VRS: matches in weeks with a VRS snapshot, from mid-2025). Values only compare within one system.
 
 ### Head-to-head (`h2h.json`)
 
