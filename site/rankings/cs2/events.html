@@ -169,7 +169,7 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
         ed.forEach(function (e) { out.push({ t: t, e: e, date: e.date, kind: e.status || (e.champion ? "finished" : "live") }); });
         if (!ed.length && year === years[0]) {
           var prev = t.editions.filter(function (e) { return e.year === year - 1; })[0];
-          if (prev) {
+          if (prev && !isMajor(prev)) {  // Majors move to a new organiser and city each time: never assume a repeat
             var exp = iso(Date.parse(prev.date) + 364 * DAY);  // same week, same weekday, one year on
             if (exp.slice(0, 4) === String(year) && Date.parse(exp) >= today - 6 * DAY) out.push({ t: t, e: prev, date: exp, kind: "expected" });
           }
@@ -184,7 +184,7 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
       else if (x.kind === "live") res = '<span class="livedot" aria-hidden="true"></span><b>In progress</b>';
       else res = '<span class="muted">Expected · placed at ' + e.year + "’s dates</span>" + (e.champion ? '<div class="muted">' + e.year + ": " + S.esc(e.champion.name) + "</div>" : "");
       var stk = (e.vrs_weight != null ? e.vrs_weight.toFixed(2) : "–") + (x.kind === "expected" && e.vrs_weight != null ? "<small>" + e.year + "</small>" : "") + '<span class="lbl">VRS stakes</span>';
-      var fld = (done && s_ ? fmtField(s_.field) : "–") + '<span class="lbl">Field</span>';
+      var fld = (x.kind !== "expected" && s_ ? fmtField(s_.field) : "–") + '<span class="lbl">Field</span>';
       return '<div class="ev ' + x.kind + '" data-href="' + href(t) + '"><div class="when">' + (x.kind === "expected" ? "~" : "") + short(x.date) + "<small>" + (x.kind === "expected" ? "expected" : "start") + "</small></div>" +
         '<div class="tr">' + S.cs2tier(e.tier, e.valve) + '</div><div class="nm"><a href="' + href(t) + '">' + S.esc(x.kind === "expected" ? t.name : e.name) + "</a>" + '<span class="muted" style="display:block;font-size:.82rem">' + (e.lan ? "LAN" : "Online") + (e.pool ? " · $" + S.num(e.pool) : "") + "</span></div>" +
         '<div class="res">' + res + '</div><div class="fld cn">' + fld + '</div><div class="stk cn">' + stk + "</div></div>";
@@ -197,12 +197,17 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
       items.forEach(function (x) { var m = +x.date.slice(5, 7); (byMonth[m] = byMonth[m] || []).push(x); });
       var nowRow = '<div class="now" id="now">Today · ' + short(todayIso) + "</div>";
       var HEAD = '<div class="ev hd" aria-hidden="true"><span>Start</span><span>Tier</span><span>Event</span><span>Champion</span><span>Field (' + SYS_NAME[state.sys] + ")</span><span>VRS stakes</span></div>";
-      var html = Object.keys(byMonth).map(Number).sort(function (a, b) { return a - b; }).map(function (m) {
+      // the Today line goes before the first event still to come, but never into a later month's table: if that
+      // event is next month, the line closes this month's table instead
+      var months = Object.keys(byMonth).map(Number).sort(function (a, b) { return a - b; }), nowMonth = +todayIso.slice(5, 7);
+      var lastBefore = months.filter(function (m) { return m <= nowMonth; }).pop();
+      var html = months.map(function (m) {
         var rows = byMonth[m].map(function (x) {
           var pre = "";
-          if (!nowPlaced && x.date > todayIso && x.kind !== "live") { pre = nowRow; nowPlaced = true; }
+          if (!nowPlaced && x.date > todayIso && x.kind !== "live" && (m <= nowMonth || lastBefore == null)) { pre = nowRow; nowPlaced = true; }
           return pre + calRow(x);
         }).join("");
+        if (!nowPlaced && thisSeason && m === lastBefore) { rows += nowRow; nowPlaced = true; }
         var done = byMonth[m].filter(function (x) { return x.kind === "finished"; }).length;
         return '<section class="month"><h2>' + MONTHS[m - 1] + " <small>" + byMonth[m].length + " event" + (byMonth[m].length > 1 ? "s" : "") +
           (done && done < byMonth[m].length ? ", " + done + " finished" : "") + '</small></h2><div class="cal">' + HEAD + rows + "</div></section>";
