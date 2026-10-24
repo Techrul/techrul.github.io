@@ -41,7 +41,7 @@ Other projects will show up here.
 | `site/index.html` | The homepage |
 | `site/rankings/` | The rankings site's pages |
 | `scripts/` | The data pipeline that fetches results and builds the rankings |
-| `.github/workflows/update.yml` | Rebuilds and deploys the whole site every day with GitHub Actions |
+| `.github/workflows/update.yml` | Rebuilds and deploys the whole site every 3 hours with GitHub Actions |
 
 # FAQ:
 

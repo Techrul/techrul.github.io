@@ -102,7 +102,7 @@ Site.json('data/rankings.json').then(function(D){
     {id:'openskill', label:'OpenSkill', badge:'Skill model', color:'var(--openskill)',
      blurb:'A Bayesian rating with an uncertainty value (σ). Here it rates each roster as one entity. Ranked by the mean minus three σ.',
      val:function(p){return p[Site.sysKey('openskill')].toFixed(1)}, unc:function(p){return 'σ ' + p[Site.sysKey('openskill') === 'openskill' ? 'openskill_sigma' : 'openskill_sigma_pure'].toFixed(2)}},
-    {id:'vrs', label:'VRS (live)', badge:'Valve’s method, recalculated daily', color:'var(--vrs)',
+    {id:'vrs', label:'VRS (live)', badge:'Valve’s method, recalculated every 3 hours', color:'var(--vrs)',
      blurb:'Valve’s own code, run unchanged on the same results as the other systems, up to the latest match: a live preview of Valve’s next update. It rewards prize money and beating teams that win it; teams that stop playing drop fast.',
      links:[{href:'https://liquipedia.net/counterstrike/Valve_Regional_Standings', text:'Liquipedia’s unofficial VRS'}, {href:'https://www.hltv.org/valve-ranking/teams', text:'HLTV’s live Valve ranking'}],
      val:function(p){return p.vrs == null ? '–' : p.vrs.toLocaleString('en-US')}, unc:null},

@@ -91,10 +91,16 @@ def main():
         with open(args.manifest, encoding="utf-8") as fh:
             manifest = json.load(fh)
 
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     names = [f"{y}.csv" for y in range(args.start_year, datetime.now(timezone.utc).year + 1)] + ["ongoing_tourneys.csv"]
+    current = {f"{datetime.now(timezone.utc).year}.csv", "ongoing_tourneys.csv"}
     problems = 0
     for name in names:
         dest = os.path.join(args.raw, name)
+        # The site updates several times a day: past seasons are downloaded at most once a day, only the current
+        # season and the ongoing events every run, to go easy on Tennismylife's server.
+        if name not in current and os.path.exists(dest) and manifest.get(name, {}).get("fetched") == today:
+            continue
         try:
             blob = download(BASE + name, ua)
             rows, newest = inspect(blob)
@@ -109,7 +115,7 @@ def main():
         with open(dest, "wb") as fh:
             fh.write(blob)
         manifest[name] = {"sha256": hashlib.sha256(blob).hexdigest(), "rows": rows, "newest_match": newest,
-                          "fetched": datetime.now(timezone.utc).strftime("%Y-%m-%d")}
+                          "fetched": today}
         print(f"ok   {name}: {rows} rows, newest {newest}")
         time.sleep(args.delay)
 
@@ -121,6 +127,8 @@ def main():
         name = f"rankings_{year}.csv"
         if year < this_year - 1 and os.path.exists(os.path.join(args.rankings, f"{year}.csv")):
             continue
+        if year < this_year and os.path.exists(os.path.join(args.rankings, f"{year}.csv")) and manifest.get(name, {}).get("fetched") == today:
+            continue
         try:
             blob = download(f"{RANKINGS_BASE}{year}.csv", ua)
             rows, newest = inspect_rankings(blob)
@@ -131,7 +139,7 @@ def main():
         with open(os.path.join(args.rankings, f"{year}.csv"), "wb") as fh:
             fh.write(blob)
         manifest[name] = {"sha256": hashlib.sha256(blob).hexdigest(), "rows": rows, "newest_ranking": newest,
-                          "fetched": datetime.now(timezone.utc).strftime("%Y-%m-%d")}
+                          "fetched": today}
         print(f"ok   {name}: {rows} rows, newest ranking {newest}")
         time.sleep(args.delay)
 

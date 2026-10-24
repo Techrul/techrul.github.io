@@ -27,7 +27,7 @@ scripts/ratings.py       Elo, Glicko-2, OpenSkill, official -> docs/rankings/ten
 scripts/site_data.py     weekly history, profiles, records, tournaments -> docs/rankings/tennis/data/
 scripts/trophies.py      trophy photos from Wikimedia Commons (choices in data/trophies.json) -> docs/rankings/tennis/trophies/
 scripts/build_site.py    copies site/ pages and assets into docs/
-.github/workflows/       runs all of it daily and deploys docs/ to GitHub Pages
+.github/workflows/       runs all of it every 3 hours and deploys docs/ to GitHub Pages
 ```
 
 Run it locally:
@@ -253,7 +253,7 @@ python3 scripts/cs2_site_data.py --valve vendor/vrs --current docs/rankings/cs2/
 python3 tests/test_fetch_cs2.py && python3 tests/test_cs2_adapter.py vendor/vrs
 ```
 
-On GitHub: add the repository secret `LIQUIPEDIA_API_KEY`. The daily workflow fetches at most 30 requests (recent weeks,
+On GitHub: add the repository secret `LIQUIPEDIA_API_KEY`. Each workflow run (every 3 hours) fetches at most 30 requests (recent weeks,
 plus any month not fetched yet), commits `data/cs2/`, and builds the CS2 pages. Every CS2 step may fail without stopping
 the tennis update; without fresh CS2 data the CS2 pages say they could not load it. The weekly VRS history takes about
 7 minutes (Valve's code runs once per week since January 2024).

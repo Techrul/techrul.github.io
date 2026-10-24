@@ -2,7 +2,7 @@ name: Update rankings
 
 on:
   schedule:
-    - cron: "15 6 * * *"   # daily, 06:15 UTC
+    - cron: "15 */3 * * *"   # every 3 hours (00:15, 03:15, ... UTC), so results show up the same day
   workflow_dispatch:         # "Run workflow" button in the Actions tab
   push:                      # any change pushed to main goes live within minutes
     branches: [main]
@@ -30,8 +30,8 @@ jobs:
       - uses: actions/checkout@v5
 
       # GitHub pauses scheduled workflows in public repos after 60 days without repository activity.
-      # If the repo has been quiet for 45 days, commit a one-line date file so the daily update keeps running.
-      - name: Keep the daily schedule alive
+      # If the repo has been quiet for 45 days, commit a one-line date file so the scheduled updates keep running.
+      - name: Keep the schedule alive
         if: github.event_name == 'schedule'
         continue-on-error: true
         run: |
@@ -109,7 +109,7 @@ jobs:
         run: python scripts/trophies.py --out docs/rankings/tennis
 
       # ---------------------------------------------------------------- CS2 (all optional: CS2 trouble never stops tennis)
-      # Liquipedia's API: recent weeks every day, plus any month not fetched yet; at most 30 requests (their limit is
+      # Liquipedia's API: recent weeks every run (about 4-5 requests), plus any month not fetched yet; at most 30 requests (their limit is
       # 60 an hour). Stops early, keeping what it has, if Liquipedia rate-limits it. The data is committed below.
       - name: Fetch CS2 data (Liquipedia)
         continue-on-error: true
