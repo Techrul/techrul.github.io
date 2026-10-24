@@ -623,6 +623,32 @@ def main():
         with open(os.path.join(args.out, name), "w", encoding="utf-8") as fh:
             json.dump(obj, fh, ensure_ascii=False, separators=(",", ":"))
 
+    # ---------------------------------------------------------------- every match of each listed edition (event pages)
+    # One file per edition, loaded when someone opens that edition: teams as named at the time, linked to the roster's
+    # page when it has one, and each system's pre-match chance for the team that won.
+    by_id = {m["id"]: m for m in played}
+    os.makedirs(os.path.join(args.out, "events"), exist_ok=True)
+    for old in glob.glob(os.path.join(args.out, "events", "*.json")):
+        os.remove(old)
+    n_files = 0
+    for series in ev_out:
+        for ed in series["editions"]:
+            rows = []
+            for mid in events[ed["page"]]["match_ids"]:
+                m = by_id.get(mid)
+                if not m:
+                    continue
+                probs = {k: round(v, 3) for k, v in (preds.get(mid) or {}).items() if k in SKILL and v is not None}
+                if mid in vrs_pred:
+                    probs["vrs"] = round(vrs_pred[mid], 3)
+                sides = [{"id": rid, "name": ad.short_name(t["name"]) or person(rid)["name"], "score": t["score"],
+                          "link": rid in has_profile} for rid, t in zip(m["rid"], m["teams"])]
+                rows.append({"time": m["time"], "bo": m["bestof"], "winner": m["winner"], "teams": sides, "p": probs})
+            ed["mfile"] = re.sub(r"[^A-Za-z0-9_-]+", "_", ed["page"])
+            dump(os.path.join("events", ed["mfile"] + ".json"), {"page": ed["page"], "name": ed["name"], "matches": rows})
+            n_files += 1
+    print(f"event matches: {n_files} editions")
+
     dump("teams_index.json", index)
     dump("records.json", records)
     dump("events.json", {"as_of": as_of_date, "series": ev_out})

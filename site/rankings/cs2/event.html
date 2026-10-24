@@ -21,6 +21,19 @@
 .tile .s{color:var(--muted);font-size:.8rem}
 .yes{color:var(--up);font-weight:600} .no{color:var(--down);font-weight:600}
 td .muted{font-size:.84rem}
+.edpick{margin:4px 0 12px}
+.mday{margin:16px 0 6px;color:var(--muted);font-size:.84rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase}
+.mt td{vertical-align:middle}
+.mt .tm{width:38%}
+.mt .tm.r{text-align:right}
+.mt .w{font-weight:700}
+.mt .l{color:var(--muted)}
+.mt .sc{text-align:center;white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:600}
+.mt .tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);border-radius:5px;padding:1px 5px;margin-left:6px;color:var(--muted);vertical-align:1px}
+.mt .tag.up{color:var(--down);border-color:currentColor}
+.mt .ch{white-space:nowrap}
+#mlist .tablewrap,#mlist .note{max-width:760px}
+@media (max-width:560px){.mt .bo{display:none}.mt td{padding:7px 5px}.mt{font-size:.88rem}.mt .tag{margin-left:0;margin-top:3px}}
 </style>
 </head>
 <body data-root="../">
@@ -34,6 +47,7 @@ td .muted{font-size:.84rem}
   var S = Site, key = S.param("key"), main = document.getElementById("main");
   var SYS = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS (live)"]], NAME = { elo: "Elo", glicko: "Glicko-2", openskill: "OpenSkill", vrs: "VRS" };
   var sys; try { sys = localStorage.getItem("tsys") || "elo"; } catch (e) { sys = "elo"; }
+  var edSel = S.param("ed"), mcache = {};
   S.json("data/events.json").then(function (data) {
     var list = data.series;
     var t = list.filter(function (x) { return x.key === key; })[0];
@@ -61,6 +75,8 @@ td .muted{font-size:.84rem}
           '<td class="n">' + (x ? x.upsets + '<div class="muted">of ' + x.predicted + "</div>" : "–") + "</td>" +
           '<td class="n">' + (e.vrs_weight != null ? e.vrs_weight.toFixed(2) : "–") + "</td></tr>";
       }).join("");
+      var withM = t.editions.filter(function (e) { return e.mfile; });
+      var ed = withM.filter(function (e) { return e.page === edSel; })[0] || withM[0] || {};
       var latest = t.editions[0], prizes = (t.editions.filter(function (e) { return e.prizes && e.prizes.length; })[0] || {});
       main.innerHTML = S.back("events.html", "Back") +
         '<div class="hero">' +
@@ -80,13 +96,56 @@ td .muted{font-size:.84rem}
         '<div class="tablewrap"><table class="t"><thead><tr><th>Year</th><th>Champion</th><th class="n">Prize pool</th><th class="n">Seed</th><th>Favourite</th><th class="n">Field</th><th class="n">Upsets</th><th class="n">VRS stakes</th></tr></thead><tbody>' +
         rows + "</tbody></table></div></section>" +
         (prizes.prizes ? '<section><h2>Prize money, ' + prizes.year + '</h2><p class="note">Top places, in US dollars, from Liquipedia.</p><div class="tablewrap"><table class="t"><thead><tr><th>Place</th><th>Team</th><th class="n">Prize</th></tr></thead><tbody>' +
-          prizes.prizes.map(function (x) { return "<tr><td>" + S.esc(x.place) + "</td><td>" + S.esc(x.team) + '</td><td class="n">$' + S.num(x.prize) + "</td></tr>"; }).join("") + "</tbody></table></div></section>" : "");
+          prizes.prizes.map(function (x) { return "<tr><td>" + S.esc(x.place) + "</td><td>" + S.esc(x.team) + '</td><td class="n">$' + S.num(x.prize) + "</td></tr>"; }).join("") + "</tbody></table></div></section>" : "") +
+        '<section id="matches"><h2>Matches</h2><div class="chips edpick" id="edpick" role="group" aria-label="Edition">' + withM.map(function (e) {
+          return '<button class="chip" type="button" data-v="' + S.esc(e.page) + '" aria-pressed="' + (e.page === ed.page ? "true" : "false") + '">' + e.year + "</button>";
+        }).join("") + '</div><div id="mlist"><p class="note">Loading matches…</p></div></section>';
+      document.getElementById("edpick").onclick = function (e) {
+        var b = e.target.closest("button"); if (!b) return;
+        edSel = b.dataset.v;
+        try { var u = new URL(location.href); u.searchParams.set("ed", edSel); history.replaceState(null, "", u); } catch (err) {}
+        draw();
+      };
+      loadMatches(ed);
       document.getElementById("sys").onclick = function (e) {
         var b = e.target.closest("button"); if (!b) return;
         sys = b.dataset.v; try { localStorage.setItem("tsys", sys); } catch (err) {}
         draw();
       };
       S.inactivityToggle(document.getElementById("inact"), draw, "When a team is out", sys === "glicko" || sys === "openskill");
+    }
+    function loadMatches(ed) {
+      var box = document.getElementById("mlist");
+      if (!ed.mfile) { box.innerHTML = '<p class="note">No matches for this event.</p>'; return; }
+      var got = mcache[ed.mfile] || (mcache[ed.mfile] = S.json("data/events/" + encodeURIComponent(ed.mfile) + ".json"));
+      got.then(function (d) { if (document.getElementById("mlist") === box) box.innerHTML = matchList(ed, d.matches); })
+         .catch(function () { box.innerHTML = '<p class="note">Couldn’t load the matches for this edition.</p>'; });
+    }
+    function matchList(ed, ms) {
+      if (!ms.length) return '<p class="note">No matches recorded.</p>';
+      var nm = NAME[sys], key = S.sysKey(sys), DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], ups = 0, rated = 0;
+      function side(x, won) { return '<span class="' + (won ? "w" : "l") + '">' + (x.link ? S.team(x) : S.esc(x.name)) + "</span>"; }
+      var out = [], day = null;
+      ms.forEach(function (m, i) {
+        var d = new Date(m.time * 1000), dk = d.toDateString();
+        if (dk !== day) {
+          if (day) out.push("</tbody></table></div>");
+          day = dk;
+          out.push('<div class="mday">' + DAYS[d.getDay()] + " " + S.date(d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2)) + "</div>" +
+            '<div class="tablewrap"><table class="t mt"><tbody>');
+        }
+        var a = m.teams[0], b = m.teams[1], p = m.p[key], final = ed.champion && i === ms.length - 1;
+        if (p != null) { rated++; if (p < 0.25) ups++; }
+        var hh = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+        out.push("<tr><td class=\"muted\" style=\"width:1%;white-space:nowrap\">" + hh + '</td><td class="tm r">' + side(a, m.winner === 1) + '</td><td class="sc">' +
+          (a.score != null ? a.score : "") + "–" + (b.score != null ? b.score : "") + '</td><td class="tm">' + side(b, m.winner === 2) +
+          (final ? '<span class="tag">Final</span>' : "") + (p != null && p < 0.25 ? '<span class="tag up" title="' + nm + ' gave the winner under 25%">Upset</span>' : "") +
+          '</td><td class="muted bo" style="width:1%;white-space:nowrap">' + (m.bo ? "Bo" + m.bo : "") + '</td><td class="n ch">' +
+          (p != null ? Math.round(p * 100) + "%" : "–") + "</td></tr>");
+      });
+      out.push("</tbody></table></div>");
+      return '<p class="note">' + ms.length + " matches" + (rated ? ", " + ups + " upset" + (ups === 1 ? "" : "s") + " by " + nm : "") +
+        ". Times are in your time zone. The right-hand number is " + nm + "’s pre-match chance for the team that won (bold).</p>" + out.join("");
     }
     draw();
   }).catch(function (e) { S.fail(main, e); });
