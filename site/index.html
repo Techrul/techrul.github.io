@@ -24,6 +24,10 @@ a.project:hover{border-color:var(--muted)}
 .project .now b{font-weight:600}
 .project .go{margin-top:auto;font-weight:600}
 .project.soon{border-style:dashed;background:transparent;justify-content:center;align-items:flex-start;min-height:180px}
+.cmd{display:inline-flex;align-items:center;gap:6px}
+.copy{font:inherit;font-size:.78rem;display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:6px;padding:2px 7px;cursor:pointer}
+.copy:hover{color:var(--ink);border-color:var(--muted)}
+.copy.done{color:var(--up);border-color:var(--up)}
 .project .now code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.85rem;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
 .project .links{margin-top:auto;display:flex;gap:16px}
 .project .links a{font-weight:600;text-decoration:none}
@@ -65,7 +69,7 @@ a.project:hover{border-color:var(--muted)}
         <h2>snackutils</h2>
         <p>Tiny, dependency-free Python utilities that might save you a few lines: a magic 8-ball, coin flips, dice rolls, OS detection and quick averages.</p>
         <div class="tags"><span class="badge">Python</span><span class="badge">PyPI</span><span class="badge">MIT</span></div>
-        <div class="now"><code>pip install snackutils</code> <span id="snackver"></span></div>
+        <div class="now"><span class="cmd"><code id="pipcmd">pip install snackutils</code><button class="copy" type="button" id="copypip" aria-label="Copy pip install snackutils"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5" y="5" width="9" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M11 3.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span>Copy</span></button></span> <span id="snackver"></span></div>
         <div class="links"><a href="https://github.com/Techrul/snackutils" target="_blank" rel="noopener">GitHub →</a><a href="https://pypi.org/project/snackutils/" target="_blank" rel="noopener">PyPI →</a></div>
       </div>
       <div class="project soon">
@@ -106,6 +110,14 @@ a.project:hover{border-color:var(--muted)}
     document.getElementById("now").innerHTML = '<table class="ones"><caption>#1 today</caption><thead><tr><td></td><th scope="col">Tennis</th><th scope="col">CS2</th></tr></thead><tbody>' + rows + "</tbody></table>" +
       '<p class="onesnote">Official: ATP for tennis, Valve\u2019s standings for CS2.</p>';
   });
+  // copy the install command (falls back to selecting it where the clipboard API isn't allowed)
+  var cp = document.getElementById("copypip");
+  cp.onclick = function () {
+    var txt = document.getElementById("pipcmd").textContent, label = cp.querySelector("span");
+    function done(ok) { label.textContent = ok ? "Copied" : "Press Ctrl+C"; cp.classList.toggle("done", ok); setTimeout(function () { label.textContent = "Copy"; cp.classList.remove("done"); }, 1600); }
+    function select() { var r = document.createRange(); r.selectNodeContents(document.getElementById("pipcmd")); var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); done(false); }
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(txt).then(function () { done(true); }, select); else select();
+  };
   // latest snackutils version from PyPI (left blank if it can't load)
   fetch("https://pypi.org/pypi/snackutils/json").then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
     if (d && d.info && d.info.version) document.getElementById("snackver").textContent = "· latest v" + d.info.version;
