@@ -465,6 +465,22 @@ def main():
         })
     ev_out.sort(key=lambda t: (t["tier"], t["month"], t["name"]))
 
+    # S- and A-tier main events on Liquipedia's calendar that have no matches yet (fetch_cs2.py gets them once a day):
+    # the events page shows them at their real dates instead of guessing from last year
+    soon = (datetime.strptime(as_of_date, "%Y-%m-%d") - timedelta(days=7)).strftime("%Y-%m-%d")
+    upcoming = []
+    for page, t in data.tournaments.items():
+        start = t.get("start") or ""
+        if (page in events or t.get("tier") not in TRACKED_TIERS or t.get("tiertype") or not re.fullmatch(r"\d{4}-\d\d-\d\d", start)
+                or start < soon or start[5:] == "01-01"):
+            continue
+        upcoming.append({"key": series_key(page), "page": page, "name": t.get("name") or page.replace("_", " "), "start": start,
+                         "end": t.get("end"), "tier": t["tier"], "valve": t.get("valve") or "", "lan": bool(t.get("lan")),
+                         "pool": t.get("pool") or 0, "vrs_weight": vrs_stakes(t["pool"]) if t.get("pool") else None,
+                         "liquipedia": "https://liquipedia.net/counterstrike/" + page})
+    upcoming.sort(key=lambda u: (u["start"], u["tier"], u["name"]))
+    print(f"upcoming events: {len(upcoming)}")
+
     # ---------------------------------------------------------------- titles
     titles, finals_lost = defaultdict(list), Counter()
     for page, e in events.items():
@@ -653,7 +669,7 @@ def main():
 
     dump("teams_index.json", index)
     dump("records.json", records)
-    dump("events.json", {"as_of": as_of_date, "series": ev_out})
+    dump("events.json", {"as_of": as_of_date, "series": ev_out, "upcoming": upcoming})
     dump("history_meta.json", {"weeks": weeks, "matches_from": first_day.strftime("%Y-%m-%d"), "matches_to": as_of_date,
                                "official_from": official_from})
     dump("backtest.json", backtest)

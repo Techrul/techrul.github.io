@@ -167,13 +167,22 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
       list.forEach(function (t) {
         var ed = t.editions.filter(function (e) { return e.year === year; });
         ed.forEach(function (e) { out.push({ t: t, e: e, date: e.date, kind: e.status || (e.champion ? "finished" : "live") }); });
-        if (!ed.length && year === years[0]) {
+        if (!ed.length && year === years[0] && !data.upcoming) {  // older data without Liquipedia's calendar: guess from last year
           var prev = t.editions.filter(function (e) { return e.year === year - 1; })[0];
           if (prev && !isMajor(prev)) {  // Majors move to a new organiser and city each time: never assume a repeat
             var exp = iso(Date.parse(prev.date) + 364 * DAY);  // same week, same weekday, one year on
             if (exp.slice(0, 4) === String(year) && Date.parse(exp) >= today - 6 * DAY) out.push({ t: t, e: prev, date: exp, kind: "expected" });
           }
         }
+      });
+      // events still to come, at their dates on Liquipedia, with the series' last edition for context
+      if (year === years[0]) (data.upcoming || []).forEach(function (u) {
+        if (u.start.slice(0, 4) !== String(year)) return;
+        var t = list.filter(function (x) { return x.key === u.key; })[0];
+        var last = t && t.editions.filter(function (e) { return e.champion; })[0];
+        out.push({ t: t || { key: u.key, name: u.name, tier: u.tier, editions: [], nolink: true },
+                   e: { year: last ? last.year : null, name: u.name, tier: u.tier, valve: u.valve, lan: u.lan, pool: u.pool, vrs_weight: u.vrs_weight, champion: last ? last.champion : null, liquipedia: u.liquipedia },
+                   date: u.start, kind: "expected", sched: true });
       });
       return out.filter(function (x) { return keep(x.t, x.e); })
         .sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : (a.t.tier < b.t.tier ? -1 : 0); });
@@ -182,11 +191,12 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
       var t = x.t, e = x.e, res, s_ = st(e), done = x.kind === "finished";
       if (done) res = S.team(e.champion) + '<div class="muted">beat ' + S.esc(e.runner_up ? e.runner_up.name : "–") + " " + S.esc(e.score || "") + "</div>";
       else if (x.kind === "live") res = '<span class="livedot" aria-hidden="true"></span><b>In progress</b>';
-      else res = '<span class="muted">Expected · placed at ' + e.year + "’s dates</span>" + (e.champion ? '<div class="muted">' + e.year + ": " + S.esc(e.champion.name) + "</div>" : "");
-      var stk = (e.vrs_weight != null ? e.vrs_weight.toFixed(2) : "–") + (x.kind === "expected" && e.vrs_weight != null ? "<small>" + e.year + "</small>" : "") + '<span class="lbl">VRS stakes</span>';
+      else res = '<span class="muted">' + (x.sched ? "Scheduled · on Liquipedia" : "Expected · placed at " + e.year + "’s dates") + "</span>" + (e.champion ? '<div class="muted">' + (x.sched ? "Last won by " + S.esc(e.champion.name) + ", " + e.year : e.year + ": " + S.esc(e.champion.name)) + "</div>" : "");
+      var stk = (e.vrs_weight != null ? e.vrs_weight.toFixed(2) : "–") + (x.kind === "expected" && !x.sched && e.vrs_weight != null ? "<small>" + e.year + "</small>" : "") + '<span class="lbl">VRS stakes</span>';
       var fld = (x.kind !== "expected" && s_ ? fmtField(s_.field) : "–") + '<span class="lbl">Field</span>';
-      return '<div class="ev ' + x.kind + '" data-href="' + href(t) + '"><div class="when">' + (x.kind === "expected" ? "~" : "") + short(x.date) + "<small>" + (x.kind === "expected" ? "expected" : "start") + "</small></div>" +
-        '<div class="tr">' + S.cs2tier(e.tier, e.valve) + '</div><div class="nm"><a href="' + href(t) + '">' + S.esc(x.kind === "expected" ? t.name : e.name) + "</a>" + '<span class="muted" style="display:block;font-size:.82rem">' + (e.lan ? "LAN" : "Online") + (e.pool ? " · $" + S.num(e.pool) : "") + "</span></div>" +
+      var link = t.nolink ? e.liquipedia : href(t), ext = t.nolink ? ' target="_blank" rel="noopener"' : "";
+      return '<div class="ev ' + x.kind + '"' + (t.nolink ? "" : ' data-href="' + href(t) + '"') + '><div class="when">' + (x.kind === "expected" && !x.sched ? "~" : "") + short(x.date) + "<small>" + (x.kind === "expected" ? (x.sched ? "scheduled" : "expected") : "start") + "</small></div>" +
+        '<div class="tr">' + S.cs2tier(e.tier, e.valve) + '</div><div class="nm"><a href="' + S.esc(link) + '"' + ext + ">" + S.esc(x.kind === "expected" && !x.sched ? t.name : e.name) + (t.nolink ? " ↗" : "") + "</a>" + '<span class="muted" style="display:block;font-size:.82rem">' + (e.lan ? "LAN" : "Online") + (e.pool ? " · $" + S.num(e.pool) : "") + "</span></div>" +
         '<div class="res">' + res + '</div><div class="fld cn">' + fld + '</div><div class="stk cn">' + stk + "</div></div>";
     }
     function drawCalendar() {
@@ -214,7 +224,7 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
       }).join("");
       if (!nowPlaced) html += '<section class="month"><div class="cal">' + nowRow + "</div></section>";
       return (thisSeason ? '<button class="jump" type="button" id="jump">Jump to today ↓</button>' : "") + '<p class="note" style="margin-top:14px">' +
-        "S- and A-tier main events on Liquipedia (qualifiers and smaller events count for the ratings but are not listed). Field: average " + SYS_NAME[state.sys] + " rating of the eight best teams in the event when it started. VRS stakes: how much a result counts in VRS (1.00 = a $1M prize pool). Faded rows are not played yet and placed at last year’s dates. " +
+        "S- and A-tier main events on Liquipedia (qualifiers and smaller events count for the ratings but are not listed). Field: average " + SYS_NAME[state.sys] + " rating of the eight best teams in the event when it started. VRS stakes: how much a result counts in VRS (1.00 = a $1M prize pool). Faded rows are still to come, at their dates on Liquipedia. " +
         '<a class="extlink" href="https://liquipedia.net/counterstrike/S-Tier_Tournaments" target="_blank" rel="noopener">Full calendar on Liquipedia ↗</a> · ' +
         '<a class="extlink" href="https://www.hltv.org/events" target="_blank" rel="noopener">Events on HLTV ↗</a></p>' + html;
     }

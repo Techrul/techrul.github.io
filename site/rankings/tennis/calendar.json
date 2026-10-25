@@ -1,0 +1,13 @@
+{
+  "year": 2026,
+  "source": "ATP Tour 2026 calendar, atptour.com/en/news/what-is-the-2026-atp-tour-calendar",
+  "note": "Start dates of tour-level events still to come (keys are Tennismylife tournament ids). From complete_from on, an event that is not listed here is not on this year's calendar (Metz was dropped; Athens is not on it). Update once a year when the ATP publishes the next calendar.",
+  "complete_from": "2026-10-19",
+  "events": {
+    "328": "2026-10-26",
+    "337": "2026-10-26",
+    "352": "2026-11-02",
+    "429": "2026-11-08",
+    "605": "2026-11-15"
+  }
+}

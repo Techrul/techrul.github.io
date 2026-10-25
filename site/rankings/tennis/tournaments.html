@@ -150,7 +150,8 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
   function fmtField(v) { return v == null ? "–" : state.sys === "openskill" ? Number(v).toFixed(1) : S.num(Math.round(v)); }
   function href(t) { return "tournament.html?key=" + encodeURIComponent(t.key); }
 
-  S.json("data/tournaments.json").then(function (data) {
+  Promise.all([S.json("data/tournaments.json"), S.json("calendar.json").catch(function () { return null; })]).then(function (res) {
+    var data = res[0], cal = res[1];
     var list = data.tournaments || data;
     var today = Date.now(), todayIso = iso(today);
     var years = Array.from(new Set([].concat.apply([], list.map(function (t) { return t.editions.map(function (e) { return e.year; }); })))).sort(function (a, b) { return b - a; });
@@ -167,8 +168,11 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
         if (!ed.length && year === years[0]) {
           var prev = t.editions.filter(function (e) { return e.year === year - 1; })[0];
           if (prev) {
-            var exp = iso(Date.parse(prev.date) + 364 * DAY);  // same week, same weekday, one year on
-            if (exp.slice(0, 4) === String(year) && Date.parse(exp) >= today - 6 * DAY) out.push({ t: t, e: prev, date: exp, kind: "expected" });
+            // this year's ATP calendar when we have it (calendar.json); otherwise last year's week, one year on
+            var known = cal && cal.year === year ? cal.events[t.key] : null;
+            var exp = known || iso(Date.parse(prev.date) + 364 * DAY);
+            var dropped = !known && cal && cal.year === year && exp >= cal.complete_from;  // not on this year's calendar
+            if (!dropped && exp.slice(0, 4) === String(year) && Date.parse(exp) >= today - 6 * DAY) out.push({ t: t, e: prev, date: exp, kind: "expected", sched: !!known });
           }
         }
       });
@@ -180,10 +184,10 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
       if (done) res = S.player(e.champion) + '<div class="muted">beat ' + S.esc(e.runner_up ? e.runner_up.name : "–") + "</div>";
       else if (x.kind === "live") res = '<span class="livedot" aria-hidden="true"></span><b>In progress</b>';
       else if (x.kind === "no_final") res = '<span class="muted">Final not in the data</span>';
-      else res = '<span class="muted">Expected · placed at ' + e.year + "’s dates</span>" + (e.champion ? '<div class="muted">' + e.year + ": " + S.esc(e.champion.name) + "</div>" : "");
+      else res = '<span class="muted">' + (x.sched ? "Scheduled · on the ATP calendar" : "Expected · placed at " + e.year + "’s dates") + "</span>" + (e.champion ? '<div class="muted">' + e.year + ": " + S.esc(e.champion.name) + "</div>" : "");
       var stk = (e.vrs_weight != null ? e.vrs_weight.toFixed(2) : "–") + (x.kind === "expected" && e.vrs_weight != null ? "<small>" + e.year + "</small>" : "") + '<span class="lbl">VRS stakes</span>';
       var fld = (x.kind !== "expected" && s_ ? fmtField(s_.field) : "–") + '<span class="lbl">Field</span>';
-      return '<div class="ev ' + x.kind + '" data-href="' + href(t) + '"><div class="when">' + (x.kind === "expected" ? "~" : "") + short(x.date) + "<small>" + (x.kind === "expected" ? "expected" : "start") + "</small></div>" +
+      return '<div class="ev ' + x.kind + '" data-href="' + href(t) + '"><div class="when">' + (x.kind === "expected" && !x.sched ? "~" : "") + short(x.date) + "<small>" + (x.kind === "expected" ? (x.sched ? "scheduled" : "expected") : "start") + "</small></div>" +
         '<div class="tr">' + S.tier(t.level) + '</div><div class="nm"><a href="' + href(t) + '">' + S.esc(x.kind === "expected" ? t.name : e.name) + "</a>" + S.SURFACE(e.surface || t.surface) + "</div>" +
         '<div class="res">' + res + '</div><div class="fld cn">' + fld + '</div><div class="stk cn">' + stk + "</div></div>";
     }
@@ -212,7 +216,7 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
       }).join("");
       if (!nowPlaced) html += '<section class="month"><div class="cal">' + nowRow + "</div></section>";
       return (thisSeason ? '<button class="jump" type="button" id="jump">Jump to today ↓</button>' : "") + '<p class="note" style="margin-top:14px">' +
-        "Field: average " + SYS_NAME[state.sys] + " rating of the draw’s eight best players when it started. VRS stakes: how much a result counts in VRS (1.00 = the biggest prize pool). Faded rows are not played yet and placed at last year’s dates. " +
+        "Field: average " + SYS_NAME[state.sys] + " rating of the draw’s eight best players when it started. VRS stakes: how much a result counts in VRS (1.00 = the biggest prize pool). Faded rows are still to come, at their dates on the ATP calendar (or last year’s dates, marked ~, when not known yet). " +
         '<a class="extlink" href="https://www.atptour.com/en/tournaments" target="_blank" rel="noopener">Official calendar on atptour.com ↗</a></p>' + html;
     }
 

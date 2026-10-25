@@ -6,6 +6,7 @@
 Each run:
 1. refresh: matches from the last REFRESH_MATCH_DAYS days, tournaments and prize money from the last
    REFRESH_EVENT_DAYS days (results get corrected, events finish);
+   Once a day, also every S- and A-tier tournament that hasn't started yet (real dates for the events calendar);
 2. backfill: whole months, newest first, back to --start, for anything not fetched yet. A month counts as done
    once it has been fetched SETTLE_DAYS after it ended; it is never fetched again after that.
 
@@ -225,6 +226,20 @@ def fetch_placements(client, store, first, nxt):
     return len(rows)
 
 
+def fetch_upcoming(client, store, today):
+    """S- and A-tier tournaments starting after today (two requests, once a day)."""
+    if store.state.get("upcoming") == today.isoformat():
+        return None
+    n = 0
+    for tier in ("1", "2"):
+        rows = client.get_all("tournament", f"[[startdate::>{today.isoformat()}]] AND [[liquipediatier::{tier}]]",
+                              query=TOURNAMENT_FIELDS, order="startdate ASC")
+        store.add_tournaments(rows)
+        n += len(rows)
+    store.state["upcoming"] = today.isoformat()
+    return n
+
+
 KINDS = (("matches", fetch_matches), ("tournaments", fetch_tournaments), ("placements", fetch_placements))
 
 
@@ -241,6 +256,10 @@ def run(client, store, today, start, backfill=True, log=print):
     store.save()
     done["refresh"] = n
     log(f"  {n} matches, {t} tournaments, {p} prize rows")
+    u = fetch_upcoming(client, store, today)
+    if u is not None:
+        store.save()
+        log(f"  upcoming S- and A-tier tournaments: {u}")
 
     if not backfill:
         return done
