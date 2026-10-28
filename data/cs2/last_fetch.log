@@ -3,11 +3,8 @@ refresh: matches since 2026-10-07, events since 2026-08-29
   request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-06]] AND [[date::<2026-10-29]] offset 1000
   request 3: tournament [[enddate::>2026-08-28]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-10-29]] offset 0
   request 4: placement [[prizemoney::>0]] AND [[date::>2026-08-28]] AND [[date::<2026-10-29]] offset 0
-  1501 matches, 315 tournaments, 861 prize rows
-  request 5: tournament [[startdate::>2026-10-28]] AND [[liquipediatier::1]] offset 0
-  request 6: tournament [[startdate::>2026-10-28]] AND [[liquipediatier::2]] offset 0
-  upcoming S- and A-tier tournaments: 44
+  1519 matches, 315 tournaments, 871 prize rows
 finished: everything up to date
-requests used: 6
-83656 matches stored, 5768 tournaments, 3495 events with prize money, 28161 players; 46 of 46 months fetched (2023-01 to 2026-10)
-::notice title=CS2 fetch::finished: everything up to date; 6 requests; 83656 matches stored, 5768 tournaments, 3495 events with prize money, 28161 players; 46 of 46 months fetched (2023-01 to 2026-10)
+requests used: 4
+83674 matches stored, 5768 tournaments, 3495 events with prize money, 28162 players; 46 of 46 months fetched (2023-01 to 2026-10)
+::notice title=CS2 fetch::finished: everything up to date; 4 requests; 83674 matches stored, 5768 tournaments, 3495 events with prize money, 28162 players; 46 of 46 months fetched (2023-01 to 2026-10)
