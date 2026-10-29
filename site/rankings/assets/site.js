@@ -208,6 +208,13 @@
     var v = (m.p || {})[S.sysKey(sys)];
     return v == null ? null : v;
   };
+  // re-render without the page jumping: keep the element with this id at the same place on screen
+  S.keepPlace = function (id, fn) {
+    var el = document.getElementById(id), before = el ? el.getBoundingClientRect().top : null;
+    fn();
+    var now = document.getElementById(id);
+    if (before != null && now) window.scrollBy(0, now.getBoundingClientRect().top - before);
+  };
   S.sysChips = function (id, sel) {
     return '<div class="chips" id="' + id + '" role="group" aria-label="Rating system">' + S.RSYS.map(function (r) {
       return '<button class="chip" type="button" data-v="' + r[0] + '" aria-pressed="' + (r[0] === sel ? "true" : "false") + '">' + r[1] + "</button>";
