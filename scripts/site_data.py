@@ -325,6 +325,9 @@ def main():
         key = (r["tourney_id"], r["round"], w, l)
         pr = preds.get(key, {})
         p = pr.get("elo")
+        chances = {k: v for k, v in pr.items() if v is not None}  # each system's chance for the winner
+        if key in vrs_pred:
+            chances["vrs"] = vrs_pred[key]
         for pid, won in ((w, True), (l, False)):
             rec = record[pid]
             for bucket in ("all", f"surface:{r['surface']}", f"level:{ev['level']}", f"year:{r['_date'].year}"):
@@ -332,7 +335,7 @@ def main():
             opp = l if won else w
             recent[pid].append({"date": r["_date"].strftime("%Y-%m-%d"), "event": ev["name"], "tid": r["tourney_id"],
                                 "level": ev["level"], "round": r["round"], "opp": opp, "opp_name": facts[opp]["name"],
-                                "won": won, "score": r["score"], "p": round(p if won else 1 - p, 3) if p is not None else None})
+                                "won": won, "score": r["score"], "p": {k: round(v if won else 1 - v, 3) for k, v in chances.items()}})
             if len(recent[pid]) > 30:
                 recent[pid].pop(0)
         if pr and prior[w] >= MIN_MATCHES and prior[l] >= MIN_MATCHES and r["_date"] >= history_from:

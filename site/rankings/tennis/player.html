@@ -106,10 +106,11 @@
     var yearRows = years.map(function (k) { return wl(k, k.slice(5)); }).join("");
     var thead = '<thead><tr><th></th><th class="n">Won</th><th class="n">Lost</th><th class="n">Win %</th><th></th></tr></thead>';
 
+    var rsys = S.recentSys(), rname = S.RSYS.filter(function (r) { return r[0] === rsys; })[0][1];
     var recent = p.recent.map(function (m) {
       return '<tr data-href="tournament.html?key=' + encodeURIComponent(m.tid.split("-").slice(1).join("-")) + '"><td>' + S.date(m.date) + '</td><td><a class="plink" href="tournament.html?key=' + encodeURIComponent(m.tid.split("-").slice(1).join("-")) + '">' + S.esc(m.event) + "</a><div class=\"muted\">" + S.esc(S.ROUND[m.round] || m.round) + "</div></td><td>" +
         '<a class="plink" href="player.html?id=' + encodeURIComponent(m.opp) + '">' + S.esc(m.opp_name) + "</a></td><td><span class=\"" + (m.won ? "win\">Won" : "loss\">Lost") + "</span><div class=\"muted\">" + S.esc(m.score) + '</div></td><td class="n">' +
-        (m.p == null ? "–" : Math.round(m.p * 100) + "%") + "</td></tr>";
+        (S.chance(m, rsys) == null ? "–" : Math.round(S.chance(m, rsys) * 100) + "%") + "</td></tr>";
     }).join("");
 
     main.innerHTML =
@@ -129,8 +130,12 @@
       '<section><h2>Elo rating over time</h2>' + (p.peak_elo ? '<p class="note">Highest Elo in the data: ' + p.peak_elo.value + " on " + S.date(p.peak_elo.date) + ". The marked point is the highest in the range shown.</p>" : "") + '<div id="elo-chart"></div></section>' +
       '<section class="cols"><div><h2>Record</h2><p class="note">Tour-level singles since ' + (years.length ? years[years.length - 1].slice(5) : "") + ".</p><div class=\"tablewrap\"><table class=\"t\">" + thead + "<tbody>" + recRows + "</tbody></table></div></div>" +
       '<div><h2>By year</h2><p class="note">Most recent first.</p><div class="tablewrap"><table class="t">' + thead + "<tbody>" + yearRows + "</tbody></table></div></div></section>" +
-      '<section><h2>Recent matches</h2><p class="note">Pre-match chance is what Elo gave this player before the match.</p><div class="tablewrap"><table class="t"><thead><tr><th>Date</th><th>Event</th><th>Opponent</th><th>Result</th><th class="n">Pre-match chance</th></tr></thead><tbody>' + recent + "</tbody></table></div></section>";
+      '<section id="recent"><div class="head2"><h2>Recent matches</h2>' + S.sysChips("rsys", rsys) + '</div><p class="note">Pre-match chance: what ' + rname + ' gave this player before each match' + (rsys === "vrs" ? " (from that week’s VRS standings; – where VRS had no standings for both sides)" : rsys === "elo" ? "" : " (follows the setting for players who are out, above)") + '.</p><div class="tablewrap"><table class="t"><thead><tr><th>Date</th><th>Event</th><th>Opponent</th><th>Result</th><th class="n">' + rname + ' chance</th></tr></thead><tbody>' + recent + "</tbody></table></div></section>";
 
+    document.getElementById("rsys").onclick = function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      S.recentSys(b.dataset.v); render(p, meta);
+    };
     S.inactivityToggle(document.getElementById("inact"), function () { render(p, meta); }, "Glicko-2 and OpenSkill, when a player is out");
 
     // charts

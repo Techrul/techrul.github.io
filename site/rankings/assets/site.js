@@ -196,6 +196,23 @@
   S.sysKey = function (k) { return S.inactivity() === "pure" && (k === "glicko" || k === "openskill") ? k + "_pure" : k; };
   // Only for Glicko-2 and OpenSkill, the two models with an uncertainty that can grow; pages show it only there.
   // show = false keeps the space but hides it, so switching systems does not move the page.
+  // Recent-match tables: each system's pre-match chance (older data held only Elo's, as a number)
+  S.RSYS = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS"]];
+  S.recentSys = function (v) {
+    if (v) { try { localStorage.setItem("tsys", v); } catch (e) {} return v; }
+    var x; try { x = localStorage.getItem("tsys"); } catch (e) {}
+    return S.RSYS.some(function (r) { return r[0] === x; }) ? x : "elo";
+  };
+  S.chance = function (m, sys) {
+    if (typeof m.p === "number") return sys === "elo" ? m.p : null;
+    var v = (m.p || {})[S.sysKey(sys)];
+    return v == null ? null : v;
+  };
+  S.sysChips = function (id, sel) {
+    return '<div class="chips" id="' + id + '" role="group" aria-label="Rating system">' + S.RSYS.map(function (r) {
+      return '<button class="chip" type="button" data-v="' + r[0] + '" aria-pressed="' + (r[0] === sel ? "true" : "false") + '">' + r[1] + "</button>";
+    }).join("") + "</div>";
+  };
   S.inactivityToggle = function (el, onChange, label, show) {
     var cur = S.inactivity();
     el.classList.add("inact");

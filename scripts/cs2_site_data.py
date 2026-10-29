@@ -372,8 +372,9 @@ def main():
         wr, lr = m["rid"][wi], m["rid"][1 - wi]
         ev = events[m["event"]]
         day = datetime.fromtimestamp(m["time"], timezone.utc).strftime("%Y-%m-%d")
-        pr = preds.get(m["id"], {})
-        p_elo = pr.get("elo")
+        pr = {k: v for k, v in preds.get(m["id"], {}).items() if v is not None}  # each system's chance for the winner
+        if m["id"] in vrs_pred:
+            pr["vrs"] = vrs_pred[m["id"]]
         sw, sl = m["teams"][wi]["score"], m["teams"][1 - wi]["score"]
         score = f"{sw}–{sl}" if isinstance(sw, int) and isinstance(sl, int) else ""
         for rid, won in ((wr, True), (lr, False)):
@@ -384,7 +385,7 @@ def main():
             recent[rid].append({"date": day, "event": ev["name"], "page": m["event"], "tier": m["tier"], "opp": opp,
                                 "opp_name": ad.short_name(roster[opp].name), "won": won,
                                 "score": score if won else (f"{sl}–{sw}" if score else ""),
-                                "p": round(p_elo if won else 1 - p_elo, 3) if p_elo is not None else None})
+                                "p": {k: round(v if won else 1 - v, 3) for k, v in pr.items()}})
             if len(recent[rid]) > 30:
                 recent[rid].pop(0)
             match_days[rid].append(day)
