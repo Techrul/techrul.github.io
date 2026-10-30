@@ -1281,7 +1281,7 @@
 "EPIC.LAN/46": {"name":"EPIC.LAN 46","start":"2025-10-31","end":"2025-11-02","pool":6051,"lan":true,"type":"Offline","valve":"Tier 2","tier":"4","tiertype":"","status":"","teams":44},
 "EPIC.LAN/47": {"name":"EPIC.LAN 47","start":"2026-02-20","end":"2026-02-22","pool":7413,"lan":true,"type":"Offline","valve":"Tier 2","tier":"4","tiertype":"","status":"","teams":38},
 "EPIC.LAN/48": {"name":"EPIC.LAN 48","start":"2026-07-17","end":"2026-07-19","pool":6721,"lan":true,"type":"Offline","valve":"Tier 2","tier":"4","tiertype":"","status":"","teams":28},
-"EPIC.LAN/49": {"name":"EPIC.LAN 49","start":"2026-10-30","end":"2026-11-01","pool":0,"lan":true,"type":"Offline","valve":"Tier 2","tier":"4","tiertype":"","status":"","teams":-1},
+"EPIC.LAN/49": {"name":"EPIC.LAN 49","start":"2026-10-30","end":"2026-11-01","pool":6693,"lan":true,"type":"Offline","valve":"Tier 2","tier":"4","tiertype":"","status":"","teams":30},
 "EPICENTER_Slovenia/2025": {"name":"EPICENTER 2025","start":"2025-09-13","end":"2025-09-14","pool":880,"lan":true,"type":"Offline","valve":"","tier":"4","tiertype":"","status":"","teams":10},
 "EPICENTER_Slovenia/2026": {"name":"EPICENTER 2026","start":"2026-09-13","end":"2026-09-13","pool":963,"lan":true,"type":"Offline","valve":"","tier":"4","tiertype":"","status":"","teams":11},
 "EPICENTER_Slovenia/22": {"name":"EPICENTER 22","start":"2023-08-26","end":"2023-08-27","pool":906,"lan":true,"type":"Offline","valve":"","tier":"4","tiertype":"","status":"","teams":7},
