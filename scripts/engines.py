@@ -89,7 +89,7 @@ def months_between(a, b):
     return (int(b[:4]) - int(a[:4])) * 12 + int(b[4:6]) - int(a[4:6])
 
 
-def run(matches, backtest_from, preds=None, weekly=None, inactivity=True, periods_per_year=12):
+def run(matches, backtest_from, preds=None, weekly=None, inactivity=True, periods_per_year=12, deltas=None):
     """Elo, Glicko-2 and OpenSkill over `matches`, oldest first. Each match is a dict:
         w, l     winner and loser (any hashable id: a tennis player, a CS2 roster, a chess player)
         date     naive datetime (UTC), used for weekly ticks and inactivity
@@ -98,6 +98,9 @@ def run(matches, backtest_from, preds=None, weekly=None, inactivity=True, period
     periods_per_year: how many rating periods make a year (12 for months, 52 for weeks); sets how fast an
                  inactive player's uncertainty grows per period (INACTIVE_RESET_YEARS either way)
         key      optional; preds[key] gets each model's pre-match win chance for the winner
+    deltas: optional dict; deltas[key] = {"elo": (winner, loser), "openskill": (winner, loser)}, each side's rating
+                 change from this match (OpenSkill: the shown value, mu - 3 sigma). Glicko-2 has none: it rates a
+                 whole period's results together, not match by match.
     weekly(monday, elo, g2, osk, last_match, count) is called once per week, before that week's matches.
     inactivity=True grows Glicko-2 / OpenSkill uncertainty while a player is not playing (see constants)."""
     elo = defaultdict(lambda: 1500.0)
@@ -174,8 +177,12 @@ def run(matches, backtest_from, preds=None, weekly=None, inactivity=True, period
         elo[l] -= ELO_K * (1 - e)
         pending[w].append((l, 1.0))
         pending[l].append((w, 0.0))
+        ow, ol = osk[w].ordinal(), osk[l].ordinal()
         (nw,), (nl,) = model.rate([[osk[w]], [osk[l]]], ranks=[0, 1])
         osk[w], osk[l] = nw, nl
+        if deltas is not None:
+            deltas[r.get("key", (w, l))] = {"elo": (ELO_K * (1 - e), -ELO_K * (1 - e)),
+                                            "openskill": (nw.ordinal() - ow, nl.ordinal() - ol)}
         for pid in (w, l):
             last_match[pid] = r["date"]
             count[pid] += 1
