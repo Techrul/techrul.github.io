@@ -26,6 +26,14 @@
 .tile .s{color:var(--muted);font-size:.8rem}
 .yes{color:var(--up);font-weight:600} .no{color:var(--down);font-weight:600}
 td .muted{font-size:.84rem}
+.edpick{margin:4px 0 12px}
+.mday{margin:16px 0 6px;color:var(--muted);font-size:.84rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase}
+.mt td{vertical-align:middle}
+.mt .w{font-weight:700}
+.mt .l{color:var(--muted)}
+.mt .tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid currentColor;border-radius:5px;padding:1px 5px;margin-left:6px;color:var(--down);vertical-align:1px}
+#mlist .tablewrap,#mlist .note{max-width:820px}
+@media (max-width:560px){.mt td{padding:7px 5px}.mt{font-size:.88rem}.mt .sc{display:none}}
 </style>
 </head>
 <body data-root="../">
@@ -39,6 +47,7 @@ td .muted{font-size:.84rem}
   var S = Site, key = S.param("key"), main = document.getElementById("main");
   var SYS = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS"]], NAME = { elo: "Elo", glicko: "Glicko-2", openskill: "OpenSkill", vrs: "VRS" };
   var sys; try { sys = localStorage.getItem("tsys") || "elo"; } catch (e) { sys = "elo"; }
+  var edSel = S.param("ed"), mcache = {};
   Promise.all([S.json("data/tournaments.json"), S.trophies()]).then(function (res) {
     var data = res[0], list = data.tournaments || data, photo = (res[1] || {})[key];
     var t = list.filter(function (x) { return x.key === key; })[0];
@@ -65,6 +74,8 @@ td .muted{font-size:.84rem}
           '<td class="n">' + (x ? x.upsets + '<div class="muted">of ' + x.predicted + "</div>" : "–") + "</td>" +
           '<td class="n">' + (e.vrs_weight != null ? e.vrs_weight.toFixed(2) : "–") + "</td></tr>";
       }).join("");
+      var withM = t.editions.filter(function (e) { return e.mfile; });
+      var ed = withM.filter(function (e) { return e.mfile === edSel; })[0] || withM[0] || {};
       main.innerHTML = S.back("tournaments.html", "Back") +
         '<div class="hero">' +
         '<div><div class="thead">' + S.tier(t.level, true) + S.SURFACE(t.surface) + "</div><h1>" + S.esc(t.name) + "</h1>" +
@@ -83,13 +94,55 @@ td .muted{font-size:.84rem}
         '<section><h2>Year by year</h2><p class="note">Seed: where ' + nm + " placed the champion among this draw’s entrants the week it started (#1 = the favourite). Upsets: wins " + nm + " gave under a 35% chance, out of the matches it rated." +
         (sys === "vrs" ? " VRS figures start in mid-2025, when six months of prize money data exist." : "") + "</p>" +
         '<div class="tablewrap"><table class="t"><thead><tr><th>Year</th><th>Champion</th><th class="n">Seed</th><th>Favourite</th><th class="n">Field</th><th class="n">Upsets</th><th class="n">VRS stakes</th></tr></thead><tbody>' +
-        rows + "</tbody></table></div></section>";
+        rows + "</tbody></table></div></section>" +
+        (withM.length ? '<section id="matches"><h2>Matches</h2><div class="chips edpick" id="edpick" role="group" aria-label="Edition">' + withM.map(function (e) {
+          return '<button class="chip" type="button" data-v="' + S.esc(e.mfile) + '" aria-pressed="' + (e.mfile === ed.mfile ? "true" : "false") + '">' + e.year + "</button>";
+        }).join("") + '</div><div id="mlist"><p class="note">Loading matches…</p></div></section>' : "");
+      if (withM.length) {
+        document.getElementById("edpick").onclick = function (e) {
+          var b = e.target.closest("button"); if (!b) return;
+          edSel = b.dataset.v;
+          try { var u = new URL(location.href); u.searchParams.set("ed", edSel); history.replaceState(null, "", u); } catch (err) {}
+          S.keepPlace("matches", draw);
+        };
+        loadMatches(ed);
+      }
       document.getElementById("sys").onclick = function (e) {
         var b = e.target.closest("button"); if (!b) return;
         sys = b.dataset.v; try { localStorage.setItem("tsys", sys); } catch (err) {}
-        draw();
+        S.keepPlace("sys", draw);
       };
-      S.inactivityToggle(document.getElementById("inact"), draw, "When a player is out", sys === "glicko" || sys === "openskill");
+      S.inactivityToggle(document.getElementById("inact"), function () { S.keepPlace("sys", draw); }, "When a player is out", sys === "glicko" || sys === "openskill");
+    }
+    function loadMatches(ed) {
+      var box = document.getElementById("mlist");
+      var got = mcache[ed.mfile] || (mcache[ed.mfile] = S.json("data/events/" + encodeURIComponent(ed.mfile) + ".json"));
+      got.then(function (d) { if (document.getElementById("mlist") === box) box.innerHTML = matchList(ed, d.matches); })
+         .catch(function () { box.innerHTML = '<p class="note">Couldn’t load the matches for this edition.</p>'; });
+    }
+    function matchList(ed, ms) {
+      if (!ms.length) return '<p class="note">No matches recorded.</p>';
+      var nm = NAME[sys], key = S.sysKey(sys), ups = 0, big = 0, rated = 0, out = [], rd = null;
+      function who(x, won) {
+        var dl = S.delta(x.d, sys);
+        return '<span class="' + (won ? "w" : "l") + '">' + S.player(x) + "</span>" + (dl ? " " + dl : "");
+      }
+      ms.forEach(function (m) {  // latest round first
+        if (m.round !== rd) {
+          if (rd) out.push("</tbody></table></div>");
+          rd = m.round;
+          out.push('<div class="mday">' + S.esc(S.ROUND[rd] || rd) + "</div>" + '<div class="tablewrap"><table class="t mt"><tbody>');
+        }
+        var p = m.p[key];
+        if (p != null) { rated++; if (p < 0.35) ups++; if (p < 0.2) big++; }
+        out.push("<tr><td>" + who(m.w, true) + (p != null && p < 0.35 ? '<span class="tag" title="' + nm + ' gave the winner ' + (p < 0.2 ? "under 20%" : "under 35%") + '">' + (p < 0.2 ? "Big upset" : "Upset") + "</span>" : "") +
+          '<div class="muted">beat ' + who(m.l, false) + "</div></td>" +
+          '<td class="muted sc" style="white-space:nowrap">' + S.esc(m.score || "") + '</td><td class="n" style="width:1%;white-space:nowrap">' + (p != null ? Math.round(p * 100) + "%" : "–") + "</td></tr>");
+      });
+      out.push("</tbody></table></div>");
+      return '<p class="note">' + ms.length + " matches" + (rated ? ", " + ups + " upset" + (ups === 1 ? "" : "s") + (big ? " (" + big + " big)" : "") + " by " + nm : "") +
+        ". Latest round first. The number on the right is " + nm + "’s pre-match chance for the winner (bold). Upset: under 35%; big upset: under 20%." +
+        (S.deltaKey(sys) ? " Next to each player: how much their " + nm + " rating moved from the match." : sys === "glicko" ? " Glicko-2 rates a whole month’s results together, so it shows no change per match." : "") + "</p>" + out.join("");
     }
     draw();
   }).catch(function (e) { S.fail(main, e); });

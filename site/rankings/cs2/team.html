@@ -128,13 +128,15 @@ a.tit:hover{border-color:var(--ink)}
 
     function recentHTML() {
       var rsys = S.recentSys(), rname = S.RSYS.filter(function (r) { return r[0] === rsys; })[0][1];
+      var hasD = !!S.deltaKey(rsys) && p.recent.some(function (m) { return m.d; });
       var recent = p.recent.map(function (m) {
         var opp = m.opp_link ? '<a class="plink" href="team.html?id=' + encodeURIComponent(m.opp) + '">' + S.esc(m.opp_name) + "</a>" : S.esc(m.opp_name);
         return "<tr><td>" + S.date(m.date) + "</td><td>" + S.esc(m.event) + ' <span class="muted">' + S.esc(TIER_NAME[m.tier] || "") + "</span></td><td>" + opp +
           '</td><td><span class="' + (m.won ? "win\">Won" : "loss\">Lost") + '</span><div class="muted">' + S.esc(m.score) + '</div></td><td class="n">' +
-          (S.chance(m, rsys) == null ? "–" : Math.round(S.chance(m, rsys) * 100) + "%") + "</td></tr>";
+          (S.chance(m, rsys) == null ? "–" : Math.round(S.chance(m, rsys) * 100) + "%") + "</td>" +
+          (hasD ? '<td class="n">' + (S.delta(m.d, rsys) || "–") + "</td>" : "") + "</tr>";
       }).join("");
-      return '<div class="head2"><h2>Recent matches</h2>' + S.sysChips("rsys", rsys) + '</div><div id="rinact" class="rinact"></div><p class="note">Pre-match chance: what ' + rname + ' gave this team before each match' + (rsys === "vrs" ? " (from that week’s VRS standings; – where VRS had no standings for both sides)" : "") + '.</p><div class="tablewrap"><table class="t"><thead><tr><th>Date</th><th>Event</th><th>Opponent</th><th>Result</th><th class="n">' + rname + ' chance</th></tr></thead><tbody>' + recent + "</tbody></table></div>";
+      return '<div class="head2"><h2>Recent matches</h2>' + S.sysChips("rsys", rsys) + '</div><div id="rinact" class="rinact"></div><p class="note">Pre-match chance: what ' + rname + ' gave this team before each match' + (rsys === "vrs" ? " (from that week’s VRS standings; – where VRS had no standings for both sides)" : "") + (S.deltaKey(rsys) ? ", and how much the team’s rating moved from it" : rsys === "glicko" ? ". Glicko-2 rates a whole week’s results together, so it has no change per match" : "") + '.</p><div class="tablewrap"><table class="t"><thead><tr><th>Date</th><th>Event</th><th>Opponent</th><th>Result</th><th class="n">' + rname + ' chance</th>' + (hasD ? '<th class="n">' + rname + " change</th>" : "") + "</tr></thead><tbody>" + recent + "</tbody></table></div>";
     }
     function wireRecent() {
       var rsys = S.recentSys();

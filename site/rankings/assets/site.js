@@ -215,6 +215,15 @@
     var now = document.getElementById(id);
     if (before != null && now) window.scrollBy(0, now.getBoundingClientRect().top - before);
   };
+  // Rating change from one match. Only Elo and OpenSkill have one: Glicko-2 rates a whole period's results at
+  // once and VRS is rebuilt weekly from standings.
+  S.deltaKey = function (sys) { return sys === "elo" ? "elo" : sys === "openskill" ? S.sysKey("openskill") : null; };
+  S.delta = function (d, sys) {
+    var k = S.deltaKey(sys), v = k && d ? d[k] : null;
+    if (v == null) return "";
+    var r = sys === "elo" ? Math.round(v) : Math.round(v * 10) / 10, txt = sys === "elo" ? String(Math.abs(r)) : Math.abs(r).toFixed(1);
+    return '<span class="dlt ' + (r > 0 ? "up" : r < 0 ? "dn" : "") + '">' + (r > 0 ? "+" : r < 0 ? "\u2212" : "\u00b1") + txt + "</span>";
+  };
   S.sysChips = function (id, sel) {
     return '<div class="chips" id="' + id + '" role="group" aria-label="Rating system">' + S.RSYS.map(function (r) {
       return '<button class="chip" type="button" data-v="' + r[0] + '" aria-pressed="' + (r[0] === sel ? "true" : "false") + '">' + r[1] + "</button>";

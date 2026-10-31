@@ -276,13 +276,20 @@ def main():
                     row["elo_rating"] = round(elo[p])
         return on_week
 
-    preds, preds_pure = {}, {}
-    engines.run(cr.engine_rows(common), first_day, preds, make_on_week(""), inactivity=True, periods_per_year=cr.PERIODS_PER_YEAR)
+    preds, preds_pure, deltas, deltas_pure = {}, {}, {}, {}
+    engines.run(cr.engine_rows(common), first_day, preds, make_on_week(""), inactivity=True, periods_per_year=cr.PERIODS_PER_YEAR, deltas=deltas)
     week_index_of = {d: i for i, d in enumerate(weeks)}
-    engines.run(cr.engine_rows(common), first_day, preds_pure, make_on_week("_pure"), inactivity=False, periods_per_year=cr.PERIODS_PER_YEAR)
+    engines.run(cr.engine_rows(common), first_day, preds_pure, make_on_week("_pure"), inactivity=False, periods_per_year=cr.PERIODS_PER_YEAR, deltas=deltas_pure)
     for key, pr in preds_pure.items():
         if key in preds:
             preds[key]["glicko_pure"], preds[key]["openskill_pure"] = pr["glicko"], pr["openskill"]
+    for key, d_ in deltas_pure.items():
+        if key in deltas:
+            deltas[key]["openskill_pure"] = d_["openskill"]
+
+    def change(key, side):
+        """This side's rating change from one match (0 winner, 1 loser): Elo and OpenSkill; Glicko-2 rates by week."""
+        return {k: round(v[side], 1) for k, v in deltas.get(key, {}).items()}
     for p in list(hist):
         for w in list(hist[p]):
             if min(v for k, v in hist[p][w].items() if k != "elo_rating") > HISTORY_TOP:
@@ -385,7 +392,7 @@ def main():
             recent[rid].append({"date": day, "event": ev["name"], "page": m["event"], "tier": m["tier"], "opp": opp,
                                 "opp_name": ad.short_name(roster[opp].name), "won": won,
                                 "score": score if won else (f"{sl}–{sw}" if score else ""),
-                                "p": {k: round(v if won else 1 - v, 3) for k, v in pr.items()}})
+                                "p": {k: round(v if won else 1 - v, 3) for k, v in pr.items()}, "d": change(m["id"], 0 if won else 1)})
             if len(recent[rid]) > 30:
                 recent[rid].pop(0)
             match_days[rid].append(day)
@@ -661,7 +668,8 @@ def main():
                 if mid in vrs_pred:
                     probs["vrs"] = round(vrs_pred[mid], 3)
                 sides = [{"id": rid, "name": ad.short_name(t["name"]) or person(rid)["name"], "score": t["score"],
-                          "link": rid in has_profile} for rid, t in zip(m["rid"], m["teams"])]
+                          "link": rid in has_profile, "d": change(mid, 0 if i == m["winner"] - 1 else 1)}
+                         for i, (rid, t) in enumerate(zip(m["rid"], m["teams"]))]
                 rows.append({"time": m["time"], "bo": m["bestof"], "winner": m["winner"], "teams": sides, "p": probs})
             ed["mfile"] = re.sub(r"[^A-Za-z0-9_-]+", "_", ed["page"])
             dump(os.path.join("events", ed["mfile"] + ".json"), {"page": ed["page"], "name": ed["name"], "matches": rows})

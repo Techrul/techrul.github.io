@@ -84,13 +84,13 @@ def load(raw_dir, start_year):
 
 
 # ----------------------------------------------------------------------------- skill models (scripts/engines.py)
-def run_skill_models(matches, backtest_from, preds=None, weekly=None, inactivity=True):
+def run_skill_models(matches, backtest_from, preds=None, weekly=None, inactivity=True, deltas=None):
     """Tennis rows -> engines.run: tour-level matches without walkovers; Glicko-2 periods are tournament start
     months; preds are keyed (tourney_id, round, winner_id, loser_id)."""
     rows = ({"w": r["winner_id"], "l": r["loser_id"], "date": r["_date"], "period": r["tourney_date"][:6],
              "key": (r["tourney_id"], r["round"], r["winner_id"], r["loser_id"])}
             for r in matches if not r["_walkover"] and r["tourney_level"] in TOUR_LEVELS)
-    return engines.run(rows, backtest_from, preds, weekly, inactivity)
+    return engines.run(rows, backtest_from, preds, weekly, inactivity, deltas=deltas)
 
 
 # ----------------------------------------------------------------------------- points ledger

@@ -14,8 +14,10 @@ Writes into --out:
 History starts one year after --start-year: the first year only warms the rating models up.
 """
 import argparse
+import glob
 import json
 import os
+import re
 import sys
 from collections import Counter, defaultdict
 from datetime import timedelta
@@ -185,13 +187,20 @@ def main():
         return on_week
 
     week_index_of = {}
-    preds, preds_pure = {}, {}
-    ratings.run_skill_models(tour, tour[0]["_date"], preds, make_on_week(""), inactivity=True)
+    preds, preds_pure, deltas, deltas_pure = {}, {}, {}, {}
+    ratings.run_skill_models(tour, tour[0]["_date"], preds, make_on_week(""), inactivity=True, deltas=deltas)
     week_index_of = {d: i for i, d in enumerate(weeks)}
-    ratings.run_skill_models(tour, tour[0]["_date"], preds_pure, make_on_week("_pure"), inactivity=False)
+    ratings.run_skill_models(tour, tour[0]["_date"], preds_pure, make_on_week("_pure"), inactivity=False, deltas=deltas_pure)
     for key, pr in preds_pure.items():
         if key in preds:
             preds[key]["glicko_pure"], preds[key]["openskill_pure"] = pr["glicko"], pr["openskill"]
+    for key, d_ in deltas_pure.items():
+        if key in deltas:
+            deltas[key]["openskill_pure"] = d_["openskill"]
+
+    def change(key, side):
+        """This side's rating change from one match (0 winner, 1 loser): Elo and OpenSkill; Glicko-2 rates by period."""
+        return {k: round(v[side], 1) for k, v in deltas.get(key, {}).items()}
     # keep history rows only for players near the top of some system that week
     for p in list(hist):
         for w in list(hist[p]):
@@ -335,7 +344,8 @@ def main():
             opp = l if won else w
             recent[pid].append({"date": r["_date"].strftime("%Y-%m-%d"), "event": ev["name"], "tid": r["tourney_id"],
                                 "level": ev["level"], "round": r["round"], "opp": opp, "opp_name": facts[opp]["name"],
-                                "won": won, "score": r["score"], "p": {k: round(v if won else 1 - v, 3) for k, v in chances.items()}})
+                                "won": won, "score": r["score"], "p": {k: round(v if won else 1 - v, 3) for k, v in chances.items()},
+                                "d": change(key, 0 if won else 1)})
             if len(recent[pid]) > 30:
                 recent[pid].pop(0)
         if pr and prior[w] >= MIN_MATCHES and prior[l] >= MIN_MATCHES and r["_date"] >= history_from:
@@ -409,7 +419,7 @@ def main():
         tournaments.append({
             "key": key, "name": latest["name"], "level": level, "surface": latest["surface"],
             "month": int(latest["date"][5:7]),
-            "editions": [{"year": e["year"], "date": e["date"], "name": e["name"], "surface": e["surface"],
+            "editions": [{"tid": e["tid"], "year": e["year"], "date": e["date"], "name": e["name"], "surface": e["surface"],
                           "champion": person(e["champion"]) if e["champion"] else None,
                           "runner_up": person(e["runner_up"]) if e["runner_up"] else None,
                           "score": e["score"], "field": e.get("field"),
@@ -555,6 +565,34 @@ def main():
     def dump(name, obj):
         with open(os.path.join(args.out, name), "w", encoding="utf-8") as fh:
             json.dump(obj, fh, ensure_ascii=False, separators=(",", ":"))
+
+    # ---------------------------------------------------------------- every match of each edition (tournament pages)
+    # One file per edition, loaded only when that edition is opened; latest round first.
+    ROUND_ORDER = {"F": 0, "BR": 1, "SF": 2, "QF": 3, "R16": 4, "RR": 5, "R32": 6, "R64": 7, "R128": 8}
+    os.makedirs(os.path.join(args.out, "events"), exist_ok=True)
+    for old_f in glob.glob(os.path.join(args.out, "events", "*.json")):
+        os.remove(old_f)
+    by_tid = defaultdict(list)
+    for r in tour:
+        by_tid[r["tourney_id"]].append(r)
+    mfile = {}
+    for tid, ms in by_tid.items():
+        rows = []
+        for r in sorted(ms, key=lambda r: (ROUND_ORDER.get(r["round"], 9), -r["_date"].timestamp())):
+            key = (tid, r["round"], r["winner_id"], r["loser_id"])
+            pr = {k: v for k, v in preds.get(key, {}).items() if v is not None}
+            if key in vrs_pred:
+                pr["vrs"] = vrs_pred[key]
+            rows.append({"round": r["round"], "date": r["_date"].strftime("%Y-%m-%d"), "score": r["score"],
+                         "w": {**person(r["winner_id"]), "d": change(key, 0)}, "l": {**person(r["loser_id"]), "d": change(key, 1)},
+                         "p": {k: round(v, 3) for k, v in pr.items()}})
+        mfile[tid] = re.sub(r"[^A-Za-z0-9_-]+", "_", tid)
+        dump(os.path.join("events", mfile[tid] + ".json"), {"tid": tid, "name": events[tid]["name"], "matches": rows})
+    for t_ in tournaments:
+        for e_ in t_["editions"]:
+            if e_.get("tid") in mfile:
+                e_["mfile"] = mfile[e_["tid"]]
+    print(f"tournament matches: {len(mfile)} editions")
 
     dump("players_index.json", index)
     dump("records.json", records)

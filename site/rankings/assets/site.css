@@ -163,3 +163,7 @@ tr[data-href]:hover>td,.row[data-href]:hover,.ev[data-href]:hover{background:var
 .roster{color:var(--muted);font-size:.8rem}
 .roster .flag{margin-right:3px}
 .roster span+span::before{content:" \00b7\00a0"}
+
+/* rating change from one match */
+.dlt{font-variant-numeric:tabular-nums;font-size:.82rem;font-weight:600;color:var(--muted);white-space:nowrap}
+.dlt.up{color:var(--up)} .dlt.dn{color:var(--down)}
