@@ -1,10 +1,13 @@
-refresh: matches since 2026-10-09, events since 2026-08-31
-  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-08]] AND [[date::<2026-10-31]] offset 0
-  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-08]] AND [[date::<2026-10-31]] offset 1000
-  request 3: tournament [[enddate::>2026-08-30]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-10-31]] offset 0
-  request 4: placement [[prizemoney::>0]] AND [[date::>2026-08-30]] AND [[date::<2026-10-31]] offset 0
-  1510 matches, 308 tournaments, 858 prize rows
+refresh: matches since 2026-10-10, events since 2026-09-01
+  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-09]] AND [[date::<2026-11-01]] offset 0
+  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-09]] AND [[date::<2026-11-01]] offset 1000
+  request 3: tournament [[enddate::>2026-08-31]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-01]] offset 0
+  request 4: placement [[prizemoney::>0]] AND [[date::>2026-08-31]] AND [[date::<2026-11-01]] offset 0
+  1451 matches, 312 tournaments, 834 prize rows
+  request 5: tournament [[startdate::>2026-10-31]] AND [[liquipediatier::1]] offset 0
+  request 6: tournament [[startdate::>2026-10-31]] AND [[liquipediatier::2]] offset 0
+  upcoming S- and A-tier tournaments: 44
 finished: everything up to date
-requests used: 4
-83792 matches stored, 5780 tournaments, 3496 events with prize money, 28171 players; 46 of 46 months fetched (2023-01 to 2026-10)
-::notice title=CS2 fetch::finished: everything up to date; 4 requests; 83792 matches stored, 5780 tournaments, 3496 events with prize money, 28171 players; 46 of 46 months fetched (2023-01 to 2026-10)
+requests used: 6
+83805 matches stored, 5782 tournaments, 3496 events with prize money, 28172 players; 46 of 46 months fetched (2023-01 to 2026-10)
+::notice title=CS2 fetch::finished: everything up to date; 6 requests; 83805 matches stored, 5782 tournaments, 3496 events with prize money, 28172 players; 46 of 46 months fetched (2023-01 to 2026-10)
