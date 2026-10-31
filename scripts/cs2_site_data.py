@@ -630,7 +630,9 @@ def main():
         with open(os.path.join(args.out, "teams", f"{rid}.json"), "w", encoding="utf-8") as fh:
             json.dump(prof, fh, ensure_ascii=False, separators=(",", ":"))
         index.append({**person(rid), "official": cur.get("official_rank"), "elo_rank": (cur.get("ranks") or {}).get("elo"),
-                      "players": r.players, "titles": len(titles[rid])})
+                      "players": r.players, "titles": len(titles[rid]),
+                      # when this roster played: older rosters of the same organisation are told apart by these
+                      "first": match_days[rid][0] if match_days.get(rid) else None, "last": last_played.get(rid)})
     has_profile = {x["id"] for x in index}
     for rid in list(recent):
         for x in recent[rid]:

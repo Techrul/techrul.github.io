@@ -93,8 +93,15 @@
     var find = el.querySelector("#find");
     if (find && sport === "cs2") {
       S.json(base + "cs2/data/teams_index.json").then(function (list) {
-        S.autocomplete(find, list.map(function (t) {
-          return { id: t.id, name: t.name, hint: [t.official ? "Valve #" + t.official : null, t.elo_rank ? "Elo #" + t.elo_rank : null, t.region].filter(Boolean).join(" \u00b7 "),
+        // An organisation can have several rosters (Valve's rule: a new core of three is a new team). Ranked ones
+        // show their ranks; older ones show when they played and who was in them, so they don't look like duplicates.
+        var seen = {};
+        S.autocomplete(find, list.map(function (t) {  // the list comes best-ranked first
+          var dupe = seen[t.name] = (t.name in seen);
+          var ranked = (t.official || t.elo_rank) && !dupe, yrs = t.first && t.last ? (t.first.slice(0, 4) === t.last.slice(0, 4) ? t.last.slice(0, 4) : t.first.slice(0, 4) + "\u2013" + t.last.slice(2, 4)) : "";
+          var who = (t.players || []).slice(0, 2).map(S.pname).join(", ");
+          return { id: t.id, name: t.name, hint: ranked ? [t.official ? "Valve #" + t.official : null, t.elo_rank ? "Elo #" + t.elo_rank : null, t.region].filter(Boolean).join(" \u00b7 ")
+                                                        : [yrs ? yrs + " roster" : "Older roster", who].filter(Boolean).join(" \u00b7 "),
             also: (t.players || []).join(" ") + " " + (t.full || "") };
         }), function (item) { location.href = base + "cs2/team.html?id=" + encodeURIComponent(item.id); }, { empty: "No team or player by that name" });
       }).catch(function () { find.remove(); });
