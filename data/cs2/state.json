@@ -229,7 +229,12 @@
    "matches": "2026-10-19",
    "placements": "2026-10-19",
    "tournaments": "2026-10-19"
+  },
+  "2026-11": {
+   "matches": "2026-11-01",
+   "placements": "2026-11-01",
+   "tournaments": "2026-11-01"
   }
  },
- "upcoming": "2026-10-31"
+ "upcoming": "2026-11-01"
 }
