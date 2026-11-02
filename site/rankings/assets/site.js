@@ -225,7 +225,13 @@
   // Rating change: per match for Elo and OpenSkill. Glicko-2 rates a whole period's results at once (CS2: a week,
   // tennis: a month) and VRS is rebuilt each Monday, so for those it is the change over the match's period.
   S.deltaKey = function (sys) { return sys === "elo" || sys === "vrs" ? sys : S.sysKey(sys); };
-  S.deltaPeriod = function (sys) { return sys === "vrs" ? "week" : sys === "glicko" ? (S.sport() === "cs2" ? "week" : "month") : null; };
+  S.deltaPeriod = function (sys) { return sys === "vrs" ? "event" : sys === "glicko" ? (S.sport() === "cs2" ? "week" : "month") : null; };
+  // the sentence that explains a period change (Glicko-2: its rating period; VRS: the whole event)
+  S.deltaNote = function (sys, nm, who) {
+    if (sys === "vrs") return "VRS counts a result once the event is over, so its change is " + who + "’s VRS points from the Monday before the event to the Monday after, shown on " + who + "’s last match there.";
+    var per = S.deltaPeriod(sys);
+    return per ? nm + " rates a whole " + per + "’s results together, so its change covers every match " + who + " played that " + per + "." : "";
+  };
   S.delta = function (d, sys) {
     var k = S.deltaKey(sys), v = k && d ? d[k] : null;
     if (v == null) return "";

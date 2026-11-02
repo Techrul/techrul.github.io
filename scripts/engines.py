@@ -202,3 +202,37 @@ def run(matches, backtest_from, preds=None, weekly=None, inactivity=True, period
     if weekly is not None and last_match:
         weekly(max(last_match.values()), elo, g2, osk, last_match, count)  # state after the latest matches
     return elo, g2, osk, last_match, count, bt
+
+
+def event_vrs_changes(matches, snaps, now=None):
+    """VRS counts a result once the event is over, so its change belongs to a whole event, not one match.
+    matches: (key, event, time, winner, loser) in any order; snaps: [(monday_time, {id: points})] oldest first
+    (each Monday's standings, built from matches before it); now: {id: points} today, for events after the last
+    Monday. Returns {key: (winner_change, loser_change)}, filled for each player's last match in each event
+    (None elsewhere): points the Monday after their last match there minus the Monday before their first."""
+    import bisect
+    times = [t for t, _ in snaps]
+    span = {}
+    for key, ev, t, w, l in matches:
+        for side, pid in ((0, w), (1, l)):
+            s = span.get((ev, pid))
+            if s is None:
+                span[(ev, pid)] = [t, t, key, side]
+            else:
+                s[0] = min(s[0], t)
+                if t >= s[1]:
+                    s[1], s[2], s[3] = t, key, side
+    out = {}
+    for (ev, pid), (first, last, key, side) in span.items():
+        i = bisect.bisect_right(times, first) - 1           # the Monday at or before the first match
+        j = bisect.bisect_right(times, last)                # the first Monday after the last match
+        if i < 0:
+            continue
+        before = snaps[i][1].get(pid)
+        after = snaps[j][1].get(pid) if j < len(snaps) else (now or {}).get(pid)
+        if before is None or after is None:
+            continue
+        pair = list(out.get(key, (None, None)))
+        pair[side] = after - before
+        out[key] = tuple(pair)
+    return out
