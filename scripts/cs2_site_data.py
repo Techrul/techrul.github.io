@@ -34,6 +34,7 @@ UPSET = 0.35  # a win the system gave the winner under 35% counts as an upset
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import cs2_adapter as ad  # noqa: E402
+import cs2_points as cpts  # noqa: E402
 import cs2_ratings as cr  # noqa: E402
 import engines  # noqa: E402
 from engines import G2_SCALE, INACTIVE_RESET_YEARS  # noqa: E402
@@ -305,6 +306,21 @@ def main():
 
     lineups = Lineups(usable)
 
+    # ---------------------------------------------------------------- ATP-style points, weekly (cs2_points.py)
+    pt_results = cpts.event_results(data, lambda m, i: f"r{m['rosters'][i]}")
+    points_hist = defaultdict(dict)  # rid -> week -> rank
+    points_by_week = {}              # week -> {rid: points}
+    for w, day in enumerate(week_dates):
+        led = cpts.ledger(pt_results, (day - timedelta(days=1)).strftime("%Y-%m-%d"))  # events finished before that Monday
+        points_by_week[w] = led
+        rk_ = cpts.ranks(led)
+        if day.weekday() == 0 and rk_:
+            number_one["points"].append((w, min(rk_, key=rk_.get)))
+        for rid, rk in rk_.items():
+            if rk <= HISTORY_TOP:
+                points_hist[rid][w] = rk
+    print(f"points: {len(pt_results)} scoring placings")
+
     # ---------------------------------------------------------------- Valve's official standings, weekly
     # Valve publishes on the first Monday of each month; each list stays in force until the next one.
     official_hist = defaultdict(dict)  # rid -> week -> rank
@@ -420,7 +436,7 @@ def main():
 
     # ---------------------------------------------------------------- prediction table
     bt_from = last_day - timedelta(days=365)
-    methods = ["elo", "glicko", "glicko_pure", "openskill", "openskill_pure", "vrs", "official"]
+    methods = ["elo", "glicko", "glicko_pure", "openskill", "openskill_pure", "vrs", "official", "points"]
     if not vrs_pred:
         methods.remove("vrs")
         print("prediction table: no VRS predictions this run; comparing the other methods only")
@@ -441,15 +457,18 @@ def main():
         probs = {k: preds[m["id"]][k] for k in ("elo", "glicko", "glicko_pure", "openskill", "openskill_pure")}
         probs["vrs"] = vrs_pred.get(m["id"])
         probs["official"] = 0.5 if offr[a] == offr[b] else (1.0 if offr[a] < offr[b] else 0.0)
+        ptw = points_by_week.get(w, {})
+        pa_, pb_ = ptw.get(a, 0), ptw.get(b, 0)  # "more points wins"; no points counts as 0
+        probs["points"] = 0.5 if pa_ == pb_ else (1.0 if pa_ > pb_ else 0.0)
         for m_ in methods:
             q, t = probs[m_], tot[m_]
             t[0] += 1
             t[1] += 1 if q > 0.5 else (0.5 if q == 0.5 else 0)
-            if m_ != "official":
+            if m_ not in ("official", "points"):
                 t[2] += -math.log(min(max(q, 1e-6), 1 - 1e-6))
     backtest = {"from": bt_from.strftime("%Y-%m-%d"), "to": as_of_date, "matches": used,
                 "methods": {m_: {"accuracy": round(t[1] / t[0], 4) if t[0] else None,
-                                 "log_loss": round(t[2] / t[0], 4) if t[0] and m_ != "official" else None}
+                                 "log_loss": round(t[2] / t[0], 4) if t[0] and m_ not in ("official", "points") else None}
                             for m_, t in tot.items()}}
     print("prediction table:", used, "matches", {m_: v["accuracy"] for m_, v in backtest["methods"].items()})
 
@@ -612,17 +631,17 @@ def main():
         r = roster.get(rid)
         if r is None:
             continue
-        allw = sorted(set(hist[rid]) | set(official_hist[rid]) | set(vrs_hist[rid]))
+        allw = sorted(set(hist[rid]) | set(official_hist[rid]) | set(vrs_hist[rid]) | set(points_hist[rid]))
 
         def hrow(w):
             h = hist[rid].get(w, {})
             return [w, h.get("elo"), h.get("glicko"), h.get("openskill"), h.get("elo_rating"), vrs_hist[rid].get(w),
-                    official_hist[rid].get(w), h.get("glicko_pure"), h.get("openskill_pure")]
+                    official_hist[rid].get(w), h.get("glicko_pure"), h.get("openskill_pure"), points_hist[rid].get(w)]
         series = [hrow(w) for w in allw]
         cur = current.get(rid, {})
         peak = peaks["all"]["elo"].get(rid)
         best = {s: min((row[i] for row in series if row[i]), default=None)
-                for s, i in (("elo", 1), ("glicko", 2), ("openskill", 3), ("vrs", 5), ("official", 6), ("glicko_pure", 7), ("openskill_pure", 8))}
+                for s, i in (("elo", 1), ("glicko", 2), ("openskill", 3), ("vrs", 5), ("official", 6), ("glicko_pure", 7), ("openskill_pure", 8), ("points", 9))}
         flags = [ad.countries.iso(data.flags.get(x)) for x in r.players]
         names = [n for n, _c in sorted(r.names_seen.items(), key=lambda kv: -kv[1])]
         prof = {
@@ -630,11 +649,11 @@ def main():
             "liquipedia": "https://liquipedia.net/counterstrike/" + r.name.replace(" ", "_"),
             "current": {k: cur.get(k) for k in ("elo", "glicko", "glicko_rd", "openskill", "openskill_sigma", "vrs",
                                                  "glicko_pure", "glicko_rd_pure", "openskill_pure", "openskill_sigma_pure",
-                                                 "official_rank", "official_points", "ranks", "last_match", "region")},
+                                                 "official_rank", "official_points", "points", "ranks", "last_match", "region")},
             "last_match": last_played.get(rid), "matches": r.matches,
             "peak_elo": {"value": round(peak[0]), "date": peak[1].strftime("%Y-%m-%d")} if peak else None,
             "best_rank": best,
-            # [week, elo_rank, glicko_rank, openskill_rank, elo_rating, vrs_rank, official_rank, glicko_pure_rank, openskill_pure_rank]
+            # [week, elo_rank, glicko_rank, openskill_rank, elo_rating, vrs_rank, official_rank, glicko_pure_rank, openskill_pure_rank, points_rank]
             "history": series,
             "titles": sorted(titles[rid], key=lambda t: t["date"], reverse=True), "finals_lost": finals_lost[rid],
             "record": {k: v for k, v in record[rid].items()},

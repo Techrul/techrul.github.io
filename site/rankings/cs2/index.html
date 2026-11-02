@@ -110,7 +110,11 @@ Site.json('data/rankings.json').then(function(D){
      blurb:'Valve’s standings of ' + offDate + ', which decide tournament invites. Valve updates them on the first Monday of each month. Teams are matched to rosters by three of five players.',
      links:[{href:'https://github.com/ValveSoftware/counter-strike_regional_standings', text:'Valve’s standings on GitHub'}],
      val:function(p){return p.official_points == null ? '–' : p.official_points.toLocaleString('en-US')}, unc:null}
+    ,{id:'points', label:'Points', badge:'ATP-style', color:'var(--points)',
+     blurb:'Points for where a team finished, like the ATP ranking: the winner gets 2000 at a Major, 1000 at S-Tier, 500 at A-Tier, 250 at B-Tier; 2nd 65%, 3–4 40%, 5–8 20%, 9–16 10%, 17–32 5%, and only the top half of the field scores. Online events count 75%. A team’s best 10 results from the last 52 weeks.',
+     val:function(p){return p.points == null ? '–' : p.points.toLocaleString('en-US')}, unc:null}
   ];
+  if (!meta.points) MODELS = MODELS.filter(function(m){return m.id !== 'points'});
   if (!meta.vrs) MODELS = MODELS.filter(function(m){return m.id !== 'vrs'});
   if (!meta.official) MODELS = MODELS.filter(function(m){return m.id !== 'official'});
   var REGIONS = [['all', 'All regions'], ['Europe', 'Europe'], ['Americas', 'Americas'], ['Asia', 'Asia']];

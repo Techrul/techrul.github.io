@@ -66,7 +66,8 @@ a.tit:hover{border-color:var(--ink)}
     { key: "glicko", label: "Glicko-2", color: "glicko", col: 2 },
     { key: "openskill", label: "OpenSkill", color: "openskill", col: 3 },
     { key: "vrs", label: "VRS (live)", color: "vrs", col: 5 },
-    { key: "official", label: "Valve official", color: "official", col: 6 }
+    { key: "official", label: "Valve official", color: "official", col: 6 },
+    { key: "points", label: "Points", color: "points", col: 9 }
   ];
   var TIERS = ["1", "2", "3"], TIER_NAME = { "1": "S-Tier", "2": "A-Tier", "3": "B-Tier", "4": "C-Tier" };
   var range = 156;
@@ -95,7 +96,7 @@ a.tit:hover{border-color:var(--ink)}
       var k = S.sysKey(s.key);
       var r = s.key === "official" ? c.official_rank : ranks[k];
       var v = s.key === "official" ? c.official_points : c[k];
-      var sub = s.key === "official" ? (v != null ? S.num(v) + " points" : "Not on Valve’s list") : s.key === "vrs" ? (v != null ? S.num(v) + " points" : "Not ranked now") : (v != null ? "Rating " + (s.key === "openskill" ? Number(v).toFixed(1) : S.num(v)) : "Not rated now");
+      var sub = s.key === "official" ? (v != null ? S.num(v) + " points" : "Not on Valve’s list") : s.key === "vrs" ? (v != null ? S.num(v) + " points" : "Not ranked now") : s.key === "points" ? (v != null ? S.num(v) + " points" : "No points in 52 weeks") : (v != null ? "Rating " + (s.key === "openskill" ? Number(v).toFixed(1) : S.num(v)) : "Not rated now");
       var best = p.best_rank && p.best_rank[k] ? "Best #" + p.best_rank[k] : "";
       return '<div class="tile"><div class="sys"><i style="background:var(--' + s.color + ')"></i>' + s.label + '</div><div class="big">' + (r ? "#" + r : "–") +
         '</div><div class="sub">' + [sub, best].filter(Boolean).join(" · ") + "</div></div>";

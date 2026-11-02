@@ -27,6 +27,7 @@ from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import cs2_adapter as ad  # noqa: E402
+import cs2_points  # noqa: E402
 import cs2_vrs  # noqa: E402
 import engines  # noqa: E402
 from engines import G2_SCALE, INACTIVE_RESET_YEARS  # noqa: E402
@@ -134,10 +135,16 @@ def main():
         official_meta = {"date": day, "teams": len(rows), "matched": len(official),
                          "source": "https://github.com/ValveSoftware/counter-strike_regional_standings"}
 
+    # ATP-style points (cs2_points.py): best results at S-, A- and B-tier events over the last 52 weeks
+    pt_results = cs2_points.event_results(data, lambda m, i: f"r{m['rosters'][i]}")
+    points = cs2_points.ledger(pt_results, as_of.strftime("%Y-%m-%d"))
+    points_rank = cs2_points.ranks(points)
+
     cutoff = as_of_naive - timedelta(days=args.active_days)
     pool = {p for p in last_match if last_match[p] >= cutoff and count[p] >= args.min_matches}
     rated = set(pool)
-    extra = {r for r, v in vrs.items() if v["rank"] <= 100} | {r for r, o in official.items() if o["rank"] <= 100}
+    extra = ({r for r, v in vrs.items() if v["rank"] <= 100} | {r for r, o in official.items() if o["rank"] <= 100}
+             | {r for r, k in points_rank.items() if k <= 100})
     ranks = {
         "elo": rank_map(pool, elo), "glicko": rank_map(pool, g2_score), "openskill": rank_map(pool, osk_score),
         "glicko_pure": rank_map(pool, g2p_score), "openskill_pure": rank_map(pool, oskp_score),
@@ -182,6 +189,9 @@ def main():
             v = vrs[p]
             t["vrs"] = v["points"]
             t["ranks"]["vrs"] = v["rank"]
+        if p in points:
+            t["points"] = points[p]
+            t["ranks"]["points"] = points_rank[p]
         if p in official:
             o = official[p]
             t.update({"official_rank": o["rank"], "official_points": o["points"], "official_name": o["name"]})
@@ -200,6 +210,8 @@ def main():
         "rosters": len(rosters.list), "teams_rated": len(pool), "teams_listed": len(teams),
         "listing": {"min_matches": args.min_matches, "active_days": args.active_days},
         "official": official_meta, "vrs": vrs_meta,
+        "points": {"top": cs2_points.TOP, "bands": cs2_points.BANDS, "online": cs2_points.ONLINE, "best": cs2_points.BEST_N,
+                   "window_days": cs2_points.WINDOW_DAYS, "ranked": len(points)},
         "backtest": {"window": f"last {args.backtest_months} months",
                      "elo": bt_summary(bt["elo"]), "glicko": bt_summary(bt["glicko"]),
                      "openskill": bt_summary(bt["openskill"]), "glicko_pure": bt_summary(btp["glicko"]),
