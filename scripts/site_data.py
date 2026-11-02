@@ -25,6 +25,7 @@ from datetime import timedelta
 UPSET = 0.35  # a win the system gave the winner under 35% counts as an upset
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import engines  # noqa: E402
 import ratings  # noqa: E402
 
 TOUR = ratings.TOUR_LEVELS
@@ -201,9 +202,10 @@ def main():
                 deltas[key]["glicko_pure"] = d_["glicko"]
 
     def change(key, side):
-        """This side's rating change (0 winner, 1 loser): per match for Elo and OpenSkill; for Glicko-2 and VRS the
-        change over the match's period (Glicko-2: the month; VRS: the week), since they rate a whole period together."""
-        return {k: round(v[side], 1) for k, v in deltas.get(key, {}).items()}
+        """This side's rating change (0 winner, 1 loser): per match for Elo and OpenSkill; for Glicko-2 the
+        change over the match's month, since it rates a month's results together; for VRS the change across the
+        whole event, on the player's last match there (VRS counts a result once the event is over)."""
+        return {k: round(v[side], 1) for k, v in deltas.get(key, {}).items() if v[side] is not None}
     # keep history rows only for players near the top of some system that week
     for p in list(hist):
         for w in list(hist[p]):
@@ -272,7 +274,7 @@ def main():
                 vrs_weight[e["eventId"]] = round(1 / (1 + abs(math.log10(pool / 1_000_000))), 3)  # Valve's curveFunction
             first_ts = min(m["matchStartTime"] for m in data["matches"])
             start = first_ts + 182 * 86400  # a full 6-month window of priced events
-            prev_res, prev_ts = None, None
+            vrs_snaps = []  # (monday time, {player: points})
             with tempfile.TemporaryDirectory() as tmp:
                 for day in weeks:
                     from datetime import datetime, timezone
@@ -281,14 +283,7 @@ def main():
                         continue
                     res = vrs_backtest.run_valve(args.valve, vrs_backtest.snapshot(data, ts), tmp)
                     w = week_index[day]
-                    if prev_res:  # last week's matches: each player's VRS points change from last Monday to this one
-                        for m in data["matches"]:
-                            if prev_ts <= m["matchStartTime"] < ts:
-                                a, b = m["team1Id"], m["team2Id"]
-                                k_ = (m["eventId"], m["round"], a, b)
-                                if a in res and b in res and a in prev_res and b in prev_res and k_ in deltas:
-                                    deltas[k_]["vrs"] = (res[a]["points"] - prev_res[a]["points"], res[b]["points"] - prev_res[b]["points"])
-                    prev_res, prev_ts = res, ts
+                    vrs_snaps.append((ts, {p_: v_["points"] for p_, v_ in res.items()}))
                     # this Monday's VRS (built from earlier matches only) predicts the coming week's matches
                     for m in data["matches"]:
                         if ts <= m["matchStartTime"] < ts + 7 * 86400:
@@ -309,16 +304,16 @@ def main():
                             vrs_hist[pid][w] = p["rank"]
                         keep_max(peaks, "vrs", pid, p["points"], week_dates[w])
             print(f"VRS history: {len(number_one['vrs'])} weeks")
-            # this week's matches: change from last Monday to the current VRS (rankings.json), as there is no next Monday yet
-            if prev_res and os.path.exists(args.current):
+            # VRS counts a result when the event is over: each player's change across the event, on their last match there
+            now_pts = {}
+            if os.path.exists(args.current):
                 with open(args.current, encoding="utf-8") as fh:
-                    now_pts = {p_["id"]: p_.get("vrs") for p_ in json.load(fh)["players"]}
-                for m in data["matches"]:
-                    if m["matchStartTime"] >= prev_ts:
-                        a, b = m["team1Id"], m["team2Id"]
-                        k_ = (m["eventId"], m["round"], a, b)
-                        if now_pts.get(a) is not None and now_pts.get(b) is not None and a in prev_res and b in prev_res and k_ in deltas:
-                            deltas[k_]["vrs"] = (now_pts[a] - prev_res[a]["points"], now_pts[b] - prev_res[b]["points"])
+                    now_pts = {p_["id"]: p_["vrs"] for p_ in json.load(fh)["players"] if p_.get("vrs") is not None}
+            ev_ch = engines.event_vrs_changes(((( m["eventId"], m["round"], m["team1Id"], m["team2Id"]), m["eventId"], m["matchStartTime"],
+                                               m["team1Id"], m["team2Id"]) for m in data["matches"]), vrs_snaps, now_pts)
+            for k_, pair in ev_ch.items():
+                if k_ in deltas:
+                    deltas[k_]["vrs"] = pair
 
     # ---------------------------------------------------------------- per-match facts
     events = {}
