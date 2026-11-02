@@ -142,7 +142,7 @@ td .muted{font-size:.84rem}
       out.push("</tbody></table></div>");
       return '<p class="note">' + ms.length + " matches" + (rated ? ", " + ups + " upset" + (ups === 1 ? "" : "s") + (big ? " (" + big + " big)" : "") + " by " + nm : "") +
         ". Latest round first. The number on the right is " + nm + "’s pre-match chance for the winner (bold). Upset: under 35%; big upset: under 20%." +
-        (S.deltaKey(sys) ? " Next to each player: how much their " + nm + " rating moved from the match." : sys === "glicko" ? " Glicko-2 rates a whole month’s results together, so it shows no change per match." : "") + "</p>" + out.join("");
+        (S.deltaPeriod(sys) ? " Next to each player: how much their " + nm + " rating moved over that " + S.deltaPeriod(sys) + " (" + nm + " rates a whole " + S.deltaPeriod(sys) + "’s results together, so this is the " + S.deltaPeriod(sys) + "’s change, not just this match)." : " Next to each player: how much their " + nm + " rating moved from the match.") + "</p>" + out.join("");
     }
     draw();
   }).catch(function (e) { S.fail(main, e); });

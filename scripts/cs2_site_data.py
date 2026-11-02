@@ -286,9 +286,12 @@ def main():
     for key, d_ in deltas_pure.items():
         if key in deltas:
             deltas[key]["openskill_pure"] = d_["openskill"]
+            if "glicko" in d_:
+                deltas[key]["glicko_pure"] = d_["glicko"]
 
     def change(key, side):
-        """This side's rating change from one match (0 winner, 1 loser): Elo and OpenSkill; Glicko-2 rates by week."""
+        """This side's rating change (0 winner, 1 loser): per match for Elo and OpenSkill; for Glicko-2 and VRS the
+        change over the match's week (tennis Glicko-2: month), since they rate a whole period together."""
         return {k: round(v[side], 1) for k, v in deltas.get(key, {}).items()}
     for p in list(hist):
         for w in list(hist[p]):
@@ -338,6 +341,7 @@ def main():
     vrs_hist = defaultdict(dict)
     vrs_pred = {}  # match id -> P(winner) from that week's Monday VRS
     vrs_weeks = 0
+    prev_res, prev_ts = None, None
     if not args.no_vrs and os.path.isdir(os.path.join(args.valve, "model")):
         with tempfile.TemporaryDirectory() as tmp:
             for w, day in enumerate(week_dates):
@@ -353,6 +357,13 @@ def main():
                     if rid and rid not in res:
                         res[rid] = v
                 vrs_weeks += 1
+                if prev_res:  # last week's matches: each side's VRS points change from last Monday to this one
+                    for m in played:
+                        if prev_ts <= m["time"] < ts:
+                            a, b = m["rid"][m["winner"] - 1], m["rid"][2 - m["winner"]]
+                            if a in res and b in res and a in prev_res and b in prev_res and m["id"] in deltas:
+                                deltas[m["id"]]["vrs"] = (res[a]["points"] - prev_res[a]["points"], res[b]["points"] - prev_res[b]["points"])
+                prev_res, prev_ts = res, ts
                 for m in played:
                     if ts <= m["time"] < ts + 7 * 86400:
                         a, b = m["rid"][m["winner"] - 1], m["rid"][2 - m["winner"]]
@@ -367,6 +378,14 @@ def main():
                         vrs_hist[rid][w] = v["rank"]
                     keep_max(peaks, "vrs", rid, v["points"], day)
         print(f"VRS history: {vrs_weeks} weeks")
+        # this week's matches: change from last Monday to the current VRS (rankings.json), as there is no next Monday yet
+        if prev_res:
+            for m in played:
+                if m["time"] >= prev_ts:
+                    a, b = m["rid"][m["winner"] - 1], m["rid"][2 - m["winner"]]
+                    pa, pb = (current.get(a) or {}).get("vrs"), (current.get(b) or {}).get("vrs")
+                    if pa is not None and pb is not None and a in prev_res and b in prev_res and m["id"] in deltas:
+                        deltas[m["id"]]["vrs"] = (pa - prev_res[a]["points"], pb - prev_res[b]["points"])
 
     # ---------------------------------------------------------------- records per match, team facts
     record = defaultdict(lambda: defaultdict(lambda: [0, 0]))

@@ -222,13 +222,14 @@
     var now = document.getElementById(id);
     if (before != null && now) window.scrollBy(0, now.getBoundingClientRect().top - before);
   };
-  // Rating change from one match. Only Elo and OpenSkill have one: Glicko-2 rates a whole period's results at
-  // once and VRS is rebuilt weekly from standings.
-  S.deltaKey = function (sys) { return sys === "elo" ? "elo" : sys === "openskill" ? S.sysKey("openskill") : null; };
+  // Rating change: per match for Elo and OpenSkill. Glicko-2 rates a whole period's results at once (CS2: a week,
+  // tennis: a month) and VRS is rebuilt each Monday, so for those it is the change over the match's period.
+  S.deltaKey = function (sys) { return sys === "elo" || sys === "vrs" ? sys : S.sysKey(sys); };
+  S.deltaPeriod = function (sys) { return sys === "vrs" ? "week" : sys === "glicko" ? (S.sport() === "cs2" ? "week" : "month") : null; };
   S.delta = function (d, sys) {
     var k = S.deltaKey(sys), v = k && d ? d[k] : null;
     if (v == null) return "";
-    var r = sys === "elo" ? Math.round(v) : Math.round(v * 10) / 10, txt = sys === "elo" ? String(Math.abs(r)) : Math.abs(r).toFixed(1);
+    var dec = sys === "openskill", r = dec ? Math.round(v * 10) / 10 : Math.round(v), txt = dec ? Math.abs(r).toFixed(1) : String(Math.abs(r));
     return '<span class="dlt ' + (r > 0 ? "up" : r < 0 ? "dn" : "") + '">' + (r > 0 ? "+" : r < 0 ? "\u2212" : "\u00b1") + txt + "</span>";
   };
   S.sysChips = function (id, sel) {

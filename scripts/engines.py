@@ -99,8 +99,8 @@ def run(matches, backtest_from, preds=None, weekly=None, inactivity=True, period
                  inactive player's uncertainty grows per period (INACTIVE_RESET_YEARS either way)
         key      optional; preds[key] gets each model's pre-match win chance for the winner
     deltas: optional dict; deltas[key] = {"elo": (winner, loser), "openskill": (winner, loser)}, each side's rating
-                 change from this match (OpenSkill: the shown value, mu - 3 sigma). Glicko-2 has none: it rates a
-                 whole period's results together, not match by match.
+                 change from this match (OpenSkill: the shown value, mu - 3 sigma), and "glicko": each side's
+                 change over the match's whole rating period (Glicko-2 rates a period's results together).
     weekly(monday, elo, g2, osk, last_match, count) is called once per week, before that week's matches.
     inactivity=True grows Glicko-2 / OpenSkill uncertainty while a player is not playing (see constants)."""
     elo = defaultdict(lambda: 1500.0)
@@ -113,11 +113,22 @@ def run(matches, backtest_from, preds=None, weekly=None, inactivity=True, period
     per_period = G2_INACTIVE_C2 if periods_per_year == 12 else G2_PHI_MAX ** 2 / (periods_per_year * INACTIVE_RESET_YEARS)
     extra = per_period if inactivity else 0.0
 
+    period_keys = []  # (key, winner, loser) of the matches in the current Glicko-2 period
+
+    def shown(v):
+        return (v.mu - 2 * v.phi) * G2_SCALE + 1500  # the rating the site shows (rating - 2 RD)
+
     def flush():
         snap = {k: (v.mu, v.phi) for k, v in g2.items()}
+        before = {k: shown(v) for k, v in g2.items()} if deltas is not None and period_keys else None
         for k in list(g2):
             g2_update(g2[k], [(snap[o][0], snap[o][1], s) for o, s in pending.get(k, [])], extra)
         pending.clear()
+        if before is not None:  # Glicko-2 rates the period as a whole: each match gets its period's change
+            for key, w, l in period_keys:
+                if key in deltas:
+                    deltas[key]["glicko"] = (shown(g2[w]) - before[w], shown(g2[l]) - before[l])
+        period_keys.clear()
 
     def record(name, p_winner):
         p = min(max(p_winner, 1e-6), 1 - 1e-6)
@@ -183,6 +194,7 @@ def run(matches, backtest_from, preds=None, weekly=None, inactivity=True, period
         if deltas is not None:
             deltas[r.get("key", (w, l))] = {"elo": (ELO_K * (1 - e), -ELO_K * (1 - e)),
                                             "openskill": (nw.ordinal() - ow, nl.ordinal() - ol)}
+            period_keys.append((r.get("key", (w, l)), w, l))
         for pid in (w, l):
             last_match[pid] = r["date"]
             count[pid] += 1
