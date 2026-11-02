@@ -10,7 +10,7 @@
   --paper:#f2f5f3; --card:#ffffff; --head:#e8eeeb; --ink:#12202b; --on-ink:#ffffff; --muted:#5b6b76; --line:#d5dde0;
   /* chart series: validated categorical steps (light surface) */
   --elo:#2a78d6; --glicko:#1baf7a; --openskill:#4a3aa7; --vrs:#eb6834; --official:#12202b;
-  --up:#157a4b; --down:#b3402e;
+  --up:#157a4b; --down:#b3402e; --points:#a5741c;
   --gold:#b8862b; --silver:#7d8893; --bronze:#a8683a; --slate:#5d6b78; --orb:#3a6fb0;
   --hard:#2f6db5; --clay:#c0602e; --grass:#3f8a3a; --carpet:#7a5aa8;
   --maxw:1080px; color-scheme:light;
@@ -19,7 +19,7 @@
   --paper:#000000; --card:#000000; --head:#0e0e0e; --ink:#f2f2f2; --on-ink:#000000; --muted:#9b9b9b; --line:#262626;
   /* validated dark steps */
   --elo:#3987e5; --glicko:#199e70; --openskill:#9085e9; --vrs:#d95926; --official:#f2f2f2;
-  --up:#5fd394; --down:#ff7a66;
+  --up:#5fd394; --down:#ff7a66; --points:#e0b354;
   --gold:#e0b354; --silver:#b9c2cc; --bronze:#d08a55; --slate:#8796a5; --orb:#6f9fe0;
   --hard:#5b93d8; --clay:#e07a45; --grass:#5fae58; --carpet:#a487d6;
   color-scheme:dark;
@@ -29,7 +29,7 @@
 :root[data-theme="mocha"]{
   --paper:#1e1e2e; --card:#181825; --head:#313244; --ink:#cdd6f4; --on-ink:#1e1e2e; --muted:#a6adc8; --line:#313244;
   --elo:#3987e5; --glicko:#199e70; --openskill:#9085e9; --vrs:#d95926; --official:#cdd6f4;
-  --up:#a6e3a1; --down:#f38ba8;
+  --up:#a6e3a1; --down:#f38ba8; --points:#f9e2af;
   --gold:#f9e2af; --silver:#bac2de; --bronze:#fab387; --slate:#9399b2; --orb:#89b4fa;
   --hard:#89b4fa; --clay:#fab387; --grass:#a6e3a1; --carpet:#cba6f7;
   color-scheme:dark;

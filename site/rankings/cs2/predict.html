@@ -85,7 +85,8 @@
         return phiN((ma - mb) / Math.sqrt(2 * OS_BETA * OS_BETA + sa * sa + sb * sb));
       } },
     { key: "vrs", label: "VRS (live)", p: function (a, b) { return a.vrs == null || b.vrs == null ? null : 1 / (1 + Math.pow(10, -VRS_G * (a.vrs - b.vrs) / 400)); } },
-    { key: "official", label: "Valve official", p: null }
+    { key: "official", label: "Valve official", p: null },
+    { key: "points", label: "Points", p: null }
   ];
   function rankOf(p, key) { return key === "official" ? p.official_rank : (p.ranks || {})[S.sysKey(key)]; }
   function nm(t) { return t.short; }
@@ -122,7 +123,7 @@
         var ra = rankOf(A, s.key), rb = rankOf(B, s.key);
         var ranks = "<small>" + (ra ? "#" + ra : "unranked") + "</small>", ranksB = "<small>" + (rb ? "#" + rb : "unranked") + "</small>";
         var sw = '<i style="background:var(--' + s.key + ')"></i>';
-        var sub = s.key === "glicko" || s.key === "openskill" ? (S.inactivity() === "pure" ? "pure model" : "sink while out") : s.key === "official" ? "no win chances" : s.key === "vrs" ? "Valve’s method" : "";
+        var sub = s.key === "glicko" || s.key === "openskill" ? (S.inactivity() === "pure" ? "pure model" : "sink while out") : s.key === "official" || s.key === "points" ? "no win chances" : s.key === "vrs" ? "Valve’s method" : "";
         var head = '<div class="nm">' + sw + "<span>" + s.label + (sub ? "<small>" + sub + "</small>" : "") + "</span></div>";
         if (!s.p) {
           var higher = ra && rb ? (ra < rb ? A : B) : null;
@@ -161,9 +162,9 @@
 
     var B_ = res[1];
     if (!B_ || !B_.matches) { document.getElementById("acc-card").hidden = true; return; }
-    var M = B_.methods, ROWS = [["Elo", "elo"], ["Glicko-2, sink while out", "glicko"], ["Glicko-2, pure", "glicko_pure"], ["OpenSkill, sink while out", "openskill"], ["OpenSkill, pure", "openskill_pure"], ["VRS (live)", "vrs"], ["Higher Valve rank wins", "official"]];
+    var M = B_.methods, ROWS = [["Elo", "elo"], ["Glicko-2, sink while out", "glicko"], ["Glicko-2, pure", "glicko_pure"], ["OpenSkill, sink while out", "openskill"], ["OpenSkill, pure", "openskill_pure"], ["VRS (live)", "vrs"], ["Higher Valve rank wins", "official"], ["More points wins (ATP-style)", "points"]];
     document.getElementById("btnote").textContent = "Every method predicted the same " + B_.matches.toLocaleString("en-US") + " matches (" + S.date(B_.from) + " to " + S.date(B_.to) + "): those where both teams were on Valve’s list and in VRS, using only results from before each match. " +
-      "The skill models update after every match; VRS is rebuilt each Monday and predicts that week; Valve’s list is the one in force at the time. Lower log loss is better; Valve’s list gives no probabilities, so it has none. Differences of a point or so are within noise.";
+      "The skill models update after every match; VRS is rebuilt each Monday and predicts that week; Valve’s list is the one in force at the time. Lower log loss is better; Valve’s list and the points ranking give no probabilities, so they have none. Differences of a point or so are within noise.";
     var best = Math.max.apply(null, ROWS.map(function (r) { return M[r[1]] ? M[r[1]].accuracy || 0 : 0; }));
     document.getElementById("bt").innerHTML = '<thead><tr><th>Method</th><th class="n">Picked the winner</th><th class="n">Log loss</th></tr></thead><tbody>' + ROWS.filter(function (r) { return M[r[1]]; }).map(function (r) {
       var b = M[r[1]];

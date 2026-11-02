@@ -270,6 +270,13 @@ How it differs from tennis, and why:
 - **VRS (live)** is Valve's code on our Liquipedia data. Valve's ranked flag is Liquipedia's `publishertier` (blank =
   not ranked; Valve's code only checks it from 2025). Against Valve's own lists on 9 dates (Mar 2025 to Oct 2026) the top
   50 correlate 0.92 to 0.99 and the #1 always matches.
+- **Points (ATP-style)** (`scripts/cs2_points.py`): points for final placings at Liquipedia S-, A- and B-tier main
+  events, like the ATP ranking. The winner gets 2000 at a Major (Valve's "Major Championship"), 1000 at S-Tier, 500 at
+  A-Tier, 250 at B-Tier; 2nd 65%, 3-4 40%, 5-8 20%, 9-16 10%, 17-32 5%. A range counts by where it starts (9-11 and
+  12-14 are 9-16), and only places in the top half of the field score, so bigger events pay deeper. Only the final
+  placing is used, so Swiss stages, groups and double elimination need nothing special. Online events count 75%.
+  A roster's ranking is its best 10 results from events that ended in the last 52 weeks; the team at each placing is
+  matched to the roster it fielded in that event. In the prediction table it is "more points wins" (no probabilities).
 - **Regions** (Europe, Americas, Asia) are Valve's: from the VRS run, else Valve's plurality rule on the current five.
 - **Events page**: Liquipedia S- and A-tier main events (about 35 a season), editions grouped by series. All tiers count
   for the ratings. Upset records only count S-, A- and B-tier events (tennis: tour level only).
