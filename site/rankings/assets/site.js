@@ -205,10 +205,18 @@
   // show = false keeps the space but hides it, so switching systems does not move the page.
   // Recent-match tables: each system's pre-match chance (older data held only Elo's, as a number)
   S.RSYS = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS"]];
+  // CS2 also has its ATP-style points (the page's sport is only known once the page has loaded)
+  S.rsysList = function () { return S.sport() === "cs2" ? S.RSYS.concat([["points", "Points"]]) : S.RSYS; };
+  // a pre-match "chance" cell: a percentage, or for Points (rank-based, no probability) who had more points
+  S.chanceText = function (v, sys) {
+    if (v == null) return "–";
+    if (sys === "points") return v === 0.5 ? "Even" : v > 0.5 ? "More points" : "Fewer points";
+    return Math.round(v * 100) + "%";
+  };
   S.recentSys = function (v) {
     if (v) { try { localStorage.setItem("tsys", v); } catch (e) {} return v; }
     var x; try { x = localStorage.getItem("tsys"); } catch (e) {}
-    return S.RSYS.some(function (r) { return r[0] === x; }) ? x : "elo";
+    return S.rsysList().some(function (r) { return r[0] === x; }) ? x : "elo";
   };
   S.chance = function (m, sys) {
     if (typeof m.p === "number") return sys === "elo" ? m.p : null;
@@ -225,9 +233,10 @@
   // Rating change: per match for Elo and OpenSkill. Glicko-2 rates a whole period's results at once (CS2: a week,
   // tennis: a month) and VRS is rebuilt each Monday, so for those it is the change over the match's period.
   S.deltaKey = function (sys) { return sys === "elo" || sys === "vrs" ? sys : S.sysKey(sys); };
-  S.deltaPeriod = function (sys) { return sys === "vrs" ? "event" : sys === "glicko" ? (S.sport() === "cs2" ? "week" : "month") : null; };
+  S.deltaPeriod = function (sys) { return sys === "vrs" || sys === "points" ? "event" : sys === "glicko" ? (S.sport() === "cs2" ? "week" : "month") : null; };
   // the sentence that explains a period change (Glicko-2: its rating period; VRS: the whole event)
   S.deltaNote = function (sys, nm, who) {
+    if (sys === "points") return "Points are earned for the final placing, so the number is what " + who + " earned at the event, shown on " + who + "’s last match there (best 10 results of 52 weeks count).";
     if (sys === "vrs") return "VRS counts a result once the event is over, so its change is " + who + "’s VRS points from the Monday before the event to the Monday after, shown on " + who + "’s last match there.";
     var per = S.deltaPeriod(sys);
     return per ? nm + " rates a whole " + per + "’s results together, so its change covers every match " + who + " played that " + per + "." : "";
@@ -239,7 +248,7 @@
     return '<span class="dlt ' + (r > 0 ? "up" : r < 0 ? "dn" : "") + '">' + (r > 0 ? "+" : r < 0 ? "\u2212" : "\u00b1") + txt + "</span>";
   };
   S.sysChips = function (id, sel) {
-    return '<div class="chips" id="' + id + '" role="group" aria-label="Rating system">' + S.RSYS.map(function (r) {
+    return '<div class="chips" id="' + id + '" role="group" aria-label="Rating system">' + S.rsysList().map(function (r) {
       return '<button class="chip" type="button" data-v="' + r[0] + '" aria-pressed="' + (r[0] === sel ? "true" : "false") + '">' + r[1] + "</button>";
     }).join("") + "</div>";
   };

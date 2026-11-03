@@ -47,6 +47,7 @@ td .muted{font-size:.84rem}
   var S = Site, key = S.param("key"), main = document.getElementById("main");
   var SYS = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS"]], NAME = { elo: "Elo", glicko: "Glicko-2", openskill: "OpenSkill", vrs: "VRS" };
   var sys; try { sys = localStorage.getItem("tsys") || "elo"; } catch (e) { sys = "elo"; }
+  if (!{ elo: 1, glicko: 1, openskill: 1, vrs: 1 }[sys]) sys = "elo";  // e.g. CS2's Points, which tennis doesn't have
   var edSel = S.param("ed"), mcache = {};
   Promise.all([S.json("data/tournaments.json"), S.trophies()]).then(function (res) {
     var data = res[0], list = data.tournaments || data, photo = (res[1] || {})[key];

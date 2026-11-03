@@ -319,6 +319,28 @@ def main():
         for rid, rk in rk_.items():
             if rk <= HISTORY_TOP:
                 points_hist[rid][w] = rk
+        if day in events_by_monday:
+            event_stats(day, lambda _s, r, led=led: float(led.get(r, 0)), ["points"])
+    # "more points wins" for every match: 1 if the winner had more points that Monday, 0 if fewer, 0.5 if equal
+    pts_pred = {}
+    for m in played:
+        w = bisect.bisect_right(week_dates, datetime.fromtimestamp(m["time"], timezone.utc).replace(tzinfo=None)) - 1
+        if w < 0:
+            continue
+        led = points_by_week[w]
+        pa_, pb_ = led.get(m["rid"][m["winner"] - 1], 0), led.get(m["rid"][2 - m["winner"]], 0)
+        pts_pred[m["id"]] = 0.5 if pa_ == pb_ else (1.0 if pa_ > pb_ else 0.0)
+    # points earned at each event, shown on the team's last match there (like VRS, a result counts once it is over)
+    last_at = {}
+    for m in played:
+        for side, rid in ((0, m["rid"][m["winner"] - 1]), (1, m["rid"][2 - m["winner"]])):
+            last_at[(m["event"], rid)] = (m["id"], side)
+    for rid, _end, pts, page in pt_results:
+        hit = last_at.get((page, rid))
+        if hit and hit[0] in deltas:
+            pair = list(deltas[hit[0]].get("points", (None, None)))
+            pair[hit[1]] = pts
+            deltas[hit[0]]["points"] = tuple(pair)
     print(f"points: {len(pt_results)} scoring placings")
 
     # ---------------------------------------------------------------- Valve's official standings, weekly
@@ -411,6 +433,8 @@ def main():
         pr = {k: v for k, v in preds.get(m["id"], {}).items() if v is not None}  # each system's chance for the winner
         if m["id"] in vrs_pred:
             pr["vrs"] = vrs_pred[m["id"]]
+        if m["id"] in pts_pred:
+            pr["points"] = pts_pred[m["id"]]  # 1 / 0 / 0.5: who had more points, not a probability
         sw, sl = m["teams"][wi]["score"], m["teams"][1 - wi]["score"]
         score = f"{sw}–{sl}" if isinstance(sw, int) and isinstance(sl, int) else ""
         for rid, won in ((wr, True), (lr, False)):
@@ -477,7 +501,8 @@ def main():
         e = events[page]
         out = {}
         for system, st in ev_stats.get(page, {}).items():
-            ps = [vrs_pred.get(i) if system == "vrs" else preds.get(i, {}).get(system) for i in e["match_ids"]]
+            ps = [vrs_pred.get(i) if system == "vrs" else pts_pred.get(i) if system == "points" else preds.get(i, {}).get(system)
+                  for i in e["match_ids"]]
             ps = [x for x in ps if x is not None]
             out[system] = {"field": round(st["field"], 1 if system.startswith("openskill") else 0), "favourite": person(st["fav"]),
                            "favourite_won": st["fav"] == e["champion"], "seed": st["seed"],
@@ -701,6 +726,8 @@ def main():
                 probs = {k: round(v, 3) for k, v in (preds.get(mid) or {}).items() if k in SKILL and v is not None}
                 if mid in vrs_pred:
                     probs["vrs"] = round(vrs_pred[mid], 3)
+                if mid in pts_pred:
+                    probs["points"] = pts_pred[mid]
                 sides = [{"id": rid, "name": ad.short_name(t["name"]) or person(rid)["name"], "score": t["score"],
                           "link": rid in has_profile, "d": change(mid, 0 if i == m["winner"] - 1 else 1)}
                          for i, (rid, t) in enumerate(zip(m["rid"], m["teams"]))]
