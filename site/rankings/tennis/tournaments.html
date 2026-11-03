@@ -132,6 +132,7 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
   function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   var view0 = pref("tview", "calendar");
   var state = { view: view0 === "gallery" ? "cards" : view0, year: null, tier: "all", surface: "All", sort: "cal", sys: pref("tsys", "elo") };
+  if (!{ elo: 1, glicko: 1, openskill: 1, vrs: 1 }[state.sys]) state.sys = "elo";  // e.g. CS2's Points, which tennis doesn't have
   var draw = function () {};
   function iso(t) { var d = new Date(t); return d.getUTCFullYear() + "-" + String(d.getUTCMonth() + 1).padStart(2, "0") + "-" + String(d.getUTCDate()).padStart(2, "0"); }
   function short(isoD) { var p = isoD.split("-"); return +p[2] + " " + MON[+p[1] - 1]; }
