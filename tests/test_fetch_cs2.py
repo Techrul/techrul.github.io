@@ -156,6 +156,16 @@ def test_full_run_and_resume():
         assert json.load(open(os.path.join(root, "players.json")))["P11"] == "Denmark"
 
 
+def test_placements_merge_across_windows():
+    with tempfile.TemporaryDirectory() as root:
+        st = fetch_cs2.Store(root)
+        row = lambda place, team, d: {"pagename": "Major", "placement": place, "opponentname": team, "opponenttemplate": team.lower(), "date": d}
+        st.add_placements([row("1", "A", "2025-12-14"), row("2", "B", "2025-12-14")])   # December window
+        st.add_placements([row("23-24", "C", "2025-11-27")])                           # November window
+        st.add_placements([row("2", "B", "2025-12-14"), row("3-4", "A", "2025-12-14")])  # a correction for A
+        assert [(x["place"], x["team"]) for x in st.placements["Major"]] == [("2", "B"), ("3-4", "A"), ("23-24", "C")]
+
+
 def test_month_settles_later():
     api = FakeApi(n_per_day=2, start=date(2026, 9, 1))
     with tempfile.TemporaryDirectory() as root:

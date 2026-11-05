@@ -155,12 +155,19 @@ class Store:
                 self.tournaments[t["pagename"]] = compact_tournament(t)
 
     def add_placements(self, rows):
+        """Merge placings into each event page's list, one row per team: a fetch covers a date window, and an event
+        that spans two windows (a Major from late November into December) has placings dated in both, so a page's
+        list must not be replaced by one window's rows. A team's newer row replaces its older one (corrections)."""
+        def who(x):
+            return (x.get("template") or x.get("team") or "").lower() or x["place"]
         by_page = {}
         for p in rows:
             if p.get("pagename"):
                 by_page.setdefault(p["pagename"], []).append(compact_placement(p, self.flags))
-        for page, ps in by_page.items():  # a page's list is replaced whole, so corrections replace old rows
-            self.placements[page] = sorted(ps, key=lambda x: (_int(x["place"].split("-")[0], 999), x["team"]))
+        for page, ps in by_page.items():
+            merged = {who(x): x for x in self.placements.get(page, [])}
+            merged.update({who(x): x for x in ps})
+            self.placements[page] = sorted(merged.values(), key=lambda x: (_int(x["place"].split("-")[0], 999), x["team"]))
 
     def mark(self, month, kind, today):
         self.state["months"].setdefault(month, {})[kind] = today.isoformat()
@@ -263,6 +270,13 @@ def run(client, store, today, start, backfill=True, log=print):
 
     if not backfill:
         return done
+    if not store.state.get("placements_merged"):
+        # one-off repair: placings used to be replaced per date window, which dropped part of events that span two
+        # months; fetch every month's placings again (about one request a month, over a few runs)
+        for marks in store.state["months"].values():
+            marks.pop("placements", None)
+        store.state["placements_merged"] = today.isoformat()
+        store.save()
     for month in months_back(today, start):
         first, nxt = month_bounds(month)
         for kind, fn in KINDS:

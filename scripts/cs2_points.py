@@ -9,7 +9,9 @@
     Online events:          75% (the ATP has no online events; LAN results count fully)
     Ranking:                the sum of a roster's best BEST_N results from events that ended in the last 52 weeks.
 
-Only the final placing matters, so Swiss stages, groups, upper and lower brackets need no special handling.
+Only the final placing matters, so Swiss stages, groups, upper and lower brackets need no special handling. A Major's
+stages are one event on Liquipedia (its matches and placings sit on the Major's page); its RMRs and qualifiers lead
+into it and don't score.
 Points belong to the roster that played the event (Valve's three-of-five rule, as everywhere on the site): the team
 at each placing is matched to the roster it fielded in that event's matches.
 """
@@ -57,7 +59,9 @@ def event_results(data, roster_of_match):
     out = []
     for page, rows in data.placements.items():
         t = data.tournaments.get(page) or {}
-        if t.get("tiertype") or not t.get("end"):
+        # qualifiers and Valve's RMR events (the regional stage before a Major) don't score: like ATP qualifying,
+        # they lead into the main event, where the team's placing is counted
+        if t.get("tiertype") or not t.get("end") or t.get("valve") in ("RMR Event", "Major Qualifier"):
             continue
         top = TOP["major"] if t.get("valve") == "Major Championship" else TOP.get(t.get("tier"))
         if not top:
