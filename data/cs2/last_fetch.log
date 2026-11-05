@@ -1,7 +1,62 @@
 refresh: matches since 2026-10-15, events since 2026-09-06
   request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-14]] AND [[date::<2026-11-06]] offset 0
-  HTTP 429 (rate limited), waiting 15 min before retrying
-stopped early (time limit for this run reached); the next run continues from here
-requests used: 1
-84105 matches stored, 5848 tournaments, 3556 events with prize money, 28264 players; 47 of 47 months fetched (2023-01 to 2026-11)
-::notice title=CS2 fetch::stopped early (time limit for this run reached); the next run continues from here; 1 requests; 84105 matches stored, 5848 tournaments, 3556 events with prize money, 28264 players; 47 of 47 months fetched (2023-01 to 2026-11)
+  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-14]] AND [[date::<2026-11-06]] offset 1000
+  request 3: tournament [[enddate::>2026-09-05]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-06]] offset 0
+  request 4: placement [[prizemoney::>0]] AND [[date::>2026-09-05]] AND [[date::<2026-11-06]] offset 0
+  1351 matches, 305 tournaments, 893 prize rows
+  request 5: placement [[prizemoney::>0]] AND [[date::>2026-10-31]] AND [[date::<2026-12-01]] offset 0
+  2026-11 placements: 286
+  request 6: placement [[prizemoney::>0]] AND [[date::>2026-09-30]] AND [[date::<2026-11-01]] offset 0
+  2026-10 placements: 466
+  request 7: placement [[prizemoney::>0]] AND [[date::>2026-08-31]] AND [[date::<2026-10-01]] offset 0
+  2026-09 placements: 406
+  request 8: placement [[prizemoney::>0]] AND [[date::>2026-07-31]] AND [[date::<2026-09-01]] offset 0
+  2026-08 placements: 368
+  request 9: placement [[prizemoney::>0]] AND [[date::>2026-06-30]] AND [[date::<2026-08-01]] offset 0
+  2026-07 placements: 292
+  request 10: placement [[prizemoney::>0]] AND [[date::>2026-05-31]] AND [[date::<2026-07-01]] offset 0
+  2026-06 placements: 334
+  request 11: placement [[prizemoney::>0]] AND [[date::>2026-04-30]] AND [[date::<2026-06-01]] offset 0
+  2026-05 placements: 407
+  request 12: placement [[prizemoney::>0]] AND [[date::>2026-03-31]] AND [[date::<2026-05-01]] offset 0
+  2026-04 placements: 385
+  request 13: placement [[prizemoney::>0]] AND [[date::>2026-02-28]] AND [[date::<2026-04-01]] offset 0
+  2026-03 placements: 427
+  request 14: placement [[prizemoney::>0]] AND [[date::>2026-01-31]] AND [[date::<2026-03-01]] offset 0
+  2026-02 placements: 286
+  request 15: placement [[prizemoney::>0]] AND [[date::>2025-12-31]] AND [[date::<2026-02-01]] offset 0
+  2026-01 placements: 165
+  request 16: placement [[prizemoney::>0]] AND [[date::>2025-11-30]] AND [[date::<2026-01-01]] offset 0
+  2025-12 placements: 344
+  request 17: placement [[prizemoney::>0]] AND [[date::>2025-10-31]] AND [[date::<2025-12-01]] offset 0
+  2025-11 placements: 437
+  request 18: placement [[prizemoney::>0]] AND [[date::>2025-09-30]] AND [[date::<2025-11-01]] offset 0
+  2025-10 placements: 449
+  request 19: placement [[prizemoney::>0]] AND [[date::>2025-08-31]] AND [[date::<2025-10-01]] offset 0
+  2025-09 placements: 407
+  request 20: placement [[prizemoney::>0]] AND [[date::>2025-07-31]] AND [[date::<2025-09-01]] offset 0
+  2025-08 placements: 312
+  request 21: placement [[prizemoney::>0]] AND [[date::>2025-06-30]] AND [[date::<2025-08-01]] offset 0
+  2025-07 placements: 244
+  request 22: placement [[prizemoney::>0]] AND [[date::>2025-05-31]] AND [[date::<2025-07-01]] offset 0
+  2025-06 placements: 386
+  request 23: placement [[prizemoney::>0]] AND [[date::>2025-04-30]] AND [[date::<2025-06-01]] offset 0
+  2025-05 placements: 366
+  request 24: placement [[prizemoney::>0]] AND [[date::>2025-03-31]] AND [[date::<2025-05-01]] offset 0
+  2025-04 placements: 288
+  request 25: placement [[prizemoney::>0]] AND [[date::>2025-02-28]] AND [[date::<2025-04-01]] offset 0
+  2025-03 placements: 339
+  request 26: placement [[prizemoney::>0]] AND [[date::>2025-01-31]] AND [[date::<2025-03-01]] offset 0
+  2025-02 placements: 197
+  request 27: placement [[prizemoney::>0]] AND [[date::>2024-12-31]] AND [[date::<2025-02-01]] offset 0
+  2025-01 placements: 147
+  request 28: placement [[prizemoney::>0]] AND [[date::>2024-11-30]] AND [[date::<2025-01-01]] offset 0
+  2024-12 placements: 437
+  request 29: placement [[prizemoney::>0]] AND [[date::>2024-10-31]] AND [[date::<2024-12-01]] offset 0
+  2024-11 placements: 435
+  request 30: placement [[prizemoney::>0]] AND [[date::>2024-09-30]] AND [[date::<2024-11-01]] offset 0
+  2024-10 placements: 396
+stopped early (request budget for this run used (30)); the next run continues from here
+requests used: 30
+84117 matches stored, 5848 tournaments, 3571 events with prize money, 28274 players; 26 of 47 months fetched (2023-01 to 2026-11)
+::notice title=CS2 fetch::stopped early (request budget for this run used (30)); the next run continues from here; 30 requests; 84117 matches stored, 5848 tournaments, 3571 events with prize money, 28274 players; 26 of 47 months fetched (2023-01 to 2026-11)
