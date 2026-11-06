@@ -34,6 +34,11 @@ def test_event_results_and_ledger():
     assert ("r2", "Big") not in got                                       # 17-19 of 32 is the bottom half
     assert got[("r1", "Small")] == 750 and ("r0", "Small") not in got     # online 75%; 5-6 of 8 scores nothing
     assert got[("r0", "Major")] == 2000 and ("r2", "Qual") not in got     # Majors double; qualifiers don't count
+    # an event with no winner recorded yet (final still to come) scores nothing, not even its finished placings
+    tours["Live"] = {"tier": "1", "tiertype": "", "end": "2026-10-25", "teams": 16, "lan": True, "valve": "Tier 1"}
+    places["Live"] = [{"place": "3-4", "team": "A"}, {"place": "5-8", "team": "B"}]
+    data = ad.Data(matches + [m("Live", "A", "B", 0, 1)], tours, places, {})
+    assert not [r for r in cp.event_results(data, lambda mm, i: f"r{mm['rosters'][i]}") if r[3] == "Live"]
     led = cp.ledger(res, "2026-11-01")
     assert led == {"r0": 1000, "r1": 850}                                 # the 2025 Major is outside 52 weeks
 

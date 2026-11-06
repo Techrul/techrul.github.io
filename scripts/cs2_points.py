@@ -67,6 +67,10 @@ def event_results(data, roster_of_match):
         if not top:
             continue
         starts = [s for s in (_start(r["place"]) for r in rows) if s]
+        # an event scores once it is over: on its end date, and only when the winner is recorded (so a final still
+        # being played on the last day never leaves half an event counted)
+        if 1 not in starts:
+            continue
         field = t.get("teams") or (max(starts) if starts else 0)
         if not field:
             continue
