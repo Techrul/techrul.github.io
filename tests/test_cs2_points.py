@@ -43,6 +43,26 @@ def test_event_results_and_ledger():
     assert led == {"r0": 1000, "r1": 850}                                 # the 2025 Major is outside 52 weeks
 
 
+def test_live():
+    # a 16-team S-Tier LAN, 4 teams left: the 8 who are out keep their places, the 4 still in hold 3rd-4th (40%)
+    tours = {"Live": {"tier": "1", "tiertype": "", "start": "2026-11-02", "end": "2026-11-08", "teams": 16, "lan": True, "valve": "Tier 1"}}
+    names = "ABCDEFGHIJKL"
+    places = {"Live": [{"place": "5-8", "team": n} for n in "EFGH"] + [{"place": "9-12", "team": n} for n in "IJKL"]
+              + [{"place": "1", "team": "TBD"}, {"place": "2", "team": "TBD"}]}  # undecided places don't finish it
+    matches = [dict(m("Live", names[i], names[i + 1], i, i + 1), time=100 - i) for i in range(0, 12, 2)]
+    matches += [dict(m("Live", a, b, names.index(a), names.index(b)), time=200) for a, b in (("A", "B"), ("C", "D"))]
+    data = ad.Data(matches, tours, places, {})
+    rom = lambda mm, i: f"r{mm['rosters'][i]}"
+    assert not cp.event_results(data, rom)                                  # not over: nothing final yet
+    res, events = cp.live_results(data, rom, "2026-11-06")
+    got = {r: pts for r, _d, pts, _p in res}
+    assert events == [{"page": "Live", "name": "Live", "left": 4}]
+    assert all(got[f"r{i}"] == 400 for i in range(4))                     # A-D still in: sure of 3rd-4th
+    assert all(got[f"r{i}"] == 200 for i in range(4, 8))                  # E-H out in 5th-8th
+    assert not any(f"r{i}" in got for i in range(8, 12))                  # 9-12 of 16 is the bottom half
+    assert not cp.live_results(data, rom, "2026-11-20")[1]                 # long past its end date: not live
+
+
 if __name__ == "__main__":
     for name, fn in sorted(globals().items()):
         if name.startswith("test_"):

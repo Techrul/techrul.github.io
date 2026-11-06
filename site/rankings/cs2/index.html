@@ -112,7 +112,8 @@ Site.json('data/rankings.json').then(function(D){
      val:function(p){return p.official_points == null ? '–' : p.official_points.toLocaleString('en-US')}, unc:null}
     ,{id:'points', label:'Points', badge:'ATP-style', color:'var(--points)',
      blurb:'Points for where a team finished, like the ATP ranking: the winner gets 2000 at a Major, 1000 at S-Tier, 500 at A-Tier, 250 at B-Tier; 2nd 65%, 3–4 40%, 5–8 20%, 9–16 10%, 17–32 5%, and only the top half of the field scores. Online events count 75%. A team’s best 10 results from the last 52 weeks.',
-     val:function(p){return p.points == null ? '–' : p.points.toLocaleString('en-US')}, unc:null}
+     val:function(p){var v = state.live ? p.points_live : p.points; return v == null ? '–' : v.toLocaleString('en-US')},
+     unc:function(p){var d = (p.points_live || 0) - (p.points || 0); return state.live && d ? '+' + d.toLocaleString('en-US') + ' live' : ''}}
   ];
   if (!meta.points) MODELS = MODELS.filter(function(m){return m.id !== 'points'});
   if (!meta.vrs) MODELS = MODELS.filter(function(m){return m.id !== 'vrs'});
@@ -121,7 +122,28 @@ Site.json('data/rankings.json').then(function(D){
   var state = {model:'elo', shown:PAGE, q:'', region:'all'};
   try { var r0 = localStorage.getItem('cs2region'); if (REGIONS.some(function(x){return x[0] === r0})) state.region = r0; } catch (e) {}
   var esc = Site.esc;
-  function rankOf(p,id){return id === 'official' ? p.official_rank : p.ranks[Site.sysKey(id)]}
+  // Points: final (finished events only) or live (plus points so far at events still being played, like the ATP's live ranking)
+  var LIVE = (meta.points && meta.points.live) || [];
+  state.live = false;
+  try { state.live = LIVE.length > 0 && localStorage.getItem('cs2live') === '1'; } catch (e) {}
+  function pkey(id){return id === 'points' && state.live ? 'points_live' : Site.sysKey(id)}
+  function rankOf(p,id){return id === 'official' ? p.official_rank : p.ranks[pkey(id)]}
+  function liveToggle(el){
+    el.classList.add('inact'); el.style.visibility = ''; el.setAttribute('aria-hidden', 'false');
+    var evs = LIVE.map(function(e){return e.name + (e.left ? ' (' + e.left + ' left)' : '')}).join(', ');
+    el.innerHTML = '<span class="lab">Events in progress</span><div class="chips" role="group" aria-label="Points from events still being played">' +
+      [['0', 'Final'], ['1', 'Live']].map(function(x){
+        return '<button class="chip" type="button" data-v="' + x[0] + '" aria-pressed="' + ((state.live ? '1' : '0') === x[0] ? 'true' : 'false') + '">' + x[1] + '</button>';
+      }).join('') + '</div><span class="hint">' + Site.stack([
+        'Only finished events count. Live adds ' + esc(evs) + '.',
+        'Adds points so far at ' + esc(evs) + ': teams that are out get their placing, teams still in hold the least they’re sure of.'], state.live ? 1 : 0) + '</span>';
+    el.onclick = function(e){
+      var b = e.target.closest('button'); if (!b || (b.dataset.v === '1') === state.live) return;
+      state.live = b.dataset.v === '1';
+      try { localStorage.setItem('cs2live', state.live ? '1' : '0'); } catch (err) {}
+      state.shown = PAGE; render();
+    };
+  }
   function pos(rank){return (Math.sqrt((Math.min(rank,MAXRANK) - 1) / (MAXRANK - 1)) * 100).toFixed(2) + '%'}
 
   document.getElementById('asof').textContent =
@@ -173,7 +195,8 @@ Site.json('data/rankings.json').then(function(D){
       return '<span class="badge">' + esc(x.badge) + '</span>' + esc(x.blurb) +
         (x.links ? ' ' + x.links.map(function(l){return '<a class="extlink" href="' + l.href + '" target="_blank" rel="noopener">' + esc(l.text) + ' ↗</a>'}).join(' · ') : '');
     }), MODELS.indexOf(m));
-    Site.inactivityToggle(document.getElementById('inact'), function(){ state.shown = PAGE; render(); }, 'When a team is out', m.id === 'glicko' || m.id === 'openskill');
+    if (m.id === 'points' && LIVE.length) liveToggle(document.getElementById('inact'));
+    else Site.inactivityToggle(document.getElementById('inact'), function(){ state.shown = PAGE; render(); }, 'When a team is out', m.id === 'glicko' || m.id === 'openskill');
 
     var list = teams.filter(function(p){return rankOf(p, m.id) != null});
     list.sort(function(a,b){return rankOf(a,m.id) - rankOf(b,m.id)});
@@ -183,7 +206,7 @@ Site.json('data/rankings.json').then(function(D){
     if (q) list = list.filter(function(p){return p.short.toLowerCase().indexOf(q) !== -1 || p.name.toLowerCase().indexOf(q) !== -1 || p.players.some(function(x){return x.toLowerCase().indexOf(q) !== -1})});
 
     var regional = state.region !== 'all';
-    var html = '<div class="row head"><span class="rk">' + (regional ? '#' : '#') + '</span><span>Team' + (regional ? ' (' + esc(state.region) + ')' : '') + '</span><span class="val">' + (m.id === 'official' || m.id === 'vrs' ? 'Points' : 'Rating') + '</span><span class="off">Valve</span><span class="shift" title="Valve’s rank minus this system’s rank. Plus means this system ranks the team higher.">vs Valve</span><span>Rank strip</span></div>';
+    var html = '<div class="row head"><span class="rk">' + (regional ? '#' : '#') + '</span><span>Team' + (regional ? ' (' + esc(state.region) + ')' : '') + '</span><span class="val">' + (m.id === 'official' || m.id === 'vrs' || m.id === 'points' ? 'Points' : 'Rating') + '</span><span class="off">Valve</span><span class="shift" title="Valve’s rank minus this system’s rank. Plus means this system ranks the team higher.">vs Valve</span><span>Rank strip</span></div>';
     var slice = list.slice(0, state.shown);
     if (!slice.length) html += '<div class="empty">No teams match that search.</div>';
     slice.forEach(function(p){

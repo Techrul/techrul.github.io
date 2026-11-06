@@ -139,12 +139,16 @@ def main():
     pt_results = cs2_points.event_results(data, lambda m, i: f"r{m['rosters'][i]}")
     points = cs2_points.ledger(pt_results, as_of.strftime("%Y-%m-%d"))
     points_rank = cs2_points.ranks(points)
+    # live: the same, plus points so far at events still being played (like the ATP's live ranking)
+    live_res, live_events = cs2_points.live_results(data, lambda m, i: f"r{m['rosters'][i]}", as_of.strftime("%Y-%m-%d"))
+    points_live = cs2_points.ledger(pt_results + live_res, as_of.strftime("%Y-%m-%d")) if live_events else points
+    points_live_rank = cs2_points.ranks(points_live)
 
     cutoff = as_of_naive - timedelta(days=args.active_days)
     pool = {p for p in last_match if last_match[p] >= cutoff and count[p] >= args.min_matches}
     rated = set(pool)
     extra = ({r for r, v in vrs.items() if v["rank"] <= 100} | {r for r, o in official.items() if o["rank"] <= 100}
-             | {r for r, k in points_rank.items() if k <= 100})
+             | {r for r, k in points_rank.items() if k <= 100} | {r for r, k in points_live_rank.items() if k <= 100})
     ranks = {
         "elo": rank_map(pool, elo), "glicko": rank_map(pool, g2_score), "openskill": rank_map(pool, osk_score),
         "glicko_pure": rank_map(pool, g2p_score), "openskill_pure": rank_map(pool, oskp_score),
@@ -192,6 +196,9 @@ def main():
         if p in points:
             t["points"] = points[p]
             t["ranks"]["points"] = points_rank[p]
+        if p in points_live:
+            t["points_live"] = points_live[p]
+            t["ranks"]["points_live"] = points_live_rank[p]
         if p in official:
             o = official[p]
             t.update({"official_rank": o["rank"], "official_points": o["points"], "official_name": o["name"]})
@@ -211,7 +218,8 @@ def main():
         "listing": {"min_matches": args.min_matches, "active_days": args.active_days},
         "official": official_meta, "vrs": vrs_meta,
         "points": {"top": cs2_points.TOP, "bands": cs2_points.BANDS, "online": cs2_points.ONLINE, "best": cs2_points.BEST_N,
-                   "window_days": cs2_points.WINDOW_DAYS, "ranked": len(points)},
+                   "window_days": cs2_points.WINDOW_DAYS, "ranked": len(points),
+                   "live": live_events},
         "backtest": {"window": f"last {args.backtest_months} months",
                      "elo": bt_summary(bt["elo"]), "glicko": bt_summary(bt["glicko"]),
                      "openskill": bt_summary(bt["openskill"]), "glicko_pure": bt_summary(btp["glicko"]),
