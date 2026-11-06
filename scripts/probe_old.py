@@ -28,3 +28,23 @@ for first, nxt in ((date(2018, 9, 1), date(2018, 10, 1)), (date(2016, 6, 1), dat
     except lp_api.StopRun as e:
         note(f"{first:%Y-%m}", f"stopped: {e}"); break
 note("probe", f"{c.sent} requests used")
+
+# ---- where could the official ATP ranking come from now? (TML's weekly files stopped in Jan 2026)
+import json as _j, urllib.request as _u
+for name, url in (("espn", "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings"),
+                  ("espn-core", "https://sports.core.api.espn.com/v2/sports/tennis/leagues/atp/rankings"),
+                  ("atptour", "https://www.atptour.com/en/rankings/singles?rankRange=1-200"),
+                  ("atp-app", "https://app.atptour.com/api/v2/gateway/rankings/singles?fromRank=1&toRank=200")):
+    try:
+        req = _u.Request(url, headers={"User-Agent": "techrul.github.io rankings (github.com/Techrul/techrul.github.io)", "Accept": "application/json,text/html"})
+        with _u.urlopen(req, timeout=30) as r:
+            body = r.read()
+        txt = body.decode("utf-8", "replace")
+        try:
+            d = _j.loads(txt)
+            summ = f"JSON keys {list(d)[:8]}; " + txt[:600].replace("\n", " ")
+        except ValueError:
+            summ = f"HTML {len(txt)} bytes; has 'Sinner': {'Sinner' in txt}; " + txt[:200].replace("\n", " ")
+        note(f"source {name}", f"HTTP {r.status}; {summ}")
+    except Exception as e:
+        note(f"source {name}", f"failed: {e}")
