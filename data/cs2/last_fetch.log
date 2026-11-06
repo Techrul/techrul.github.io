@@ -3,53 +3,8 @@ refresh: matches since 2026-10-16, events since 2026-09-07
   request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-15]] AND [[date::<2026-11-07]] offset 1000
   request 3: tournament [[enddate::>2026-09-06]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-07]] offset 0
   request 4: placement [[prizemoney::>0]] AND [[date::>2026-09-06]] AND [[date::<2026-11-07]] offset 0
-  1301 matches, 293 tournaments, 901 prize rows
-  request 5: tournament [[startdate::>2026-11-06]] AND [[liquipediatier::1]] offset 0
-  request 6: tournament [[startdate::>2026-11-06]] AND [[liquipediatier::2]] offset 0
-  upcoming S- and A-tier tournaments: 43
-  request 7: placement [[prizemoney::>0]] AND [[date::>2024-08-31]] AND [[date::<2024-10-01]] offset 0
-  2024-09 placements: 389
-  request 8: placement [[prizemoney::>0]] AND [[date::>2024-07-31]] AND [[date::<2024-09-01]] offset 0
-  2024-08 placements: 321
-  request 9: placement [[prizemoney::>0]] AND [[date::>2024-06-30]] AND [[date::<2024-08-01]] offset 0
-  2024-07 placements: 238
-  request 10: placement [[prizemoney::>0]] AND [[date::>2024-05-31]] AND [[date::<2024-07-01]] offset 0
-  2024-06 placements: 542
-  request 11: placement [[prizemoney::>0]] AND [[date::>2024-04-30]] AND [[date::<2024-06-01]] offset 0
-  2024-05 placements: 415
-  request 12: placement [[prizemoney::>0]] AND [[date::>2024-03-31]] AND [[date::<2024-05-01]] offset 0
-  2024-04 placements: 354
-  request 13: placement [[prizemoney::>0]] AND [[date::>2024-02-29]] AND [[date::<2024-04-01]] offset 0
-  2024-03 placements: 387
-  request 14: placement [[prizemoney::>0]] AND [[date::>2024-01-31]] AND [[date::<2024-03-01]] offset 0
-  2024-02 placements: 256
-  request 15: placement [[prizemoney::>0]] AND [[date::>2023-12-31]] AND [[date::<2024-02-01]] offset 0
-  2024-01 placements: 180
-  request 16: placement [[prizemoney::>0]] AND [[date::>2023-11-30]] AND [[date::<2024-01-01]] offset 0
-  2023-12 placements: 548
-  request 17: placement [[prizemoney::>0]] AND [[date::>2023-10-31]] AND [[date::<2023-12-01]] offset 0
-  2023-11 placements: 498
-  request 18: placement [[prizemoney::>0]] AND [[date::>2023-09-30]] AND [[date::<2023-11-01]] offset 0
-  2023-10 placements: 531
-  request 19: placement [[prizemoney::>0]] AND [[date::>2023-08-31]] AND [[date::<2023-10-01]] offset 0
-  2023-09 placements: 308
-  request 20: placement [[prizemoney::>0]] AND [[date::>2023-07-31]] AND [[date::<2023-09-01]] offset 0
-  2023-08 placements: 329
-  request 21: placement [[prizemoney::>0]] AND [[date::>2023-06-30]] AND [[date::<2023-08-01]] offset 0
-  2023-07 placements: 336
-  request 22: placement [[prizemoney::>0]] AND [[date::>2023-05-31]] AND [[date::<2023-07-01]] offset 0
-  2023-06 placements: 506
-  request 23: placement [[prizemoney::>0]] AND [[date::>2023-04-30]] AND [[date::<2023-06-01]] offset 0
-  2023-05 placements: 448
-  request 24: placement [[prizemoney::>0]] AND [[date::>2023-03-31]] AND [[date::<2023-05-01]] offset 0
-  2023-04 placements: 426
-  request 25: placement [[prizemoney::>0]] AND [[date::>2023-02-28]] AND [[date::<2023-04-01]] offset 0
-  2023-03 placements: 481
-  request 26: placement [[prizemoney::>0]] AND [[date::>2023-01-31]] AND [[date::<2023-03-01]] offset 0
-  2023-02 placements: 360
-  request 27: placement [[prizemoney::>0]] AND [[date::>2022-12-31]] AND [[date::<2023-02-01]] offset 0
-  2023-01 placements: 265
+  1305 matches, 293 tournaments, 901 prize rows
 finished: everything up to date
-requests used: 27
-84119 matches stored, 5849 tournaments, 3572 events with prize money, 28274 players; 47 of 47 months fetched (2023-01 to 2026-11)
-::notice title=CS2 fetch::finished: everything up to date; 27 requests; 84119 matches stored, 5849 tournaments, 3572 events with prize money, 28274 players; 47 of 47 months fetched (2023-01 to 2026-11)
+requests used: 4
+84123 matches stored, 5849 tournaments, 3572 events with prize money, 28274 players; 47 of 47 months fetched (2023-01 to 2026-11)
+::notice title=CS2 fetch::finished: everything up to date; 4 requests; 84123 matches stored, 5849 tournaments, 3572 events with prize money, 28274 players; 47 of 47 months fetched (2023-01 to 2026-11)
