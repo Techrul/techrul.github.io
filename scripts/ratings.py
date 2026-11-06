@@ -19,7 +19,7 @@ import json
 import os
 import re
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
 
 import engines  # noqa: E402
@@ -239,6 +239,13 @@ def main():
     def iso(pid):
         return IOC_TO_ISO.get((iocs.get(pid) or "").upper())
     official_info, official = official_ranking(all_rows, load_weekly_rankings(args.rankings), as_of, args.official_mode)
+    if os.environ.get("GITHUB_ACTIONS"):  # readable on the run's page without opening the log
+        by_level = Counter(r["tourney_level"] for r in all_rows if r["_date"] >= as_of - timedelta(days=60))
+        pts_rows = [r["_date"] for r in all_rows if (r.get("winner_rank_points") or "").isdigit()]
+        top = sorted(official.values())[:12]
+        print(f"::notice title=Official ranking::{official_info}; newest tour event {as_of:%Y-%m-%d}; newest row with ranking "
+              f"points {max(pts_rows):%Y-%m-%d}; levels in last 60 days {dict(by_level)}; top: "
+              + ", ".join(f"{rk} {name} {pts}" for rk, pts, name in top))
 
     matches = [r for r in all_rows if r["tourney_level"] in TOUR_LEVELS]
     backtest_from = as_of - timedelta(days=30 * args.backtest_months)
