@@ -549,7 +549,9 @@ def main():
     # ---------------------------------------------------------------- titles
     titles, finals_lost = defaultdict(list), Counter()
     for page, e in events.items():
-        if e["champion"] and e["tier"] in TITLE_TIERS and e["tiertype"] == "":
+        # RMRs and Major qualifiers are qualifying stages, not trophies (they don't score points either)
+        if (e["champion"] and e["tier"] in TITLE_TIERS and e["tiertype"] == ""
+                and e["valve"] not in ("RMR Event", "Major Qualifier")):
             item = {"year": int(e["start"][:4]), "date": e["start"], "name": e["name"], "tier": e["tier"], "valve": e["valve"],
                     "key": series_key(page) if page in tracked else None, "page": page}
             titles[e["champion"]].append(item)
