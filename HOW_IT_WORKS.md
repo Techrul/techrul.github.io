@@ -272,8 +272,9 @@ How it differs from tennis, and why:
   50 correlate 0.92 to 0.99 and the #1 always matches.
 - **Points (ATP-style)** (`scripts/cs2_points.py`): points for final placings at Liquipedia S-, A- and B-tier main
   events, like the ATP ranking. The winner gets 2000 at a Major (Valve's "Major Championship"), 1000 at S-Tier, 500 at
-  A-Tier, 250 at B-Tier; 2nd 65%, 3-4 40%, 5-8 20%, 9-16 10%, 17-32 5%. A range counts by where it starts (9-11 and
-  12-14 are 9-16), and only places in the top half of the field score, so bigger events pay deeper. Only the final
+  A-Tier, 250 at B-Tier; 2nd 65%, 3-4 40%, 5-8 20%, 9-16 10%, 17-24 5%, 25-32 2.5%. A range counts by where it starts
+  (9-11 and 12-14 are 9-16), and only places in the top half of the field score, so bigger events pay deeper. Majors
+  are the exception: every team scores, so a Stage 2 exit gets 100 and a Stage 1 exit 50. Only the final
   placing is used, so Swiss stages, groups and double elimination need nothing special. Online events count 75%.
   A roster's ranking is its best 10 results from events that ended in the last 52 weeks; the team at each placing is
   matched to the roster it fielded in that event. In the prediction table it is "more points wins" (no probabilities).

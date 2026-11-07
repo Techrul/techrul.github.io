@@ -111,7 +111,7 @@ Site.json('data/rankings.json').then(function(D){
      links:[{href:'https://github.com/ValveSoftware/counter-strike_regional_standings', text:'Valve’s standings on GitHub'}],
      val:function(p){return p.official_points == null ? '–' : p.official_points.toLocaleString('en-US')}, unc:null}
     ,{id:'points', label:'Points', badge:'ATP-style', color:'var(--points)',
-     blurb:'Points for where a team finished, like the ATP ranking: the winner gets 2000 at a Major, 1000 at S-Tier, 500 at A-Tier, 250 at B-Tier; 2nd 65%, 3–4 40%, 5–8 20%, 9–16 10%, 17–32 5%, and only the top half of the field scores. Online events count 75%. A team’s best 10 results from the last 52 weeks.',
+     blurb:'Points for where a team finished, like the ATP ranking: the winner gets 2000 at a Major, 1000 at S-Tier, 500 at A-Tier, 250 at B-Tier; 2nd 65%, 3–4 40%, 5–8 20%, 9–16 10%, 17–24 5%, 25–32 2.5%, and only the top half of the field scores (at a Major, everyone does). Online events count 75%. A team’s best 10 results from the last 52 weeks.',
      val:function(p){var v = state.live ? p.points_live : p.points; return v == null ? '–' : v.toLocaleString('en-US')},
      unc:function(p){var d = (p.points_live || 0) - (p.points || 0); return state.live && d ? '+' + d.toLocaleString('en-US') + ' live' : ''}}
   ];
