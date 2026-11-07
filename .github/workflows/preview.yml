@@ -1,0 +1,56 @@
+# Publishes the dev branch's latest build at techrul.github.io/preview/, next to the live site.
+#
+# A test run on dev (update.yml) uploads its built site to the "preview" release and starts this workflow on main.
+# This takes the live site as main's last update built it (kept in the Actions cache), puts the preview under
+# /preview/, and deploys both. Main's own updates (every 3 hours) carry the latest preview along too.
+name: Deploy preview
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: The live site, from main's last update
+        id: site
+        uses: actions/cache/restore@v5
+        with:
+          path: docs
+          key: site-none
+          restore-keys: site-
+
+      # Without the live site this would publish only the preview: stop and leave the site as it is.
+      - name: Check the live site is there
+        run: test -f docs/index.html || { echo "::error::No cached build of the live site yet; run a main update first"; exit 1; }
+
+      - name: Add the preview
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rm -rf docs/preview
+          gh release download preview --repo "$GITHUB_REPOSITORY" --pattern preview-site.tar.gz --dir /tmp
+          mkdir -p docs/preview && tar -xzf /tmp/preview-site.tar.gz -C docs/preview
+          echo "::notice title=Preview::$(cat docs/preview/PREVIEW.txt 2>/dev/null) is at /preview/"
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
