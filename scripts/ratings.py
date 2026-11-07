@@ -19,6 +19,7 @@ import json
 import os
 import re
 import sys
+import unicodedata
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
 
@@ -156,6 +157,49 @@ def load_weekly_rankings(folder):
     return dict(out)
 
 
+def _norm_name(s):
+    s = unicodedata.normalize("NFKD", s or "").encode("ascii", "ignore").decode().lower()
+    return " ".join(re.sub(r"[^a-z ]", " ", s).split())
+
+
+def load_espn_rankings(folder, all_rows):
+    """Official rankings saved by fetch_atp_espn.py (from 2026, after Tennismylife's files stopped), in the same shape as
+    load_weekly_rankings. ESPN's names are matched to player ids by name (accents, hyphens and case ignored), the most
+    recently active player winning a tie; a player with no matches here keeps an "espn:<id>" id."""
+    if not folder or not os.path.isdir(folder):
+        return {}
+    last_seen, by_name, by_initial, by_words = {}, {}, defaultdict(set), {}
+    for r in all_rows:  # date order: the latest name and date per player
+        for side in ("winner", "loser"):
+            last_seen[r[f"{side}_id"]] = (r["_date"], r[f"{side}_name"])
+    for pid, (d, name) in sorted(last_seen.items(), key=lambda x: x[1][0]):
+        n = _norm_name(name)
+        by_name[n] = pid
+        parts = n.split()
+        if len(parts) >= 2:
+            by_initial[(parts[0][0], parts[-1])].add(pid)
+            by_words[pid] = set(parts)
+    out = defaultdict(list)
+    for path in sorted(glob.glob(os.path.join(folder, "*.csv"))):
+        with open(path, newline="", encoding="utf-8") as fh:
+            for r in csv.DictReader(fh):
+                n = _norm_name(r["name"])
+                pid = by_name.get(n)
+                if pid is None:  # "Felix Auger Aliassime" / "Felix Auger-Aliassime" are caught above; this catches
+                    parts = n.split()  # shortened first names: one player with that initial and surname
+                    cands = by_initial.get((parts[0][0], parts[-1])) if len(parts) >= 2 else None
+                    if not cands or len(cands) != 1:
+                        # names in another order ("Wu Yibing" / "Yibing Wu") or with a name more or less
+                        # ("Coleman Wong" / "Chak Lam Coleman Wong", "Max Alcala Gurri" / "Maximo Alcala Gurri"): one
+                        # player sharing 2+ words, with all of the shorter name or the same surname
+                        mine = set(parts)
+                        cands = {p for p, words in by_words.items()
+                                 if len(mine & words) >= 2 and (mine <= words or words <= mine or parts[-1] in words)}
+                    pid = next(iter(cands)) if cands and len(cands) == 1 else f"espn:{r['espn_id']}"
+                out[datetime.strptime(r["date"], "%Y-%m-%d")].append((int(r["rank"]), pid, r["name"], int(r["points"])))
+    return dict(out)
+
+
 def official_ranking(all_rows, weekly, as_of, mode="auto", max_age_days=10, top_n=150, ledger_cache=None):
     """Return (info, {player_id: (rank, points, name)}).
 
@@ -214,6 +258,7 @@ def main():
     ap.add_argument("--active-days", type=int, default=180)
     ap.add_argument("--backtest-months", type=int, default=12)
     ap.add_argument("--rankings", default=None, help="folder with TML weekly ranking CSVs (optional)")
+    ap.add_argument("--espn", default=None, help="folder with rankings saved by fetch_atp_espn.py (optional)")
     ap.add_argument("--official-mode", choices=["auto", "weekly", "estimated"], default="auto")
     ap.add_argument("--vrs", default=None, help="output of scripts/vrs_tennis.py (optional)")
     args = ap.parse_args()
@@ -238,14 +283,16 @@ def main():
 
     def iso(pid):
         return IOC_TO_ISO.get((iocs.get(pid) or "").upper())
-    official_info, official = official_ranking(all_rows, load_weekly_rankings(args.rankings), as_of, args.official_mode)
+    weekly = {**load_espn_rankings(args.espn, all_rows), **load_weekly_rankings(args.rankings)}
+    official_info, official = official_ranking(all_rows, weekly, as_of, args.official_mode)
     if os.environ.get("GITHUB_ACTIONS"):  # readable on the run's page without opening the log
         by_level = Counter(r["tourney_level"] for r in all_rows if r["_date"] >= as_of - timedelta(days=60))
         pts_rows = [r["_date"] for r in all_rows if (r.get("winner_rank_points") or "").isdigit()]
         top = sorted(official.values())[:12]
         print(f"::notice title=Official ranking::{official_info}; newest tour event {as_of:%Y-%m-%d}; newest row with ranking "
               f"points {max(pts_rows):%Y-%m-%d}; levels in last 60 days {dict(by_level)}; top: "
-              + ", ".join(f"{rk} {name} {pts}" for rk, pts, name in top))
+              + ", ".join(f"{rk} {name} {pts}" for rk, pts, name in top)
+              + f"; names not matched to a player: {[v[2] for k, v in official.items() if str(k).startswith('espn:')][:15]}")
 
     matches = [r for r in all_rows if r["tourney_level"] in TOUR_LEVELS]
     backtest_from = as_of - timedelta(days=30 * args.backtest_months)

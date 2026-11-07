@@ -173,7 +173,8 @@
         series: SYSTEMS.map(function (s) {
           return { key: s.key, label: s.label, color: s.color,
             values: idx.map(function (w) { return rows[w] ? rows[w][colOf(s)] : null; }),
-            dashFrom: s.key === "official" && estFrom != null ? Math.max(0, estFrom - start) : null };
+            dashFrom: s.key === "official" && estFrom != null ? Math.max(0, estFrom - start) : null,
+            dashTo: s.key === "official" && estFrom != null && meta.official_estimated_to != null ? meta.official_estimated_to - start : null };
         })
       });
       var elo = idx.map(function (w) { return rows[w] ? rows[w][4] : null; });
