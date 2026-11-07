@@ -168,7 +168,7 @@ def load_espn_rankings(folder, all_rows):
     recently active player winning a tie; a player with no matches here keeps an "espn:<id>" id."""
     if not folder or not os.path.isdir(folder):
         return {}
-    last_seen, by_name, by_initial = {}, {}, defaultdict(set)
+    last_seen, by_name, by_initial, by_words = {}, {}, defaultdict(set), {}
     for r in all_rows:  # date order: the latest name and date per player
         for side in ("winner", "loser"):
             last_seen[r[f"{side}_id"]] = (r["_date"], r[f"{side}_name"])
@@ -178,6 +178,7 @@ def load_espn_rankings(folder, all_rows):
         parts = n.split()
         if len(parts) >= 2:
             by_initial[(parts[0][0], parts[-1])].add(pid)
+            by_words[pid] = set(parts)
     out = defaultdict(list)
     for path in sorted(glob.glob(os.path.join(folder, "*.csv"))):
         with open(path, newline="", encoding="utf-8") as fh:
@@ -187,6 +188,13 @@ def load_espn_rankings(folder, all_rows):
                 if pid is None:  # "Felix Auger Aliassime" / "Felix Auger-Aliassime" are caught above; this catches
                     parts = n.split()  # shortened first names: one player with that initial and surname
                     cands = by_initial.get((parts[0][0], parts[-1])) if len(parts) >= 2 else None
+                    if not cands or len(cands) != 1:
+                        # names in another order ("Wu Yibing" / "Yibing Wu") or with a name more or less
+                        # ("Coleman Wong" / "Chak Lam Coleman Wong", "Max Alcala Gurri" / "Maximo Alcala Gurri"): one
+                        # player sharing 2+ words, with all of the shorter name or the same surname
+                        mine = set(parts)
+                        cands = {p for p, words in by_words.items()
+                                 if len(mine & words) >= 2 and (mine <= words or words <= mine or parts[-1] in words)}
                     pid = next(iter(cands)) if cands and len(cands) == 1 else f"espn:{r['espn_id']}"
                 out[datetime.strptime(r["date"], "%Y-%m-%d")].append((int(r["rank"]), pid, r["name"], int(r["points"])))
     return dict(out)
