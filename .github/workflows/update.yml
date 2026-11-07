@@ -76,6 +76,12 @@ jobs:
           CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
         run: python scripts/fetch_tml.py --start-year 2015 --raw data/raw
 
+      # The official ranking: Tennismylife's weekly files stopped in January 2026, so from then on it comes from
+      # ESPN's public feed. Each new weekly ranking is kept in data/atp_rankings (committed below).
+      - name: Official ATP ranking (ESPN)
+        continue-on-error: true
+        run: python scripts/fetch_atp_espn.py --out data/atp_rankings
+
       - name: Look up prize money for new events (Wikipedia)
         continue-on-error: true
         env:
@@ -97,10 +103,10 @@ jobs:
           python scripts/vrs_tennis.py --raw data/raw --prize data/prize_money.json --valve vendor/vrs --out docs/rankings/tennis/data/vrs.json
 
       - name: Compute ratings
-        run: python scripts/ratings.py --raw data/raw --rankings data/rankings --vrs docs/rankings/tennis/data/vrs.json --out docs/rankings/tennis/data/rankings.json --start-year 2015
+        run: python scripts/ratings.py --raw data/raw --rankings data/rankings --espn data/atp_rankings --vrs docs/rankings/tennis/data/vrs.json --out docs/rankings/tennis/data/rankings.json --start-year 2015
 
       - name: Build history, profiles, records and tournaments
-        run: python scripts/site_data.py --raw data/raw --rankings data/rankings --prize data/prize_money.json --valve vendor/vrs --current docs/rankings/tennis/data/rankings.json --out docs/rankings/tennis/data --start-year 2015
+        run: python scripts/site_data.py --raw data/raw --rankings data/rankings --espn data/atp_rankings --prize data/prize_money.json --valve vendor/vrs --current docs/rankings/tennis/data/rankings.json --out docs/rankings/tennis/data --start-year 2015
 
       # Photos listed in data/trophies.json (Wikimedia Commons), downloaded once and credited.
       - name: Trophy photos
@@ -136,15 +142,15 @@ jobs:
 
       # Liquipedia's data is CC BY-SA: keeping it in the repo (not only in the Actions cache, which is dropped after
       # 7 days unused) means a lost cache never means fetching everything again.
-      - name: Save CS2 data
+      - name: Save CS2 data and ATP rankings
         if: github.ref == 'refs/heads/main'
         continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/cs2
-          git diff --cached --quiet && { echo "no new CS2 data"; exit 0; }
-          git commit -m "CS2 data from Liquipedia"
+          git add data/cs2 data/atp_rankings
+          git diff --cached --quiet && { echo "no new data"; exit 0; }
+          git commit -m "CS2 data from Liquipedia, ATP ranking from ESPN"
           # --autostash: the cache step above replaces data/prize_money.json, which would otherwise block the pull
           git pull --rebase --autostash -q origin main && git push
 

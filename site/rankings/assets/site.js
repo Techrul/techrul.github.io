@@ -321,7 +321,9 @@
   S.pct = function (p) { return p == null ? "–" : p < 0.001 ? "<0.1%" : (p * 100).toFixed(1) + "%"; };
 
   // ---------------------------------------------------------------- line chart
-  // opts: { dates: [iso...], series: [{key, label, color, values: [..|null], dashFrom: index}], scale: "rank"|"linear",
+  // a stretch drawn dashed (estimated values): from dashFrom, up to dashTo if given
+  S.inDash = function (ser, i) { return ser.dashFrom != null && i >= ser.dashFrom && (ser.dashTo == null || i <= ser.dashTo); };
+  // opts: { dates: [iso...], series: [{key, label, color, values: [..|null], dashFrom: index, dashTo: index}], scale: "rank"|"linear",
   //         height, fmt(v), mark: {index, label} }
   var RANK_TICKS = [1, 2, 5, 10, 20, 50, 100, 200];
   S.lineChart = function (el, opts) {
@@ -393,10 +395,10 @@
       vis.forEach(function (ser) {
         var solid = "", dash = "", pen = false, dpen = false;
         ser.values.forEach(function (v, i) {
-          var dashed = ser.dashFrom != null && i >= ser.dashFrom;
+          var dashed = S.inDash(ser, i);
           if (v == null) { pen = false; dpen = false; return; }
           var pt = X(xs[i]).toFixed(1) + "," + Y(v).toFixed(1);
-          if (!dashed || i === ser.dashFrom) { solid += (pen ? "L" : "M") + pt; pen = true; }
+          if (!dashed || i === ser.dashFrom || i === ser.dashTo) { solid += (pen ? "L" : "M") + pt; pen = true; } else pen = false;
           if (dashed) { dash += (dpen ? "L" : "M") + pt; dpen = true; }
         });
         s += '<path d="' + solid + '" style="stroke:var(--' + ser.color + ')"/>';
@@ -439,7 +441,7 @@
         c.setAttribute("class", "dot"); c.setAttribute("cx", cx); c.setAttribute("cy", geom.Y(v)); c.setAttribute("r", 4);
         c.style.fill = "var(--" + ser.color + ")";
         g.appendChild(c);
-        rows += '<div><span><i style="background:var(--' + ser.color + ')"></i>' + S.esc(ser.label) + (ser.dashFrom != null && i >= ser.dashFrom ? " (est.)" : "") + "</span><b>" + fmt(v) + "</b></div>";
+        rows += '<div><span><i style="background:var(--' + ser.color + ')"></i>' + S.esc(ser.label) + (S.inDash(ser, i) ? " (est.)" : "") + "</span><b>" + fmt(v) + "</b></div>";
       });
       if (!rows) { tip.hidden = true; return; }
       tip.innerHTML = "<b>" + S.date(opts.dates[i]) + "</b>" + rows;

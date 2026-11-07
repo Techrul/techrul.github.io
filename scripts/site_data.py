@@ -59,6 +59,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--raw", default="data/raw")
     ap.add_argument("--rankings", default="data/rankings")
+    ap.add_argument("--espn", default="data/atp_rankings", help="official rankings saved by fetch_atp_espn.py")
     ap.add_argument("--prize", default="data/prize_money.json")
     ap.add_argument("--valve", default=None)
     ap.add_argument("--current", default="docs/rankings/tennis/data/rankings.json")
@@ -221,23 +222,28 @@ def main():
     # published (the ATP publishes none in the December off-season), so it is carried forward.
     # After the last published file, the same-date estimate from ratings.official_ranking is used.
     official_hist = defaultdict(dict)  # pid -> week -> rank
-    weekly = ratings.load_weekly_rankings(args.rankings)
+    # Tennismylife's files up to January 2026, then the rankings saved from ESPN (fetch_atp_espn.py)
+    weekly = {**ratings.load_espn_rankings(args.espn, rows), **ratings.load_weekly_rankings(args.rankings)}
     published = sorted(d for d in weekly if d >= history_from - timedelta(days=7))
     last_published = published[-1] if published else None
     from datetime import datetime as _dt
     week_dates = [_dt.strptime(d, "%Y-%m-%d") for d in weeks]
-    estimated_from = None
+    estimated_from = estimated_to = None
     ledger_cache = {}
     j = -1
     for w, day in enumerate(week_dates):
         while j + 1 < len(published) and published[j + 1] <= day:
             j += 1
-        if last_published and day <= last_published + timedelta(days=7) and j >= 0:
+        # a ranking stays in force for a week, or through the December/January off-season (no rankings published);
+        # longer gaps (Tennismylife's files stopped in January 2026, ESPN's start later) are estimated
+        gap = (day - published[j]).days if j >= 0 else None
+        if gap is not None and (gap <= 7 or (day.month in (12, 1) and gap <= 42)):
             snap = sorted(weekly[published[j]])
             entries = [(rk, pid) for rk, pid, _n, _p in snap]
         else:
             if estimated_from is None:
                 estimated_from = w
+            estimated_to = w
             _, est = ratings.official_ranking(rows, {}, day, "estimated", top_n=HISTORY_TOP, ledger_cache=ledger_cache)
             entries = sorted((rk, pid) for pid, (rk, _pts, _n) in est.items())
         if not entries:
@@ -615,6 +621,7 @@ def main():
     dump("records.json", records)
     dump("tournaments.json", {"as_of": last_day.strftime("%Y-%m-%d"), "tournaments": tournaments})
     dump("history_meta.json", {"weeks": weeks, "official_estimated_from": estimated_from,
+                                      "official_estimated_to": estimated_to if estimated_to != len(weeks) - 1 else None,
                                # coverage of the match data, shown on player pages so title counts are not mistaken for career totals
                                "matches_from": tour[0]["_date"].strftime("%Y-%m-%d"), "matches_to": tour[-1]["_date"].strftime("%Y-%m-%d")})
     dump("backtest.json", backtest)
