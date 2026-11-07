@@ -148,8 +148,8 @@ Site.json('data/rankings.json').then(function(D){
 
   document.getElementById('asof').textContent =
     'Match data through ' + Site.date(meta.data_as_of) + ', ' + meta.matches_used.toLocaleString('en-US') +
-    ' matches since January 2023. Updated ' + meta.generated + '.';
-  document.getElementById('rules').textContent = 'Ratings use every finished match on Liquipedia with five players a side (all tiers, Valve-ranked or not; no showmatches), counting a series as one result. Walkovers are skipped. 2023 only warms the models up. Teams need ' +
+    ' matches since January 2016 (CS:GO until CS2 came out in September 2023). Updated ' + meta.generated + '.';
+  document.getElementById('rules').textContent = 'Ratings use every finished match on Liquipedia with five players a side (all tiers, Valve-ranked or not; no showmatches), counting a series as one result. Walkovers are skipped. 2016 only warms the models up. Teams need ' +
     meta.listing.min_matches + ' matches and one in the last ' + meta.listing.active_days + ' days to be rated; teams in the top 100 of VRS or Valve’s list are shown either way. Regions follow Valve’s rule: where most of a team’s players come from.';
 
   var tabs = document.getElementById('tabs');

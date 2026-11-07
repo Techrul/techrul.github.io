@@ -8,7 +8,7 @@ Liquipedia data) and Valve's official standings, for the same rosters.
   share 3 of them. All systems rank the same rosters.
 - Skill models: every finished match with five players a side and a winner (Liquipedia tiers 1-4, ranked by
   Valve or not; showmatches are never fetched), walkovers left out. Glicko-2 rating periods are weeks.
-  History starts Jan 2023; 2023 only warms the models up.
+  History starts Jan 2016 (CS:GO until Sep 2023); 2016 only warms the models up.
 - Listed: rosters with --min-matches matches and one in the last --active-days days, plus any roster in the top
   100 of our VRS or of Valve's standings.
 - Official: Valve's latest published global standings (its repository, live/<year>/standings_global_<date>.md),

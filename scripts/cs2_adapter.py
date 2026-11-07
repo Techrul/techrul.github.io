@@ -31,7 +31,7 @@ class Data:
         self.matches, self.tournaments, self.placements, self.flags = matches, tournaments, placements, flags
 
 
-DATA_FROM = "2023-01-01"
+DATA_FROM = "2016-01-01"  # CS:GO until CS2 came out on 27 Sep 2023
 
 
 def load(data_dir="data/cs2"):
@@ -39,7 +39,7 @@ def load(data_dir="data/cs2"):
     for path in sorted(glob.glob(os.path.join(data_dir, "matches", "*.jsonl"))):
         with open(path, encoding="utf-8") as fh:
             matches.extend(json.loads(line) for line in fh if line.strip())
-    matches = [m for m in matches if m["date"] >= DATA_FROM]  # Liquipedia's Jan 2023 query also returns a few New Year's Eve games
+    matches = [m for m in matches if m["date"] >= DATA_FROM]  # Liquipedia's first month's query also returns a few New Year's Eve games
     matches.sort(key=lambda m: (m["time"], m["id"]))
 
     def read(name):

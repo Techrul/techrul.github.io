@@ -109,7 +109,7 @@ a.tit:hover{border-color:var(--ink)}
     var cab = TIERS.filter(function (k) { return byTier[k]; }).map(function (k) {
       var list = p.titles.filter(function (t) { return t.tier === k; });
       return '<div class="trow"><div class="tl">' + S.cs2tier(k) + '</div><div class="tt">' + list.map(function (t) {
-        var inner = (/major/i.test(t.valve) ? S.cs2tier(k, t.valve) + " " : "") + "<b>" + t.year + "</b> " + S.esc(noYear(t.name, t.year));
+        var inner = (/major/i.test(t.valve) ? S.cs2tier(k, t.valve) + " " : "") + "<b>" + t.year + "</b> " + S.esc(noYear(t.name, t.year)) + (S.csgo(t.date) ? ' <small class="muted">CS:GO</small>' : "");
         return t.key ? '<a class="tit" href="event.html?key=' + encodeURIComponent(t.key) + '">' + inner + "</a>" : '<span class="tit">' + inner + "</span>";
       }).join("") + "</div></div>";
     }).join("");

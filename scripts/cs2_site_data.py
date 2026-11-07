@@ -14,7 +14,7 @@ Writes into --out:
     h2h.json            meetings between listed teams
     history_meta.json   the weekly dates the history arrays refer to
 
-As for tennis: history starts a year after the first match (2023 only warms the models up), records only cover
+As for tennis: history starts a year after the first match (2016 only warms the models up), records only cover
 the data on the site, and "official" is Valve's published standings, each in force until the next one.
 Match data: Liquipedia, CC BY-SA 3.0; the output is shared under the same licence.
 """

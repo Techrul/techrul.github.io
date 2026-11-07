@@ -80,6 +80,7 @@ section{margin-top:36px}
 .chip,.theme,.legend button,.tab,.more,.nav a{transition:border-color .12s,background-color .12s,color .12s}
 .chip:not([aria-pressed="true"]):hover,.legend button:hover{border-color:var(--muted)}
 .theme:not([aria-pressed="true"]):hover{color:var(--ink)}
+.badge.csgo{margin-left:6px}
 .badge{display:inline-block;font-size:.8rem;font-weight:500;border:1px solid var(--line);border-radius:6px;padding:1px 8px;background:var(--card);color:var(--muted)}
 table.t{border-collapse:collapse;width:100%;font-size:.95rem}
 table.t th,table.t td{padding:8px 10px;border-top:1px solid var(--line);text-align:left;vertical-align:top}

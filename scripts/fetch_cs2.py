@@ -305,7 +305,7 @@ def summary(store, start, today):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default="data/cs2")
-    ap.add_argument("--start", default="2023-01", help="first month to fetch (YYYY-MM)")
+    ap.add_argument("--start", default="2016-01", help="first month to fetch (YYYY-MM)")
     ap.add_argument("--max-requests", type=int, default=40, help="hard cap for this run")
     ap.add_argument("--per-hour", type=int, default=45, help="rolling limit (Liquipedia allows 60 per hour)")
     ap.add_argument("--max-minutes", type=float, default=None, help="stop cleanly after this long (incl. waiting)")

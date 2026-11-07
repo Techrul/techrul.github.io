@@ -65,7 +65,7 @@ td .muted{font-size:.84rem}
       function tile(k, v, s_) { return '<div class="tile"><div class="k">' + k + '</div><div class="v">' + v + '</div><div class="s">' + (s_ || "&nbsp;") + "</div></div>"; }
       var rows = t.editions.map(function (e) {
         var x = st(e), fin = !!e.champion;
-        return '<tr><td><b>' + e.year + "</b>" + '<div class="muted"><a href="' + S.esc(e.liquipedia) + '" target="_blank" rel="noopener">' + S.esc(e.name) + " \u2197</a></div>" + "</td>" +
+        return '<tr><td><b>' + e.year + "</b>" + (S.csgo(e.end || e.start) ? ' <small class="muted">CS:GO</small>' : "") + '<div class="muted"><a href="' + S.esc(e.liquipedia) + '" target="_blank" rel="noopener">' + S.esc(e.name) + " \u2197</a></div>" + "</td>" +
           (fin ? "<td>" + S.team(e.champion) + '<div class="muted">beat ' + S.esc(e.runner_up ? e.runner_up.name : "–") + " " + S.esc(e.score || "") + "</div></td>"
                : '<td class="muted">In progress</td>') +
           '<td class="n">' + (e.pool ? "$" + S.num(e.pool) : "–") + "</td>" +
@@ -80,8 +80,8 @@ td .muted{font-size:.84rem}
       var latest = t.editions[0], prizes = (t.editions.filter(function (e) { return e.prizes && e.prizes.length; })[0] || {});
       main.innerHTML = S.back("events.html", "Back") +
         '<div class="hero">' +
-        '<div><div class="thead">' + S.cs2tier(latest.tier, latest.valve) + '<span class="muted">' + (latest.lan ? "LAN" : "Online") + "</span></div><h1>" + S.esc(t.name) + "</h1>" +
-        '<p class="lede">' + t.editions.length + " edition" + (t.editions.length > 1 ? "s" : "") + " in the data (S- and A-tier main events since 2023).</p></div></div>" +
+        '<div><div class="thead">' + S.cs2tier(latest.tier, latest.valve) + '<span class="muted">' + (latest.lan ? "LAN" : "Online") + "</span>" + (t.editions.every(function (e) { return S.csgo(e.end || e.start); }) ? S.csgoTag(latest.end || latest.start) : "") + "</div><h1>" + S.esc(t.name) + "</h1>" +
+        '<p class="lede">' + t.editions.length + " edition" + (t.editions.length > 1 ? "s" : "") + " in the data (S- and A-tier main events since 2016).</p></div></div>" +
         '<div class="sysrow"><span class="lab">Stats by</span><div class="chips" id="sys" role="group" aria-label="Rating system">' + SYS.map(function (x) {
           return '<button class="chip" type="button" data-v="' + x[0] + '" aria-pressed="' + (x[0] === sys ? "true" : "false") + '">' + x[1] + "</button>";
         }).join("") + '</div><div id="inact"></div></div>' +
@@ -91,7 +91,7 @@ td .muted{font-size:.84rem}
           tile(nm + " favourite won", done.length ? favWon + " of " + done.length : "–", done.length ? Math.round(favWon / done.length * 100) + "% of editions" : "No " + nm + " data") +
           tile("Longest shot to win", worst ? "#" + st(worst).seed : "–", worst ? S.esc(worst.champion.name) + ", " + worst.year + " (" + nm + " seed)" : "") +
         "</div>" +
-        '<section><h2>Edition by edition</h2><p class="note">Seed: where ' + nm + " placed the champion among the event’s teams the week it started (#1 = the favourite). Upsets: " + (sys === "points" ? "series won by the team with fewer points" : "series wins " + nm + " gave under a 35% chance") + ", out of the matches it rated. 2023 editions have no figures: that year only warms the models up." +
+        '<section><h2>Edition by edition</h2><p class="note">Seed: where ' + nm + " placed the champion among the event’s teams the week it started (#1 = the favourite). Upsets: " + (sys === "points" ? "series won by the team with fewer points" : "series wins " + nm + " gave under a 35% chance") + ", out of the matches it rated. 2016 editions have no figures: that year only warms the models up." +
         "</p>" +
         '<div class="tablewrap"><table class="t"><thead><tr><th>Year</th><th>Champion</th><th class="n">Prize pool</th><th class="n">Seed</th><th>Favourite</th><th class="n">Field</th><th class="n">Upsets</th><th class="n">VRS stakes</th></tr></thead><tbody>' +
         rows + "</tbody></table></div></section>" +
