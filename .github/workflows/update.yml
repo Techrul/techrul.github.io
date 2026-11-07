@@ -25,7 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     permissions:
-      contents: write        # only for the keepalive commit below
+      contents: write        # the keepalive and data commits, and the preview release
+      actions: write         # starting the preview deploy, and dropping old cached copies of the site
     steps:
       - uses: actions/checkout@v5
 
@@ -160,6 +161,47 @@ jobs:
 
       - name: Copy pages
         run: python scripts/build_site.py --site site --out docs
+
+      # ---- the preview of dev at /preview/ (see preview.yml)
+      # dev: keep this build as the preview and have main publish it (deploying straight from dev isn't allowed)
+      - name: Publish this build as the preview
+        if: github.ref == 'refs/heads/dev'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "dev at ${GITHUB_SHA::7}, built $(date -u '+%Y-%m-%d %H:%M UTC')" > docs/PREVIEW.txt
+          tar -czf /tmp/preview-site.tar.gz -C docs .
+          gh release view preview >/dev/null 2>&1 || gh release create preview --target dev --prerelease \
+            --title "Preview build (dev)" --notes "The latest test build of the dev branch, shown at https://techrul.github.io/preview/. Replaced by every dev run."
+          gh release upload preview /tmp/preview-site.tar.gz --clobber
+          gh workflow run preview.yml --ref main || echo "::warning::preview.yml isn't on main yet, so the preview can't be deployed"
+          echo "::notice title=Preview::uploaded; deploying at https://techrul.github.io/preview/ in a minute or two"
+
+      # main: keep the live site for preview deploys, and carry the latest preview along
+      - name: Keep the live site for preview deploys
+        if: github.ref == 'refs/heads/main'
+        uses: actions/cache/save@v5
+        with:
+          path: docs
+          key: site-${{ github.run_id }}
+
+      - name: Drop older copies of the live site
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh cache list --key site- --sort created_at --order desc --limit 50 --json id --jq '.[1:][].id' |
+            while read id; do gh cache delete "$id"; done
+
+      - name: Include the preview
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download preview --pattern preview-site.tar.gz --dir /tmp 2>/dev/null || { echo "no preview yet"; exit 0; }
+          mkdir -p docs/preview && tar -xzf /tmp/preview-site.tar.gz -C docs/preview
 
       # Only the generated site goes to Pages.
       - uses: actions/upload-pages-artifact@v5
