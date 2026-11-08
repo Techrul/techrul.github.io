@@ -1,10 +1,7 @@
-refresh: matches since 2026-10-17, events since 2026-09-08
-  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-16]] AND [[date::<2026-11-08]] offset 0
-  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-16]] AND [[date::<2026-11-08]] offset 1000
-  request 3: tournament [[enddate::>2026-09-07]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-08]] offset 0
-  request 4: placement [[prizemoney::>0]] AND [[date::>2026-09-07]] AND [[date::<2026-11-08]] offset 0
-  1389 matches, 304 tournaments, 902 prize rows
-finished: everything up to date
-requests used: 4
+refresh: matches since 2026-10-18, events since 2026-09-09
+  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-17]] AND [[date::<2026-11-09]] offset 0
+  HTTP 429 (rate limited), waiting 15 min before retrying
+stopped early (time limit for this run reached); the next run continues from here
+requests used: 1
 84236 matches stored, 5851 tournaments, 3574 events with prize money, 28316 players; 47 of 47 months fetched (2023-01 to 2026-11)
-::notice title=CS2 fetch::finished: everything up to date; 4 requests; 84236 matches stored, 5851 tournaments, 3574 events with prize money, 28316 players; 47 of 47 months fetched (2023-01 to 2026-11)
+::notice title=CS2 fetch::stopped early (time limit for this run reached); the next run continues from here; 1 requests; 84236 matches stored, 5851 tournaments, 3574 events with prize money, 28316 players; 47 of 47 months fetched (2023-01 to 2026-11)
