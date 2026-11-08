@@ -446,8 +446,10 @@ def main():
             if len(recent[rid]) > 30:
                 recent[rid].pop(0)
             match_days[rid].append(day)
-        # upsets: both teams with 20+ earlier matches (as for tennis) at S-, A- or B-tier events (tennis: tour level)
-        if pr and prior[wr] >= 20 and prior[lr] >= 20 and m["tier"] in TITLE_TIERS and day >= history_from.strftime("%Y-%m-%d"):
+        # upsets: both teams with 20+ earlier matches (as for tennis) at S-, A- or B-tier main events, not their
+        # qualifiers (tennis: tour level)
+        if (pr and prior[wr] >= 20 and prior[lr] >= 20 and m["tier"] in TITLE_TIERS and not m.get("tiertype")
+                and day >= history_from.strftime("%Y-%m-%d")):
             for system in SKILL:
                 if system in pr:
                     upsets[system].append((pr[system], m["id"]))
@@ -593,7 +595,8 @@ def main():
                 sw, sl = m["teams"][wi]["score"], m["teams"][1 - wi]["score"]
                 out.append({"winner": P(m["rid"][wi]), "loser": P(m["rid"][1 - wi]), "p": round(p, 3),
                             "date": datetime.fromtimestamp(m["time"], timezone.utc).strftime("%Y-%m-%d"),
-                            "event": events[m["event"]]["name"], "tier": m["tier"],
+                            "event": events[m["event"]]["name"], "tier": m["tier"], "valve": events[m["event"]].get("valve") or "",
+                            "lan": bool(m.get("lan")),
                             "score": f"{sw}–{sl}" if isinstance(sw, int) and isinstance(sl, int) else ""})
             return out
 
