@@ -57,11 +57,28 @@ def test_live():
     assert not cp.event_results(data, rom)                                  # not over: nothing final yet
     res, events = cp.live_results(data, rom, "2026-11-06")
     got = {r: pts for r, _d, pts, _p in res}
-    assert events == [{"page": "Live", "name": "Live", "left": 4}]
+    assert events == [{"page": "Live", "name": "Live", "start": "2026-11-02", "left": 4}]
     assert all(got[f"r{i}"] == 400 for i in range(4))                     # A-D still in: sure of 3rd-4th
     assert all(got[f"r{i}"] == 200 for i in range(4, 8))                  # E-H out in 5th-8th
     assert not any(f"r{i}" in got for i in range(8, 12))                  # 9-12 of 16 is the bottom half
     assert not cp.live_results(data, rom, "2026-11-20")[1]                 # long past its end date: not live
+
+
+def test_defending():
+    tours = {"IEM/2025/Beijing": {"end": "2025-11-09"}, "IEM/2024/Beijing": {"end": "2024-11-10"},
+             "ESL/Pro_League/Season_23": {"end": "2026-03-29"}, "ESL/Pro_League/Season_22": {"end": "2025-10-12"}}
+    res = [("r1", "2025-11-09", 1000, "IEM/2025/Beijing"), ("r2", "2024-11-10", 1000, "IEM/2024/Beijing"),
+           ("r1", "2026-03-29", 500, "ESL/Pro_League/Season_23"), ("r3", "2025-10-12", 500, "ESL/Pro_League/Season_22")]
+    live = [{"page": "IEM/2026/Beijing", "start": "2026-11-02"}, {"page": "ESL/Pro_League/Season_24", "start": "2026-09-28"}]
+    # last year's Beijing goes; Pro League runs twice a year, so its last season (6 months ago) stays, but the
+    # season a year before is dropped
+    assert cp.defending(res, live, tours) == {"IEM/2026/Beijing": "IEM/2025/Beijing", "ESL/Pro_League/Season_24": "ESL/Pro_League/Season_22"}
+    # a move to another city: the same organiser and tier, a year earlier to within 3 weeks
+    tours = {"IEM/2025/Chengdu": {"tier": "1", "start": "2025-11-03", "end": "2025-11-09"},
+             "IEM/2026/Katowice": {"tier": "1", "start": "2026-01-28", "end": "2026-02-08"},
+             "IEM/2026/Beijing": {"tier": "1", "start": "2026-11-02", "end": "2026-11-08"}}
+    res = [("r1", "2025-11-09", 1000, "IEM/2025/Chengdu"), ("r2", "2026-02-08", 1000, "IEM/2026/Katowice")]
+    assert cp.defending(res, [{"page": "IEM/2026/Beijing", "start": "2026-11-02"}], tours) == {"IEM/2026/Beijing": "IEM/2025/Chengdu"}
 
 
 if __name__ == "__main__":

@@ -141,7 +141,14 @@ def main():
     points_rank = cs2_points.ranks(points)
     # live: the same, plus points so far at events still being played (like the ATP's live ranking)
     live_res, live_events = cs2_points.live_results(data, lambda m, i: f"r{m['rosters'][i]}", as_of.strftime("%Y-%m-%d"))
-    points_live = cs2_points.ledger(pt_results + live_res, as_of.strftime("%Y-%m-%d")) if live_events else points
+    # last year's edition of each live event is being defended: its points go as the new edition starts
+    defended = cs2_points.defending(pt_results, live_events, data.tournaments)
+    dropped = set(defended.values())
+    for ev in live_events:
+        prev = defended.get(ev["page"])
+        ev["defending"] = {"page": prev, "name": data.tournaments[prev].get("name") or prev} if prev else None
+    points_live = (cs2_points.ledger([r for r in pt_results if r[3] not in dropped] + live_res, as_of.strftime("%Y-%m-%d"))
+                   if live_events else points)
     points_live_rank = cs2_points.ranks(points_live)
 
     cutoff = as_of_naive - timedelta(days=args.active_days)

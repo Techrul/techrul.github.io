@@ -17,6 +17,7 @@ into it and don't score.
 Points belong to the roster that played the event (Valve's three-of-five rule, as everywhere on the site): the team
 at each placing is matched to the roster it fielded in that event's matches.
 """
+import re
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta
 
@@ -73,6 +74,45 @@ def _scoring(t):
 def _counts(start, field, major):
     """Does a placing starting at `start` score? The top half of the field does; at a Major, every team."""
     return bool(field and share(start) and (major or start <= field / 2))
+
+
+def series_key(page):
+    """'Intel_Extreme_Masters/2026/Cologne' -> 'Intel_Extreme_Masters/Cologne', 'ESL/Pro_League/Season_24' ->
+    'ESL/Pro_League': editions of the same event across years share a key."""
+    return re.sub(r"/(19|20)\d\d(?=/|$)|/Season_\d+", "", page)
+
+
+def defending(results, live_events, tournaments):
+    """{live event page: page whose points a live ranking drops}: last year's edition of each event being played now. Like the ATP's
+    live ranking, a team defending points from it loses them as the new edition starts (and wins back what it earns
+    there), instead of when they turn 52 weeks old a few days later.
+
+    Last year's edition is, first, an edition of the same series that ended 40 to 60 weeks before this one began (so a
+    league played twice a year keeps its last season); failing that, as the ATP does when a tournament moves city, the
+    same organiser's event of the same tier that started within 3 weeks of a year earlier (IEM Chengdu 2025 ->
+    IEM Beijing 2026)."""
+    pages = {page for _r, _d, _p, page in results}
+    out = {}
+    for ev in live_events:
+        t_ev = tournaments.get(ev["page"]) or {}
+        start = datetime.strptime(ev["start"], "%Y-%m-%d")
+        lo, hi = (start - timedelta(weeks=60)).strftime("%Y-%m-%d"), (start - timedelta(weeks=40)).strftime("%Y-%m-%d")
+        key, org = series_key(ev["page"]), ev["page"].split("/")[0]
+        same = [p for p in pages if p != ev["page"] and series_key(p) == key
+                and lo <= (tournaments.get(p) or {}).get("end", "") <= hi]
+        if not same:
+            near = []
+            for p in pages:
+                t = tournaments.get(p) or {}
+                if p.split("/")[0] != org or p == ev["page"] or t.get("tier") != t_ev.get("tier") or not t.get("start"):
+                    continue
+                off = abs((datetime.strptime(t["start"], "%Y-%m-%d") + timedelta(weeks=52) - start).days)
+                if off <= 21:
+                    near.append((off, p))
+            same = [min(near)[1]] if near else []
+        if same:
+            out[ev["page"]] = max(same, key=lambda p: tournaments[p]["end"])
+    return out
 
 
 def _decided(rows):
@@ -156,7 +196,7 @@ def live_results(data, roster_of_match, today):
         # the worst place still open is `left` (e.g. 8 left: 8th, which is in the 5-8 band)
         if left and _counts(left, field, t.get("valve") == "Major Championship"):
             out.extend((rid, day, round(top * share(left) * mult, 1), page) for rid in alive)
-        events.append({"page": page, "name": t.get("name") or page, "left": left if starts else None})
+        events.append({"page": page, "name": t.get("name") or page, "start": t["start"], "left": left if starts else None})
     return out, events
 
 

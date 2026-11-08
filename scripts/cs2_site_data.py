@@ -63,10 +63,7 @@ def weeks_at_one(series):
     return out
 
 
-def series_key(page):
-    """'Intel_Extreme_Masters/2026/Cologne' -> 'Intel_Extreme_Masters/Cologne', 'ESL/Pro_League/Season_24' ->
-    'ESL/Pro_League': editions of the same event across years share a key."""
-    return re.sub(r"/(19|20)\d\d(?=/|$)|/Season_\d+", "", page)
+series_key = cpts.series_key  # editions of the same event across years share a key
 
 
 def series_name(name):
