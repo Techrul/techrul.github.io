@@ -73,6 +73,7 @@ table.bt thead th{border-top:0;color:var(--muted);font-weight:500}
   <h1>Tennis rankings</h1>
   <p class="lede">The same ATP match results, ranked by different systems. Pick a system to see how its order compares with the official ranking.</p>
   <p class="asof" id="asof"></p>
+  <section class="card h2hw" id="h2hw" aria-label="Head to head"></section>
 
   <div class="tabs" id="tabs" role="group" aria-label="Ranking system"></div>
   <p class="blurb" id="blurb"></p>
@@ -93,6 +94,10 @@ table.bt thead th{border-top:0;color:var(--muted);font-weight:500}
 </div>
 <script>
 Site.json('data/rankings.json').then(function(D){
+  // head-to-head widget: the featured match-up (next big match, else #1 against #2)
+  Site.json('data/featured.json').catch(function(){ return null; }).then(function(F){
+    Site.h2hWidget(document.getElementById('h2hw'), { sport: 'tennis', entries: D.players, featured: F, asOf: D.meta.data_as_of });
+  });
   var players = D.players, meta = D.meta;
   var MAXRANK = 60, PAGE = 50;
   var MODELS = [

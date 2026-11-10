@@ -137,11 +137,11 @@ def test_full_run_and_resume():
             raise AssertionError("never finished")
         assert count_stored(root) == len(api.matches), (count_stored(root), len(api.matches))
 
-        # a later run only refreshes (3 requests: matches, tournaments, placements)
+        # a later run only refreshes (4 requests: matches, tournaments, placements, scheduled matches)
         before = len(api.calls)
         c, _ = client(api, max_requests=25)
         fetch_cs2.run(c, fetch_cs2.Store(root), TODAY, "2025-01", log=lambda *a: None)
-        assert len(api.calls) - before == 3, len(api.calls) - before
+        assert len(api.calls) - before == 4, len(api.calls) - before
 
         # stored shapes
         with open(os.path.join(root, "matches", "2026-03.jsonl")) as fh:

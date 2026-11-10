@@ -47,10 +47,48 @@ def latest_saved(folder):
     return os.path.basename(files[-1])[:10], rows
 
 
+SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard?dates={}"
+
+
+def scheduled_matches(get, today, days=8):
+    """Men's singles matches scheduled from today on, from ESPN's scoreboard (one request a day ahead):
+    [{"date", "event", "a", "b"}] with the players' display names. The site's head-to-head widget picks its default
+    match-up from these."""
+    out, seen = [], set()
+    for k in range(days):
+        day = today + timedelta(days=k)
+        try:
+            data = get(SCOREBOARD.format(day.strftime("%Y%m%d")))
+        except Exception:
+            continue
+        for ev in data.get("events") or []:
+            for g in ev.get("groupings") or []:
+                if (g.get("grouping") or {}).get("displayName") != "Men's Singles":
+                    continue
+                for c in g.get("competitions") or []:
+                    st = ((c.get("status") or {}).get("type") or {})
+                    names = [((x.get("athlete") or {}).get("displayName") or "") for x in c.get("competitors") or []]
+                    if st.get("state") != "pre" or len(names) != 2 or not all(names) or c.get("id") in seen:
+                        continue
+                    seen.add(c.get("id"))
+                    out.append({"date": (c.get("date") or "")[:16], "event": ev.get("name") or "", "a": names[0], "b": names[1]})
+    return sorted(out, key=lambda m: m["date"])
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="data/atp_rankings")
+    ap.add_argument("--scheduled", default=None, help="also save the coming week's scheduled matches to this JSON file")
     args = ap.parse_args()
+    if args.scheduled:
+        def get(url):
+            r_ = urllib.request.Request(url, headers={"User-Agent": "techrul.github.io rankings (https://github.com/Techrul/techrul.github.io)"})
+            with urllib.request.urlopen(r_, timeout=60) as fh:
+                return json.loads(fh.read().decode("utf-8"))
+        sched = scheduled_matches(get, datetime.now(timezone.utc).date())
+        with open(args.scheduled, "w", encoding="utf-8") as fh:
+            json.dump(sched, fh, ensure_ascii=False, indent=0)
+        print(f"ESPN schedule: {len(sched)} men's singles matches in the coming week")
     os.makedirs(args.out, exist_ok=True)
     req = urllib.request.Request(URL, headers={"User-Agent": "techrul.github.io rankings (https://github.com/Techrul/techrul.github.io)"})
     try:
