@@ -215,6 +215,12 @@
   // CS2 also has its ATP-style points (the page's sport is only known once the page has loaded)
   S.rsysList = function () { return S.sport() === "cs2" ? S.RSYS.concat([["points", "Points"]]) : S.RSYS; };
   // a pre-match "chance" cell: a percentage, or for Points (rank-based, no probability) who had more points
+  // points ranks before a match, [this side, the other]: "#3 v #12"
+  S.pointsRanks = function (pk) {
+    if (!pk) return null;
+    var r = function (x) { return x ? "#" + x : "unranked"; };
+    return '<span title="Points ranks that week">' + r(pk[0]) + ' <small class="muted">v</small> ' + r(pk[1]) + "</span>";
+  };
   S.chanceText = function (v, sys) {
     if (v == null) return "–";
     if (sys === "points") return v === 0.5 ? "Even" : v > 0.5 ? "More points" : "Fewer points";
@@ -243,7 +249,7 @@
   S.deltaPeriod = function (sys) { return sys === "vrs" || sys === "points" ? "event" : sys === "glicko" ? (S.sport() === "cs2" ? "week" : "month") : null; };
   // the sentence that explains a period change (Glicko-2: its rating period; VRS: the whole event)
   S.deltaNote = function (sys, nm, who) {
-    if (sys === "points") return "Points are earned for the final placing, so the number is what " + who + " earned at the event, shown on " + who + "’s last match there (best 10 results of 52 weeks count).";
+    if (sys === "points") return "Points are earned for the final placing; like rounds in the ATP’s live ranking, a win that lifts " + who + "’s guaranteed placing earns the difference, and the rest comes with " + who + "’s last match there, so an event’s matches add up to its points (best 10 results of 52 weeks count).";
     if (sys === "vrs") return "VRS counts a result once the event is over, so its change is " + who + "’s VRS points from the Monday before the event to the Monday after, shown on " + who + "’s last match there.";
     var per = S.deltaPeriod(sys);
     return per ? nm + " rates a whole " + per + "’s results together, so its change covers every match " + who + " played that " + per + "." : "";

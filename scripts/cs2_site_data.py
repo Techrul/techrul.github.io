@@ -325,26 +325,28 @@ def main():
                 points_hist[rid][w] = rk
         if day in events_by_monday:
             event_stats(day, lambda _s, r, led=led: float(led.get(r, 0)), ["points"])
-    # "more points wins" for every match: 1 if the winner had more points that Monday, 0 if fewer, 0.5 if equal
-    pts_pred = {}
+    # "more points wins" for every match: 1 if the winner had more points that Monday, 0 if fewer, 0.5 if equal;
+    # and both teams' points ranks that Monday ([winner, loser], None if unranked), shown before each match
+    pts_pred, pts_rank = {}, {}
+    ranks_by_week = {}
     for m in played:
         w = bisect.bisect_right(week_dates, datetime.fromtimestamp(m["time"], timezone.utc).replace(tzinfo=None)) - 1
         if w < 0:
             continue
         led = points_by_week[w]
-        pa_, pb_ = led.get(m["rid"][m["winner"] - 1], 0), led.get(m["rid"][2 - m["winner"]], 0)
+        if w not in ranks_by_week:
+            ranks_by_week[w] = cpts.ranks(led)
+        wr_, lr_ = m["rid"][m["winner"] - 1], m["rid"][2 - m["winner"]]
+        pa_, pb_ = led.get(wr_, 0), led.get(lr_, 0)
         pts_pred[m["id"]] = 0.5 if pa_ == pb_ else (1.0 if pa_ > pb_ else 0.0)
-    # points earned at each event, shown on the team's last match there (like VRS, a result counts once it is over)
-    last_at = {}
+        pts_rank[m["id"]] = [ranks_by_week[w].get(wr_), ranks_by_week[w].get(lr_)]
+    # what each match was worth, like rounds in the ATP's live ranking: wins that lift a team's guaranteed placing
+    # earn the difference, the rest comes with its last match there (cs2_points.match_points)
+    per_match = cpts.match_points(data, lambda m, i: f"r{m['rosters'][i]}", as_of_date)
     for m in played:
-        for side, rid in ((0, m["rid"][m["winner"] - 1]), (1, m["rid"][2 - m["winner"]])):
-            last_at[(m["event"], rid)] = (m["id"], side)
-    for rid, _end, pts, page in pt_results:
-        hit = last_at.get((page, rid))
-        if hit and hit[0] in deltas:
-            pair = list(deltas[hit[0]].get("points", (None, None)))
-            pair[hit[1]] = pts
-            deltas[hit[0]]["points"] = tuple(pair)
+        pair = [per_match.get((m["id"], m["rid"][m["winner"] - 1])), per_match.get((m["id"], m["rid"][2 - m["winner"]]))]
+        if any(v is not None for v in pair):
+            deltas.setdefault(m["id"], {})["points"] = tuple(pair)
     print(f"points: {len(pt_results)} scoring placings")
 
     # ---------------------------------------------------------------- Valve's official standings, weekly
@@ -451,7 +453,8 @@ def main():
             recent[rid].append({"date": day, "event": ev["name"], "page": m["event"], "tier": m["tier"], "opp": opp,
                                 "opp_name": ad.short_name(roster[opp].name), "won": won, **{("opp_" + k): v for k, v in ad.logo_fields(roster[opp].name, logo_have).items()},
                                 "score": score if won else (f"{sl}–{sw}" if score else ""),
-                                "p": {k: round(v if won else 1 - v, 3) for k, v in pr.items()}, "d": change(m["id"], 0 if won else 1)})
+                                "p": {k: round(v if won else 1 - v, 3) for k, v in pr.items()}, "d": change(m["id"], 0 if won else 1),
+                                **({"pk": pts_rank[m["id"]] if won else pts_rank[m["id"]][::-1]} if m["id"] in pts_rank else {})})
             if len(recent[rid]) > 30:
                 recent[rid].pop(0)
             match_days[rid].append(day)
@@ -759,7 +762,10 @@ def main():
                 sides = [{"id": rid, "name": ad.short_name(t["name"]) or person(rid)["name"], "score": t["score"],
                           "link": rid in has_profile, "d": change(mid, 0 if i == m["winner"] - 1 else 1)}
                          for i, (rid, t) in enumerate(zip(m["rid"], m["teams"]))]
-                rows.append({"time": m["time"], "bo": m["bestof"], "winner": m["winner"], "teams": sides, "p": probs})
+                row = {"time": m["time"], "bo": m["bestof"], "winner": m["winner"], "teams": sides, "p": probs}
+                if mid in pts_rank:  # points ranks that week, in side order
+                    row["pk"] = pts_rank[mid] if m["winner"] == 1 else pts_rank[mid][::-1]
+                rows.append(row)
             ed["mfile"] = re.sub(r"[^A-Za-z0-9_-]+", "_", ed["page"])
             dump(os.path.join("events", ed["mfile"] + ".json"), {"page": ed["page"], "name": ed["name"], "matches": rows})
             n_files += 1

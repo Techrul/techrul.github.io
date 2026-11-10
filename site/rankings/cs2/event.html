@@ -145,11 +145,11 @@ td .muted{font-size:.84rem}
           (a.score != null ? a.score : "") + "–" + (b.score != null ? b.score : "") + '</td><td class="tm">' + side(b, m.winner === 2, false) +
           (final ? '<span class="tag">Final</span>' : "") + (p != null && p < 0.35 ? '<span class="tag up" title="' + (sys === "points" ? "The winner had fewer points" : nm + " gave the winner " + (p < 0.2 ? "under 20%" : "under 35%")) + '">' + (p < 0.2 && sys !== "points" ? "Big upset" : "Upset") + "</span>" : "") +
           '</td><td class="muted bo" style="width:1%;white-space:nowrap">' + (m.bo ? "Bo" + m.bo : "") + '</td><td class="n ch">' +
-          S.chanceText(p, sys) + "</td></tr>");
+          (sys === "points" && m.pk ? S.pointsRanks(m.pk) : S.chanceText(p, sys)) + "</td></tr>");
       });
       out.push("</tbody></table></div>");
       return '<p class="note">' + ms.length + " matches" + (rated ? ", " + ups + " upset" + (ups === 1 ? "" : "s") + (big ? " (" + big + " big)" : "") + " by " + nm : "") +
-        ". Latest first; times are in your time zone. " + (sys === "points" ? "On the right: whether the team that won (bold) had more points than its opponent that week; Upset: it had fewer." : "The right-hand number is " + nm + "’s pre-match chance for the team that won (bold). Upset: under 35%; big upset: under 20%.") +
+        ". Latest first; times are in your time zone. " + (sys === "points" ? "On the right: both teams’ points ranks that week, left team first; Upset: the team that won (bold) had fewer points." : "The right-hand number is " + nm + "’s pre-match chance for the team that won (bold). Upset: under 35%; big upset: under 20%.") +
         (sys === "points" ? " Next to each team: the points it earned at the event, on its last match there." : S.deltaKey(sys) ? " Next to each team: how much its " + nm + " rating moved" + (S.deltaPeriod(sys) ? ". " + S.deltaNote(sys, nm, "the team") : " from the match.") : "") + "</p>" + out.join("");
     }
     draw();
