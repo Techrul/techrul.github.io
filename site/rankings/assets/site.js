@@ -321,6 +321,11 @@
   S.pct = function (p) { return p == null ? "–" : p < 0.001 ? "<0.1%" : (p * 100).toFixed(1) + "%"; };
 
   // ---------------------------------------------------------------- line chart
+  // CS2 came out on 27 Sep 2023: events before it were played in CS:GO
+  S.CS2_FROM = "2023-09-27";
+  S.csgo = function (day) { return !!day && String(day) < S.CS2_FROM; };
+  S.csgoTag = function (day) { return S.csgo(day) ? '<span class="badge csgo" title="Played in CS:GO, before CS2 came out in September 2023">CS:GO</span>' : ""; };
+
   // a stretch drawn dashed (estimated values): from dashFrom, up to dashTo if given
   S.inDash = function (ser, i) { return ser.dashFrom != null && i >= ser.dashFrom && (ser.dashTo == null || i <= ser.dashTo); };
   // opts: { dates: [iso...], series: [{key, label, color, values: [..|null], dashFrom: index, dashTo: index}], scale: "rank"|"linear",

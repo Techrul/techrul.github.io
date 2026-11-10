@@ -8,7 +8,7 @@ Liquipedia data) and Valve's official standings, for the same rosters.
   share 3 of them. All systems rank the same rosters.
 - Skill models: every finished match with five players a side and a winner (Liquipedia tiers 1-4, ranked by
   Valve or not; showmatches are never fetched), walkovers left out. Glicko-2 rating periods are weeks.
-  History starts Jan 2023; 2023 only warms the models up.
+  History starts Jan 2016 (CS:GO until Sep 2023); 2016 only warms the models up.
 - Listed: rosters with --min-matches matches and one in the last --active-days days, plus any roster in the top
   100 of our VRS or of Valve's standings.
 - Official: Valve's latest published global standings (its repository, live/<year>/standings_global_<date>.md),
@@ -141,7 +141,14 @@ def main():
     points_rank = cs2_points.ranks(points)
     # live: the same, plus points so far at events still being played (like the ATP's live ranking)
     live_res, live_events = cs2_points.live_results(data, lambda m, i: f"r{m['rosters'][i]}", as_of.strftime("%Y-%m-%d"))
-    points_live = cs2_points.ledger(pt_results + live_res, as_of.strftime("%Y-%m-%d")) if live_events else points
+    # last year's edition of each live event is being defended: its points go as the new edition starts
+    defended = cs2_points.defending(pt_results, live_events, data.tournaments)
+    dropped = set(defended.values())
+    for ev in live_events:
+        prev = defended.get(ev["page"])
+        ev["defending"] = {"page": prev, "name": data.tournaments[prev].get("name") or prev} if prev else None
+    points_live = (cs2_points.ledger([r for r in pt_results if r[3] not in dropped] + live_res, as_of.strftime("%Y-%m-%d"))
+                   if live_events else points)
     points_live_rank = cs2_points.ranks(points_live)
 
     cutoff = as_of_naive - timedelta(days=args.active_days)

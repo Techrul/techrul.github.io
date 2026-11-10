@@ -111,9 +111,11 @@ Site.json('data/rankings.json').then(function(D){
      links:[{href:'https://github.com/ValveSoftware/counter-strike_regional_standings', text:'Valve’s standings on GitHub'}],
      val:function(p){return p.official_points == null ? '–' : p.official_points.toLocaleString('en-US')}, unc:null}
     ,{id:'points', label:'Points', badge:'ATP-style', color:'var(--points)',
-     blurb:'Points for where a team finished, like the ATP ranking: the winner gets 2000 at a Major, 1000 at S-Tier, 500 at A-Tier, 250 at B-Tier; 2nd 65%, 3–4 40%, 5–8 20%, 9–16 10%, 17–32 5%, and only the top half of the field scores. Online events count 75%. A team’s best 10 results from the last 52 weeks.',
+     blurb:'Points for where a team finished, like the ATP ranking: the winner gets 2000 at a Major, 1000 at S-Tier, 500 at A-Tier, 250 at B-Tier; 2nd 65%, 3–4 40%, 5–8 20%, 9–16 10%, 17–24 5%, 25–32 2.5%, and only the top half of the field scores (at a Major, everyone does). Online events count 75%. A team’s best 10 results from the last 52 weeks.',
      val:function(p){var v = state.live ? p.points_live : p.points; return v == null ? '–' : v.toLocaleString('en-US')},
-     unc:function(p){var d = (p.points_live || 0) - (p.points || 0); return state.live && d ? '+' + d.toLocaleString('en-US') + ' live' : ''}}
+     uncHTML:true,
+     unc:function(p){var d = (p.points_live || 0) - (p.points || 0);
+       return state.live && d ? '<span class="dlt ' + (d > 0 ? 'up' : 'dn') + '">' + (d > 0 ? '+' : '−') + Math.abs(d).toLocaleString('en-US') + ' live</span>' : ''}}
   ];
   if (!meta.points) MODELS = MODELS.filter(function(m){return m.id !== 'points'});
   if (!meta.vrs) MODELS = MODELS.filter(function(m){return m.id !== 'vrs'});
@@ -131,12 +133,14 @@ Site.json('data/rankings.json').then(function(D){
   function liveToggle(el){
     el.classList.add('inact'); el.style.visibility = ''; el.setAttribute('aria-hidden', 'false');
     var evs = LIVE.map(function(e){return e.name + (e.left ? ' (' + e.left + ' left)' : '')}).join(', ');
+    var def = LIVE.filter(function(e){return e.defending}).map(function(e){return e.defending.name + ' (for ' + e.name + ')'}).join(', ');
     el.innerHTML = '<span class="lab">Events in progress</span><div class="chips" role="group" aria-label="Points from events still being played">' +
       [['0', 'Final'], ['1', 'Live']].map(function(x){
         return '<button class="chip" type="button" data-v="' + x[0] + '" aria-pressed="' + ((state.live ? '1' : '0') === x[0] ? 'true' : 'false') + '">' + x[1] + '</button>';
       }).join('') + '</div><span class="hint">' + Site.stack([
         'Only finished events count. Live adds ' + esc(evs) + '.',
-        'Adds points so far at ' + esc(evs) + ': teams that are out get their placing, teams still in hold the least they’re sure of.'], state.live ? 1 : 0) + '</span>';
+        'Adds points so far at ' + esc(evs) + ': teams that are out get their placing, teams still in hold the least they’re sure of.' +
+        (def ? ' Like the ATP’s live ranking, last year’s edition drops out while this one is played, so teams defending its points can go down: ' + esc(def) + '.' : '')], state.live ? 1 : 0) + '</span>';
     el.onclick = function(e){
       var b = e.target.closest('button'); if (!b || (b.dataset.v === '1') === state.live) return;
       state.live = b.dataset.v === '1';
@@ -148,8 +152,8 @@ Site.json('data/rankings.json').then(function(D){
 
   document.getElementById('asof').textContent =
     'Match data through ' + Site.date(meta.data_as_of) + ', ' + meta.matches_used.toLocaleString('en-US') +
-    ' matches since January 2023. Updated ' + meta.generated + '.';
-  document.getElementById('rules').textContent = 'Ratings use every finished match on Liquipedia with five players a side (all tiers, Valve-ranked or not; no showmatches), counting a series as one result. Walkovers are skipped. 2023 only warms the models up. Teams need ' +
+    ' matches since January 2016 (CS:GO until CS2 came out in September 2023). Updated ' + meta.generated + '.';
+  document.getElementById('rules').textContent = 'Ratings use every finished match on Liquipedia with five players a side (all tiers, Valve-ranked or not; no showmatches), counting a series as one result. Walkovers are skipped. 2016 only warms the models up. Teams need ' +
     meta.listing.min_matches + ' matches and one in the last ' + meta.listing.active_days + ' days to be rated; teams in the top 100 of VRS or Valve’s list are shown either way. Regions follow Valve’s rule: where most of a team’s players come from.';
 
   var tabs = document.getElementById('tabs');
@@ -223,7 +227,7 @@ Site.json('data/rankings.json').then(function(D){
       html += '<div class="row" data-href="' + href + '">' +
         '<span class="rk">' + (regional ? p._pos + '<small>#' + r + '</small>' : r) + '</span>' +
         '<span class="nm"><b><a class="plink" href="' + href + '"' + (p.short !== p.name ? ' title="' + esc(p.name) + '"' : '') + '>' + esc(p.short) + '</a>' + (p.region && !regional ? '<span class="region">' + esc(p.region) + '</span>' : '') + out + '</b>' + roster(p) + '<small>' + esc(sub) + '</small></span>' +
-        '<span class="val">' + esc(m.val(p)) + (m.unc ? '<small>' + esc(m.unc(p)) + '</small>' : '') + '</span>' +
+        '<span class="val">' + esc(m.val(p)) + (m.unc ? '<small>' + (m.uncHTML ? m.unc(p) : esc(m.unc(p))) + '</small>' : '') + '</span>' +
         '<span class="off">' + offTxt + '</span>' +
         '<span class="shift ' + cls + '">' + shift + '</span>' +
         strip(p, m.id) +
