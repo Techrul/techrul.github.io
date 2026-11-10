@@ -211,6 +211,11 @@ _SUFFIXES = (" Esports Club", " Esport Club", " Esports", " eSports", " esports"
              " Gaming", " Team", " Clan", " Club", " CS", ".gg")
 
 
+def org_slug(name):
+    """File name for an organisation's head-to-head file: 'Team Vitality' -> 'team_vitality'."""
+    return re.sub(r"[^a-z0-9]+", "_", (name or "").lower()).strip("_") or "_"
+
+
 def short_name(name):
     """Liquipedia's full team name -> the short name Valve and HLTV use: 'Team Vitality' -> 'Vitality',
     'G2 Esports' -> 'G2', 'Aimclub (Romanian team)' -> 'Aimclub'. Leaves at least two characters."""

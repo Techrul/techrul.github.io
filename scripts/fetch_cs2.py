@@ -105,6 +105,7 @@ class Store:
         self.tournaments = self._load("tournaments.json", {})
         self.placements = self._load("placements.json", {})
         self.flags = self._load("players.json", {})
+        self.scheduled = self._load("scheduled.json", [])
 
     def _load(self, name, default):
         path = os.path.join(self.root, name)
@@ -176,6 +177,7 @@ class Store:
         self._write("tournaments.json", self._lines(self.tournaments))
         self._write("placements.json", self._lines(self.placements))
         self._write("players.json", self._lines(self.flags))
+        self._write("scheduled.json", json.dumps(self.scheduled, ensure_ascii=False, indent=0) + "\n")
         self._write("state.json", json.dumps(self.state, indent=1, sort_keys=True) + "\n")
 
 
@@ -247,6 +249,24 @@ def fetch_upcoming(client, store, today):
     return n
 
 
+def fetch_scheduled(client, store, today):
+    """S- and A-tier matches scheduled for the next week (one request, every run): the site's head-to-head picks its
+    default match-up from these. Opponents not decided yet ("TBD") are left out."""
+    rows = client.get_all("match", f"[[finished::0]] AND {NOT_SHOWMATCH} AND {window('date', today - timedelta(days=1), today + timedelta(days=8))}"
+                                   " AND ([[liquipediatier::1]] OR [[liquipediatier::2]])", query=MATCH_FIELDS, order="date ASC")
+    out = []
+    for m in rows:
+        opps = m.get("match2opponents") or []
+        teams = [{"name": o.get("name") or "", "template": o.get("template") or ""} for o in opps[:2]]
+        if len(teams) < 2 or any(not t["name"] or t["name"].upper() == "TBD" for t in teams):
+            continue
+        out.append({"date": (m.get("date") or "")[:16], "event": m.get("parent") or m.get("pagename") or "",
+                    "event_name": m.get("tournament") or "", "tier": m.get("liquipediatier") or "",
+                    "tiertype": m.get("liquipediatiertype") or "", "bestof": m.get("bestof") or None, "teams": teams})
+    store.scheduled = out
+    return len(out)
+
+
 KINDS = (("matches", fetch_matches), ("tournaments", fetch_tournaments), ("placements", fetch_placements))
 
 
@@ -263,6 +283,9 @@ def run(client, store, today, start, backfill=True, log=print):
     store.save()
     done["refresh"] = n
     log(f"  {n} matches, {t} tournaments, {p} prize rows")
+    s = fetch_scheduled(client, store, today)
+    store.save()
+    log(f"  scheduled S- and A-tier matches (next week): {s}")
     u = fetch_upcoming(client, store, today)
     if u is not None:
         store.save()

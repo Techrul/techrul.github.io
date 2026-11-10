@@ -422,6 +422,8 @@ def main():
     prior = Counter()
     upsets = {s_: [] for s_ in SKILL}
     match_days = defaultdict(list)
+    season_year = as_of_date[:4]
+    season_elo = defaultdict(float)  # Elo gained or lost in matches this calendar year
     for m in played:
         wi = m["winner"] - 1
         wr, lr = m["rid"][wi], m["rid"][1 - wi]
@@ -446,6 +448,8 @@ def main():
             if len(recent[rid]) > 30:
                 recent[rid].pop(0)
             match_days[rid].append(day)
+            if day[:4] == season_year:
+                season_elo[rid] += change(m["id"], 0 if won else 1).get("elo", 0)
         # upsets: both teams with 20+ earlier matches (as for tennis) at S-, A- or B-tier main events, not their
         # qualifiers (tennis: tour level)
         if (pr and prior[wr] >= 20 and prior[lr] >= 20 and m["tier"] in TITLE_TIERS and not m.get("tiertype")
@@ -642,6 +646,14 @@ def main():
             for s in e["sys"].values():
                 linked.add(s["favourite"]["id"])
 
+    # ---------------------------------------------------------------- prize money, this season
+    prize_all, prize_season = Counter(), Counter()
+    for rid, day, usd, _page in cpts.prize_money(data, lambda m, i: f"r{m['rosters'][i]}"):
+        prize_all[rid] += usd
+        if day[:4] == season_year:
+            prize_season[rid] += usd
+    points_new_year = cpts.ledger(pt_results, f"{int(season_year) - 1}-12-31")
+
     # ---------------------------------------------------------------- profiles
     # every team the site links to, plus every roster with 15+ matches since the history starts
     since = Counter()
@@ -673,10 +685,17 @@ def main():
         names = [n for n, _c in sorted(r.names_seen.items(), key=lambda kv: -kv[1])]
         prof = {
             **person(rid), "players": r.players, "flags": flags, "names": names,
-            "liquipedia": "https://liquipedia.net/counterstrike/" + r.name.replace(" ", "_"),
+            "liquipedia": "https://liquipedia.net/counterstrike/" + r.name.replace(" ", "_"), "org": ad.org_slug(r.name),
             "current": {k: cur.get(k) for k in ("elo", "glicko", "glicko_rd", "openskill", "openskill_sigma", "vrs",
                                                  "glicko_pure", "glicko_rd_pure", "openskill_pure", "openskill_sigma_pure",
-                                                 "official_rank", "official_points", "points", "ranks", "last_match", "region")},
+                                                 "official_rank", "official_points", "points", "points_live", "ranks",
+                                                 "last_match", "region")},
+            "prize": prize_all.get(rid, 0),
+            # this calendar year so far, like the ATP's "YTD"
+            "season": {"year": int(season_year), "record": record[rid].get(f"year:{season_year}", [0, 0]),
+                       "titles": sum(1 for t in titles[rid] if str(t["year"]) == season_year),
+                       "prize": prize_season.get(rid, 0), "elo": round(season_elo.get(rid, 0)),
+                       "points": (cur.get("points") or 0) - points_new_year.get(rid, 0)},
             "last_match": last_played.get(rid), "matches": r.matches,
             "peak_elo": {"value": round(peak[0]), "date": peak[1].strftime("%Y-%m-%d")} if peak else None,
             "best_rank": best,
@@ -759,6 +778,68 @@ def main():
             ev_names[m["event"]] = [e["name"], e["tier"], series_key(m["event"]) if m["event"] in tracked else None]
     dump("h2h.json", {"events": ev_names, "pairs": pairs})
     print(f"h2h: {len(pairs)} pairs, {sum(len(v) for v in pairs.values())} meetings")
+
+    # the head-to-head widget's default match-up: the best-ranked scheduled match at an S-tier event (then an A-tier
+    # one between two top-20 teams), else #1 against #2. "Best-ranked": the lower of the two Valve ranks, then the other
+    latest_of = {}
+    for rid in current:
+        r = roster.get(rid)
+        if r and (r.name.lower() not in latest_of or (last_played.get(rid) or "") > (last_played.get(latest_of[r.name.lower()]) or "")):
+            latest_of[r.name.lower()] = rid
+    def vrank(rid):
+        return current.get(rid, {}).get("official_rank") or 999
+    try:
+        with open(os.path.join(args.data, "scheduled.json"), encoding="utf-8") as fh:
+            scheduled = json.load(fh)
+    except (OSError, ValueError):
+        scheduled = []
+    picks = []
+    for sm in scheduled:
+        ids = [latest_of.get(t["name"].lower()) for t in sm["teams"]]
+        if None in ids or ids[0] == ids[1] or sm.get("tiertype") or sm["tier"] not in ("1", "2"):
+            continue
+        ranks_ = sorted(vrank(i) for i in ids)
+        if sm["tier"] == "2" and ranks_[1] > 20:
+            continue
+        picks.append((sm["tier"], ranks_, sm["date"], ids, sm))
+    if picks:
+        _t, _r, _d, ids, sm = min(picks, key=lambda x: (x[0], x[1], x[2]))
+        featured = {"a": ids[0], "b": ids[1], "event": sm["event_name"], "page": sm["event"], "tier": sm["tier"],
+                    "date": sm["date"], "bestof": sm.get("bestof")}
+    else:
+        top = sorted((r for r in current if current[r].get("official_rank")), key=vrank)[:2]
+        featured = {"a": top[0], "b": top[1], "event": None} if len(top) == 2 else None
+    dump("featured.json", featured)
+    print(f"featured match-up: {featured}")
+
+    # head-to-head between organisations, across all their rosters: one file per organisation of a listed roster
+    # (h2h/<org>.json), so a page loads only the two it compares. A meeting: [date, event page, 1 if this org won,
+    # score from this org's side, this org's roster, the opponent's roster]
+    orgs = {ad.org_slug(roster[r].name) for r in has_profile if r in roster}
+    by_org, org_name = defaultdict(lambda: defaultdict(list)), {}
+    for m in played:
+        wi = m["winner"] - 1
+        sides = [(ad.org_slug(roster[r].name), r) for r in m["rid"]]
+        if sides[0][0] == sides[1][0] or not ({sides[0][0], sides[1][0]} & orgs):
+            continue
+        day = datetime.fromtimestamp(m["time"], timezone.utc).strftime("%Y-%m-%d")
+        s0, s1 = m["teams"][0]["score"], m["teams"][1]["score"]
+        for i in (0, 1):
+            (me, my_r), (them, their_r) = sides[i], sides[1 - i]
+            org_name[me] = roster[my_r].name
+            if me in orgs:
+                sc = f"{(s0, s1)[i]}–{(s0, s1)[1 - i]}" if isinstance(s0, int) and isinstance(s1, int) else ""
+                by_org[me][them].append([day, m["event"], 1 if wi == i else 0, sc, my_r, their_r])
+        e = events[m["event"]]
+        ev_names[m["event"]] = [e["name"], e["tier"], series_key(m["event"]) if m["event"] in tracked else None]
+    os.makedirs(os.path.join(args.out, "h2h"), exist_ok=True)
+    for old in glob.glob(os.path.join(args.out, "h2h", "*.json")):
+        os.remove(old)
+    for org, vs in by_org.items():
+        evs = {e for ms in vs.values() for x in ms for e in [x[1]]}
+        dump(os.path.join("h2h", org + ".json"), {"org": org_name.get(org, org), "names": {o: org_name.get(o, o) for o in vs},
+                                                  "vs": vs, "events": {e: ev_names[e] for e in evs}})
+    print(f"h2h by organisation: {len(by_org)} files")
     print(f"profiles {len(index)}, event series {len(ev_out)} ({sum(len(t['editions']) for t in ev_out)} editions)")
 
 

@@ -81,7 +81,7 @@ jobs:
       # ESPN's public feed. Each new weekly ranking is kept in data/atp_rankings (committed below).
       - name: Official ATP ranking (ESPN)
         continue-on-error: true
-        run: python scripts/fetch_atp_espn.py --out data/atp_rankings
+        run: python scripts/fetch_atp_espn.py --out data/atp_rankings --scheduled data/atp_scheduled.json
 
       - name: Look up prize money for new events (Wikipedia)
         continue-on-error: true
@@ -107,7 +107,7 @@ jobs:
         run: python scripts/ratings.py --raw data/raw --rankings data/rankings --espn data/atp_rankings --vrs docs/rankings/tennis/data/vrs.json --out docs/rankings/tennis/data/rankings.json --start-year 2015
 
       - name: Build history, profiles, records and tournaments
-        run: python scripts/site_data.py --raw data/raw --rankings data/rankings --espn data/atp_rankings --prize data/prize_money.json --valve vendor/vrs --current docs/rankings/tennis/data/rankings.json --out docs/rankings/tennis/data --start-year 2015
+        run: python scripts/site_data.py --raw data/raw --rankings data/rankings --espn data/atp_rankings --scheduled data/atp_scheduled.json --prize data/prize_money.json --valve vendor/vrs --current docs/rankings/tennis/data/rankings.json --out docs/rankings/tennis/data --start-year 2015
 
       # Photos listed in data/trophies.json (Wikimedia Commons), downloaded once and credited.
       - name: Trophy photos

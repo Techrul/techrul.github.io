@@ -98,9 +98,31 @@ a.tit:hover{border-color:var(--ink)}
       var v = s.key === "official" ? c.official_points : c[k];
       var sub = s.key === "official" ? (v != null ? S.num(v) + " points" : "Not on Valve’s list") : s.key === "vrs" ? (v != null ? S.num(v) + " points" : "Not ranked now") : s.key === "points" ? (v != null ? S.num(v) + " points" : "No points in 52 weeks") : (v != null ? "Rating " + (s.key === "openskill" ? Number(v).toFixed(1) : S.num(v)) : "Not rated now");
       var best = p.best_rank && p.best_rank[k] ? "Best #" + p.best_rank[k] : "";
+      // points: also the live total while events are being played (gains and last year's points being defended)
+      if (s.key === "points" && c.points_live != null && c.points_live !== c.points) {
+        var d = c.points_live - (c.points || 0);
+        sub += '<br>Live ' + S.num(c.points_live) + ' <span class="dlt ' + (d > 0 ? "up" : "dn") + '">' + (d > 0 ? "+" : "−") + S.num(Math.abs(d)) + "</span>" +
+          (ranks.points_live ? " · #" + ranks.points_live + " live" : "");
+      }
       return '<div class="tile"><div class="sys"><i style="background:var(--' + s.color + ')"></i>' + s.label + '</div><div class="big">' + (r ? "#" + r : "–") +
         '</div><div class="sub">' + [sub, best].filter(Boolean).join(" · ") + "</div></div>";
     }).join("");
+
+    // this calendar year so far, like the ATP's "YTD", next to the totals
+    function season() {
+      var y = p.season;
+      if (!y) return "";
+      var r = y.record || [0, 0], n = r[0] + r[1];
+      function sg(v) { return v == null ? "–" : '<span class="dlt ' + (v > 0 ? "up" : v < 0 ? "dn" : "") + '">' + (v > 0 ? "+" : v < 0 ? "−" : "") + S.num(Math.abs(v)) + "</span>"; }
+      var T = [["Win–loss", n ? r[0] + "–" + r[1] : "–", n ? Math.round(100 * r[0] / n) + "% won" : "No matches yet"],
+               ["Titles", S.num(y.titles), p.titles.length + " in all"],
+               ["Prize money", S.money(y.prize), S.money(p.prize) + " in all"],
+               ["Elo", sg(y.elo), "since 1 January"],
+               ["Points", sg(y.points), "since 1 January"]];
+      return '<section><h2>' + y.year + ' so far</h2><div class="tiles season">' + T.map(function (t) {
+        return '<div class="tile"><div class="sys">' + t[0] + '</div><div class="big">' + t[1] + '</div><div class="sub">' + t[2] + "</div></div>";
+      }).join("") + "</div></section>";
+    }
 
     // titles (S-, A- and B-tier main events won); the year is shown once, in front, so drop it from the name
     function noYear(name, y) { var n = name.replace(new RegExp("\\s*\\b" + y + "\\b", "g"), "").replace(/\s+([:#])/g, function (m, c) { return c === "#" ? " #" : c; }).trim(); return n || name; }
@@ -159,7 +181,7 @@ a.tit:hover{border-color:var(--ink)}
       '<div class="coverage"><b>Data covers ' + S.date(dataFrom) + " to " + S.date(dataTo) + ", this roster only.</b> A team here is a roster under Valve’s rule: its current five and earlier lineups that share three of them. " +
       "Matches by the organisation with a different core are a different team, so these are not the organisation’s all-time totals.</div>" +
       '<div class="tiles" aria-label="Current rank in each system">' + tiles + "</div>" +
-      '<div id="inact"></div>' +
+      '<div id="inact"></div>' + season() +
       '<section><h2>Titles <small class="muted" style="font-weight:400;font-size:.9rem">' + p.titles.length + " since " + S.monthYear(dataFrom) + "</small></h2>" + (p.titles.length
         ? '<div class="tiersum">' + tierSum + "</div><div class=\"titles\">" + cab + "</div>"
         : '<p class="note">No S-, A- or B-tier titles since ' + S.monthYear(dataFrom) + ".</p>") +

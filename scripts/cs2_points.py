@@ -162,6 +162,22 @@ def event_results(data, roster_of_match):
     return out
 
 
+def prize_money(data, roster_of_match):
+    """[(roster id, date 'YYYY-MM-DD', prize in USD, event page)]: every placing with prize money, at any event, matched
+    to the roster that played it (as for points). Undecided ("TBD") places are left out."""
+    by_event, _last = _rosters_by_event(data, roster_of_match)
+    out = []
+    for page, rows in data.placements.items():
+        seen = by_event.get(page, Counter())
+        for r in _decided(rows):
+            if not r.get("prize"):
+                continue
+            rid = _roster_for(r, seen)
+            if rid is not None:
+                out.append((rid, r.get("date") or (data.tournaments.get(page) or {}).get("end") or "", r["prize"], page))
+    return out
+
+
 def live_results(data, roster_of_match, today):
     """Points so far at events still being played, like the ATP's live ranking, as
     ([(roster id, today, points, event page)], [{"page", "name", "left"}]).

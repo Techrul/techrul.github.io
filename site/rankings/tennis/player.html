@@ -83,6 +83,20 @@
         '</div><div class="sub">' + [sub, best].filter(Boolean).join(" · ") + "</div></div>";
     }).join("");
 
+    // this calendar year so far, like the ATP's "YTD" (tour-level matches)
+    function season() {
+      var y = p.season;
+      if (!y) return "";
+      var r = y.record || [0, 0], n = r[0] + r[1];
+      var sg = y.elo == null ? "–" : '<span class="dlt ' + (y.elo > 0 ? "up" : y.elo < 0 ? "dn" : "") + '">' + (y.elo > 0 ? "+" : y.elo < 0 ? "−" : "") + S.num(Math.abs(y.elo)) + "</span>";
+      var T = [["Win–loss", n ? r[0] + "–" + r[1] : "–", n ? Math.round(100 * r[0] / n) + "% won" : "No tour-level matches yet"],
+               ["Titles", S.num(y.titles), p.titles.length + " in all"],
+               ["Elo", sg, "since 1 January"]];
+      return '<section><h2>' + y.year + ' so far</h2><div class="tiles season">' + T.map(function (t) {
+        return '<div class="tile"><div class="sys">' + t[0] + '</div><div class="big">' + t[1] + '</div><div class="sub">' + t[2] + "</div></div>";
+      }).join("") + "</div></section>";
+    }
+
     // titles
     var byTier = {}; p.titles.forEach(function (t) { byTier[t.level] = (byTier[t.level] || 0) + 1; });
     var tierSum = ["G", "F", "M", "500", "250"].filter(function (k) { return byTier[k]; }).map(function (k) {
@@ -138,7 +152,7 @@
       '<div class="coverage"><b>Data covers ' + S.date(dataFrom) + " to " + S.date(dataTo) + ", tour-level singles only.</b> Titles, win\u2013loss records and charts count Grand Slams, the ATP Finals, Masters 1000, ATP 500 and 250 events in this period. " +
       "Earlier results, Challengers, Davis Cup, the Olympics and qualifying are not included, so these are not career totals.</div>" +
       '<div class="tiles" aria-label="Current rank in each system">' + tiles + "</div>" +
-      '<div id="inact"></div>' +
+      '<div id="inact"></div>' + season() +
       '<section><h2>Titles <small class="muted" style="font-weight:400;font-size:.9rem">' + p.titles.length + " since " + S.monthYear(dataFrom) + "</small></h2>" + (p.titles.length
         ? '<div class="tiersum">' + tierSum + "</div><div class=\"titles\">" + cab + "</div>"
         : '<p class="note">No tour-level titles since ' + S.monthYear(dataFrom) + ".</p>") +

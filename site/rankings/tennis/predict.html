@@ -95,8 +95,14 @@
     var ia = document.getElementById("pa"), ib = document.getElementById("pb");
     var A = byId[S.param("a")] || order[0], B = byId[S.param("b")] || (A === order[0] ? order[1] : order[0]);
     ia.value = A.name; ib.value = B.name;
-    var h2hData = null;
-    S.json("data/h2h.json").then(function (d) { h2hData = d; draw(); }).catch(function () { h2hData = { pairs: {}, events: {}, missing: true }; draw(); });
+    // head-to-head: each player's file (data/h2h/<id>.json) and profile, loaded when picked
+    var files = {}, H2H_WIN = "all";
+    try { H2H_WIN = localStorage.getItem("h2hwin-tennis") || "all"; } catch (e) {}
+    function fileOf(p) {
+      if (!files[p.id]) files[p.id] = Promise.all([S.json("data/players/" + encodeURIComponent(p.id) + ".json").catch(function () { return null; }),
+        S.json("data/h2h/" + encodeURIComponent(p.id) + ".json").catch(function () { return null; })]);
+      return files[p.id];
+    }
 
     function update() { history.replaceState(null, "", "?a=" + encodeURIComponent(A.id) + "&b=" + encodeURIComponent(B.id)); draw(); }
     var choices = order.map(function (p) {
@@ -133,26 +139,45 @@
       var verdict = counted ? (favA === counted ? "Every system favours " + S.esc(A.name) + "." : favB === counted ? "Every system favours " + S.esc(B.name) + "." :
         "Split decision: " + favA + " of " + counted + " favour " + S.esc(A.name) + ", " + favB + " favour " + S.esc(B.name) + ".") : "";
 
-      // head-to-head
-      var key = [A.id, B.id].sort().join("|"), aFirst = key.indexOf(A.id) === 0;
-      var meets = h2hData && h2hData.pairs[key] ? h2hData.pairs[key].slice().reverse() : [];
-      var wa = meets.filter(function (m) { return (m[3] === 0) === aFirst; }).length, wb = meets.length - wa;
-      var h2h = !h2hData ? '<p class="note">Loading head-to-head…</p>' : !meets.length ? '<p class="note">No tour-level meetings in the data' + (h2hData.missing ? " (head-to-head data not built yet)" : "") + ".</p>" :
-        '<div class="h2h"><b>' + wa + "–" + wb + "</b><span>" + (wa === wb ? "Level" : S.esc((wa > wb ? A : B).name) + " leads") + " in tour-level matches in the data</span></div>" +
-        '<div class="tablewrap"><table class="t"><thead><tr><th>Date</th><th>Event</th><th>Round</th><th>Winner</th><th>Score</th></tr></thead><tbody>' + meets.map(function (m) {
-          var ev = h2hData.events[m[1]] || [m[1], "", ""], winner = (m[3] === 0) === aFirst ? A : B;
-          return '<tr data-href="tournament.html?key=' + encodeURIComponent(ev[2]) + '"><td>' + S.date(m[0]) + '</td><td><a class="plink" href="tournament.html?key=' + encodeURIComponent(ev[2]) + '">' + S.esc(ev[0]) + "</a> " + (ev[1] ? S.tier(ev[1]) : "") +
-            "</td><td>" + S.esc(S.ROUND[m[2]] || m[2]) + "</td><td>" + S.esc(winner.name) + '</td><td class="muted">' + S.esc(m[4]) + "</td></tr>";
-        }).join("") + "</tbody></table></div>";
-
       out.innerHTML =
         '<div class="vs"><div class="side">' + S.player(A) + "<small>Official " + (A.official_rank ? "#" + A.official_rank : "unranked") + S.outTag(A.last_match, res[0].meta.data_as_of) + '</small></div><div class="mid">vs</div><div class="side b">' + S.player(B) +
         "<small>Official " + (B.official_rank ? "#" + B.official_rank : "unranked") + S.outTag(B.last_match, res[0].meta.data_as_of) + "</small></div></div>" +
         '<div class="card" style="padding:0;margin-top:14px">' + rows + "</div>" +
         '<div id="inact" style="margin-top:12px"></div>' +
         '<p class="verdict">' + verdict + '</p><p class="note">Win chances use each system’s ratings as of ' + S.date(res[0].meta.data_as_of) + ", with no surface or venue adjustments, the same way the accuracy table below was scored.</p>" +
-        '<section><h2>Head-to-head</h2>' + h2h + "</section>";
+        '<section><h2>Head-to-head</h2><div class="card" style="padding:0 0 4px"><div class="h2hw-rows" id="cmp" style="margin-top:0;border-top:0"></div></div>' +
+        '<div class="tools" style="margin-top:16px"><div class="chips" id="h2hwin" role="group" aria-label="Meetings since"></div></div><div id="h2h"></div></section>';
       S.inactivityToggle(document.getElementById("inact"), draw, "Glicko-2 and OpenSkill, when a player is out");
+      var a0 = A, b0 = B;
+      document.getElementById("h2h").innerHTML = '<p class="note">Loading head-to-head…</p>';
+      Promise.all([fileOf(A), fileOf(B)]).then(function (r2) {
+        if (a0 !== A || b0 !== B) return;
+        document.getElementById("cmp").innerHTML = S.h2hRows("tennis", A, B, r2[0][0], r2[1][0]);
+        meetings(r2[0][1]);
+      });
+    }
+    // tour-level meetings over a chosen period (ATP-style head-to-head counts every meeting, so "All" is the default)
+    function meetings(fa) {
+      var WINS = [["1y", "Last year", 365], ["2y", "Last 2 years", 730], ["all", "All", 0]];
+      var asOf = res[0].meta.data_as_of;
+      function show() {
+        var el = document.getElementById("h2hwin");
+        el.innerHTML = WINS.map(function (x) { return '<button class="chip" type="button" data-v="' + x[0] + '" aria-pressed="' + (x[0] === H2H_WIN ? "true" : "false") + '">' + x[1] + "</button>"; }).join("");
+        el.onclick = function (e) { var b = e.target.closest("button"); if (!b) return; H2H_WIN = b.dataset.v; try { localStorage.setItem("h2hwin-tennis", H2H_WIN); } catch (err) {} show(); };
+        var days = WINS.filter(function (w) { return w[0] === H2H_WIN; })[0][2];
+        var from = days ? new Date(Date.parse(asOf) - days * 864e5).toISOString().slice(0, 10) : "";
+        var ms = (fa && fa.vs && fa.vs[B.id] || []).filter(function (m) { return m[0] >= from; }).slice().reverse();
+        var wa = ms.filter(function (m) { return m[3] === 1; }).length, wb = ms.length - wa;
+        var box = document.getElementById("h2h");
+        if (!ms.length) { box.innerHTML = '<p class="note">No tour-level meetings' + (days ? " in this period" : " in the data") + ".</p>"; return; }
+        box.innerHTML = '<div class="h2h"><b>' + wa + "–" + wb + "</b><span>" + (wa === wb ? "Level" : S.esc((wa > wb ? A : B).name) + " leads") + " in tour-level matches" + (days ? " in this period" : " in the data") + "</span></div>" +
+          '<div class="tablewrap"><table class="t"><thead><tr><th>Date</th><th>Event</th><th>Round</th><th>Winner</th><th>Score</th></tr></thead><tbody>' + ms.map(function (m) {
+            var ev = fa.events[m[1]] || [m[1], "", ""], winner = m[3] === 1 ? A : B;
+            return '<tr data-href="tournament.html?key=' + encodeURIComponent(ev[2]) + '"><td>' + S.date(m[0]) + '</td><td><a class="plink" href="tournament.html?key=' + encodeURIComponent(ev[2]) + '">' + S.esc(ev[0]) + "</a> " + (ev[1] ? S.tier(ev[1]) : "") +
+              "</td><td>" + S.esc(S.ROUND[m[2]] || m[2]) + "</td><td>" + S.esc(winner.name) + '</td><td class="muted">' + S.esc(m[4]) + "</td></tr>";
+          }).join("") + "</tbody></table></div>";
+      }
+      show();
     }
     draw();
 

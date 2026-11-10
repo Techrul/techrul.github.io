@@ -502,6 +502,143 @@
       });
     });
   }
+  // ---------------------------------------------------------------- win chances (the Predict page's formulas)
+  var G2 = 173.7178, OS_BETA = 25 / 6;
+  var VRS_G = 1 / Math.sqrt(1 + 3 * Math.pow(Math.log(10) / 400, 2) * 75 * 75 / (Math.PI * Math.PI));  // Valve's formula, RD 75
+  function phiN(x) {
+    var t = 1 / (1 + 0.3275911 * Math.abs(x) / Math.SQRT2), y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x / 2);
+    return x >= 0 ? (1 + y) / 2 : (1 - y) / 2;
+  }
+  // chance that a beats b under a system ("elo", "glicko", "openskill", "vrs"), from ranking entries; null if not rated
+  S.winChance = function (key, a, b) {
+    var k = S.inactivity() === "pure" ? "_pure" : "";
+    if (key === "elo") return a.elo == null || b.elo == null ? null : 1 / (1 + Math.pow(10, (b.elo - a.elo) / 400));
+    if (key === "vrs") return a.vrs == null || b.vrs == null ? null : 1 / (1 + Math.pow(10, -VRS_G * (a.vrs - b.vrs) / 400));
+    if (key === "glicko") {
+      var ra = a["glicko_r" + k], rb = b["glicko_r" + k], da = a["glicko_rd" + k], db = b["glicko_rd" + k];
+      if (ra == null || rb == null) return null;
+      var phi = Math.sqrt(da * da + db * db) / G2, g = 1 / Math.sqrt(1 + 3 * phi * phi / (Math.PI * Math.PI));
+      return 1 / (1 + Math.exp(-g * (ra - rb) / G2));
+    }
+    if (key === "openskill") {
+      var ma = a["openskill_mu" + k], mb = b["openskill_mu" + k], sa = a["openskill_sigma" + k], sb = b["openskill_sigma" + k];
+      return ma == null || mb == null ? null : phiN((ma - mb) / Math.sqrt(2 * OS_BETA * OS_BETA + sa * sa + sb * sb));
+    }
+    return null;
+  };
+
+  // ---------------------------------------------------------------- head-to-head widget (ATP-style compare)
+  S.money = function (usd) {
+    if (usd == null) return "–";
+    return usd >= 1e6 ? "$" + (usd / 1e6).toFixed(usd >= 1e7 ? 1 : 2).replace(/\.?0+$/, "") + "M" : usd >= 1e3 ? "$" + Math.round(usd / 1e3) + "k" : "$" + usd;
+  };
+  function wl(r) { return r && (r[0] + r[1]) ? r[0] + "–" + r[1] + ' <small>' + Math.round(100 * r[0] / (r[0] + r[1])) + "%</small>" : "–"; }
+  function wpct(r) { return r && (r[0] + r[1]) ? r[0] / (r[0] + r[1]) : null; }
+  function flip(score) { var p = String(score || "").split("–"); return p.length === 2 ? p[1] + "–" + p[0] : score; }
+  function signed(n) { return n == null ? "–" : (n > 0 ? "+" : n < 0 ? "−" : "") + Math.abs(n).toLocaleString("en-US"); }
+  // the compare rows: (sport, ranking entry A, B, profile file A, B) -> HTML
+  S.h2hRows = function (sport, A, B, pa, pb) {
+    pa = pa || {}; pb = pb || {};
+    var cs2 = sport === "cs2", OFF = cs2 ? "Valve" : "ATP", nm = function (e) { return cs2 ? e.short : e.name; };
+      var sa = pa.season || {}, sb = pb.season || {}, y = sa.year || sb.year || "";
+      var R = [  // [label, value a, value b, compare a, compare b, higher is better]
+        ["Projected win", null, null, null, null, true, "chance"],
+        [OFF + " rank", A.official_rank ? "#" + A.official_rank : "–", B.official_rank ? "#" + B.official_rank : "–", A.official_rank, B.official_rank, false],
+        [cs2 ? "Points" : "ATP points", S.num(cs2 ? A.points : A.official_points), S.num(cs2 ? B.points : B.official_points), cs2 ? A.points : A.official_points, cs2 ? B.points : B.official_points, true],
+        ["Elo", S.num(A.elo), S.num(B.elo), A.elo, B.elo, true],
+        [y + " win–loss", wl(sa.record), wl(sb.record), wpct(sa.record), wpct(sb.record), true],
+        ["All matches", wl((pa.record || {}).all), wl((pb.record || {}).all), wpct((pa.record || {}).all), wpct((pb.record || {}).all), true],
+        [y + " titles", S.num(sa.titles), S.num(sb.titles), sa.titles, sb.titles, true],
+        ["Titles", S.num((pa.titles || []).length), S.num((pb.titles || []).length), (pa.titles || []).length, (pb.titles || []).length, true]
+      ];
+      if (cs2) R.push([y + " prize money", S.money(sa.prize), S.money(sb.prize), sa.prize, sb.prize, true],
+                      ["Prize money", S.money(pa.prize), S.money(pb.prize), pa.prize, pb.prize, true]);
+      R.push([y + " Elo change", signed(sa.elo), signed(sb.elo), sa.elo, sb.elo, true]);
+      if (cs2) R.push([y + " points change", signed(sa.points), signed(sb.points), sa.points, sb.points, true]);
+      return R.map(function (r) {
+        if (r[6] === "chance") {
+          var p = S.winChance("elo", A, B), sys = ["glicko", "openskill"].concat(cs2 || A.vrs != null ? ["vrs"] : []).map(function (k) { return S.winChance(k, A, B); }).filter(function (x) { return x != null; });
+          if (p == null) return "";
+          var lo = Math.min.apply(null, [p].concat(sys)), hi = Math.max.apply(null, [p].concat(sys));
+          var pc = function (x) { return Math.round(x * 100) + "%"; };
+          return '<div class="h2hw-row chance"><b class="' + (p > 0.5 ? "best" : "") + '">' + pc(p) + '</b><span><span class="h2hw-bar" role="img" aria-label="Elo: ' + S.esc(nm(A)) + " " + pc(p) + '"><i style="width:' + (p * 100).toFixed(1) + '%"></i></span><small>Elo' +
+            (sys.length ? " · other systems " + pc(lo) + "–" + pc(hi) : "") + '</small></span><b class="' + (p < 0.5 ? "best" : "") + '">' + pc(1 - p) + "</b></div>";
+        }
+        var better = r[3] == null || r[4] == null || r[3] === r[4] ? 0 : (r[3] > r[4]) === r[5] ? 1 : 2;
+        return '<div class="h2hw-row"><b class="' + (better === 1 ? "best" : "") + '">' + r[1] + "</b><span>" + r[0] + '</span><b class="' + (better === 2 ? "best" : "") + '">' + r[2] + "</b></div>";
+      }).join("");
+  };
+  // opts: { sport: "cs2"|"tennis", entries: rankings entries, featured: {a, b, event, date, tier}|null, asOf: ISO date }
+  S.h2hWidget = function (el, o) {
+    var cs2 = o.sport === "cs2", byId = {};
+    o.entries.forEach(function (e) { byId[e.id] = e; });
+    var order = o.entries.filter(function (e) { return e.official_rank; }).sort(function (a, b) { return a.official_rank - b.official_rank; });
+    var f = o.featured || {}, A = byId[f.a] || order[0], B = byId[f.b] || order[1];
+    if (!A || !B) { el.hidden = true; return; }
+    var featuredPair = A.id + "|" + B.id, cache = {};
+    var nm = function (e) { return cs2 ? e.short : e.name; };
+    var shardOf = function (e) { return cs2 ? e.org : e.id; };
+    var OFF = cs2 ? "Valve" : "ATP";
+    function load(e) {
+      if (!cache[e.id]) cache[e.id] = Promise.all([
+        S.json("data/" + (cs2 ? "teams/" : "players/") + encodeURIComponent(e.id) + ".json").catch(function () { return null; }),
+        shardOf(e) ? S.json("data/h2h/" + encodeURIComponent(shardOf(e)) + ".json").catch(function () { return null; }) : Promise.resolve(null)]);
+      return cache[e.id];
+    }
+    var since = new Date(Date.parse(o.asOf) - 730 * 864e5).toISOString().slice(0, 10);
+    function meetings(shardA) {
+      if (!shardA || !shardA.vs) return null;
+      var ms = shardA.vs[shardOf(B)] || [];
+      return ms.filter(function (m) { return m[0] >= since; });
+    }
+    el.innerHTML = '<div class="h2hw-head"><h2>Head to head</h2><span class="h2hw-why" id="h2hw-why"></span></div>' +
+      '<div class="h2hw-pick"><input id="h2hw-a" aria-label="' + (cs2 ? "Team" : "Player") + ' 1" autocomplete="off" spellcheck="false"><span class="h2hw-score" id="h2hw-score">–</span>' +
+      '<input id="h2hw-b" class="b" aria-label="' + (cs2 ? "Team" : "Player") + ' 2" autocomplete="off" spellcheck="false"></div>' +
+      '<div class="h2hw-sub"><span id="h2hw-sa"></span><span id="h2hw-last"></span><span id="h2hw-sb"></span></div>' +
+      '<div class="h2hw-rows" id="h2hw-rows"></div>' +
+      '<a class="h2hw-more" id="h2hw-more" href="predict.html">Full head-to-head and every system →</a>';
+    var ia = el.querySelector("#h2hw-a"), ib = el.querySelector("#h2hw-b");
+    var choices = o.entries.filter(function (e) { return e.official_rank || (e.ranks && e.ranks.elo); }).map(function (e) {
+      return { id: e.id, name: nm(e), also: cs2 ? (e.players || []).join(" ") + " " + e.name : "",
+               hint: [e.official_rank ? OFF + " #" + e.official_rank : null, e.ranks && e.ranks.elo ? "Elo #" + e.ranks.elo : null].filter(Boolean).join(" · ") };
+    });
+    S.autocomplete(ia, choices, function (it) { A = byId[it.id]; draw(); }, { selectOnFocus: true, empty: "Nobody by that name" });
+    S.autocomplete(ib, choices, function (it) { B = byId[it.id]; draw(); }, { selectOnFocus: true, empty: "Nobody by that name" });
+    ia.addEventListener("blur", function () { setTimeout(function () { ia.value = nm(A); }, 150); });
+    ib.addEventListener("blur", function () { setTimeout(function () { ib.value = nm(B); }, 150); });
+
+    function draw() {
+      ia.value = nm(A); ib.value = nm(B);
+      var why = el.querySelector("#h2hw-why");
+      why.innerHTML = A.id + "|" + B.id !== featuredPair ? "" : f.event ?
+        (cs2 ? S.cs2tier(f.tier, "") + " " : "") + "Up next: " + S.esc(f.event) + (f.date ? " · " + S.date(f.date.slice(0, 10)) : "") :
+        OFF + " #1 against #2";
+      el.querySelector("#h2hw-more").href = "predict.html?a=" + encodeURIComponent(A.id) + "&b=" + encodeURIComponent(B.id);
+      var a0 = A, b0 = B;
+      Promise.all([load(A), load(B)]).then(function (res) {
+        if (a0 !== A || b0 !== B) return;  // changed while loading
+        var pa = res[0][0] || {}, pb = res[1][0] || {}, ms = meetings(res[0][1]);
+        // a meeting: CS2 [date, event, won, score, ...], tennis [date, event, round, won, score]
+        var won = function (m) { return (cs2 ? m[2] : m[3]) === 1; };
+        var wa = ms ? ms.filter(won).length : 0;
+        var wb = ms ? ms.length - wa : 0;
+        el.querySelector("#h2hw-score").innerHTML = ms ? '<b class="' + (wa > wb ? "lead" : "") + '">' + wa + '</b><i>–</i><b class="' + (wb > wa ? "lead" : "") + '">' + wb + "</b>" : "–";
+        var last = ms && ms.length ? ms[ms.length - 1] : null, evs = (res[0][1] || {}).events || {};
+        el.querySelector("#h2hw-last").innerHTML = (ms ? (ms.length ? "Last 2 years" + (cs2 ? ", every lineup" : "") : "No meetings in the last 2 years") : "") +
+          (last ? '<br><small>Last: ' + S.esc((evs[last[1]] || [last[1]])[0]) + ", " + S.date(last[0]) + " · " + S.esc(nm(won(last) ? A : B)) + " won " + S.esc(won(last) ? (cs2 ? last[3] : last[4]) : (cs2 ? flip(last[3]) : last[4])) + "</small>" : "");
+        el.querySelector("#h2hw-sa").innerHTML = side(A, pa);
+        el.querySelector("#h2hw-sb").innerHTML = side(B, pb);
+        rows(pa, pb);
+      });
+    }
+    function side(e, p) {
+      if (cs2) return (e.players || []).map(function (n, i) { return S.flag(e.flags && e.flags[i] !== "world" ? e.flags[i] : "") + S.esc(S.pname(n)); }).join(" ");
+      return S.flag(e.iso) + [p.age ? Math.floor(p.age) + " yrs" : null, p.height ? p.height + " cm" : null, p.hand === "L" ? "Left-handed" : p.hand === "R" ? "Right-handed" : null].filter(Boolean).join(" · ");
+    }
+    function rows(pa, pb) { el.querySelector("#h2hw-rows").innerHTML = S.h2hRows(o.sport, A, B, pa, pb); }
+    draw();
+  };
+
   S.alignNums = alignNums;
   document.addEventListener("DOMContentLoaded", function () {
     alignNums(document.body);

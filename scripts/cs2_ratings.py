@@ -185,7 +185,7 @@ def main():
             region = ad.REGIONS[g] if g is not None else None
         t = {"id": p, "name": r.name, "short": ad.short_name(r.name), "region": region, "players": r.players,
              "flags": flags,
-             "liquipedia": "https://liquipedia.net/counterstrike/" + r.name.replace(" ", "_"),
+             "liquipedia": "https://liquipedia.net/counterstrike/" + r.name.replace(" ", "_"), "org": ad.org_slug(r.name),
              "matches": count.get(p, 0), "matches_12m": m12[p],
              "last_match": last_match[p].strftime("%Y-%m-%d") if p in last_match else None,
              "rated": p in rated, "ranks": {k: v[p] for k, v in ranks.items() if p in v}}

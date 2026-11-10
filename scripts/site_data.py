@@ -60,6 +60,7 @@ def main():
     ap.add_argument("--raw", default="data/raw")
     ap.add_argument("--rankings", default="data/rankings")
     ap.add_argument("--espn", default="data/atp_rankings", help="official rankings saved by fetch_atp_espn.py")
+    ap.add_argument("--scheduled", default="data/atp_scheduled.json", help="the coming week's matches (fetch_atp_espn.py)")
     ap.add_argument("--prize", default="data/prize_money.json")
     ap.add_argument("--valve", default=None)
     ap.add_argument("--current", default="docs/rankings/tennis/data/rankings.json")
@@ -351,6 +352,8 @@ def main():
     recent = defaultdict(list)
     prior = Counter()
     upsets = {s_: [] for s_ in SKILL}
+    season_year = last_day.year
+    season_elo = defaultdict(float)  # Elo gained or lost in tour-level matches this calendar year
     for r in tour:
         w, l = r["winner_id"], r["loser_id"]
         ev = events[r["tourney_id"]]
@@ -371,6 +374,8 @@ def main():
                                 "d": change(key, 0 if won else 1)})
             if len(recent[pid]) > 30:
                 recent[pid].pop(0)
+            if r["_date"].year == season_year:
+                season_elo[pid] += change(key, 0 if won else 1).get("elo", 0)
         if pr and prior[w] >= MIN_MATCHES and prior[l] >= MIN_MATCHES and r["_date"] >= history_from:
             for system in SKILL:
                 if system in pr:
@@ -508,6 +513,9 @@ def main():
             "finals_lost": len(finals_lost[pid]),
             "record": {k: v for k, v in record[pid].items()},
             "recent": list(reversed(recent[pid][-20:])),
+            # this calendar year so far, like the ATP's "YTD" (tour-level matches; no prize money in the data)
+            "season": {"year": season_year, "record": record[pid].get(f"year:{season_year}", [0, 0]),
+                       "titles": sum(1 for t in titles[pid] if t["year"] == season_year), "elo": round(season_elo.get(pid, 0))},
         }
         with open(os.path.join(args.out, "players", f"{pid}.json"), "w", encoding="utf-8") as fh:
             json.dump(prof, fh, ensure_ascii=False, separators=(",", ":"))
@@ -638,6 +646,55 @@ def main():
             ev_names[r["tourney_id"]] = [ev["name"], ev["level"], ev["key"]]
     dump("h2h.json", {"events": ev_names, "pairs": pairs})
     print(f"h2h: {len(pairs)} pairs, {sum(len(v) for v in pairs.values())} meetings")
+    # the head-to-head widget's default match-up: the best-ranked scheduled match at a Grand Slam, the ATP Finals or a
+    # Masters 1000 in the coming week (ESPN's schedule), else #1 against #2 in the official ranking
+    BIG = re.compile(r"ATP Finals|Masters|Australian Open|Roland Garros|French Open|Wimbledon|US Open|BNP Paribas Open|"
+                     r"Miami Open|Monte-?Carlo|Mutua Madrid|Internazionali|Italian Open|National Bank Open|Canadian Open|"
+                     r"Cincinnati|Shanghai|Rolex Paris", re.I)
+    by_norm, by_init = {}, defaultdict(set)
+    for pid_, c_ in current.items():
+        n_ = ratings._norm_name(c_.get("name"))
+        by_norm[n_] = pid_
+        if len(n_.split()) >= 2:
+            by_init[(n_[0], n_.split()[-1])].add(pid_)
+    def who(name):
+        n_ = ratings._norm_name(name)
+        if n_ in by_norm:
+            return by_norm[n_]
+        c_ = by_init.get((n_[:1], n_.split()[-1] if n_ else ""), set())
+        return next(iter(c_)) if len(c_) == 1 else None
+    try:
+        with open(args.scheduled, encoding="utf-8") as fh:
+            sched = json.load(fh)
+    except (OSError, ValueError):
+        sched = []
+    def orank(pid_):
+        return current.get(pid_, {}).get("official_rank") or 9999
+    picks = []
+    for sm in sched:
+        a_, b_ = who(sm["a"]), who(sm["b"])
+        if a_ and b_ and a_ != b_ and BIG.search(sm["event"]):
+            picks.append((sorted((orank(a_), orank(b_))), sm["date"], a_, b_, sm))
+    if picks:
+        _r, _d, a_, b_, sm = min(picks, key=lambda x: (x[0], x[1]))
+        featured = {"a": a_, "b": b_, "event": sm["event"], "date": sm["date"]}
+    else:
+        top = sorted((p_ for p_ in current if current[p_].get("official_rank")), key=orank)[:2]
+        featured = {"a": top[0], "b": top[1], "event": None} if len(top) == 2 else None
+    dump("featured.json", featured)
+    print(f"featured match-up: {featured}")
+
+    # the same per player (h2h/<id>.json), so the head-to-head widget loads only the two it compares:
+    # {"vs": {opponent id: [[date, event id, round, 1 if this player won, score]]}, "events": {...}}
+    by_p = defaultdict(lambda: defaultdict(list))
+    for key_, ms in pairs.items():
+        a_, b_ = key_.split("|")
+        for d_, tid, rnd, wi, sc in ms:
+            by_p[a_][b_].append([d_, tid, rnd, 1 if wi == 0 else 0, sc])
+            by_p[b_][a_].append([d_, tid, rnd, 1 if wi == 1 else 0, sc])
+    os.makedirs(os.path.join(args.out, "h2h"), exist_ok=True)
+    for pid_, vs in by_p.items():
+        dump(os.path.join("h2h", f"{pid_}.json"), {"vs": vs, "events": {x[1]: ev_names[x[1]] for ms in vs.values() for x in ms}})
     print(f"profiles {len(index)}, tournaments {len(tournaments)}")
 
 
