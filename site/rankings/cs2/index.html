@@ -231,7 +231,7 @@ Site.json('data/rankings.json').then(function(D){
       var href = 'team.html?id=' + encodeURIComponent(p.id);
       html += '<div class="row" data-href="' + href + '">' +
         '<span class="rk">' + (regional ? p._pos + '<small>#' + r + '</small>' : r) + '</span>' +
-        '<span class="nm"><b><a class="plink" href="' + href + '"' + (p.short !== p.name ? ' title="' + esc(p.name) + '"' : '') + '>' + esc(p.short) + '</a>' + (p.region && !regional ? '<span class="region">' + esc(p.region) + '</span>' : '') + out + '</b>' + roster(p) + '<small>' + esc(sub) + '</small></span>' +
+        '<span class="nm"><b>' + Site.logo(p) + '<a class="plink" href="' + href + '"' + (p.short !== p.name ? ' title="' + esc(p.name) + '"' : '') + '>' + esc(p.short) + '</a>' + (p.region && !regional ? '<span class="region">' + esc(p.region) + '</span>' : '') + out + '</b>' + roster(p) + '<small>' + esc(sub) + '</small></span>' +
         '<span class="val">' + esc(m.val(p)) + (m.unc ? '<small>' + (m.uncHTML ? m.unc(p) : esc(m.unc(p))) + '</small>' : '') + '</span>' +
         '<span class="off">' + offTxt + '</span>' +
         '<span class="shift ' + cls + '">' + shift + '</span>' +

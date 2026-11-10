@@ -25,6 +25,7 @@ import json
 import math
 import os
 import re
+import shutil
 import sys
 import tempfile
 from collections import Counter, defaultdict
@@ -161,11 +162,17 @@ def main():
         with open(args.current, encoding="utf-8") as fh:
             current = {t["id"]: t for t in json.load(fh)["teams"]}
 
+    logo_have = ad.logos(args.data)
+    # the logos themselves go with the site (data/logos/), from data/cs2/logos
+    os.makedirs(os.path.join(args.out, "logos"), exist_ok=True)
+    for f_ in glob.glob(os.path.join(args.data, "logos", "*.png")):
+        shutil.copy2(f_, os.path.join(args.out, "logos", os.path.basename(f_)))
+
     def person(rid):
         r = roster.get(rid)
         c = current.get(rid, {})
         name = r.name if r else rid
-        return {"id": rid, "name": ad.short_name(name), "full": name, "region": c.get("region")}
+        return {"id": rid, "name": ad.short_name(name), "full": name, "region": c.get("region"), **ad.logo_fields(name, logo_have)}
 
     # ---------------------------------------------------------------- events
     ev_matches = defaultdict(list)
@@ -442,7 +449,7 @@ def main():
                 rec[bucket][0 if won else 1] += 1
             opp = lr if won else wr
             recent[rid].append({"date": day, "event": ev["name"], "page": m["event"], "tier": m["tier"], "opp": opp,
-                                "opp_name": ad.short_name(roster[opp].name), "won": won,
+                                "opp_name": ad.short_name(roster[opp].name), "won": won, **{("opp_" + k): v for k, v in ad.logo_fields(roster[opp].name, logo_have).items()},
                                 "score": score if won else (f"{sl}–{sw}" if score else ""),
                                 "p": {k: round(v if won else 1 - v, 3) for k, v in pr.items()}, "d": change(m["id"], 0 if won else 1)})
             if len(recent[rid]) > 30:

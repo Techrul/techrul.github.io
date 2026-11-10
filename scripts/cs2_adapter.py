@@ -211,6 +211,22 @@ _SUFFIXES = (" Esports Club", " Esport Club", " Esports", " eSports", " esports"
              " Gaming", " Team", " Clan", " Club", " CS", ".gg")
 
 
+def logos(data_dir):
+    """{org slug: 1 (one logo for light and dark pages) or 2 (separate dark version)} from fetch_logos.py's index."""
+    try:
+        with open(os.path.join(data_dir, "logos", "index.json"), encoding="utf-8") as fh:
+            idx = json.load(fh)
+    except (OSError, ValueError):
+        return {}
+    return {s: 2 if e.get("dark") else 1 for s, e in idx.items() if e.get("light")}
+
+
+def logo_fields(name, have):
+    """{"org", "logo"} for a team name when its organisation has a logo, else {}."""
+    s = org_slug(name)
+    return {"org": s, "logo": have[s]} if s in have else {}
+
+
 def org_slug(name):
     """File name for an organisation's head-to-head file: 'Team Vitality' -> 'team_vitality'."""
     return re.sub(r"[^a-z0-9]+", "_", (name or "").lower()).strip("_") or "_"

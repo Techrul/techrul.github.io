@@ -46,11 +46,18 @@
   };
   // which sport the page belongs to ("tennis", "cs2" or "" on the overview), from the header's data-sport
   S.sport = function () { var h = document.querySelector("header.bar"); return h ? h.dataset.sport || "" : ""; };
+  // a team's logo (from Liquipedia, kept with the site): light and dark versions follow the theme
+  S.logo = function (t, cls) {
+    if (!t || !t.logo || !t.org) return "";
+    var src = S.base() + "cs2/data/logos/" + encodeURIComponent(t.org), c = "tlogo" + (cls ? " " + cls : "");
+    var img = function (file, k) { return '<img class="' + c + k + '" src="' + src + file + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">'; };
+    return t.logo === 2 ? img(".png", " lg-l") + img("-dark.png", " lg-d") : img(".png", "");
+  };
   S.team = function (t, opts) {
     if (!t) return "–";
     var name = S.esc(t.name || t.id), title = t.full && t.full !== t.name ? ' title="' + S.esc(t.full) + '"' : "";
-    return (opts && opts.nolink) ? "<span" + title + ">" + name + "</span>" :
-      '<a class="plink" href="' + S.base() + "cs2/team.html?id=" + encodeURIComponent(t.id) + '"' + title + ">" + name + "</a>";
+    return S.logo(t) + ((opts && opts.nolink) ? "<span" + title + ">" + name + "</span>" :
+      '<a class="plink" href="' + S.base() + "cs2/team.html?id=" + encodeURIComponent(t.id) + '"' + title + ">" + name + "</a>");
   };
   // CS2 event tiers: Liquipedia's S/A/B/C (tiers 1-4); Valve's Majors get their own label
   var CS2_TIER = { "1": ["S-Tier", "silver"], "2": ["A-Tier", "bronze"], "3": ["B-Tier", "slate"], "4": ["C-Tier", "slate"] };
@@ -592,8 +599,8 @@
       return ms.filter(function (m) { return m[0] >= since; });
     }
     el.innerHTML = '<div class="h2hw-head"><h2>Head to head</h2><span class="h2hw-why" id="h2hw-why"></span></div>' +
-      '<div class="h2hw-pick"><input id="h2hw-a" aria-label="' + (cs2 ? "Team" : "Player") + ' 1" autocomplete="off" spellcheck="false"><span class="h2hw-score" id="h2hw-score">–</span>' +
-      '<input id="h2hw-b" class="b" aria-label="' + (cs2 ? "Team" : "Player") + ' 2" autocomplete="off" spellcheck="false"></div>' +
+      '<div class="h2hw-pick"><div class="h2hw-side"><span id="h2hw-la"></span><input id="h2hw-a" aria-label="' + (cs2 ? "Team" : "Player") + ' 1" autocomplete="off" spellcheck="false"></div><span class="h2hw-score" id="h2hw-score">–</span>' +
+      '<div class="h2hw-side b"><input id="h2hw-b" class="b" aria-label="' + (cs2 ? "Team" : "Player") + ' 2" autocomplete="off" spellcheck="false"><span id="h2hw-lb"></span></div></div>' +
       '<div class="h2hw-sub"><span id="h2hw-sa"></span><span id="h2hw-last"></span><span id="h2hw-sb"></span></div>' +
       '<div class="h2hw-rows" id="h2hw-rows"></div>' +
       '<a class="h2hw-more" id="h2hw-more" href="predict.html">Full head-to-head and every system →</a>';
@@ -609,6 +616,8 @@
 
     function draw() {
       ia.value = nm(A); ib.value = nm(B);
+      el.querySelector("#h2hw-la").innerHTML = cs2 ? S.logo(A, "md") : "";
+      el.querySelector("#h2hw-lb").innerHTML = cs2 ? S.logo(B, "md") : "";
       var why = el.querySelector("#h2hw-why");
       why.innerHTML = A.id + "|" + B.id !== featuredPair ? "" : f.event ?
         (cs2 ? S.cs2tier(f.tier, "") + " " : "") + "Up next: " + S.esc(f.event) + (f.date ? " · " + S.date(f.date.slice(0, 10)) : "") :
