@@ -291,7 +291,7 @@ table.st td.ev-name a{text-decoration:none;font-weight:600}
       var u = lastWith(t, function (e) { return st(e) && st(e).predicted ? 1 : null; });
       return '<a class="tcard" style="--tc:var(--' + TIER_COLOR[level(t)] + ')" href="' + href(t) + '">' +
         '<div class="top"><div class="tname">' + (rankNo ? '<span class="rankno">#' + rankNo + "</span>" : "") + "<b>" + S.esc(t.name) + "</b>" + '<span class="muted" style="font-size:.82rem">' + (last.lan ? "LAN" : "Online") + (last.pool ? " · $" + S.num(last.pool) : "") + "</span></div></div>" +
-        '<div class="holder"><span class="when">' + (champ ? last.year + " champion" : last.year + ": in progress") + "</span>" + (champ ? S.esc(champ.name) : "&nbsp;") + "</div>" +
+        '<div class="holder"><span class="when">' + (champ ? last.year + " champion" : last.year + ": in progress") + "</span>" + (champ ? S.logo(champ) + S.esc(champ.name) : "&nbsp;") + "</div>" +
         '<div class="stats"><div><strong class="cn">' + (v ? v.vrs_weight.toFixed(2) : "–") + "</strong>VRS stakes" + (v && v.year !== last.year ? " (" + v.year + ")" : "") + "</div>" +
         '<div><strong class="cn">' + (f ? fmtField(st(f).field) : "–") + "</strong>Field (" + SYS_NAME[state.sys] + ")" + (f && f.year !== last.year ? " (" + f.year + ")" : "") + "</div>" +
         '<div><strong class="cn">' + (u ? Math.round(st(u).upsets / st(u).predicted * 100) + "%" : "–") + "</strong>Upset rate" + (u && u.year !== last.year ? " (" + u.year + ")" : "") + "</div>" +

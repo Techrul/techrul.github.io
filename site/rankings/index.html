@@ -71,7 +71,7 @@ a.sport:hover{border-color:var(--ink)}
     document.getElementById("cs2-ones").innerHTML = CS2.map(function (s) {
       var best = d.teams.filter(function (t) { return (s[0] === "official" ? t.official_rank : t.ranks[s[0]]) === 1; })[0];
       if (!best) return '<li><span class="sys"><i style="background:var(--' + s[2] + ')"></i>' + s[1] + '</span><span class="same">–</span></li>';  // keep the rows lined up
-      return '<li><span class="sys"><i style="background:var(--' + s[2] + ')"></i>' + s[1] + "</span><span>" + S.esc(best.short) + "</span></li>";
+      return '<li><span class="sys"><i style="background:var(--' + s[2] + ')"></i>' + s[1] + "</span><span>" + S.logo(best) + S.esc(best.short) + "</span></li>";
     }).join("");
   }).catch(function () { document.getElementById("cs2-ones").innerHTML = ""; });
 })();

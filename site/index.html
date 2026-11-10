@@ -40,6 +40,8 @@ a.project:hover{border-color:var(--muted)}
 .ones td{font-weight:600;padding:3px 6px 3px 0;overflow-wrap:anywhere}
 .ones tbody tr+tr th,.ones tbody tr+tr td{border-top:1px solid var(--line)}
 .ones .same{font-weight:400;color:var(--muted)}
+.tlogo{width:18px;height:18px;object-fit:contain;vertical-align:-4px;margin-right:6px}
+:root[data-theme="light"] .tlogo.lg-d, :root:not([data-theme="light"]) .tlogo.lg-l{display:none}
 .onesnote{margin:6px 0 0;color:var(--muted);font-size:.75rem}
 </style>
 </head>
@@ -98,6 +100,13 @@ a.project:hover{border-color:var(--muted)}
   var SYS = [["elo", "Elo"], ["glicko", "Glicko-2"], ["openskill", "OpenSkill"], ["vrs", "VRS"], ["official", "Official"], ["points", "Points"]];
   function load(path) { return fetch(path, { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
   function top(list, s) { return list.filter(function (x) { return (s === "official" ? x.official_rank : (x.ranks || {})[s]) === 1; })[0]; }
+  // a team's logo (light and dark versions follow the theme), as on the rankings pages
+  function logo(t) {
+    if (!t.logo || !t.org) return "";
+    var src = "rankings/cs2/data/logos/" + encodeURIComponent(t.org);
+    var img = function (f, k) { return '<img class="tlogo' + k + '" src="' + src + f + '" alt="" loading="lazy" onerror="this.remove()">'; };
+    return t.logo === 2 ? img(".png", " lg-l") + img("-dark.png", " lg-d") : img(".png", "");
+  }
   Promise.all([load("rankings/tennis/data/rankings.json"), load("rankings/cs2/data/rankings.json")]).then(function (res) {
     var ten = res[0], cs = res[1];
     if (!ten && !cs) return;
@@ -106,7 +115,7 @@ a.project:hover{border-color:var(--muted)}
       if (!a && !b) return "";
       var label = s[0] === "official" ? "Official" : s[1];
       return '<tr><th scope="row"><i class="dot" style="background:var(--' + s[0] + ')"></i>' + label + "</th>" +
-        "<td>" + (a ? esc(a.name.split(" ").slice(-1)[0]) : s[0] === "points" && ten ? '<span class="same">= Official</span>' : "\u2013") + "</td><td>" + (b ? esc(b.short) : "\u2013") + "</td></tr>";
+        "<td>" + (a ? esc(a.name.split(" ").slice(-1)[0]) : s[0] === "points" && ten ? '<span class="same">= Official</span>' : "\u2013") + "</td><td>" + (b ? logo(b) + esc(b.short) : "\u2013") + "</td></tr>";
     }).join("");
     document.getElementById("now").innerHTML = '<table class="ones"><caption>#1 today</caption><thead><tr><td></td><th scope="col">Tennis</th><th scope="col">CS2</th></tr></thead><tbody>' + rows + "</tbody></table>" +
       '<p class="onesnote">Official: ATP for tennis, Valve\u2019s standings for CS2. Points: CS2\u2019s ATP-style placings ranking; for tennis, that is the official ATP ranking.</p>';
