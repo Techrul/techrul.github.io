@@ -235,6 +235,8 @@ def match_points(data, roster_of_match, today):
                 elif won and held - given >= 0.5:
                     out[(m["id"], rid)] = round(held - given)
                     given += round(held - given)
+                else:
+                    out[(m["id"], rid)] = 0  # nothing new guaranteed by this one (shown as 0, not as missing)
     return out
 
 
