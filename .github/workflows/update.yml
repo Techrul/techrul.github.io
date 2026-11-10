@@ -133,6 +133,18 @@ jobs:
 
       # Team logos: up to 10 API requests (40 teams each) and 200 small images a run, from Liquipedia; kept in
       # data/cs2/logos (committed below with the rest of data/cs2), so each logo is downloaded once
+      # dev and other test runs don't commit data, so they start from the logos the last preview had
+      - name: Logos from the last preview
+        if: github.ref != 'refs/heads/main'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download preview --pattern preview-site.tar.gz --dir /tmp/prev 2>/dev/null || { echo "no preview yet"; exit 0; }
+          mkdir -p /tmp/prev/site data/cs2/logos
+          tar -xzf /tmp/prev/preview-site.tar.gz -C /tmp/prev/site ./rankings/cs2/data/logos 2>/dev/null || { echo "no logos in the preview"; exit 0; }
+          cp -n /tmp/prev/site/rankings/cs2/data/logos/* data/cs2/logos/ && echo "$(ls data/cs2/logos | wc -l) logo files from the preview"
+
       - name: Team logos (Liquipedia)
         continue-on-error: true
         timeout-minutes: 8

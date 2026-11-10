@@ -165,7 +165,7 @@ def main():
     logo_have = ad.logos(args.data)
     # the logos themselves go with the site (data/logos/), from data/cs2/logos
     os.makedirs(os.path.join(args.out, "logos"), exist_ok=True)
-    for f_ in glob.glob(os.path.join(args.data, "logos", "*.png")):
+    for f_ in glob.glob(os.path.join(args.data, "logos", "*.png")) + glob.glob(os.path.join(args.data, "logos", "*.json")):
         shutil.copy2(f_, os.path.join(args.out, "logos", os.path.basename(f_)))
 
     def person(rid):
