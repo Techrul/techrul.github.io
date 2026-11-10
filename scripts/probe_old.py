@@ -1,24 +1,22 @@
-"""One-off: what does ESPN's ATP scoreboard hold (upcoming matches)? Prints ::notice lines."""
-import json, urllib.request
+"""One-off: team logos in Liquipedia's API (team datapoint). Prints ::notice lines."""
+import json, os, sys, urllib.request
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import lp_api, fetch_cs2 as f
 def note(t, s): print(f"::notice title={t}::{s}", flush=True)
-def get(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "techrul.github.io rankings (github.com/Techrul/techrul.github.io)"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.loads(r.read().decode("utf-8", "replace"))
-for url in ("https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard",
-            "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard?dates=20261115"):
-    try:
-        d = get(url)
-        evs = d.get("events", [])
-        note("scoreboard", f"{url[-30:]}: keys {list(d)}; {len(evs)} events: " + "; ".join(f"{e.get('name')} {e.get('date')} {e.get('status',{}).get('type',{}).get('name')}" for e in evs[:4]))
-        for e in evs[:2]:
-            grs = e.get("groupings") or []
-            note("event", f"{e.get('name')} keys {list(e)}; groupings {len(grs)}: " + "; ".join(f"{g.get('grouping',{}).get('displayName')} {len(g.get('competitions',[]))}" for g in grs[:6]))
-            for g in grs[:6]:
-                if "Men" in json.dumps(g.get("grouping", {})):
-                    cs = g.get("competitions", [])
-                    sched = [c for c in cs if (c.get("status", {}).get("type", {}).get("state") == "pre")]
-                    note("men's singles", f"{len(cs)} matches, {len(sched)} scheduled; first scheduled: " + json.dumps(sched[:1])[:900])
-                    break
-    except Exception as e:
-        note("scoreboard", f"{url}: failed {e}")
+c = lp_api.Client(f.WIKI, max_requests=3, per_hour=45, max_seconds=240)
+try:
+    rows = c.get("team", conditions="[[name::Team Vitality]] OR [[name::Team Spirit]] OR [[name::Legacy]]", limit=5)
+    rows = rows.get("result", rows) if isinstance(rows, dict) else rows
+    for r in rows[:3]:
+        note("team", json.dumps({k: v for k, v in r.items() if "logo" in k.lower() or k in ("name", "pagename", "template", "textlesslogo")})[:900])
+    if rows:
+        note("team keys", ", ".join(sorted(rows[0].keys())))
+    url = next((r.get(k) for r in rows for k in ("logourl", "logodarkurl") if r.get(k)), None)
+    if url:
+        req = urllib.request.Request(url, headers={"User-Agent": "techrul.github.io rankings (github.com/Techrul/techrul.github.io)"})
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            body = resp.read()
+        note("image", f"{url}: HTTP {resp.status}, {len(body)} bytes, {resp.headers.get('Content-Type')}")
+except Exception as e:
+    note("team", f"failed: {e}")
+note("requests", str(c.sent))
