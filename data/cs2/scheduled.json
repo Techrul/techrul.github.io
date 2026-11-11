@@ -1,41 +1,5 @@
 [
 {
-"date": "2026-11-11 02:00",
-"event": "BLAST/Rivals/2026/Fall",
-"event_name": "BLAST Rivals Fall 2026",
-"tier": "1",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "Legacy",
-"template": "legacy 2023"
-},
-{
-"name": "FURIA",
-"template": "furia 2025"
-}
-]
-},
-{
-"date": "2026-11-11 04:30",
-"event": "BLAST/Rivals/2026/Fall",
-"event_name": "BLAST Rivals Fall 2026",
-"tier": "1",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "Team Vitality",
-"template": "team vitality 2023"
-},
-{
-"name": "Team Falcons",
-"template": "team falcons 2022"
-}
-]
-},
-{
 "date": "2026-11-11 07:00",
 "event": "BLAST/Rivals/2026/Fall",
 "event_name": "BLAST Rivals Fall 2026",
@@ -68,6 +32,42 @@
 {
 "name": "G2 Esports",
 "template": "g2 esports 2019"
+}
+]
+},
+{
+"date": "2026-11-12 02:00",
+"event": "BLAST/Rivals/2026/Fall",
+"event_name": "BLAST Rivals Fall 2026",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Legacy",
+"template": "legacy 2023"
+},
+{
+"name": "Team Falcons",
+"template": "team falcons 2022"
+}
+]
+},
+{
+"date": "2026-11-12 04:30",
+"event": "BLAST/Rivals/2026/Fall",
+"event_name": "BLAST Rivals Fall 2026",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "FURIA",
+"template": "furia 2025"
+},
+{
+"name": "Team Vitality",
+"template": "team vitality 2023"
 }
 ]
 },
