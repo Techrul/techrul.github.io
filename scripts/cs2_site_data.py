@@ -794,7 +794,7 @@ def main():
 
     # the head-to-head widget's default match-up: the best-ranked scheduled match still to come at an S-tier event (then
     # an A-tier one between two top-20 teams), else #1 against #2. "Best-ranked": both teams' Valve ranks added up
-    # (Vitality #3 v Falcons #4 beats Spirit #1 v FUT #13), then the closer match
+    # (Vitality #3 v Falcons #4 beats Spirit #1 v FUT #13); on a tie, the match with the highest-ranked team in it
     latest_of = {}
     for rid in current:
         r = roster.get(rid)
@@ -818,7 +818,7 @@ def main():
         ranks_ = sorted(vrank(i) for i in ids)
         if sm["tier"] == "2" and ranks_[1] > 20:
             continue
-        picks.append((sm["tier"], sum(ranks_), ranks_[1], sm["date"], ids, sm))
+        picks.append((sm["tier"], sum(ranks_), ranks_[0], sm["date"], ids, sm))
     if picks:
         *_rest, ids, sm = min(picks, key=lambda x: x[:4])
         featured = {"a": ids[0], "b": ids[1], "event": sm["event_name"], "page": sm["event"], "tier": sm["tier"],

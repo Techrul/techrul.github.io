@@ -648,7 +648,7 @@ def main():
     print(f"h2h: {len(pairs)} pairs, {sum(len(v) for v in pairs.values())} meetings")
     # the head-to-head widget's default match-up: the best-ranked scheduled match at a Grand Slam, the ATP Finals or a
     # Masters 1000 in the coming week (ESPN's schedule), else #1 against #2 in the official ranking. "Best-ranked": both
-    # players' ranks added up, then the closer match
+    # players' ranks added up; on a tie, the match with the highest-ranked player in it
     BIG = re.compile(r"ATP Finals|Masters|Australian Open|Roland Garros|French Open|Wimbledon|US Open|BNP Paribas Open|"
                      r"Miami Open|Monte-?Carlo|Mutua Madrid|Internazionali|Italian Open|National Bank Open|Canadian Open|"
                      r"Cincinnati|Shanghai|Rolex Paris", re.I)
@@ -677,7 +677,7 @@ def main():
         a_, b_ = who(sm["a"]), who(sm["b"])
         if a_ and b_ and a_ != b_ and BIG.search(sm["event"]) and sm["date"] >= now_:
             rk_ = sorted((orank(a_), orank(b_)))
-            picks.append((sum(rk_), rk_[1], sm["date"], a_, b_, sm))
+            picks.append((sum(rk_), rk_[0], sm["date"], a_, b_, sm))
     if picks:
         *_rest, a_, b_, sm = min(picks, key=lambda x: x[:3])
         featured = {"a": a_, "b": b_, "event": sm["event"], "date": sm["date"]}
