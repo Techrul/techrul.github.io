@@ -792,8 +792,9 @@ def main():
     dump("h2h.json", {"events": ev_names, "pairs": pairs})
     print(f"h2h: {len(pairs)} pairs, {sum(len(v) for v in pairs.values())} meetings")
 
-    # the head-to-head widget's default match-up: the best-ranked scheduled match at an S-tier event (then an A-tier
-    # one between two top-20 teams), else #1 against #2. "Best-ranked": the lower of the two Valve ranks, then the other
+    # the head-to-head widget's default match-up: the best-ranked scheduled match still to come at an S-tier event (then
+    # an A-tier one between two top-20 teams), else #1 against #2. "Best-ranked": both teams' Valve ranks added up
+    # (Vitality #3 v Falcons #4 beats Spirit #1 v FUT #13), then the closer match
     latest_of = {}
     for rid in current:
         r = roster.get(rid)
@@ -807,16 +808,19 @@ def main():
     except (OSError, ValueError):
         scheduled = []
     picks = []
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M")
     for sm in scheduled:
+        if sm["date"] < now:
+            continue  # started or played since the schedule was fetched
         ids = [latest_of.get(t["name"].lower()) for t in sm["teams"]]
         if None in ids or ids[0] == ids[1] or sm.get("tiertype") or sm["tier"] not in ("1", "2"):
             continue
         ranks_ = sorted(vrank(i) for i in ids)
         if sm["tier"] == "2" and ranks_[1] > 20:
             continue
-        picks.append((sm["tier"], ranks_, sm["date"], ids, sm))
+        picks.append((sm["tier"], sum(ranks_), ranks_[1], sm["date"], ids, sm))
     if picks:
-        _t, _r, _d, ids, sm = min(picks, key=lambda x: (x[0], x[1], x[2]))
+        *_rest, ids, sm = min(picks, key=lambda x: x[:4])
         featured = {"a": ids[0], "b": ids[1], "event": sm["event_name"], "page": sm["event"], "tier": sm["tier"],
                     "date": sm["date"], "bestof": sm.get("bestof")}
     else:
