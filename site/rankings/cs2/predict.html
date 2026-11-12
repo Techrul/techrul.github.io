@@ -157,11 +157,12 @@
       document.getElementById("h2h").innerHTML = '<p class="note">Loading head-to-head…</p>';
       Promise.all([fileOf(A), fileOf(B)]).then(function (res) {
         if (a0 !== A || b0 !== B) return;
-        document.getElementById("cmp").innerHTML = S.h2hRows("cs2", A, B, res[0][0], res[1][0]);
+        prof = [res[0][0], res[1][0]];
         meetings(res[0][1]);
       });
     }
     // meetings between the two organisations (every lineup), or only these two rosters; over a chosen period
+    var prof = [null, null];
     function meetings(fa) {
       var WINS = [["1y", "Last year", 365], ["2y", "Last 2 years", 730], ["all", "All", 0]];
       var asOf = res[0].meta.data_as_of;
@@ -177,6 +178,8 @@
         var from = days ? new Date(Date.parse(asOf) - days * 864e5).toISOString().slice(0, 10) : "";
         var all = fa && fa.vs && B.org ? fa.vs[B.org] || [] : [];
         var ms = all.filter(function (m) { return m[0] >= from && (!H2H_LINEUPS || (m[4] === A.id && m[5] === B.id)); }).slice().reverse();
+        document.getElementById("cmp").innerHTML = S.h2hRows("cs2", A, B, prof[0], prof[1], ms.length ? { totals: S.h2hTotals("cs2", ms),
+          label: WINS.filter(function (w) { return w[0] === H2H_WIN; })[0][1].toLowerCase() + (H2H_LINEUPS ? ", these lineups" : "") } : null);
         var wa = ms.filter(function (m) { return m[2] === 1; }).length, wb = ms.length - wa;
         var rw = 0, rl = 0;
         ms.forEach(function (m) { rw += m[6] || 0; rl += m[7] || 0; });

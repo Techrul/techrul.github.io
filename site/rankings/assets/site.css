@@ -214,3 +214,4 @@ tr[data-href]:hover>td,.row[data-href]:hover,.ev[data-href]:hover{background:var
 .h2hw-side.b .tlogo{margin:0 0 0 8px}
 .h2hw-side input{min-width:0}
 .sub-h{font-size:1rem;margin:22px 0 8px}
+.t th.num,.t td.num{text-align:right;font-variant-numeric:tabular-nums}

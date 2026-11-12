@@ -860,8 +860,8 @@ def main():
 
     # head-to-head between organisations, across all their rosters: one file per organisation of a listed roster
     # (h2h/<org>.json), so a page loads only the two it compares. A meeting: [date, event page, 1 if this org won,
-    # score from this org's side, this org's roster, the opponent's roster, rounds won, rounds lost (summed over the
-    # maps; 0, 0 where the maps aren't known)]
+    # score from this org's side, this org's roster, the opponent's roster, rounds won, rounds lost, maps won, maps
+    # lost (from the maps; 0s where the maps aren't known)]
     orgs = {ad.org_slug(roster[r].name) for r in has_profile if r in roster}
     by_org, org_name = defaultdict(lambda: defaultdict(list)), {}
     for m in played:
@@ -878,7 +878,9 @@ def main():
                 sc = f"{(s0, s1)[i]}–{(s0, s1)[1 - i]}" if isinstance(s0, int) and isinstance(s1, int) else ""
                 rw_ = sum(mp[1] if i == 0 else mp[2] for mp in m.get("maps") or [])
                 rl_ = sum(mp[2] if i == 0 else mp[1] for mp in m.get("maps") or [])
-                by_org[me][them].append([day, m["event"], 1 if wi == i else 0, sc, my_r, their_r, rw_, rl_])
+                mw_ = sum(1 for mp in m.get("maps") or [] if (mp[1] > mp[2]) == (i == 0) and mp[1] != mp[2])
+                ml_ = sum(1 for mp in m.get("maps") or [] if mp[1] != mp[2]) - mw_
+                by_org[me][them].append([day, m["event"], 1 if wi == i else 0, sc, my_r, their_r, rw_, rl_, mw_, ml_])
         e = events[m["event"]]
         ev_names[m["event"]] = [e["name"], e["tier"], series_key(m["event"]) if m["event"] in tracked else None]
     os.makedirs(os.path.join(args.out, "h2h"), exist_ok=True)

@@ -152,11 +152,12 @@
       document.getElementById("h2h").innerHTML = '<p class="note">Loading head-to-head…</p>';
       Promise.all([fileOf(A), fileOf(B)]).then(function (r2) {
         if (a0 !== A || b0 !== B) return;
-        document.getElementById("cmp").innerHTML = S.h2hRows("tennis", A, B, r2[0][0], r2[1][0]);
+        prof = [r2[0][0], r2[1][0]];
         meetings(r2[0][1]);
       });
     }
     // tour-level meetings over a chosen period (ATP-style head-to-head counts every meeting, so "All" is the default)
+    var prof = [null, null];
     function meetings(fa) {
       var WINS = [["1y", "Last year", 365], ["2y", "Last 2 years", 730], ["all", "All", 0]];
       var asOf = res[0].meta.data_as_of;
@@ -167,6 +168,8 @@
         var days = WINS.filter(function (w) { return w[0] === H2H_WIN; })[0][2];
         var from = days ? new Date(Date.parse(asOf) - days * 864e5).toISOString().slice(0, 10) : "";
         var ms = (fa && fa.vs && fa.vs[B.id] || []).filter(function (m) { return m[0] >= from; }).slice().reverse();
+        document.getElementById("cmp").innerHTML = S.h2hRows("tennis", A, B, prof[0], prof[1], ms.length ? { totals: S.h2hTotals("tennis", ms),
+          label: WINS.filter(function (w) { return w[0] === H2H_WIN; })[0][1].toLowerCase() } : null);
         var wa = ms.filter(function (m) { return m[3] === 1; }).length, wb = ms.length - wa;
         var box = document.getElementById("h2h");
         if (!ms.length) { box.innerHTML = '<p class="note">No tour-level meetings' + (days ? " in this period" : " in the data") + ".</p>"; return; }
