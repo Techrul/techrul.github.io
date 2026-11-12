@@ -1,0 +1,182 @@
+[
+{
+"date": "2026-11-12 02:00",
+"event": "BLAST/Rivals/2026/Fall",
+"event_name": "BLAST Rivals Fall 2026",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Legacy",
+"template": "legacy 2023"
+},
+{
+"name": "Team Falcons",
+"template": "team falcons 2022"
+}
+]
+},
+{
+"date": "2026-11-12 04:30",
+"event": "BLAST/Rivals/2026/Fall",
+"event_name": "BLAST Rivals Fall 2026",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "FURIA",
+"template": "furia 2025"
+},
+{
+"name": "Team Vitality",
+"template": "team vitality 2023"
+}
+]
+},
+{
+"date": "2026-11-12 07:00",
+"event": "BLAST/Rivals/2026/Fall",
+"event_name": "BLAST Rivals Fall 2026",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "FUT Esports",
+"template": "fut esports"
+},
+{
+"name": "MOUZ",
+"template": "mouz 2021"
+}
+]
+},
+{
+"date": "2026-11-12 09:30",
+"event": "BLAST/Rivals/2026/Fall",
+"event_name": "BLAST Rivals Fall 2026",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Team Spirit",
+"template": "team spirit 2022"
+},
+{
+"name": "G2 Esports",
+"template": "g2 esports 2019"
+}
+]
+},
+{
+"date": "2026-11-13 08:00",
+"event": "BLAST/Rivals/2026/Fall",
+"event_name": "BLAST Rivals Fall 2026",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Group B 2<sup>nd</sup> Place",
+"template": "tbd"
+},
+{
+"name": "Group A 3<sup>rd</sup> Place",
+"template": "tbd"
+}
+]
+},
+{
+"date": "2026-11-13 10:30",
+"event": "BLAST/Rivals/2026/Fall",
+"event_name": "BLAST Rivals Fall 2026",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Group A 2<sup>nd</sup> Place",
+"template": "tbd"
+},
+{
+"name": "Group B 3<sup>rd</sup> Place",
+"template": "tbd"
+}
+]
+},
+{
+"date": "2026-11-17 11:00",
+"event": "Stake_Ranked/Episode_6",
+"event_name": "Stake Ranked Episode 6",
+"tier": "2",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Betclic Apogee Esports",
+"template": "betclic apogee esports"
+},
+{
+"name": "IC Esports",
+"template": "ic esports 2026"
+}
+]
+},
+{
+"date": "2026-11-17 13:30",
+"event": "Stake_Ranked/Episode_6",
+"event_name": "Stake Ranked Episode 6",
+"tier": "2",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "BIG",
+"template": "big 2020"
+},
+{
+"name": "Sangal Esports",
+"template": "sangal esports 2020"
+}
+]
+},
+{
+"date": "2026-11-17 16:00",
+"event": "Stake_Ranked/Episode_6",
+"event_name": "Stake Ranked Episode 6",
+"tier": "2",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Ninjas in Pyjamas",
+"template": "ninjas in pyjamas 2021"
+},
+{
+"name": "UNiTY esports",
+"template": "unity esports"
+}
+]
+},
+{
+"date": "2026-11-17 18:30",
+"event": "Stake_Ranked/Episode_6",
+"event_name": "Stake Ranked Episode 6",
+"tier": "2",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Luminosity Gaming",
+"template": "luminosity gaming 2018"
+},
+{
+"name": "GamerLegion",
+"template": "gamerlegion 2026"
+}
+]
+}
+]

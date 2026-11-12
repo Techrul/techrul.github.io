@@ -1,53 +1,7 @@
-refresh: matches since 2026-10-20, events since 2026-09-11
-  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-19]] AND [[date::<2026-11-11]] offset 0
-  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-19]] AND [[date::<2026-11-11]] offset 1000
-  request 3: tournament [[enddate::>2026-09-10]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-11]] offset 0
-  request 4: placement [[prizemoney::>0]] AND [[date::>2026-09-10]] AND [[date::<2026-11-11]] offset 0
-  1290 matches, 305 tournaments, 913 prize rows
-  request 5: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-11-30]] AND [[date::<2023-01-01]] offset 0
-  request 6: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-11-30]] AND [[date::<2023-01-01]] offset 1000
-  2022-12 matches: 1600
-  request 7: tournament [[enddate::>2022-11-30]] AND [[enddate::<2023-01-01]] offset 0
-  2022-12 tournaments: 176
-  request 8: placement [[prizemoney::>0]] AND [[date::>2022-11-30]] AND [[date::<2023-01-01]] offset 0
-  2022-12 placements: 564
-  request 9: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-10-31]] AND [[date::<2022-12-01]] offset 0
-  request 10: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-10-31]] AND [[date::<2022-12-01]] offset 1000
-  2022-11 matches: 1600
-  request 11: tournament [[enddate::>2022-10-31]] AND [[enddate::<2022-12-01]] offset 0
-  2022-11 tournaments: 122
-  request 12: placement [[prizemoney::>0]] AND [[date::>2022-10-31]] AND [[date::<2022-12-01]] offset 0
-  2022-11 placements: 390
-  request 13: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-09-30]] AND [[date::<2022-11-01]] offset 0
-  request 14: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-09-30]] AND [[date::<2022-11-01]] offset 1000
-  request 15: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-09-30]] AND [[date::<2022-11-01]] offset 2000
-  2022-10 matches: 2138
-  request 16: tournament [[enddate::>2022-09-30]] AND [[enddate::<2022-11-01]] offset 0
-  2022-10 tournaments: 161
-  request 17: placement [[prizemoney::>0]] AND [[date::>2022-09-30]] AND [[date::<2022-11-01]] offset 0
-  2022-10 placements: 576
-  request 18: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-08-31]] AND [[date::<2022-10-01]] offset 0
-  request 19: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-08-31]] AND [[date::<2022-10-01]] offset 1000
-  request 20: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-08-31]] AND [[date::<2022-10-01]] offset 2000
-  2022-09 matches: 2872
-  request 21: tournament [[enddate::>2022-08-31]] AND [[enddate::<2022-10-01]] offset 0
-  2022-09 tournaments: 153
-  request 22: placement [[prizemoney::>0]] AND [[date::>2022-08-31]] AND [[date::<2022-10-01]] offset 0
-  2022-09 placements: 354
-  request 23: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-07-31]] AND [[date::<2022-09-01]] offset 0
-  request 24: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-07-31]] AND [[date::<2022-09-01]] offset 1000
-  request 25: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-07-31]] AND [[date::<2022-09-01]] offset 2000
-  2022-08 matches: 2139
-  request 26: tournament [[enddate::>2022-07-31]] AND [[enddate::<2022-09-01]] offset 0
-  2022-08 tournaments: 149
-  request 27: placement [[prizemoney::>0]] AND [[date::>2022-07-31]] AND [[date::<2022-09-01]] offset 0
-  2022-08 placements: 283
-  request 28: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-06-30]] AND [[date::<2022-08-01]] offset 0
-  request 29: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2022-06-30]] AND [[date::<2022-08-01]] offset 1000
-  2022-07 matches: 1583
-  request 30: tournament [[enddate::>2022-06-30]] AND [[enddate::<2022-08-01]] offset 0
-  2022-07 tournaments: 156
-stopped early (request budget for this run used (30)); the next run continues from here
-requests used: 30
-96039 matches stored, 6768 tournaments, 4049 events with prize money, 31747 players; 52 of 131 months fetched (2016-01 to 2026-11)
-::notice title=CS2 fetch::stopped early (request budget for this run used (30)); the next run continues from here; 30 requests; 96039 matches stored, 6768 tournaments, 4049 events with prize money, 31747 players; 52 of 131 months fetched (2016-01 to 2026-11)
+refresh: matches since 2026-10-22, events since 2026-09-13
+  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-21]] AND [[date::<2026-11-13]] offset 0
+  HTTP 429 (rate limited), waiting 15 min before retrying
+stopped early (time limit for this run reached); the next run continues from here
+requests used: 1
+149529 matches stored, 10152 tournaments, 6211 events with prize money, 46359 players; 79 of 131 months fetched (2016-01 to 2026-11)
+::notice title=CS2 fetch::stopped early (time limit for this run reached); the next run continues from here; 1 requests; 149529 matches stored, 10152 tournaments, 6211 events with prize money, 46359 players; 79 of 131 months fetched (2016-01 to 2026-11)
