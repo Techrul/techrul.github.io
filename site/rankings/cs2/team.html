@@ -124,6 +124,27 @@ a.tit:hover{border-color:var(--ink)}
       }).join("") + "</div></section>";
     }
 
+    // rounds and maps: this year (all matches in the data underneath), sides, and the map pool of the last 12 months
+    function roundsHTML() {
+      var R = p.rounds || {}, y = (p.season || {}).year, ry = R["year:" + y], ra = R.all;
+      if (!ra || !(ra[0] + ra[1])) return "";
+      var pc = function (w, n) { return n ? (100 * w / n).toFixed(1) + "%" : "–"; };
+      var both = function (i, j) {  // [this year, all] as a share i of n (j = played index, or -1 for won+lost)
+        var f = function (r) { return r ? (j < 0 ? pc(r[i], r[i] + r[i + 1]) : pc(r[i], r[j])) : "–"; };
+        return [f(ry), f(ra) + " in all"];
+      };
+      var T = [["Maps", ry && ry[6] + ry[7] ? ry[6] + "–" + ry[7] : "–", ra[6] + "–" + ra[7] + " in all"],
+               ["Round win %"].concat(both(0, -1)), ["CT round win %"].concat(both(2, 3)), ["T round win %"].concat(both(4, 5))];
+      var pool = (p.map_pool || []).filter(function (x) { return x[1] + x[2] >= 1; });
+      return '<section><h2>Rounds and maps</h2><p class="note">' + y + ' so far, with every match in the data underneath. CT and T: rounds won on that side, overtime included.</p>' +
+        '<div class="tiles season">' + T.map(function (t) {
+          return '<div class="tile"><div class="sys">' + t[0] + '</div><div class="big">' + t[1] + '</div><div class="sub">' + t[2] + "</div></div>";
+        }).join("") + "</div>" +
+        (pool.length ? '<h3 class="sub-h">Map pool, last 12 months</h3><div class="tablewrap"><table class="t"><thead><tr><th>Map</th><th class="num">Won</th><th class="num">Lost</th><th class="num">Win %</th></tr></thead><tbody>' +
+          pool.map(function (x) { return "<tr><td>" + S.esc(x[0]) + '</td><td class="num">' + x[1] + '</td><td class="num">' + x[2] + '</td><td class="num">' + Math.round(100 * x[1] / (x[1] + x[2])) + "%</td></tr>"; }).join("") +
+          "</tbody></table></div>" : "") + "</section>";
+    }
+
     // titles (S-, A- and B-tier main events won); the year is shown once, in front, so drop it from the name
     function noYear(name, y) { var n = name.replace(new RegExp("\\s*\\b" + y + "\\b", "g"), "").replace(/\s+([:#])/g, function (m, c) { return c === "#" ? " #" : c; }).trim(); return n || name; }
     var byTier = {}; p.titles.forEach(function (t) { byTier[t.tier] = (byTier[t.tier] || 0) + 1; });
@@ -181,7 +202,7 @@ a.tit:hover{border-color:var(--ink)}
       '<div class="coverage"><b>Data covers ' + S.date(dataFrom) + " to " + S.date(dataTo) + ", this roster only.</b> A team here is a roster under Valve’s rule: its current five and earlier lineups that share three of them. " +
       "Matches by the organisation with a different core are a different team, so these are not the organisation’s all-time totals.</div>" +
       '<div class="tiles" aria-label="Current rank in each system">' + tiles + "</div>" +
-      '<div id="inact"></div>' + season() +
+      '<div id="inact"></div>' + season() + roundsHTML() +
       '<section><h2>Titles <small class="muted" style="font-weight:400;font-size:.9rem">' + p.titles.length + " since " + S.monthYear(dataFrom) + "</small></h2>" + (p.titles.length
         ? '<div class="tiersum">' + tierSum + "</div><div class=\"titles\">" + cab + "</div>"
         : '<p class="note">No S-, A- or B-tier titles since ' + S.monthYear(dataFrom) + ".</p>") +

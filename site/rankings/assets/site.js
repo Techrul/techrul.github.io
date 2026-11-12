@@ -546,6 +546,17 @@
     return usd >= 1e6 ? "$" + (usd / 1e6).toFixed(usd >= 1e7 ? 1 : 2).replace(/\.?0+$/, "") + "M" : usd >= 1e3 ? "$" + Math.round(usd / 1e3) + "k" : "$" + usd;
   };
   function wl(r) { return r && (r[0] + r[1]) ? r[0] + "–" + r[1] + ' <small>' + Math.round(100 * r[0] / (r[0] + r[1])) + "%</small>" : "–"; }
+  // rounds [won, lost, CT won, CT played, T won, T played, maps won, maps lost] -> a percentage and its share
+  function rpct(won, n) { return n ? (100 * won / n).toFixed(1) + "%" : "–"; }
+  function rshare(won, n) { return n ? won / n : null; }
+  S.roundRows = function (y, ra, rb) {  // compare rows for two teams' rounds: [label, a, b, compare a, compare b, higher better]
+    ra = ra || [0, 0, 0, 0, 0, 0, 0, 0]; rb = rb || [0, 0, 0, 0, 0, 0, 0, 0];
+    var mapsWL = function (r) { return r[6] + r[7] ? r[6] + "–" + r[7] + ' <small>' + Math.round(100 * r[6] / (r[6] + r[7])) + "%</small>" : "–"; };
+    return [[y + " maps", mapsWL(ra), mapsWL(rb), rshare(ra[6], ra[6] + ra[7]), rshare(rb[6], rb[6] + rb[7]), true],
+            [y + " round win %", rpct(ra[0], ra[0] + ra[1]), rpct(rb[0], rb[0] + rb[1]), rshare(ra[0], ra[0] + ra[1]), rshare(rb[0], rb[0] + rb[1]), true],
+            [y + " CT round win %", rpct(ra[2], ra[3]), rpct(rb[2], rb[3]), rshare(ra[2], ra[3]), rshare(rb[2], rb[3]), true],
+            [y + " T round win %", rpct(ra[4], ra[5]), rpct(rb[4], rb[5]), rshare(ra[4], ra[5]), rshare(rb[4], rb[5]), true]];
+  };
   function wpct(r) { return r && (r[0] + r[1]) ? r[0] / (r[0] + r[1]) : null; }
   function flip(score) { var p = String(score || "").split("–"); return p.length === 2 ? p[1] + "–" + p[0] : score; }
   function signed(n) { return n == null ? "–" : (n > 0 ? "+" : n < 0 ? "−" : "") + Math.abs(n).toLocaleString("en-US"); }
@@ -560,10 +571,11 @@
         [cs2 ? "Points" : "ATP points", S.num(cs2 ? A.points : A.official_points), S.num(cs2 ? B.points : B.official_points), cs2 ? A.points : A.official_points, cs2 ? B.points : B.official_points, true],
         ["Elo", S.num(A.elo), S.num(B.elo), A.elo, B.elo, true],
         [y + " win–loss", wl(sa.record), wl(sb.record), wpct(sa.record), wpct(sb.record), true],
-        ["All matches", wl((pa.record || {}).all), wl((pb.record || {}).all), wpct((pa.record || {}).all), wpct((pb.record || {}).all), true],
+        ["All matches", wl((pa.record || {}).all), wl((pb.record || {}).all), wpct((pa.record || {}).all), wpct((pb.record || {}).all), true]
+      ].concat(cs2 ? S.roundRows(y, (pa.rounds || {})["year:" + y], (pb.rounds || {})["year:" + y]) : []).concat([
         [y + " titles", S.num(sa.titles), S.num(sb.titles), sa.titles, sb.titles, true],
         ["Titles", S.num((pa.titles || []).length), S.num((pb.titles || []).length), (pa.titles || []).length, (pb.titles || []).length, true]
-      ];
+      ]);
       if (cs2) R.push([y + " prize money", S.money(sa.prize), S.money(sb.prize), sa.prize, sb.prize, true],
                       ["Prize money", S.money(pa.prize), S.money(pb.prize), pa.prize, pb.prize, true]);
       R.push([y + " Elo change", signed(sa.elo), signed(sb.elo), sa.elo, sb.elo, true]);
@@ -639,7 +651,10 @@
         var wb = ms ? ms.length - wa : 0;
         el.querySelector("#h2hw-score").innerHTML = ms ? '<b class="' + (wa > wb ? "lead" : "") + '">' + wa + '</b><i>–</i><b class="' + (wb > wa ? "lead" : "") + '">' + wb + "</b>" : "–";
         var last = ms && ms.length ? ms[ms.length - 1] : null, evs = (res[0][1] || {}).events || {};
+        var rw = 0, rl = 0;
+        if (cs2 && ms) ms.forEach(function (m) { rw += m[6] || 0; rl += m[7] || 0; });
         el.querySelector("#h2hw-last").innerHTML = (ms ? (ms.length ? "Last 2 years" + (cs2 ? ", every lineup" : "") : "No meetings in the last 2 years") : "") +
+          (rw + rl ? "<br><small>Rounds " + rw + "–" + rl + " (" + rpct(rw, rw + rl) + " " + S.esc(nm(A)) + ")</small>" : "") +
           (last ? '<br><small>Last: ' + S.esc((evs[last[1]] || [last[1]])[0]) + ", " + S.date(last[0]) + " · " + S.esc(nm(won(last) ? A : B)) + " won " + S.esc(won(last) ? (cs2 ? last[3] : last[4]) : (cs2 ? flip(last[3]) : last[4])) + "</small>" : "");
         el.querySelector("#h2hw-sa").innerHTML = side(A, pa);
         el.querySelector("#h2hw-sb").innerHTML = side(B, pb);

@@ -178,16 +178,19 @@
         var all = fa && fa.vs && B.org ? fa.vs[B.org] || [] : [];
         var ms = all.filter(function (m) { return m[0] >= from && (!H2H_LINEUPS || (m[4] === A.id && m[5] === B.id)); }).slice().reverse();
         var wa = ms.filter(function (m) { return m[2] === 1; }).length, wb = ms.length - wa;
+        var rw = 0, rl = 0;
+        ms.forEach(function (m) { rw += m[6] || 0; rl += m[7] || 0; });
         var box = document.getElementById("h2h");
         if (!fa) { box.innerHTML = '<p class="note">No head-to-head data for ' + S.esc(nm(A)) + " yet.</p>"; return; }
         if (!ms.length) { box.innerHTML = '<p class="note">No meetings ' + (H2H_LINEUPS ? "between these two lineups" : "between these organisations") + (days ? " in this period" : " in the data") + ".</p>"; return; }
         box.innerHTML = '<div class="h2h"><b>' + wa + "–" + wb + "</b><span>" + (wa === wb ? "Level" : S.esc(nm(wa > wb ? A : B)) + " leads") +
-          (H2H_LINEUPS ? " between these two lineups" : " between " + S.esc(A.name) + " and " + S.esc(B.name) + ", every lineup") + "</span></div>" +
-          '<div class="tablewrap"><table class="t"><thead><tr><th>Date</th><th>Event</th><th>Winner</th><th>Score</th></tr></thead><tbody>' + ms.map(function (m) {
+          (H2H_LINEUPS ? " between these two lineups" : " between " + S.esc(A.name) + " and " + S.esc(B.name) + ", every lineup") +
+          (rw + rl ? "<br>Rounds " + rw + "–" + rl + ": " + S.esc(nm(A)) + " won " + (100 * rw / (rw + rl)).toFixed(1) + "% of them" : "") + "</span></div>" +
+          '<div class="tablewrap"><table class="t"><thead><tr><th>Date</th><th>Event</th><th>Winner</th><th>Score</th><th class="num">Rounds</th></tr></thead><tbody>' + ms.map(function (m) {
             var ev = fa.events[m[1]] || [m[1], "", null], aWon = m[2] === 1, sc = aWon ? m[3] : String(m[3]).split("–").reverse().join("–");
             var evName = ev[2] ? '<a class="plink" href="event.html?key=' + encodeURIComponent(ev[2]) + '">' + S.esc(ev[0]) + "</a>" : S.esc(ev[0]);
             var lineup = (aWon ? m[4] !== A.id : m[5] !== B.id) ? ' <small class="muted">other lineup</small>' : "";
-            return "<tr><td>" + S.date(m[0]) + "</td><td>" + evName + " " + S.cs2tier(ev[1], "") + "</td><td>" + S.esc(nm(aWon ? A : B)) + lineup + '</td><td class="muted">' + S.esc(sc) + "</td></tr>";
+            return "<tr><td>" + S.date(m[0]) + "</td><td>" + evName + " " + S.cs2tier(ev[1], "") + "</td><td>" + S.esc(nm(aWon ? A : B)) + lineup + '</td><td class="muted">' + S.esc(sc) + '</td><td class="num muted">' + (m[6] + m[7] ? m[6] + "–" + m[7] : "–") + "</td></tr>";
           }).join("") + "</tbody></table></div>";
       }
       show();
