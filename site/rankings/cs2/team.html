@@ -153,13 +153,13 @@ a.tit:hover{border-color:var(--ink)}
       var rsys = S.recentSys(), rname = S.rsysList().filter(function (r) { return r[0] === rsys; })[0][1];
       var hasD = !!S.deltaKey(rsys) && p.recent.some(function (m) { return m.d; });
       var recent = p.recent.map(function (m) {
-        var opp = m.opp_link ? '<a class="plink" href="team.html?id=' + encodeURIComponent(m.opp) + '">' + S.esc(m.opp_name) + "</a>" : S.esc(m.opp_name);
+        var opp = S.logo({ org: m.opp_org, logo: m.opp_logo }) + (m.opp_link ? '<a class="plink" href="team.html?id=' + encodeURIComponent(m.opp) + '">' + S.esc(m.opp_name) + "</a>" : S.esc(m.opp_name));
         return "<tr><td>" + S.date(m.date) + "</td><td>" + S.esc(m.event) + ' <span class="muted">' + S.esc(TIER_NAME[m.tier] || "") + "</span></td><td>" + opp +
           '</td><td><span class="' + (m.won ? "win\">Won" : "loss\">Lost") + '</span><div class="muted">' + S.esc(m.score) + '</div></td><td class="n">' +
-          S.chanceText(S.chance(m, rsys), rsys) + "</td>" +
+          (rsys === "points" && m.pk ? S.pointsRanks(m.pk) : S.chanceText(S.chance(m, rsys), rsys)) + "</td>" +
           (hasD ? '<td class="n">' + (S.delta(m.d, rsys) || "–") + "</td>" : "") + "</tr>";
       }).join("");
-      return '<div class="head2"><h2>Recent matches</h2>' + S.sysChips("rsys", rsys) + '</div><div id="rinact" class="rinact"></div><p class="note">' + (rsys === "points" ? "Before the match: whether this team had more points than its opponent that week (points give no win chances)" : "Pre-match chance: what " + rname + " gave this team before each match") + (rsys === "vrs" ? " (from that week’s VRS standings; – where VRS had no standings for both sides)" : "") + (S.deltaKey(rsys) ? (rsys === "points" ? ". " + S.deltaNote(rsys, rname, "the team").replace(/\.$/, "") : ", and how much the team’s rating moved" + (S.deltaPeriod(rsys) ? ". " + S.deltaNote(rsys, rname, "the team").replace(/\.$/, "") : " from it")) : "") + '.</p><div class="tablewrap"><table class="t"><thead><tr><th>Date</th><th>Event</th><th>Opponent</th><th>Result</th><th class="n">' + (rsys === "points" ? "Before the match" : rname + " chance") + '</th>' + (hasD ? '<th class="n">' + (rsys === "points" ? "Points earned" : rname + " change" + (S.deltaPeriod(rsys) ? " (" + S.deltaPeriod(rsys) + ")" : "")) + "</th>" : "") + "</tr></thead><tbody>" + recent + "</tbody></table></div>";
+      return '<div class="head2"><h2>Recent matches</h2>' + S.sysChips("rsys", rsys) + '</div><div id="rinact" class="rinact"></div><p class="note">' + (rsys === "points" ? "Before the match: this team’s points rank and its opponent’s that week (points give no win chances)" : "Pre-match chance: what " + rname + " gave this team before each match") + (rsys === "vrs" ? " (from that week’s VRS standings; – where VRS had no standings for both sides)" : "") + (S.deltaKey(rsys) ? (rsys === "points" ? ". " + S.deltaNote(rsys, rname, "the team").replace(/\.$/, "") : ", and how much the team’s rating moved" + (S.deltaPeriod(rsys) ? ". " + S.deltaNote(rsys, rname, "the team").replace(/\.$/, "") : " from it")) : "") + '.</p><div class="tablewrap"><table class="t"><thead><tr><th>Date</th><th>Event</th><th>Opponent</th><th>Result</th><th class="n">' + (rsys === "points" ? "Before the match" : rname + " chance") + '</th>' + (hasD ? '<th class="n">' + (rsys === "points" ? "Points earned" : rname + " change" + (S.deltaPeriod(rsys) ? " (" + S.deltaPeriod(rsys) + ")" : "")) + "</th>" : "") + "</tr></thead><tbody>" + recent + "</tbody></table></div>";
     }
     function wireRecent() {
       var rsys = S.recentSys();
@@ -175,7 +175,7 @@ a.tit:hover{border-color:var(--ink)}
 
     main.innerHTML =
       S.back("index.html", "Back") +
-      '<div class="ph"><h1>' + S.esc(p.name) + (c.region ? '<span class="region">' + S.esc(c.region) + "</span>" : "") + '</h1><a class="cmp" href="predict.html?a=' + encodeURIComponent(p.id) + '">Compare with another team →</a></div>' +
+      '<div class="ph"><h1>' + S.logo(p, "lg") + S.esc(p.name) + (c.region ? '<span class="region">' + S.esc(c.region) + "</span>" : "") + '</h1><a class="cmp" href="predict.html?a=' + encodeURIComponent(p.id) + '">Compare with another team →</a></div>' +
       lineup + '<p class="facts">' + facts + S.outTag(p.last_match, asOf) + ' · <a class="extlink" href="' + S.esc(p.liquipedia) + '" target="_blank" rel="noopener">Liquipedia ↗</a>' +
         ' · <a class="extlink" href="' + S.esc(S.hltv(p.name)) + '" target="_blank" rel="noopener" title="Search HLTV for this team">HLTV ↗</a></p>' +
       '<div class="coverage"><b>Data covers ' + S.date(dataFrom) + " to " + S.date(dataTo) + ", this roster only.</b> A team here is a roster under Valve’s rule: its current five and earlier lineups that share three of them. " +

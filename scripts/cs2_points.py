@@ -19,7 +19,7 @@ at each placing is matched to the roster it fielded in that event's matches.
 """
 import re
 from collections import Counter, defaultdict
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 TOP = {"major": 2000, "1": 1000, "2": 500, "3": 250}
 BANDS = ((1, 1.0), (2, 0.65), (3, 0.40), (5, 0.20), (9, 0.10), (17, 0.05), (25, 0.025))  # first place of a band -> share
@@ -175,6 +175,68 @@ def prize_money(data, roster_of_match):
             rid = _roster_for(r, seen)
             if rid is not None:
                 out.append((rid, r.get("date") or (data.tournaments.get(page) or {}).get("end") or "", r["prize"], page))
+    return out
+
+
+def match_points(data, roster_of_match, today):
+    """{(match id, roster id): points}: what each match was worth, like rounds in the ATP's live ranking. A win that
+    lifts the team's guaranteed placing earns the difference; the rest of the event's points (or, at an event still
+    being played, of what the team is sure of so far) come with its last match. So a team's matches at an event add up
+    to exactly its points there.
+
+    The guaranteed placing after a match is the worst place still open: with 8 of 16 teams out, 8th. Teams go out on
+    the date of their placing, so this goes by day. The top-half rule, the Major rule and online events' 75% apply as
+    everywhere."""
+    day = today if isinstance(today, str) else today.strftime("%Y-%m-%d")
+    by_event, _last = _rosters_by_event(data, roster_of_match)
+    ms_by_event = defaultdict(list)
+    for m in data.matches:
+        if "rosters" in m and m.get("id"):
+            ms_by_event[m["event"]].append(m)
+    finished = {}
+    for rid, _end, pts, page in event_results(data, roster_of_match):
+        finished[(page, rid)] = pts
+    live, _events = live_results(data, roster_of_match, day)
+    so_far = {(page, rid): pts for rid, _d, pts, page in live}
+    out = {}
+    for page, ms in ms_by_event.items():
+        t = data.tournaments.get(page) or {}
+        top = _scoring(t)
+        field = t.get("teams") or 0
+        if not top or not field:
+            continue
+        major, mult = t.get("valve") == "Major Championship", 1.0 if t.get("lan") else ONLINE
+        seen = by_event.get(page, Counter())
+        out_on = []  # (date, roster) for each team out, from its placing
+        for r in _decided(data.placements.get(page, [])):
+            rid = _roster_for(r, seen)
+            s = _start(r["place"])
+            if rid is not None and s and s > 1 and r.get("date"):
+                out_on.append((r["date"][:10], rid))
+        def sure(rid, through):  # points the team is sure of once everyone out by `through` (a date) is out
+            left = field - sum(1 for d, r in out_on if d <= through and r != rid)
+            return top * share(left) * mult if left > 0 and _counts(left, field, major) else 0.0
+        ms.sort(key=lambda m: m.get("time") or 0)
+        teams = defaultdict(list)
+        for m in ms:
+            for i in (0, 1):
+                teams[roster_of_match(m, i)].append((m, i))
+        for rid, played in teams.items():
+            total = finished.get((page, rid), so_far.get((page, rid)))
+            if total is None:
+                continue  # the event doesn't score, or this team scored nothing there
+            given, held = 0.0, 0.0
+            for k, (m, i) in enumerate(played):
+                mday = datetime.fromtimestamp(m["time"], timezone.utc).strftime("%Y-%m-%d") if m.get("time") else m.get("date", "")[:10]
+                held = max(held, sure(rid, mday))
+                won = m.get("winner") == i + 1
+                if k == len(played) - 1:
+                    out[(m["id"], rid)] = round(total - given)
+                elif won and held - given >= 0.5:
+                    out[(m["id"], rid)] = round(held - given)
+                    given += round(held - given)
+                else:
+                    out[(m["id"], rid)] = 0  # nothing new guaranteed by this one (shown as 0, not as missing)
     return out
 
 

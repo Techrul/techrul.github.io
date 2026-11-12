@@ -87,6 +87,7 @@ def main():
     args = ap.parse_args()
 
     data = ad.load(args.data)
+    logo_have = ad.logos(args.data)
     usable = [m for m in data.matches if ad.usable(m)]
     rosters = ad.assign_rosters(usable)
     common = ad.to_common(usable)
@@ -184,6 +185,7 @@ def main():
             g = ad.valve_region(flags, region_table)
             region = ad.REGIONS[g] if g is not None else None
         t = {"id": p, "name": r.name, "short": ad.short_name(r.name), "region": region, "players": r.players,
+             **ad.logo_fields(r.name, logo_have),
              "flags": flags,
              "liquipedia": "https://liquipedia.net/counterstrike/" + r.name.replace(" ", "_"), "org": ad.org_slug(r.name),
              "matches": count.get(p, 0), "matches_12m": m12[p],

@@ -91,7 +91,7 @@
   function rankOf(p, key) { return key === "official" ? p.official_rank : (p.ranks || {})[S.sysKey(key)]; }
   function nm(t) { return t.short; }
   function roster(t) { return '<span class="roster">' + t.players.map(function (n, i) { return "<span>" + S.flag(t.flags[i] === "world" ? "" : t.flags[i]) + S.esc(S.pname(n)) + "</span>"; }).join("") + "</span>"; }
-  function link(t) { return '<a class="plink" href="team.html?id=' + encodeURIComponent(t.id) + '"' + (t.short !== t.name ? ' title="' + S.esc(t.name) + '"' : "") + ">" + S.esc(t.short) + "</a>"; }
+  function link(t) { return S.logo(t, "md") + '<a class="plink" href="team.html?id=' + encodeURIComponent(t.id) + '"' + (t.short !== t.name ? ' title="' + S.esc(t.name) + '"' : "") + ">" + S.esc(t.short) + "</a>"; }
 
   Promise.all([S.json("data/rankings.json"), S.json("data/backtest.json").catch(function () { return null; })]).then(function (res) {
     var teams = res[0].teams, byId = {};

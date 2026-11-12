@@ -46,11 +46,18 @@
   };
   // which sport the page belongs to ("tennis", "cs2" or "" on the overview), from the header's data-sport
   S.sport = function () { var h = document.querySelector("header.bar"); return h ? h.dataset.sport || "" : ""; };
+  // a team's logo (from Liquipedia, kept with the site): light and dark versions follow the theme
+  S.logo = function (t, cls) {
+    if (!t || !t.logo || !t.org) return "";
+    var src = S.base() + "cs2/data/logos/" + encodeURIComponent(t.org), c = "tlogo" + (cls ? " " + cls : "");
+    var img = function (file, k) { return '<img class="' + c + k + '" src="' + src + file + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">'; };
+    return t.logo === 2 ? img(".png", " lg-l") + img("-dark.png", " lg-d") : img(".png", "");
+  };
   S.team = function (t, opts) {
     if (!t) return "–";
     var name = S.esc(t.name || t.id), title = t.full && t.full !== t.name ? ' title="' + S.esc(t.full) + '"' : "";
-    return (opts && opts.nolink) ? "<span" + title + ">" + name + "</span>" :
-      '<a class="plink" href="' + S.base() + "cs2/team.html?id=" + encodeURIComponent(t.id) + '"' + title + ">" + name + "</a>";
+    return S.logo(t) + ((opts && opts.nolink) ? "<span" + title + ">" + name + "</span>" :
+      '<a class="plink" href="' + S.base() + "cs2/team.html?id=" + encodeURIComponent(t.id) + '"' + title + ">" + name + "</a>");
   };
   // CS2 event tiers: Liquipedia's S/A/B/C (tiers 1-4); Valve's Majors get their own label
   var CS2_TIER = { "1": ["S-Tier", "silver"], "2": ["A-Tier", "bronze"], "3": ["B-Tier", "slate"], "4": ["C-Tier", "slate"] };
@@ -208,6 +215,12 @@
   // CS2 also has its ATP-style points (the page's sport is only known once the page has loaded)
   S.rsysList = function () { return S.sport() === "cs2" ? S.RSYS.concat([["points", "Points"]]) : S.RSYS; };
   // a pre-match "chance" cell: a percentage, or for Points (rank-based, no probability) who had more points
+  // points ranks before a match, [this side, the other]: "#3 v #12"
+  S.pointsRanks = function (pk) {
+    if (!pk) return null;
+    var r = function (x) { return x ? "#" + x : "unranked"; };
+    return '<span title="Points ranks that week">' + r(pk[0]) + ' <small class="muted">v</small> ' + r(pk[1]) + "</span>";
+  };
   S.chanceText = function (v, sys) {
     if (v == null) return "–";
     if (sys === "points") return v === 0.5 ? "Even" : v > 0.5 ? "More points" : "Fewer points";
@@ -236,7 +249,7 @@
   S.deltaPeriod = function (sys) { return sys === "vrs" || sys === "points" ? "event" : sys === "glicko" ? (S.sport() === "cs2" ? "week" : "month") : null; };
   // the sentence that explains a period change (Glicko-2: its rating period; VRS: the whole event)
   S.deltaNote = function (sys, nm, who) {
-    if (sys === "points") return "Points are earned for the final placing, so the number is what " + who + " earned at the event, shown on " + who + "’s last match there (best 10 results of 52 weeks count).";
+    if (sys === "points") return "Points are earned for the final placing; like rounds in the ATP’s live ranking, a win that lifts " + who + "’s guaranteed placing earns the difference, and the rest comes with " + who + "’s last match there, so an event’s matches add up to its points (best 10 results of 52 weeks count).";
     if (sys === "vrs") return "VRS counts a result once the event is over, so its change is " + who + "’s VRS points from the Monday before the event to the Monday after, shown on " + who + "’s last match there.";
     var per = S.deltaPeriod(sys);
     return per ? nm + " rates a whole " + per + "’s results together, so its change covers every match " + who + " played that " + per + "." : "";
@@ -592,8 +605,8 @@
       return ms.filter(function (m) { return m[0] >= since; });
     }
     el.innerHTML = '<div class="h2hw-head"><h2>Head to head</h2><span class="h2hw-why" id="h2hw-why"></span></div>' +
-      '<div class="h2hw-pick"><input id="h2hw-a" aria-label="' + (cs2 ? "Team" : "Player") + ' 1" autocomplete="off" spellcheck="false"><span class="h2hw-score" id="h2hw-score">–</span>' +
-      '<input id="h2hw-b" class="b" aria-label="' + (cs2 ? "Team" : "Player") + ' 2" autocomplete="off" spellcheck="false"></div>' +
+      '<div class="h2hw-pick"><div class="h2hw-side"><span id="h2hw-la"></span><input id="h2hw-a" aria-label="' + (cs2 ? "Team" : "Player") + ' 1" autocomplete="off" spellcheck="false"></div><span class="h2hw-score" id="h2hw-score">–</span>' +
+      '<div class="h2hw-side b"><input id="h2hw-b" class="b" aria-label="' + (cs2 ? "Team" : "Player") + ' 2" autocomplete="off" spellcheck="false"><span id="h2hw-lb"></span></div></div>' +
       '<div class="h2hw-sub"><span id="h2hw-sa"></span><span id="h2hw-last"></span><span id="h2hw-sb"></span></div>' +
       '<div class="h2hw-rows" id="h2hw-rows"></div>' +
       '<a class="h2hw-more" id="h2hw-more" href="predict.html">Full head-to-head and every system →</a>';
@@ -609,6 +622,8 @@
 
     function draw() {
       ia.value = nm(A); ib.value = nm(B);
+      el.querySelector("#h2hw-la").innerHTML = cs2 ? S.logo(A, "md") : "";
+      el.querySelector("#h2hw-lb").innerHTML = cs2 ? S.logo(B, "md") : "";
       var why = el.querySelector("#h2hw-why");
       why.innerHTML = A.id + "|" + B.id !== featuredPair ? "" : f.event ?
         (cs2 ? S.cs2tier(f.tier, "") + " " : "") + "Up next: " + S.esc(f.event) + (f.date ? " · " + S.date(f.date.slice(0, 10)) : "") :

@@ -81,6 +81,27 @@ def test_defending():
     assert cp.defending(res, [{"page": "IEM/2026/Beijing", "start": "2026-11-02"}], tours) == {"IEM/2026/Beijing": "IEM/2025/Chengdu"}
 
 
+def test_match_points():
+    # an 8-team S-Tier LAN: quarter-finals on day 1, semis day 2, final day 3; A beats E, C and B
+    tours = {"Ev": {"tier": "1", "tiertype": "", "start": "2026-10-01", "end": "2026-10-03", "teams": 8, "lan": True, "valve": "Tier 1"}}
+    places = {"Ev": [{"place": "1", "team": "A", "date": "2026-10-03"}, {"place": "2", "team": "B", "date": "2026-10-03"},
+                     {"place": "3-4", "team": "C", "date": "2026-10-02"}, {"place": "3-4", "team": "D", "date": "2026-10-02"}]
+                    + [{"place": "5-8", "team": n, "date": "2026-10-01"} for n in "EFGH"]}
+    names = "ABCDEFGH"
+    def mm(k, a, b, day, winner):
+        x = m("Ev", a, b, names.index(a), names.index(b))
+        x.update(id=f"m{k}", time=int(__import__("datetime").datetime(2026, 10, day, 12 + k % 4).timestamp()), winner=winner)
+        return x
+    matches = [mm(0, "A", "E", 1, 1), mm(1, "B", "F", 1, 1), mm(2, "C", "G", 1, 1), mm(3, "D", "H", 1, 1),
+               mm(4, "A", "C", 2, 1), mm(5, "B", "D", 2, 1), mm(6, "A", "B", 3, 1)]
+    got = cp.match_points(ad.Data(matches, tours, places, {}), lambda x, i: f"r{x['rosters'][i]}", "2026-10-10")
+    # A: a quarter-final win makes it sure of 3rd-4th (400), the semi of 2nd (+250), the final the rest (+350)
+    assert (got[("m0", "r0")], got[("m4", "r0")], got[("m6", "r0")]) == (400, 250, 350)
+    assert got[("m1", "r1")] + got[("m5", "r1")] + got[("m6", "r1")] == 650 and got[("m6", "r1")] == 0
+    assert got[("m2", "r2")] + got[("m4", "r2")] == 400 and got[("m4", "r2")] == 0  # C: all of it with the quarter win
+    assert ("m0", "r4") not in got or got[("m0", "r4")] == 200                       # E: 5th-8th, on its only match
+
+
 if __name__ == "__main__":
     for name, fn in sorted(globals().items()):
         if name.startswith("test_"):

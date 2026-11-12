@@ -20,7 +20,7 @@ import os
 import re
 import sys
 from collections import Counter, defaultdict
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 
 UPSET = 0.35  # a win the system gave the winner under 35% counts as an upset
 
@@ -647,7 +647,8 @@ def main():
     dump("h2h.json", {"events": ev_names, "pairs": pairs})
     print(f"h2h: {len(pairs)} pairs, {sum(len(v) for v in pairs.values())} meetings")
     # the head-to-head widget's default match-up: the best-ranked scheduled match at a Grand Slam, the ATP Finals or a
-    # Masters 1000 in the coming week (ESPN's schedule), else #1 against #2 in the official ranking
+    # Masters 1000 in the coming week (ESPN's schedule), else #1 against #2 in the official ranking. "Best-ranked": both
+    # players' ranks added up; on a tie, the match with the highest-ranked player in it
     BIG = re.compile(r"ATP Finals|Masters|Australian Open|Roland Garros|French Open|Wimbledon|US Open|BNP Paribas Open|"
                      r"Miami Open|Monte-?Carlo|Mutua Madrid|Internazionali|Italian Open|National Bank Open|Canadian Open|"
                      r"Cincinnati|Shanghai|Rolex Paris", re.I)
@@ -671,12 +672,14 @@ def main():
     def orank(pid_):
         return current.get(pid_, {}).get("official_rank") or 9999
     picks = []
+    now_ = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M")
     for sm in sched:
         a_, b_ = who(sm["a"]), who(sm["b"])
-        if a_ and b_ and a_ != b_ and BIG.search(sm["event"]):
-            picks.append((sorted((orank(a_), orank(b_))), sm["date"], a_, b_, sm))
+        if a_ and b_ and a_ != b_ and BIG.search(sm["event"]) and sm["date"] >= now_:
+            rk_ = sorted((orank(a_), orank(b_)))
+            picks.append((sum(rk_), rk_[0], sm["date"], a_, b_, sm))
     if picks:
-        _r, _d, a_, b_, sm = min(picks, key=lambda x: (x[0], x[1]))
+        *_rest, a_, b_, sm = min(picks, key=lambda x: x[:3])
         featured = {"a": a_, "b": b_, "event": sm["event"], "date": sm["date"]}
     else:
         top = sorted((p_ for p_ in current if current[p_].get("official_rank")), key=orank)[:2]
