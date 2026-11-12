@@ -1,60 +1,6 @@
 [
 {
-"date": "2026-11-12 02:00",
-"event": "BLAST/Rivals/2026/Fall",
-"event_name": "BLAST Rivals Fall 2026",
-"tier": "1",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "Legacy",
-"template": "legacy 2023"
-},
-{
-"name": "Team Falcons",
-"template": "team falcons 2022"
-}
-]
-},
-{
-"date": "2026-11-12 04:30",
-"event": "BLAST/Rivals/2026/Fall",
-"event_name": "BLAST Rivals Fall 2026",
-"tier": "1",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "FURIA",
-"template": "furia 2025"
-},
-{
-"name": "Team Vitality",
-"template": "team vitality 2023"
-}
-]
-},
-{
-"date": "2026-11-12 07:00",
-"event": "BLAST/Rivals/2026/Fall",
-"event_name": "BLAST Rivals Fall 2026",
-"tier": "1",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "FUT Esports",
-"template": "fut esports"
-},
-{
-"name": "MOUZ",
-"template": "mouz 2021"
-}
-]
-},
-{
-"date": "2026-11-12 09:30",
+"date": "2026-11-12 10:40",
 "event": "BLAST/Rivals/2026/Fall",
 "event_name": "BLAST Rivals Fall 2026",
 "tier": "1",
@@ -80,12 +26,12 @@
 "bestof": 3,
 "teams": [
 {
-"name": "Group B 2<sup>nd</sup> Place",
-"template": "tbd"
+"name": "Team Vitality",
+"template": "team vitality 2023"
 },
 {
-"name": "Group A 3<sup>rd</sup> Place",
-"template": "tbd"
+"name": "MOUZ",
+"template": "mouz 2021"
 }
 ]
 },
@@ -98,12 +44,12 @@
 "bestof": 3,
 "teams": [
 {
-"name": "Group A 2<sup>nd</sup> Place",
+"name": "Group B 2<sup>nd</sup> Place",
 "template": "tbd"
 },
 {
-"name": "Group B 3<sup>rd</sup> Place",
-"template": "tbd"
+"name": "Team Falcons",
+"template": "team falcons 2022"
 }
 ]
 },
