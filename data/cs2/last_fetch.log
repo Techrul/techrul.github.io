@@ -1,55 +1,53 @@
-refresh: matches since 2026-10-22, events since 2026-09-13
-  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-21]] AND [[date::<2026-11-13]] offset 0
-  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-21]] AND [[date::<2026-11-13]] offset 1000
-  request 3: tournament [[enddate::>2026-09-12]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-13]] offset 0
-  request 4: placement [[prizemoney::>0]] AND [[date::>2026-09-12]] AND [[date::<2026-11-13]] offset 0
-  1288 matches, 301 tournaments, 903 prize rows
-  request 5: match [[finished::0]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-10]] AND [[date::<2026-11-20]] AND offset 0
+refresh: matches since 2026-10-23, events since 2026-09-14
+  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-22]] AND [[date::<2026-11-14]] offset 0
+  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-22]] AND [[date::<2026-11-14]] offset 1000
+  request 3: tournament [[enddate::>2026-09-13]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-14]] offset 0
+  request 4: placement [[prizemoney::>0]] AND [[date::>2026-09-13]] AND [[date::<2026-11-14]] offset 0
+  1216 matches, 290 tournaments, 875 prize rows
+  request 5: match [[finished::0]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-11]] AND [[date::<2026-11-21]] AND offset 0
   scheduled S- and A-tier matches (next week): 6
-  request 6: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2019-04-30]] AND [[date::<2019-06-01]] offset 0
-  request 7: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2019-04-30]] AND [[date::<2019-06-01]] offset 1000
-  request 8: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2019-04-30]] AND [[date::<2019-06-01]] offset 2000
-  2019-05 matches: 2064
-  request 9: tournament [[enddate::>2019-04-30]] AND [[enddate::<2019-06-01]] offset 0
-  2019-05 tournaments: 157
-  request 10: placement [[prizemoney::>0]] AND [[date::>2019-04-30]] AND [[date::<2019-06-01]] offset 0
-  2019-05 placements: 409
-  request 11: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2019-03-31]] AND [[date::<2019-05-01]] offset 0
-  request 12: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2019-03-31]] AND [[date::<2019-05-01]] offset 1000
-  2019-04 matches: 1999
-  request 13: tournament [[enddate::>2019-03-31]] AND [[enddate::<2019-05-01]] offset 0
-  2019-04 tournaments: 160
-  request 14: placement [[prizemoney::>0]] AND [[date::>2019-03-31]] AND [[date::<2019-05-01]] offset 0
-  2019-04 placements: 464
-  request 15: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2019-02-28]] AND [[date::<2019-04-01]] offset 0
-  request 16: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2019-02-28]] AND [[date::<2019-04-01]] offset 1000
-  2019-03 matches: 1539
-  request 17: tournament [[enddate::>2019-02-28]] AND [[enddate::<2019-04-01]] offset 0
-  2019-03 tournaments: 127
-  request 18: placement [[prizemoney::>0]] AND [[date::>2019-02-28]] AND [[date::<2019-04-01]] offset 0
-  2019-03 placements: 404
-  request 19: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2019-01-31]] AND [[date::<2019-03-01]] offset 0
-  request 20: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2019-01-31]] AND [[date::<2019-03-01]] offset 1000
-  2019-02 matches: 1504
-  request 21: tournament [[enddate::>2019-01-31]] AND [[enddate::<2019-03-01]] offset 0
-  2019-02 tournaments: 89
-  request 22: placement [[prizemoney::>0]] AND [[date::>2019-01-31]] AND [[date::<2019-03-01]] offset 0
-  2019-02 placements: 337
-  request 23: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-12-31]] AND [[date::<2019-02-01]] offset 0
-  2019-01 matches: 845
-  request 24: tournament [[enddate::>2018-12-31]] AND [[enddate::<2019-02-01]] offset 0
-  2019-01 tournaments: 62
-  request 25: placement [[prizemoney::>0]] AND [[date::>2018-12-31]] AND [[date::<2019-02-01]] offset 0
-  2019-01 placements: 263
-  request 26: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-11-30]] AND [[date::<2019-01-01]] offset 0
-  request 27: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-11-30]] AND [[date::<2019-01-01]] offset 1000
-  2018-12 matches: 1202
-  request 28: tournament [[enddate::>2018-11-30]] AND [[enddate::<2019-01-01]] offset 0
-  2018-12 tournaments: 132
-  request 29: placement [[prizemoney::>0]] AND [[date::>2018-11-30]] AND [[date::<2019-01-01]] offset 0
-  2018-12 placements: 572
-  request 30: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-10-31]] AND [[date::<2018-12-01]] offset 0
+  request 6: tournament [[startdate::>2026-11-13]] AND [[liquipediatier::1]] offset 0
+  request 7: tournament [[startdate::>2026-11-13]] AND [[liquipediatier::2]] offset 0
+  upcoming S- and A-tier tournaments: 40
+  request 8: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-10-31]] AND [[date::<2018-12-01]] offset 0
+  request 9: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-10-31]] AND [[date::<2018-12-01]] offset 1000
+  request 10: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-10-31]] AND [[date::<2018-12-01]] offset 2000
+  2018-11 matches: 2391
+  request 11: tournament [[enddate::>2018-10-31]] AND [[enddate::<2018-12-01]] offset 0
+  2018-11 tournaments: 190
+  request 12: placement [[prizemoney::>0]] AND [[date::>2018-10-31]] AND [[date::<2018-12-01]] offset 0
+  2018-11 placements: 522
+  request 13: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-09-30]] AND [[date::<2018-11-01]] offset 0
+  request 14: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-09-30]] AND [[date::<2018-11-01]] offset 1000
+  request 15: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-09-30]] AND [[date::<2018-11-01]] offset 2000
+  2018-10 matches: 2677
+  request 16: tournament [[enddate::>2018-09-30]] AND [[enddate::<2018-11-01]] offset 0
+  2018-10 tournaments: 155
+  request 17: placement [[prizemoney::>0]] AND [[date::>2018-09-30]] AND [[date::<2018-11-01]] offset 0
+  2018-10 placements: 400
+  request 18: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-08-31]] AND [[date::<2018-10-01]] offset 0
+  request 19: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-08-31]] AND [[date::<2018-10-01]] offset 1000
+  2018-09 matches: 1760
+  request 20: tournament [[enddate::>2018-08-31]] AND [[enddate::<2018-10-01]] offset 0
+  2018-09 tournaments: 147
+  request 21: placement [[prizemoney::>0]] AND [[date::>2018-08-31]] AND [[date::<2018-10-01]] offset 0
+  2018-09 placements: 403
+  request 22: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-07-31]] AND [[date::<2018-09-01]] offset 0
+  request 23: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-07-31]] AND [[date::<2018-09-01]] offset 1000
+  2018-08 matches: 1799
+  request 24: tournament [[enddate::>2018-07-31]] AND [[enddate::<2018-09-01]] offset 0
+  2018-08 tournaments: 203
+  request 25: placement [[prizemoney::>0]] AND [[date::>2018-07-31]] AND [[date::<2018-09-01]] offset 0
+  2018-08 placements: 455
+  request 26: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-06-30]] AND [[date::<2018-08-01]] offset 0
+  request 27: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-06-30]] AND [[date::<2018-08-01]] offset 1000
+  2018-07 matches: 1561
+  request 28: tournament [[enddate::>2018-06-30]] AND [[enddate::<2018-08-01]] offset 0
+  2018-07 tournaments: 109
+  request 29: placement [[prizemoney::>0]] AND [[date::>2018-06-30]] AND [[date::<2018-08-01]] offset 0
+  2018-07 placements: 360
+  request 30: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2018-05-31]] AND [[date::<2018-07-01]] offset 0
 stopped early (request budget for this run used (30)); the next run continues from here
 requests used: 30
-175762 matches stored, 12244 tournaments, 7387 events with prize money, 55187 players; 96 of 131 months fetched (2016-01 to 2026-11)
-::notice title=CS2 fetch::stopped early (request budget for this run used (30)); the next run continues from here; 30 requests; 175762 matches stored, 12244 tournaments, 7387 events with prize money, 55187 players; 96 of 131 months fetched (2016-01 to 2026-11)
+185703 matches stored, 13048 tournaments, 7797 events with prize money, 59183 players; 101 of 131 months fetched (2016-01 to 2026-11)
+::notice title=CS2 fetch::stopped early (request budget for this run used (30)); the next run continues from here; 30 requests; 185703 matches stored, 13048 tournaments, 7797 events with prize money, 59183 players; 101 of 131 months fetched (2016-01 to 2026-11)

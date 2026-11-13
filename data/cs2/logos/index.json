@@ -1,4 +1,22 @@
 {
+"00_nation": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/0/02/00_Nation_2023_allmode.png/400px-00_Nation_2023_allmode.png|https://liquipedia.net/commons/images/thumb/0/02/00_Nation_2023_allmode.png/400px-00_Nation_2023_allmode.png",
+"light": "00_nation.png",
+"name": "00 Nation",
+"src": "https://liquipedia.net/commons/images/thumb/0/02/00_Nation_2023_allmode.png/400px-00_Nation_2023_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/0/02/00_Nation_2023_allmode.png/400px-00_Nation_2023_allmode.png"
+},
+"00_prospects": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/4/45/00_Prospects_allmode.png/400px-00_Prospects_allmode.png|https://liquipedia.net/commons/images/thumb/4/45/00_Prospects_allmode.png/400px-00_Prospects_allmode.png",
+"light": "00_prospects.png",
+"name": "00 Prospects",
+"src": "https://liquipedia.net/commons/images/thumb/4/45/00_Prospects_allmode.png/400px-00_Prospects_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/4/45/00_Prospects_allmode.png/400px-00_Prospects_allmode.png"
+},
 "100_thieves": {
 "checked": "2026-11-12",
 "dark": "100_thieves-dark.png",
@@ -7,6 +25,24 @@
 "name": "100 Thieves",
 "src": "https://liquipedia.net/commons/images/thumb/c/c2/100_Thieves_lightmode.png/400px-100_Thieves_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/7/78/100_Thieves_darkmode.png/400px-100_Thieves_darkmode.png"
+},
+"100pinggods": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/f/f8/100PingGods_sep_2020_allmode.png/400px-100PingGods_sep_2020_allmode.png|https://liquipedia.net/commons/images/thumb/f/f8/100PingGods_sep_2020_allmode.png/400px-100PingGods_sep_2020_allmode.png",
+"light": "100pinggods.png",
+"name": "100PingGods",
+"src": "https://liquipedia.net/commons/images/thumb/f/f8/100PingGods_sep_2020_allmode.png/400px-100PingGods_sep_2020_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/f/f8/100PingGods_sep_2020_allmode.png/400px-100PingGods_sep_2020_allmode.png"
+},
+"1shot": {
+"checked": "2026-11-13",
+"dark": "1shot-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/5/50/1shot_teamcard_lightmode.png/400px-1shot_teamcard_lightmode.png|https://liquipedia.net/commons/images/thumb/1/1a/1shot_teamcard_darkmode.png/400px-1shot_teamcard_darkmode.png",
+"light": "1shot.png",
+"name": "1shot",
+"src": "https://liquipedia.net/commons/images/thumb/5/50/1shot_teamcard_lightmode.png/400px-1shot_teamcard_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/1/1a/1shot_teamcard_darkmode.png/400px-1shot_teamcard_darkmode.png"
 },
 "1w_team": {
 "checked": "2026-11-12",
@@ -40,6 +76,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/e/ee/3DMAX_2024_allmode.png/291px-3DMAX_2024_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/e/ee/3DMAX_2024_allmode.png/291px-3DMAX_2024_allmode.png"
 },
+"4glory_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/5/51/4glory_Esports_allmode.png/322px-4glory_Esports_allmode.png|https://liquipedia.net/commons/images/thumb/5/51/4glory_Esports_allmode.png/322px-4glory_Esports_allmode.png",
+"light": "4glory_esports.png",
+"name": "4glory Esports",
+"src": "https://liquipedia.net/commons/images/thumb/5/51/4glory_Esports_allmode.png/322px-4glory_Esports_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/5/51/4glory_Esports_allmode.png/322px-4glory_Esports_allmode.png"
+},
 "500": {
 "checked": "2026-11-12",
 "dark": null,
@@ -48,6 +93,24 @@
 "name": "500",
 "src": "https://liquipedia.net/commons/images/thumb/9/97/500_Esports_2024_allmode.png/400px-500_Esports_2024_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/9/97/500_Esports_2024_allmode.png/400px-500_Esports_2024_allmode.png"
+},
+"5balls": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/2/21/5balls_allmode.png/400px-5balls_allmode.png|https://liquipedia.net/commons/images/thumb/2/21/5balls_allmode.png/400px-5balls_allmode.png",
+"light": "5balls.png",
+"name": "5balls",
+"src": "https://liquipedia.net/commons/images/thumb/2/21/5balls_allmode.png/400px-5balls_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/2/21/5balls_allmode.png/400px-5balls_allmode.png"
+},
+"5power_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/d/d1/5Power_Gaming_allmode.png/399px-5Power_Gaming_allmode.png|https://liquipedia.net/commons/images/thumb/d/d1/5Power_Gaming_allmode.png/399px-5Power_Gaming_allmode.png",
+"light": "5power_gaming.png",
+"name": "5Power Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/d/d1/5Power_Gaming_allmode.png/399px-5Power_Gaming_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/d/d1/5Power_Gaming_allmode.png/399px-5Power_Gaming_allmode.png"
 },
 "5star_esports": {
 "name": "5star eSports",
@@ -104,6 +167,24 @@
 "src": "https://liquipedia.net/commons/images/thumb/7/7d/Acend_allmode.png/400px-Acend_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/7/7d/Acend_allmode.png/400px-Acend_allmode.png"
 },
+"agf_esport": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/f/f3/AGF_Esport_allmode.png/330px-AGF_Esport_allmode.png|https://liquipedia.net/commons/images/thumb/f/f3/AGF_Esport_allmode.png/330px-AGF_Esport_allmode.png",
+"light": "agf_esport.png",
+"name": "AGF Esport",
+"src": "https://liquipedia.net/commons/images/thumb/f/f3/AGF_Esport_allmode.png/330px-AGF_Esport_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/f/f3/AGF_Esport_allmode.png/330px-AGF_Esport_allmode.png"
+},
+"ago_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/a/af/AGO_esports_2023_sept_allmode.png/400px-AGO_esports_2023_sept_allmode.png|https://liquipedia.net/commons/images/thumb/a/af/AGO_esports_2023_sept_allmode.png/400px-AGO_esports_2023_sept_allmode.png",
+"light": "ago_esports.png",
+"name": "AGO esports",
+"src": "https://liquipedia.net/commons/images/thumb/a/af/AGO_esports_2023_sept_allmode.png/400px-AGO_esports_2023_sept_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/a/af/AGO_esports_2023_sept_allmode.png/400px-AGO_esports_2023_sept_allmode.png"
+},
 "akimbo_esports": {
 "checked": "2026-11-12",
 "dark": null,
@@ -141,6 +222,11 @@
 "src": "https://liquipedia.net/commons/images/thumb/4/43/Alpha_Gaming_2021_lightmode.png/383px-Alpha_Gaming_2021_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/4/43/Alpha_Gaming_2021_lightmode.png/383px-Alpha_Gaming_2021_lightmode.png"
 },
+"alpha_red": {
+"name": "ALPHA Red",
+"src": "https://liquipedia.net/commons/images/thumb/1/12/ALPHA_Red_allmode.png/400px-ALPHA_Red_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/1/12/ALPHA_Red_allmode.png/400px-ALPHA_Red_allmode.png"
+},
 "alter_ego": {
 "checked": "2026-11-12",
 "dark": null,
@@ -168,6 +254,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/f/fd/Achieveminds_allmode.png/209px-Achieveminds_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/f/fd/Achieveminds_allmode.png/209px-Achieveminds_allmode.png"
 },
+"ambush": {
+"checked": "2026-11-13",
+"dark": "ambush-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/f/fe/Ambush_Esport_lightmode.png/400px-Ambush_Esport_lightmode.png|https://liquipedia.net/commons/images/thumb/0/0a/Ambush_Esport_darkmode.png/400px-Ambush_Esport_darkmode.png",
+"light": "ambush.png",
+"name": "Ambush",
+"src": "https://liquipedia.net/commons/images/thumb/f/fe/Ambush_Esport_lightmode.png/400px-Ambush_Esport_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/0/0a/Ambush_Esport_darkmode.png/400px-Ambush_Esport_darkmode.png"
+},
 "amkal_esports": {
 "name": "AMKAL ESPORTS",
 "src": "https://liquipedia.net/commons/images/thumb/4/4a/AMKAL_ESPORTS_2024_lightmode.png/382px-AMKAL_ESPORTS_2024_lightmode.png",
@@ -182,6 +277,20 @@
 "src": "https://liquipedia.net/commons/images/thumb/d/da/Anonymo_Esports_2021_allmode.png/400px-Anonymo_Esports_2021_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/d/da/Anonymo_Esports_2021_allmode.png/400px-Anonymo_Esports_2021_allmode.png"
 },
+"apeks": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/a/a7/Apeks_2021_darkmode.png/400px-Apeks_2021_darkmode.png|https://liquipedia.net/commons/images/thumb/a/a7/Apeks_2021_darkmode.png/400px-Apeks_2021_darkmode.png",
+"light": "apeks.png",
+"name": "Apeks",
+"src": "https://liquipedia.net/commons/images/thumb/a/a7/Apeks_2021_darkmode.png/400px-Apeks_2021_darkmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/a/a7/Apeks_2021_darkmode.png/400px-Apeks_2021_darkmode.png"
+},
+"apeks_rebels": {
+"name": "Apeks Rebels",
+"src": "https://liquipedia.net/commons/images/thumb/2/22/Apeks_2021_lightmode.png/400px-Apeks_2021_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/a/a7/Apeks_2021_darkmode.png/400px-Apeks_2021_darkmode.png"
+},
 "arcred": {
 "checked": "2026-11-12",
 "dark": null,
@@ -190,6 +299,15 @@
 "name": "ARCRED",
 "src": "https://liquipedia.net/commons/images/thumb/b/b2/ARCRED_CS2_2025_allmode.png/389px-ARCRED_CS2_2025_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/b/b2/ARCRED_CS2_2025_allmode.png/389px-ARCRED_CS2_2025_allmode.png"
+},
+"arctic_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/3/3d/Arctic_eSports_allmode.png/400px-Arctic_eSports_allmode.png|https://liquipedia.net/commons/images/thumb/3/3d/Arctic_eSports_allmode.png/400px-Arctic_eSports_allmode.png",
+"light": "arctic_esports.png",
+"name": "Arctic eSports",
+"src": "https://liquipedia.net/commons/images/thumb/3/3d/Arctic_eSports_allmode.png/400px-Arctic_eSports_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/3/3d/Arctic_eSports_allmode.png/400px-Arctic_eSports_allmode.png"
 },
 "astralis": {
 "checked": "2026-11-12",
@@ -208,6 +326,15 @@
 "name": "Astralis Talent",
 "src": "https://liquipedia.net/commons/images/thumb/3/3d/Astralis_2020_allmode.png/329px-Astralis_2020_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/3/3d/Astralis_2020_allmode.png/329px-Astralis_2020_allmode.png"
+},
+"atk": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/7/71/ATK_2020_allmode.png/400px-ATK_2020_allmode.png|https://liquipedia.net/commons/images/thumb/7/71/ATK_2020_allmode.png/400px-ATK_2020_allmode.png",
+"light": "atk.png",
+"name": "ATK",
+"src": "https://liquipedia.net/commons/images/thumb/7/71/ATK_2020_allmode.png/400px-ATK_2020_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/7/71/ATK_2020_allmode.png/400px-ATK_2020_allmode.png"
 },
 "atox_esports": {
 "name": "ATOX Esports",
@@ -232,6 +359,42 @@
 "src": "https://liquipedia.net/commons/images/thumb/4/48/Aurora_Young_Blud_2025_allmode.png/248px-Aurora_Young_Blud_2025_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/4/48/Aurora_Young_Blud_2025_allmode.png/248px-Aurora_Young_Blud_2025_allmode.png"
 },
+"avangar": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/2/24/AVANGAR_2019_allmode.png/400px-AVANGAR_2019_allmode.png|https://liquipedia.net/commons/images/thumb/2/24/AVANGAR_2019_allmode.png/400px-AVANGAR_2019_allmode.png",
+"light": "avangar.png",
+"name": "AVANGAR",
+"src": "https://liquipedia.net/commons/images/thumb/2/24/AVANGAR_2019_allmode.png/400px-AVANGAR_2019_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/2/24/AVANGAR_2019_allmode.png/400px-AVANGAR_2019_allmode.png"
+},
+"avant_gaming": {
+"checked": "2026-11-13",
+"dark": "avant_gaming-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/1/14/AVANT_2019_lightmode.png/400px-AVANT_2019_lightmode.png|https://liquipedia.net/commons/images/thumb/6/60/AVANT_2019_darkmode.png/400px-AVANT_2019_darkmode.png",
+"light": "avant_gaming.png",
+"name": "Avant Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/1/14/AVANT_2019_lightmode.png/400px-AVANT_2019_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/6/60/AVANT_2019_darkmode.png/400px-AVANT_2019_darkmode.png"
+},
+"ave": {
+"checked": "2026-11-13",
+"dark": "ave-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/3/32/AVE_logo_lightmode.png/400px-AVE_logo_lightmode.png|https://liquipedia.net/commons/images/thumb/c/c1/AVE_logo_darkmode.png/400px-AVE_logo_darkmode.png",
+"light": "ave.png",
+"name": "AVE",
+"src": "https://liquipedia.net/commons/images/thumb/3/32/AVE_logo_lightmode.png/400px-AVE_logo_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c1/AVE_logo_darkmode.png/400px-AVE_logo_darkmode.png"
+},
+"avez": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/8/8b/AVEZ_allmode.png/400px-AVEZ_allmode.png|https://liquipedia.net/commons/images/thumb/8/8b/AVEZ_allmode.png/400px-AVEZ_allmode.png",
+"light": "avez.png",
+"name": "AVEZ",
+"src": "https://liquipedia.net/commons/images/thumb/8/8b/AVEZ_allmode.png/400px-AVEZ_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/8/8b/AVEZ_allmode.png/400px-AVEZ_allmode.png"
+},
 "b8": {
 "checked": "2026-11-12",
 "dark": "b8-dark.png",
@@ -250,6 +413,11 @@
 "src": "https://liquipedia.net/commons/images/thumb/2/26/B%C3%A9k%C3%A9scsabai_E-Sport_Egyes%C3%BClet_lightmode.png/400px-B%C3%A9k%C3%A9scsabai_E-Sport_Egyes%C3%BClet_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/3/3b/B%C3%A9k%C3%A9scsabai_E-Sport_Egyes%C3%BClet_darkmode.png/400px-B%C3%A9k%C3%A9scsabai_E-Sport_Egyes%C3%BClet_darkmode.png"
 },
+"bad_news_bears": {
+"name": "Bad News Bears",
+"src": "https://liquipedia.net/commons/images/thumb/3/32/Bad_News_Bears_2021_lightmode.png/400px-Bad_News_Bears_2021_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/6/6d/Bad_News_Bears_2021_darkmode.png/400px-Bad_News_Bears_2021_darkmode.png"
+},
 "bad_news_eagles": {
 "checked": "2026-11-12",
 "dark": null,
@@ -258,6 +426,11 @@
 "name": "Bad News Eagles",
 "src": "https://liquipedia.net/commons/images/thumb/9/93/Bad_News_Eagles_allmode.png/275px-Bad_News_Eagles_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/9/93/Bad_News_Eagles_allmode.png/275px-Bad_News_Eagles_allmode.png"
+},
+"baecon_gaming_group": {
+"name": "Baecon Gaming Group",
+"src": "https://liquipedia.net/commons/images/thumb/7/74/Baecon_Gaming_Group_2020_allmode.png/400px-Baecon_Gaming_Group_2020_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/7/74/Baecon_Gaming_Group_2020_allmode.png/400px-Baecon_Gaming_Group_2020_allmode.png"
 },
 "baks_esports": {
 "checked": "2026-11-12",
@@ -304,6 +477,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/8/8f/Be%C5%9Fikta%C5%9F_Esports_2019_allmode.png/389px-Be%C5%9Fikta%C5%9F_Esports_2019_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/8f/Be%C5%9Fikta%C5%9F_Esports_2019_allmode.png/389px-Be%C5%9Fikta%C5%9F_Esports_2019_allmode.png"
 },
+"berzerk": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/8/89/Berzerk_2017_allmode.png|https://liquipedia.net/commons/images/8/89/Berzerk_2017_allmode.png",
+"light": "berzerk.png",
+"name": "Berzerk",
+"src": "https://liquipedia.net/commons/images/8/89/Berzerk_2017_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/8/89/Berzerk_2017_allmode.png"
+},
 "bestia": {
 "checked": "2026-11-12",
 "dark": "bestia-dark.png",
@@ -336,6 +518,20 @@
 "src": "https://liquipedia.net/commons/images/thumb/c/c3/Betera_2024_allmode.png/376px-Betera_2024_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/c/c3/Betera_2024_allmode.png/376px-Betera_2024_allmode.png"
 },
+"beyond_esports": {
+"name": "Beyond Esports",
+"src": "https://liquipedia.net/commons/images/thumb/2/20/Beyond_Esports_2020_allmode.png/400px-Beyond_Esports_2020_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/2/20/Beyond_Esports_2020_allmode.png/400px-Beyond_Esports_2020_allmode.png"
+},
+"bhop_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/e/ec/BHOP_Esports_allmode.png/298px-BHOP_Esports_allmode.png|https://liquipedia.net/commons/images/thumb/e/ec/BHOP_Esports_allmode.png/298px-BHOP_Esports_allmode.png",
+"light": "bhop_esports.png",
+"name": "BHOP Esports",
+"src": "https://liquipedia.net/commons/images/thumb/e/ec/BHOP_Esports_allmode.png/298px-BHOP_Esports_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/e/ec/BHOP_Esports_allmode.png/298px-BHOP_Esports_allmode.png"
+},
 "big": {
 "checked": "2026-11-12",
 "dark": "big-dark.png",
@@ -363,6 +559,38 @@
 "src": "https://liquipedia.net/commons/images/thumb/4/4c/BIG_2020_lightmode.png/278px-BIG_2020_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/6/69/BIG_2020_darkmode.png/278px-BIG_2020_darkmode.png"
 },
+"big_time_regal_gaming": {
+"name": "Big Time Regal Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/3/37/BigTime_Regal_2018_allmode.png/400px-BigTime_Regal_2018_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/3/37/BigTime_Regal_2018_allmode.png/400px-BigTime_Regal_2018_allmode.png"
+},
+"bl4ze_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/1/17/BL4ZE_Esports_allmode.png|https://liquipedia.net/commons/images/1/17/BL4ZE_Esports_allmode.png",
+"light": "bl4ze_esports.png",
+"name": "BL4ZE Esports",
+"src": "https://liquipedia.net/commons/images/1/17/BL4ZE_Esports_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/1/17/BL4ZE_Esports_allmode.png"
+},
+"black_dragons_e_sports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/a/aa/Black_Dragons_e-Sports_allmode.png/304px-Black_Dragons_e-Sports_allmode.png|https://liquipedia.net/commons/images/thumb/a/aa/Black_Dragons_e-Sports_allmode.png/304px-Black_Dragons_e-Sports_allmode.png",
+"light": "black_dragons_e_sports.png",
+"name": "Black Dragons e-Sports",
+"src": "https://liquipedia.net/commons/images/thumb/a/aa/Black_Dragons_e-Sports_allmode.png/304px-Black_Dragons_e-Sports_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/a/aa/Black_Dragons_e-Sports_allmode.png/304px-Black_Dragons_e-Sports_allmode.png"
+},
+"black_dragons_female": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/a/aa/Black_Dragons_e-Sports_allmode.png/304px-Black_Dragons_e-Sports_allmode.png|https://liquipedia.net/commons/images/thumb/a/aa/Black_Dragons_e-Sports_allmode.png/304px-Black_Dragons_e-Sports_allmode.png",
+"light": "black_dragons_female.png",
+"name": "Black Dragons Female",
+"src": "https://liquipedia.net/commons/images/thumb/a/aa/Black_Dragons_e-Sports_allmode.png/304px-Black_Dragons_e-Sports_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/a/aa/Black_Dragons_e-Sports_allmode.png/304px-Black_Dragons_e-Sports_allmode.png"
+},
 "bluejays": {
 "checked": "2026-11-12",
 "dark": null,
@@ -371,6 +599,33 @@
 "name": "BLUEJAYS",
 "src": "https://liquipedia.net/commons/images/thumb/1/1e/BLUEJAYS_2015_allmode.png/400px-BLUEJAYS_2015_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/1/1e/BLUEJAYS_2015_allmode.png/400px-BLUEJAYS_2015_allmode.png"
+},
+"bluejays_international": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/1/1e/BLUEJAYS_2015_allmode.png/400px-BLUEJAYS_2015_allmode.png|https://liquipedia.net/commons/images/thumb/1/1e/BLUEJAYS_2015_allmode.png/400px-BLUEJAYS_2015_allmode.png",
+"light": "bluejays_international.png",
+"name": "BLUEJAYS International",
+"src": "https://liquipedia.net/commons/images/thumb/1/1e/BLUEJAYS_2015_allmode.png/400px-BLUEJAYS_2015_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/1/1e/BLUEJAYS_2015_allmode.png/400px-BLUEJAYS_2015_allmode.png"
+},
+"boca_juniors_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/6/69/Boca_Juniors_Gaming_jan_2022_full_allmode.png/344px-Boca_Juniors_Gaming_jan_2022_full_allmode.png|https://liquipedia.net/commons/images/thumb/6/69/Boca_Juniors_Gaming_jan_2022_full_allmode.png/344px-Boca_Juniors_Gaming_jan_2022_full_allmode.png",
+"light": "boca_juniors_gaming.png",
+"name": "Boca Juniors Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/6/69/Boca_Juniors_Gaming_jan_2022_full_allmode.png/344px-Boca_Juniors_Gaming_jan_2022_full_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/6/69/Boca_Juniors_Gaming_jan_2022_full_allmode.png/344px-Boca_Juniors_Gaming_jan_2022_full_allmode.png"
+},
+"boom_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/d/d0/Boom_Esports_allmode.png/299px-Boom_Esports_allmode.png|https://liquipedia.net/commons/images/thumb/d/d0/Boom_Esports_allmode.png/299px-Boom_Esports_allmode.png",
+"light": "boom_esports.png",
+"name": "BOOM Esports",
+"src": "https://liquipedia.net/commons/images/thumb/d/d0/Boom_Esports_allmode.png/299px-Boom_Esports_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/d/d0/Boom_Esports_allmode.png/299px-Boom_Esports_allmode.png"
 },
 "boring_player": {
 "name": "BORING PLAYER",
@@ -391,6 +646,11 @@
 "src": "https://liquipedia.net/commons/images/thumb/9/99/Bounty_Hunters_2026_allmode.png/292px-Bounty_Hunters_2026_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/9/99/Bounty_Hunters_2026_allmode.png/292px-Bounty_Hunters_2026_allmode.png"
 },
+"bpro_gaming": {
+"name": "BPro Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/1/1b/BPro_Gaming_2018_allmode.png/400px-BPro_Gaming_2018_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/1/1b/BPro_Gaming_2018_allmode.png/400px-BPro_Gaming_2018_allmode.png"
+},
 "bravado_gaming": {
 "checked": "2026-11-12",
 "dark": null,
@@ -400,6 +660,24 @@
 "src": "https://liquipedia.net/commons/images/thumb/7/7f/Bravado_Gaming_2021_allmode.png/400px-Bravado_Gaming_2021_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/7/7f/Bravado_Gaming_2021_allmode.png/400px-Bravado_Gaming_2021_allmode.png"
 },
+"bravos_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/1/1a/Bravos_Gaming_2020_teamcardimage.png/218px-Bravos_Gaming_2020_teamcardimage.png|https://liquipedia.net/commons/images/thumb/1/1a/Bravos_Gaming_2020_teamcardimage.png/218px-Bravos_Gaming_2020_teamcardimage.png",
+"light": "bravos_gaming.png",
+"name": "Bravos Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/1/1a/Bravos_Gaming_2020_teamcardimage.png/218px-Bravos_Gaming_2020_teamcardimage.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/1/1a/Bravos_Gaming_2020_teamcardimage.png/218px-Bravos_Gaming_2020_teamcardimage.png"
+},
+"bren_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/4/4c/Bren_Esports_allmode.png/399px-Bren_Esports_allmode.png|https://liquipedia.net/commons/images/thumb/4/4c/Bren_Esports_allmode.png/399px-Bren_Esports_allmode.png",
+"light": "bren_esports.png",
+"name": "Bren Esports",
+"src": "https://liquipedia.net/commons/images/thumb/4/4c/Bren_Esports_allmode.png/399px-Bren_Esports_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/4/4c/Bren_Esports_allmode.png/399px-Bren_Esports_allmode.png"
+},
 "brute": {
 "checked": "2026-11-12",
 "dark": "brute-dark.png",
@@ -408,6 +686,11 @@
 "name": "BRUTE",
 "src": "https://liquipedia.net/commons/images/thumb/8/83/Team_Brute_2020_lightmode.png/330px-Team_Brute_2020_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/6/69/Team_Brute_2020_darkmode.png/330px-Team_Brute_2020_darkmode.png"
+},
+"budapest_five": {
+"name": "Budapest Five",
+"src": "https://liquipedia.net/commons/images/thumb/1/10/Budapest_Five_allmode.png/297px-Budapest_Five_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/1/10/Budapest_Five_allmode.png/297px-Budapest_Five_allmode.png"
 },
 "bushido_wildcats": {
 "checked": "2026-11-12",
@@ -432,6 +715,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/e/e6/CatEvil_allmode.png/315px-CatEvil_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/e/e6/CatEvil_allmode.png/315px-CatEvil_allmode.png"
 },
+"cex": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/e/e0/CeX_allmode.png/400px-CeX_allmode.png|https://liquipedia.net/commons/images/thumb/e/e0/CeX_allmode.png/400px-CeX_allmode.png",
+"light": "cex.png",
+"name": "CeX",
+"src": "https://liquipedia.net/commons/images/thumb/e/e0/CeX_allmode.png/400px-CeX_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/e/e0/CeX_allmode.png/400px-CeX_allmode.png"
+},
 "change_the_game": {
 "checked": "2026-11-12",
 "dark": "change_the_game-dark.png",
@@ -441,10 +733,34 @@
 "src": "https://liquipedia.net/commons/images/4/41/Change_The_Game_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/0/00/Change_The_Game_darkmode.png"
 },
+"chaos_esports_club": {
+"name": "Chaos Esports Club",
+"src": "https://liquipedia.net/commons/images/thumb/d/da/Chaos_Esports_Club_2019_acid_lightmode.png/400px-Chaos_Esports_Club_2019_acid_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/2/20/Chaos_Esports_Club_2019_acid_darkmode.png/400px-Chaos_Esports_Club_2019_acid_darkmode.png"
+},
+"checkmate": {
+"name": "Checkmate",
+"src": "https://liquipedia.net/commons/images/thumb/8/8a/Checkmate_2021_lightmode.png/315px-Checkmate_2021_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/2/2c/Checkmate_2021_darkmode.png/315px-Checkmate_2021_darkmode.png"
+},
+"chetz_esports": {
+"name": "Chetz Esports",
+"src": "https://liquipedia.net/commons/images/thumb/3/3a/Chetz_Esports_2021_lightmode.png/398px-Chetz_Esports_2021_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/9/92/Chetz_Esports_2021_darkmode.png/398px-Chetz_Esports_2021_darkmode.png"
+},
 "chicken_coop_esports": {
 "name": "Chicken Coop Esports",
 "src": "https://liquipedia.net/commons/images/thumb/a/ab/Chicken_Coop_Esports_2024_allmode.png/366px-Chicken_Coop_Esports_2024_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/a/ab/Chicken_Coop_Esports_2024_allmode.png/366px-Chicken_Coop_Esports_2024_allmode.png"
+},
+"chiefs_esports_club": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/9/9d/Chiefs_Esports_Club_allmode.png/321px-Chiefs_Esports_Club_allmode.png|https://liquipedia.net/commons/images/thumb/9/9d/Chiefs_Esports_Club_allmode.png/321px-Chiefs_Esports_Club_allmode.png",
+"light": "chiefs_esports_club.png",
+"name": "Chiefs Esports Club",
+"src": "https://liquipedia.net/commons/images/thumb/9/9d/Chiefs_Esports_Club_allmode.png/321px-Chiefs_Esports_Club_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/9/9d/Chiefs_Esports_Club_allmode.png/321px-Chiefs_Esports_Club_allmode.png"
 },
 "chinggis_warriors": {
 "checked": "2026-11-12",
@@ -473,6 +789,11 @@
 "src": "https://liquipedia.net/commons/images/thumb/1/17/Coalesce_lightmode.png/400px-Coalesce_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/80/Coalesce_darkmode.png/400px-Coalesce_darkmode.png"
 },
+"codewise_unicorns": {
+"name": "Codewise Unicorns",
+"src": "https://liquipedia.net/commons/images/thumb/b/b1/Codewise_Unicorns_allmode.png/315px-Codewise_Unicorns_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/b/b1/Codewise_Unicorns_allmode.png/315px-Codewise_Unicorns_allmode.png"
+},
 "complexity": {
 "checked": "2026-11-12",
 "dark": null,
@@ -482,10 +803,60 @@
 "src": "https://liquipedia.net/commons/images/thumb/9/98/Complexity_2025_allmode.png/400px-Complexity_2025_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/9/98/Complexity_2025_allmode.png/400px-Complexity_2025_allmode.png"
 },
+"conquer_gaming": {
+"name": "Conquer Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/4/4f/Conquer_Gaming_2019_allmode.png/345px-Conquer_Gaming_2019_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/4/4f/Conquer_Gaming_2019_allmode.png/345px-Conquer_Gaming_2019_allmode.png"
+},
+"copenhagen_flames": {
+"checked": "2026-11-13",
+"dark": "copenhagen_flames-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/0/08/Copenhagen_Flames_2018_lightmode.png/242px-Copenhagen_Flames_2018_lightmode.png|https://liquipedia.net/commons/images/thumb/a/a1/Copenhagen_Flames_2018_darkmode.png/242px-Copenhagen_Flames_2018_darkmode.png",
+"light": "copenhagen_flames.png",
+"name": "Copenhagen Flames",
+"src": "https://liquipedia.net/commons/images/thumb/0/08/Copenhagen_Flames_2018_lightmode.png/242px-Copenhagen_Flames_2018_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/a/a1/Copenhagen_Flames_2018_darkmode.png/242px-Copenhagen_Flames_2018_darkmode.png"
+},
+"corinthians_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/3/3a/Corinthians_Esports_allmode.png/320px-Corinthians_Esports_allmode.png|https://liquipedia.net/commons/images/thumb/3/3a/Corinthians_Esports_allmode.png/320px-Corinthians_Esports_allmode.png",
+"light": "corinthians_esports.png",
+"name": "Corinthians Esports",
+"src": "https://liquipedia.net/commons/images/thumb/3/3a/Corinthians_Esports_allmode.png/320px-Corinthians_Esports_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/3/3a/Corinthians_Esports_allmode.png/320px-Corinthians_Esports_allmode.png"
+},
+"counter_logic_gaming_red": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/8/89/Counter_Logic_Gaming_Red_allmode.png/400px-Counter_Logic_Gaming_Red_allmode.png|https://liquipedia.net/commons/images/thumb/8/89/Counter_Logic_Gaming_Red_allmode.png/400px-Counter_Logic_Gaming_Red_allmode.png",
+"light": "counter_logic_gaming_red.png",
+"name": "Counter Logic Gaming Red",
+"src": "https://liquipedia.net/commons/images/thumb/8/89/Counter_Logic_Gaming_Red_allmode.png/400px-Counter_Logic_Gaming_Red_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/8/89/Counter_Logic_Gaming_Red_allmode.png/400px-Counter_Logic_Gaming_Red_allmode.png"
+},
 "cplay": {
 "name": "CPLAY",
 "src": "https://liquipedia.net/commons/images/thumb/f/f1/CPLAY_2018_allmode.png/400px-CPLAY_2018_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/f/f1/CPLAY_2018_allmode.png/400px-CPLAY_2018_allmode.png"
+},
+"cr4zy": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/c/c0/CR4ZY_allmode.png/400px-CR4ZY_allmode.png|https://liquipedia.net/commons/images/thumb/c/c0/CR4ZY_allmode.png/400px-CR4ZY_allmode.png",
+"light": "cr4zy.png",
+"name": "CR4ZY",
+"src": "https://liquipedia.net/commons/images/thumb/c/c0/CR4ZY_allmode.png/400px-CR4ZY_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c0/CR4ZY_allmode.png/400px-CR4ZY_allmode.png"
+},
+"cryptova": {
+"checked": "2026-11-13",
+"dark": "cryptova-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/9/9f/Cryptova_lightmode.png/400px-Cryptova_lightmode.png|https://liquipedia.net/commons/images/thumb/9/9e/Cryptova_darkmode.png/400px-Cryptova_darkmode.png",
+"light": "cryptova.png",
+"name": "Cryptova",
+"src": "https://liquipedia.net/commons/images/thumb/9/9f/Cryptova_lightmode.png/400px-Cryptova_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/9/9e/Cryptova_darkmode.png/400px-Cryptova_darkmode.png"
 },
 "cybershoke_esports": {
 "name": "CYBERSHOKE Esports",
@@ -501,6 +872,11 @@
 "src": "https://liquipedia.net/commons/images/thumb/a/ac/CYBERSHOKE_Prospects_lightmode.png/350px-CYBERSHOKE_Prospects_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/82/CYBERSHOKE_Prospects_darkmode.png/350px-CYBERSHOKE_Prospects_darkmode.png"
 },
+"d13": {
+"name": "D13",
+"src": "https://liquipedia.net/commons/images/thumb/2/21/D13_2018_allmode.png/400px-D13_2018_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/2/21/D13_2018_allmode.png/400px-D13_2018_allmode.png"
+},
 "dark_tigers": {
 "checked": "2026-11-12",
 "dark": null,
@@ -509,6 +885,11 @@
 "name": "Dark Tigers",
 "src": "https://liquipedia.net/commons/images/thumb/b/b4/Dark_Tigers_allmode.png/378px-Dark_Tigers_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/b/b4/Dark_Tigers_allmode.png/378px-Dark_Tigers_allmode.png"
+},
+"defusekids": {
+"name": "Defusekids",
+"src": "https://liquipedia.net/commons/images/thumb/9/92/Defusekids_2018_lightmode.png/371px-Defusekids_2018_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/9/92/Defusekids_2018_darkmode.png/371px-Defusekids_2018_darkmode.png"
 },
 "dendele_cs": {
 "checked": "2026-11-12",
@@ -524,10 +905,42 @@
 "src": "https://liquipedia.net/commons/images/thumb/6/63/Depo_2025_lightmode.png/375px-Depo_2025_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/e/e0/Depo_2025_darkmode.png/375px-Depo_2025_darkmode.png"
 },
+"detona_gaming": {
+"name": "DETONA Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/9/9c/DETONA_Gaming_2019_allmode.png/371px-DETONA_Gaming_2019_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/9/9c/DETONA_Gaming_2019_allmode.png/371px-DETONA_Gaming_2019_allmode.png"
+},
 "detonate": {
 "name": "DETONATE",
 "src": "https://liquipedia.net/commons/images/thumb/3/32/DETONATE_2024_allmode.png/394px-DETONATE_2024_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/3/32/DETONATE_2024_allmode.png/394px-DETONATE_2024_allmode.png"
+},
+"dignitas": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/5/56/Dignitas_2021_allmode.png/352px-Dignitas_2021_allmode.png|https://liquipedia.net/commons/images/thumb/5/56/Dignitas_2021_allmode.png/352px-Dignitas_2021_allmode.png",
+"light": "dignitas.png",
+"name": "Dignitas",
+"src": "https://liquipedia.net/commons/images/thumb/5/56/Dignitas_2021_allmode.png/352px-Dignitas_2021_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/5/56/Dignitas_2021_allmode.png/352px-Dignitas_2021_allmode.png"
+},
+"divizon": {
+"checked": "2026-11-13",
+"dark": "divizon-dark.png",
+"got": "https://liquipedia.net/commons/images/f/ff/DIVIZON_2017_lightmode.png|https://liquipedia.net/commons/images/d/dc/DIVIZON_2017_darkmode.png",
+"light": "divizon.png",
+"name": "DIVIZON",
+"src": "https://liquipedia.net/commons/images/f/ff/DIVIZON_2017_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/d/dc/DIVIZON_2017_darkmode.png"
+},
+"dnmk_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/9/9a/DNMK_Esports_2022_allmode.png/320px-DNMK_Esports_2022_allmode.png|https://liquipedia.net/commons/images/thumb/9/9a/DNMK_Esports_2022_allmode.png/320px-DNMK_Esports_2022_allmode.png",
+"light": "dnmk_esports.png",
+"name": "DNMK Esports",
+"src": "https://liquipedia.net/commons/images/thumb/9/9a/DNMK_Esports_2022_allmode.png/320px-DNMK_Esports_2022_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/9/9a/DNMK_Esports_2022_allmode.png/320px-DNMK_Esports_2022_allmode.png"
 },
 "donstu_esports": {
 "checked": "2026-11-12",
@@ -537,6 +950,20 @@
 "name": "DONSTU Esports",
 "src": "https://liquipedia.net/commons/images/thumb/2/21/Donstu_Esports_lightmode.png/400px-Donstu_Esports_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/1/18/Donstu_Esports_darkmode.png/400px-Donstu_Esports_darkmode.png"
+},
+"double_poney": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/9/94/DBL_Poney_allmode.png/398px-DBL_Poney_allmode.png|https://liquipedia.net/commons/images/thumb/9/94/DBL_Poney_allmode.png/398px-DBL_Poney_allmode.png",
+"light": "double_poney.png",
+"name": "Double Poney",
+"src": "https://liquipedia.net/commons/images/thumb/9/94/DBL_Poney_allmode.png/398px-DBL_Poney_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/9/94/DBL_Poney_allmode.png/398px-DBL_Poney_allmode.png"
+},
+"dreameaters": {
+"name": "DreamEaters",
+"src": "https://liquipedia.net/commons/images/thumb/e/ef/DreamEaters_2020_lightmode.png/228px-DreamEaters_2020_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/d/dc/DreamEaters_2020_darkmode.png/229px-DreamEaters_2020_darkmode.png"
 },
 "drillas": {
 "checked": "2026-11-12",
@@ -588,6 +1015,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/9/93/ECSTATIC_2023_allmode.png/400px-ECSTATIC_2023_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/9/93/ECSTATIC_2023_allmode.png/400px-ECSTATIC_2023_allmode.png"
 },
+"ehome": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/d/d5/EHOME_allmode.png/400px-EHOME_allmode.png|https://liquipedia.net/commons/images/thumb/d/d5/EHOME_allmode.png/400px-EHOME_allmode.png",
+"light": "ehome.png",
+"name": "EHOME",
+"src": "https://liquipedia.net/commons/images/thumb/d/d5/EHOME_allmode.png/400px-EHOME_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/d/d5/EHOME_allmode.png/400px-EHOME_allmode.png"
+},
 "elevate": {
 "checked": "2026-11-12",
 "dark": "elevate-dark.png",
@@ -616,6 +1052,33 @@
 "src": "https://liquipedia.net/commons/images/thumb/7/7f/Endpoint_2020_lightmode.png/400px-Endpoint_2020_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/e/ea/Endpoint_2020_darkmode.png/400px-Endpoint_2020_darkmode.png"
 },
+"enterprise_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/5/56/ENTERPRISE_Esports_2023_allmode.png/400px-ENTERPRISE_Esports_2023_allmode.png|https://liquipedia.net/commons/images/thumb/5/56/ENTERPRISE_Esports_2023_allmode.png/400px-ENTERPRISE_Esports_2023_allmode.png",
+"light": "enterprise_esports.png",
+"name": "ENTERPRISE esports",
+"src": "https://liquipedia.net/commons/images/thumb/5/56/ENTERPRISE_Esports_2023_allmode.png/400px-ENTERPRISE_Esports_2023_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/5/56/ENTERPRISE_Esports_2023_allmode.png/400px-ENTERPRISE_Esports_2023_allmode.png"
+},
+"entropiq": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/6/6c/Entropiq_allmode.png/304px-Entropiq_allmode.png|https://liquipedia.net/commons/images/thumb/6/6c/Entropiq_allmode.png/304px-Entropiq_allmode.png",
+"light": "entropiq.png",
+"name": "Entropiq",
+"src": "https://liquipedia.net/commons/images/thumb/6/6c/Entropiq_allmode.png/304px-Entropiq_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/6/6c/Entropiq_allmode.png/304px-Entropiq_allmode.png"
+},
+"entropiq_prague": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/6/6c/Entropiq_allmode.png/304px-Entropiq_allmode.png|https://liquipedia.net/commons/images/thumb/6/6c/Entropiq_allmode.png/304px-Entropiq_allmode.png",
+"light": "entropiq_prague.png",
+"name": "Entropiq Prague",
+"src": "https://liquipedia.net/commons/images/thumb/6/6c/Entropiq_allmode.png/304px-Entropiq_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/6/6c/Entropiq_allmode.png/304px-Entropiq_allmode.png"
+},
 "entropy_gaming": {
 "checked": "2026-11-12",
 "dark": "entropy_gaming-dark.png",
@@ -643,6 +1106,24 @@
 "src": "https://liquipedia.net/commons/images/thumb/3/3b/CSGO_default_lightmode.png/400px-CSGO_default_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/5/58/CSGO_default_darkmode.png/400px-CSGO_default_darkmode.png"
 },
+"epic_dudes": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/8/83/EPIC_DUDES_allmode.png/400px-EPIC_DUDES_allmode.png|https://liquipedia.net/commons/images/thumb/8/83/EPIC_DUDES_allmode.png/400px-EPIC_DUDES_allmode.png",
+"light": "epic_dudes.png",
+"name": "EPIC DUDES",
+"src": "https://liquipedia.net/commons/images/thumb/8/83/EPIC_DUDES_allmode.png/400px-EPIC_DUDES_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/8/83/EPIC_DUDES_allmode.png/400px-EPIC_DUDES_allmode.png"
+},
+"epsilon_esports": {
+"checked": "2026-11-13",
+"dark": "epsilon_esports-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/e/ed/Epsilon_Esports_lightmode.png/400px-Epsilon_Esports_lightmode.png|https://liquipedia.net/commons/images/thumb/4/4e/Epsilon_Esports_darkmode.png/400px-Epsilon_Esports_darkmode.png",
+"light": "epsilon_esports.png",
+"name": "Epsilon Esports",
+"src": "https://liquipedia.net/commons/images/thumb/e/ed/Epsilon_Esports_lightmode.png/400px-Epsilon_Esports_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/4/4e/Epsilon_Esports_darkmode.png/400px-Epsilon_Esports_darkmode.png"
+},
 "eruption": {
 "name": "Eruption",
 "src": "https://liquipedia.net/commons/images/thumb/e/ee/Eruption_2023_lightmode.png/271px-Eruption_2023_lightmode.png",
@@ -656,6 +1137,11 @@
 "name": "ESC Gaming",
 "src": "https://liquipedia.net/commons/images/thumb/4/45/ESC_Gaming_2023_allmode.png/400px-ESC_Gaming_2023_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/4/45/ESC_Gaming_2023_allmode.png/400px-ESC_Gaming_2023_allmode.png"
+},
+"espada": {
+"name": "ESPADA",
+"src": "https://liquipedia.net/commons/images/thumb/5/53/Espada_allmode.png/279px-Espada_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/5/53/Espada_allmode.png/279px-Espada_allmode.png"
 },
 "esport_academy_copenhagen": {
 "checked": "2026-11-12",
@@ -684,6 +1170,42 @@
 "src": "https://liquipedia.net/commons/images/thumb/e/ec/Eternal_Fire_2023_allmode.png/400px-Eternal_Fire_2023_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/e/ec/Eternal_Fire_2023_allmode.png/400px-Eternal_Fire_2023_allmode.png"
 },
+"euronics_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/e/e7/EURONICS_Gaming_2019_allmode.png/311px-EURONICS_Gaming_2019_allmode.png|https://liquipedia.net/commons/images/thumb/e/e7/EURONICS_Gaming_2019_allmode.png/311px-EURONICS_Gaming_2019_allmode.png",
+"light": "euronics_gaming.png",
+"name": "EURONICS Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/e/e7/EURONICS_Gaming_2019_allmode.png/311px-EURONICS_Gaming_2019_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/e/e7/EURONICS_Gaming_2019_allmode.png/311px-EURONICS_Gaming_2019_allmode.png"
+},
+"evil_geniuses": {
+"checked": "2026-11-13",
+"dark": "evil_geniuses-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/1/14/Evil_Geniuses_2023_lightmode.png/299px-Evil_Geniuses_2023_lightmode.png|https://liquipedia.net/commons/images/thumb/7/74/Evil_Geniuses_2020_darkmode.png/299px-Evil_Geniuses_2020_darkmode.png",
+"light": "evil_geniuses.png",
+"name": "Evil Geniuses",
+"src": "https://liquipedia.net/commons/images/thumb/1/14/Evil_Geniuses_2023_lightmode.png/299px-Evil_Geniuses_2023_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/7/74/Evil_Geniuses_2020_darkmode.png/299px-Evil_Geniuses_2020_darkmode.png"
+},
+"extra_salt": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/c/cb/Extra_Salt_2021_allmode.png/400px-Extra_Salt_2021_allmode.png|https://liquipedia.net/commons/images/thumb/c/cb/Extra_Salt_2021_allmode.png/400px-Extra_Salt_2021_allmode.png",
+"light": "extra_salt.png",
+"name": "Extra Salt",
+"src": "https://liquipedia.net/commons/images/thumb/c/cb/Extra_Salt_2021_allmode.png/400px-Extra_Salt_2021_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/cb/Extra_Salt_2021_allmode.png/400px-Extra_Salt_2021_allmode.png"
+},
+"extremum": {
+"checked": "2026-11-13",
+"dark": "extremum-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/f/f9/EXTREMUM_lightmode.png/400px-EXTREMUM_lightmode.png|https://liquipedia.net/commons/images/thumb/c/c8/EXTREMUM_darkmode.png/400px-EXTREMUM_darkmode.png",
+"light": "extremum.png",
+"name": "EXTREMUM",
+"src": "https://liquipedia.net/commons/images/thumb/f/f9/EXTREMUM_lightmode.png/400px-EXTREMUM_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c8/EXTREMUM_darkmode.png/400px-EXTREMUM_darkmode.png"
+},
 "eyeballers": {
 "checked": "2026-11-12",
 "dark": null,
@@ -710,6 +1232,15 @@
 "name": "Falcons Force",
 "src": "https://liquipedia.net/commons/images/thumb/8/83/Team_Falcons_2022_allmode.png/330px-Team_Falcons_2022_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/83/Team_Falcons_2022_allmode.png/330px-Team_Falcons_2022_allmode.png"
+},
+"fate_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/b/b2/FATE_Esports_2019_allmode.png/400px-FATE_Esports_2019_allmode.png|https://liquipedia.net/commons/images/thumb/b/b2/FATE_Esports_2019_allmode.png/400px-FATE_Esports_2019_allmode.png",
+"light": "fate_esports.png",
+"name": "FATE Esports",
+"src": "https://liquipedia.net/commons/images/thumb/b/b2/FATE_Esports_2019_allmode.png/400px-FATE_Esports_2019_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/b/b2/FATE_Esports_2019_allmode.png/400px-FATE_Esports_2019_allmode.png"
 },
 "favbet_team": {
 "checked": "2026-11-12",
@@ -746,6 +1277,15 @@
 "name": "FengDa Gaming",
 "src": "https://liquipedia.net/commons/images/thumb/7/7c/FengDa_Gaming_2024_allmode.png/400px-FengDa_Gaming_2024_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/7/7c/FengDa_Gaming_2024_allmode.png/400px-FengDa_Gaming_2024_allmode.png"
+},
+"fierce_esports": {
+"checked": "2026-11-13",
+"dark": "fierce_esports-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/7/72/Fierce_Esports_lightmode.png/400px-Fierce_Esports_lightmode.png|https://liquipedia.net/commons/images/thumb/8/8e/Fierce_Esports_darkmode.png/400px-Fierce_Esports_darkmode.png",
+"light": "fierce_esports.png",
+"name": "Fierce Esports",
+"src": "https://liquipedia.net/commons/images/thumb/7/72/Fierce_Esports_lightmode.png/400px-Fierce_Esports_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/8/8e/Fierce_Esports_darkmode.png/400px-Fierce_Esports_darkmode.png"
 },
 "fire_flux_esports": {
 "checked": "2026-11-12",
@@ -851,6 +1391,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/f/f9/Fnatic_2020_allmode.png/400px-Fnatic_2020_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/f/f9/Fnatic_2020_allmode.png/400px-Fnatic_2020_allmode.png"
 },
+"fnatic_rising": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/f/f9/Fnatic_2020_allmode.png/400px-Fnatic_2020_allmode.png|https://liquipedia.net/commons/images/thumb/f/f9/Fnatic_2020_allmode.png/400px-Fnatic_2020_allmode.png",
+"light": "fnatic_rising.png",
+"name": "Fnatic Rising",
+"src": "https://liquipedia.net/commons/images/thumb/f/f9/Fnatic_2020_allmode.png/400px-Fnatic_2020_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/f/f9/Fnatic_2020_allmode.png/400px-Fnatic_2020_allmode.png"
+},
 "fokus": {
 "checked": "2026-11-12",
 "dark": null,
@@ -859,6 +1408,24 @@
 "name": "FOKUS",
 "src": "https://liquipedia.net/commons/images/thumb/1/12/FOKUS_allmode.png/295px-FOKUS_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/1/12/FOKUS_allmode.png/295px-FOKUS_allmode.png"
+},
+"for_the_win_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/b/b6/For_The_Win_Esports_allmode.png/400px-For_The_Win_Esports_allmode.png|https://liquipedia.net/commons/images/thumb/b/b6/For_The_Win_Esports_allmode.png/400px-For_The_Win_Esports_allmode.png",
+"light": "for_the_win_esports.png",
+"name": "For The Win Esports",
+"src": "https://liquipedia.net/commons/images/thumb/b/b6/For_The_Win_Esports_allmode.png/400px-For_The_Win_Esports_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/b/b6/For_The_Win_Esports_allmode.png/400px-For_The_Win_Esports_allmode.png"
+},
+"forze_esports": {
+"checked": "2026-11-13",
+"dark": "forze_esports-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/7/70/FORZE_Esports_2023_february_lightmode.png/367px-FORZE_Esports_2023_february_lightmode.png|https://liquipedia.net/commons/images/thumb/d/df/FORZE_Esports_2023_february_darkmode.png/379px-FORZE_Esports_2023_february_darkmode.png",
+"light": "forze_esports.png",
+"name": "FORZE Esports",
+"src": "https://liquipedia.net/commons/images/thumb/7/70/FORZE_Esports_2023_february_lightmode.png/367px-FORZE_Esports_2023_february_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/d/df/FORZE_Esports_2023_february_darkmode.png/379px-FORZE_Esports_2023_february_darkmode.png"
 },
 "forze_reload": {
 "checked": "2026-11-12",
@@ -883,6 +1450,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/400px-FURIA_Esports_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/400px-FURIA_Esports_allmode.png"
 },
+"furia_academy": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/8/83/FURIA_Academy_allmode.png/389px-FURIA_Academy_allmode.png|https://liquipedia.net/commons/images/thumb/8/83/FURIA_Academy_allmode.png/389px-FURIA_Academy_allmode.png",
+"light": "furia_academy.png",
+"name": "FURIA Academy",
+"src": "https://liquipedia.net/commons/images/thumb/8/83/FURIA_Academy_allmode.png/389px-FURIA_Academy_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/8/83/FURIA_Academy_allmode.png/389px-FURIA_Academy_allmode.png"
+},
 "furia_female": {
 "checked": "2026-11-12",
 "dark": null,
@@ -891,6 +1467,15 @@
 "name": "FURIA Female",
 "src": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/400px-FURIA_Esports_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/a/aa/FURIA_Esports_allmode.png/400px-FURIA_Esports_allmode.png"
+},
+"furious_gaming": {
+"checked": "2026-11-13",
+"dark": "furious_gaming-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/a/a6/Furious_Gaming_2021_lightmode.png/400px-Furious_Gaming_2021_lightmode.png|https://liquipedia.net/commons/images/thumb/6/63/Furious_Gaming_2021_darkmode.png/400px-Furious_Gaming_2021_darkmode.png",
+"light": "furious_gaming.png",
+"name": "Furious Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/a/a6/Furious_Gaming_2021_lightmode.png/400px-Furious_Gaming_2021_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/6/63/Furious_Gaming_2021_darkmode.png/400px-Furious_Gaming_2021_darkmode.png"
 },
 "fut_esports": {
 "checked": "2026-11-12",
@@ -928,6 +1513,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/7/78/Gladiators_2022_allmode.png/241px-Gladiators_2022_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/7/78/Gladiators_2022_allmode.png/241px-Gladiators_2022_allmode.png"
 },
+"galaxy_racer": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/c/c5/Galaxy_Racer_alt_allmode.png/400px-Galaxy_Racer_alt_allmode.png|https://liquipedia.net/commons/images/thumb/c/c5/Galaxy_Racer_alt_allmode.png/400px-Galaxy_Racer_alt_allmode.png",
+"light": "galaxy_racer.png",
+"name": "Galaxy Racer",
+"src": "https://liquipedia.net/commons/images/thumb/c/c5/Galaxy_Racer_alt_allmode.png/400px-Galaxy_Racer_alt_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c5/Galaxy_Racer_alt_allmode.png/400px-Galaxy_Racer_alt_allmode.png"
+},
 "galorys": {
 "checked": "2026-11-12",
 "dark": null,
@@ -936,6 +1530,24 @@
 "name": "Galorys",
 "src": "https://liquipedia.net/commons/images/thumb/3/35/Galorys_2023_allmode.png/216px-Galorys_2023_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/3/35/Galorys_2023_allmode.png/216px-Galorys_2023_allmode.png"
+},
+"gambit_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/6/6c/Gambit_Esports_sep_2020_allmode.png/352px-Gambit_Esports_sep_2020_allmode.png|https://liquipedia.net/commons/images/thumb/6/6c/Gambit_Esports_sep_2020_allmode.png/352px-Gambit_Esports_sep_2020_allmode.png",
+"light": "gambit_esports.png",
+"name": "Gambit Esports",
+"src": "https://liquipedia.net/commons/images/thumb/6/6c/Gambit_Esports_sep_2020_allmode.png/352px-Gambit_Esports_sep_2020_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/6/6c/Gambit_Esports_sep_2020_allmode.png/352px-Gambit_Esports_sep_2020_allmode.png"
+},
+"gambit_youngsters": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/6/6c/Gambit_Esports_sep_2020_allmode.png/352px-Gambit_Esports_sep_2020_allmode.png|https://liquipedia.net/commons/images/thumb/6/6c/Gambit_Esports_sep_2020_allmode.png/352px-Gambit_Esports_sep_2020_allmode.png",
+"light": "gambit_youngsters.png",
+"name": "Gambit Youngsters",
+"src": "https://liquipedia.net/commons/images/thumb/6/6c/Gambit_Esports_sep_2020_allmode.png/352px-Gambit_Esports_sep_2020_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/6/6c/Gambit_Esports_sep_2020_allmode.png/352px-Gambit_Esports_sep_2020_allmode.png"
 },
 "gameagents": {
 "name": "GameAgents",
@@ -983,6 +1595,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/5/5b/Ghost_Gaming_2017_lightmode.png/240px-Ghost_Gaming_2017_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/89/Ghost_Gaming_2017_darkmode.png/240px-Ghost_Gaming_2017_darkmode.png"
 },
+"giants_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/f/f2/Giants_Gaming_2018_allmode.png/400px-Giants_Gaming_2018_allmode.png|https://liquipedia.net/commons/images/thumb/f/f2/Giants_Gaming_2018_allmode.png/400px-Giants_Gaming_2018_allmode.png",
+"light": "giants_gaming.png",
+"name": "Giants Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/f/f2/Giants_Gaming_2018_allmode.png/400px-Giants_Gaming_2018_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/f/f2/Giants_Gaming_2018_allmode.png/400px-Giants_Gaming_2018_allmode.png"
+},
 "gods_reign": {
 "checked": "2026-11-12",
 "dark": null,
@@ -1001,6 +1622,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/d/d8/GODSENT_lightmode.png/400px-GODSENT_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/9/99/GODSENT_darkmode.png/400px-GODSENT_darkmode.png"
 },
+"goliath_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/5/54/Goliath_Gaming_allmode.png|https://liquipedia.net/commons/images/5/54/Goliath_Gaming_allmode.png",
+"light": "goliath_gaming.png",
+"name": "Goliath Gaming",
+"src": "https://liquipedia.net/commons/images/5/54/Goliath_Gaming_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/5/54/Goliath_Gaming_allmode.png"
+},
 "gr_gaming": {
 "checked": "2026-11-12",
 "dark": null,
@@ -1009,6 +1639,15 @@
 "name": "GR Gaming",
 "src": "https://liquipedia.net/commons/images/thumb/b/b1/GR_Gaming_allmode.png/400px-GR_Gaming_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/b/b1/GR_Gaming_allmode.png/400px-GR_Gaming_allmode.png"
+},
+"grayhound_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/5/5a/Grayhound_Gaming_allmode.png/342px-Grayhound_Gaming_allmode.png|https://liquipedia.net/commons/images/thumb/5/5a/Grayhound_Gaming_allmode.png/342px-Grayhound_Gaming_allmode.png",
+"light": "grayhound_gaming.png",
+"name": "Grayhound Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/5/5a/Grayhound_Gaming_allmode.png/342px-Grayhound_Gaming_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/5/5a/Grayhound_Gaming_allmode.png/342px-Grayhound_Gaming_allmode.png"
 },
 "ground_zero_gaming": {
 "checked": "2026-11-12",
@@ -1033,6 +1672,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/4/42/GUN5_Esports_lightmode.png/400px-GUN5_Esports_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/5/50/GUN5_Esports_darkmode.png/400px-GUN5_Esports_darkmode.png"
 },
+"hard_legion_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/3/30/Hard_Legion_Esports_allmode.png/212px-Hard_Legion_Esports_allmode.png|https://liquipedia.net/commons/images/thumb/3/30/Hard_Legion_Esports_allmode.png/212px-Hard_Legion_Esports_allmode.png",
+"light": "hard_legion_esports.png",
+"name": "Hard Legion Esports",
+"src": "https://liquipedia.net/commons/images/thumb/3/30/Hard_Legion_Esports_allmode.png/212px-Hard_Legion_Esports_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/3/30/Hard_Legion_Esports_allmode.png/212px-Hard_Legion_Esports_allmode.png"
+},
 "havu": {
 "checked": "2026-11-12",
 "dark": null,
@@ -1041,6 +1689,24 @@
 "name": "HAVU",
 "src": "https://liquipedia.net/commons/images/thumb/b/bb/HAVU_2025_allmode.png/202px-HAVU_2025_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/b/bb/HAVU_2025_allmode.png/202px-HAVU_2025_allmode.png"
+},
+"heet": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/c/cf/HEET_2022_allmode.png/390px-HEET_2022_allmode.png|https://liquipedia.net/commons/images/thumb/c/cf/HEET_2022_allmode.png/390px-HEET_2022_allmode.png",
+"light": "heet.png",
+"name": "HEET",
+"src": "https://liquipedia.net/commons/images/thumb/c/cf/HEET_2022_allmode.png/390px-HEET_2022_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/cf/HEET_2022_allmode.png/390px-HEET_2022_allmode.png"
+},
+"hellraisers": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/1/11/HellRaisers_2020_allmode.png/400px-HellRaisers_2020_allmode.png|https://liquipedia.net/commons/images/thumb/1/11/HellRaisers_2020_allmode.png/400px-HellRaisers_2020_allmode.png",
+"light": "hellraisers.png",
+"name": "HellRaisers",
+"src": "https://liquipedia.net/commons/images/thumb/1/11/HellRaisers_2020_allmode.png/400px-HellRaisers_2020_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/1/11/HellRaisers_2020_allmode.png/400px-HellRaisers_2020_allmode.png"
 },
 "heroic": {
 "checked": "2026-11-12",
@@ -1060,6 +1726,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/0/0d/HEROIC_2024_allmode.png/400px-HEROIC_2024_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/0/0d/HEROIC_2024_allmode.png/400px-HEROIC_2024_allmode.png"
 },
+"honoris": {
+"checked": "2026-11-13",
+"dark": "honoris-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/e/e9/HONORIS_lightmode.png/321px-HONORIS_lightmode.png|https://liquipedia.net/commons/images/thumb/5/5c/HONORIS_darkmode.png/321px-HONORIS_darkmode.png",
+"light": "honoris.png",
+"name": "HONORIS",
+"src": "https://liquipedia.net/commons/images/thumb/e/e9/HONORIS_lightmode.png/321px-HONORIS_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/5/5c/HONORIS_darkmode.png/321px-HONORIS_darkmode.png"
+},
 "honv_d_esport": {
 "checked": "2026-11-12",
 "dark": null,
@@ -1077,6 +1752,11 @@
 "name": "HOTU",
 "src": "https://liquipedia.net/commons/images/thumb/1/17/HOTU_2022_lightmode.png/400px-HOTU_2022_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/2/27/HOTU_2022_darkmode.png/400px-HOTU_2022_darkmode.png"
+},
+"huat_zai": {
+"name": "Huat Zai",
+"src": "https://liquipedia.net/commons/images/thumb/3/3d/Huat_Zai_2020_November_allmode.png/333px-Huat_Zai_2020_November_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/3/3d/Huat_Zai_2020_November_allmode.png/333px-Huat_Zai_2020_November_allmode.png"
 },
 "hyperspirit": {
 "checked": "2026-11-12",
@@ -1113,6 +1793,15 @@
 "name": "IHC Esports",
 "src": "https://liquipedia.net/commons/images/thumb/8/88/IHC_ESPORTS_allmode.png/335px-IHC_ESPORTS_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/88/IHC_ESPORTS_allmode.png/335px-IHC_ESPORTS_allmode.png"
+},
+"ikla": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/0/07/IKLA_allmode.png/400px-IKLA_allmode.png|https://liquipedia.net/commons/images/thumb/0/07/IKLA_allmode.png/400px-IKLA_allmode.png",
+"light": "ikla.png",
+"name": "IKLA",
+"src": "https://liquipedia.net/commons/images/thumb/0/07/IKLA_allmode.png/400px-IKLA_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/0/07/IKLA_allmode.png/400px-IKLA_allmode.png"
 },
 "illuminar_gaming": {
 "checked": "2026-11-12",
@@ -1159,6 +1848,11 @@
 "src": "https://liquipedia.net/commons/images/thumb/2/28/InControl_2024_allmode.png/400px-InControl_2024_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/2/28/InControl_2024_allmode.png/400px-InControl_2024_allmode.png"
 },
+"inde_irae": {
+"name": "INDE IRAE",
+"src": "https://liquipedia.net/commons/images/thumb/7/7d/INDE_IRAE_eSports_allmode.png/294px-INDE_IRAE_eSports_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/7/7d/INDE_IRAE_eSports_allmode.png/294px-INDE_IRAE_eSports_allmode.png"
+},
 "infinite": {
 "checked": "2026-11-12",
 "dark": null,
@@ -1200,6 +1894,24 @@
 "src": "https://liquipedia.net/commons/images/thumb/4/4e/Into_The_Breach_Purple_2024_allmode.png/378px-Into_The_Breach_Purple_2024_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/4/4e/Into_The_Breach_Purple_2024_allmode.png/378px-Into_The_Breach_Purple_2024_allmode.png"
 },
+"intz": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/b/bf/INTZ_2019_allmode.png/400px-INTZ_2019_allmode.png|https://liquipedia.net/commons/images/thumb/b/bf/INTZ_2019_allmode.png/400px-INTZ_2019_allmode.png",
+"light": "intz.png",
+"name": "INTZ",
+"src": "https://liquipedia.net/commons/images/thumb/b/bf/INTZ_2019_allmode.png/400px-INTZ_2019_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/b/bf/INTZ_2019_allmode.png/400px-INTZ_2019_allmode.png"
+},
+"invictus_gaming": {
+"checked": "2026-11-13",
+"dark": "invictus_gaming-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/9/97/Invictus_Gaming_lightmode.png/400px-Invictus_Gaming_lightmode.png|https://liquipedia.net/commons/images/thumb/3/37/Invictus_Gaming_darkmode.png/400px-Invictus_Gaming_darkmode.png",
+"light": "invictus_gaming.png",
+"name": "Invictus Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/9/97/Invictus_Gaming_lightmode.png/400px-Invictus_Gaming_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/3/37/Invictus_Gaming_darkmode.png/400px-Invictus_Gaming_darkmode.png"
+},
 "isurus": {
 "checked": "2026-11-12",
 "dark": null,
@@ -1208,6 +1920,15 @@
 "name": "Isurus",
 "src": "https://liquipedia.net/commons/images/thumb/0/09/Isurus_2025_allmode.png/400px-Isurus_2025_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/0/09/Isurus_2025_allmode.png/400px-Isurus_2025_allmode.png"
+},
+"izako_boars": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/c/c2/Izako_Boars_full_allmode.png/370px-Izako_Boars_full_allmode.png|https://liquipedia.net/commons/images/thumb/c/c2/Izako_Boars_full_allmode.png/370px-Izako_Boars_full_allmode.png",
+"light": "izako_boars.png",
+"name": "Izako Boars",
+"src": "https://liquipedia.net/commons/images/thumb/c/c2/Izako_Boars_full_allmode.png/370px-Izako_Boars_full_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c2/Izako_Boars_full_allmode.png/370px-Izako_Boars_full_allmode.png"
 },
 "jano_esports": {
 "checked": "2026-11-12",
@@ -1235,6 +1956,25 @@
 "name": "Johnny Speeds",
 "src": "https://liquipedia.net/commons/images/thumb/c/ce/Johnny_Speeds_2025_allmode.png/400px-Johnny_Speeds_2025_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/c/ce/Johnny_Speeds_2025_allmode.png/400px-Johnny_Speeds_2025_allmode.png"
+},
+"juggernauts": {
+"name": "Juggernauts",
+"src": "https://liquipedia.net/commons/images/thumb/0/0d/Juggernauts_CSGO_2022_allmode.png/289px-Juggernauts_CSGO_2022_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/0/0d/Juggernauts_CSGO_2022_allmode.png/289px-Juggernauts_CSGO_2022_allmode.png"
+},
+"k1ck": {
+"checked": "2026-11-13",
+"dark": "k1ck-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/9/9d/K1ck_eSports_Club_2020_lightmode.png/400px-K1ck_eSports_Club_2020_lightmode.png|https://liquipedia.net/commons/images/thumb/a/a6/K1ck_eSports_Club_2020_darkmode.png/400px-K1ck_eSports_Club_2020_darkmode.png",
+"light": "k1ck.png",
+"name": "K1CK",
+"src": "https://liquipedia.net/commons/images/thumb/9/9d/K1ck_eSports_Club_2020_lightmode.png/400px-K1ck_eSports_Club_2020_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/a/a6/K1ck_eSports_Club_2020_darkmode.png/400px-K1ck_eSports_Club_2020_darkmode.png"
+},
+"k23": {
+"name": "K23",
+"src": "https://liquipedia.net/commons/images/thumb/5/50/K23_2020_lightmode.png/400px-K23_2020_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/9/93/K23_2020_darkmode.png/400px-K23_2020_darkmode.png"
 },
 "k27": {
 "checked": "2026-11-12",
@@ -1300,6 +2040,24 @@
 "src": "https://liquipedia.net/commons/images/thumb/5/57/Counter-Strike_2_default_lightmode.png/373px-Counter-Strike_2_default_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/d/da/Counter-Strike_2_default_darkmode.png/373px-Counter-Strike_2_default_darkmode.png"
 },
+"kova_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/6/62/KOVA_2021_allmode.png/400px-KOVA_2021_allmode.png|https://liquipedia.net/commons/images/thumb/6/62/KOVA_2021_allmode.png/400px-KOVA_2021_allmode.png",
+"light": "kova_esports.png",
+"name": "KOVA Esports",
+"src": "https://liquipedia.net/commons/images/thumb/6/62/KOVA_2021_allmode.png/400px-KOVA_2021_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/6/62/KOVA_2021_allmode.png/400px-KOVA_2021_allmode.png"
+},
+"kpi_gaming": {
+"checked": "2026-11-13",
+"dark": "kpi_gaming-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/0/09/KPI_2019_lightmode.png/400px-KPI_2019_lightmode.png|https://liquipedia.net/commons/images/thumb/f/f4/KPI_2019_darkmode.png/400px-KPI_2019_darkmode.png",
+"light": "kpi_gaming.png",
+"name": "KPI Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/0/09/KPI_2019_lightmode.png/400px-KPI_2019_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/f/f4/KPI_2019_darkmode.png/400px-KPI_2019_darkmode.png"
+},
 "kr_esports": {
 "checked": "2026-11-12",
 "dark": null,
@@ -1308,6 +2066,11 @@
 "name": "KRÜ Esports",
 "src": "https://liquipedia.net/commons/images/thumb/b/bf/KRU_Esports_allmode.png/379px-KRU_Esports_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/b/bf/KRU_Esports_allmode.png/379px-KRU_Esports_allmode.png"
+},
+"krc_genk_esports": {
+"name": "KRC Genk Esports",
+"src": "https://liquipedia.net/commons/images/thumb/9/9e/KRC_Genk_Esports_2022_lightmode.png/313px-KRC_Genk_Esports_2022_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/e/e4/KRC_Genk_Esports_2022_darkmode.png/313px-KRC_Genk_Esports_2022_darkmode.png"
 },
 "kubix_esports": {
 "checked": "2026-11-12",
@@ -1377,6 +2140,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/d/d0/Let_Her_Cook_allmode.png/309px-Let_Her_Cook_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/d/d0/Let_Her_Cook_allmode.png/309px-Let_Her_Cook_allmode.png"
 },
+"leviat_n": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/e/ec/Leviat%C3%A1n_allmode.png/400px-Leviat%C3%A1n_allmode.png|https://liquipedia.net/commons/images/thumb/e/ec/Leviat%C3%A1n_allmode.png/400px-Leviat%C3%A1n_allmode.png",
+"light": "leviat_n.png",
+"name": "Leviatán",
+"src": "https://liquipedia.net/commons/images/thumb/e/ec/Leviat%C3%A1n_allmode.png/400px-Leviat%C3%A1n_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/e/ec/Leviat%C3%A1n_allmode.png/400px-Leviat%C3%A1n_allmode.png"
+},
 "lf0": {
 "checked": "2026-11-12",
 "dark": "lf0-dark.png",
@@ -1385,6 +2157,15 @@
 "name": "LF0",
 "src": "https://liquipedia.net/commons/images/thumb/5/57/Counter-Strike_2_default_lightmode.png/373px-Counter-Strike_2_default_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/d/da/Counter-Strike_2_default_darkmode.png/373px-Counter-Strike_2_default_darkmode.png"
+},
+"liberty": {
+"checked": "2026-11-13",
+"dark": "liberty-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/9/94/Havan_Liberty_2020_lightmode.png/343px-Havan_Liberty_2020_lightmode.png|https://liquipedia.net/commons/images/thumb/c/c7/Havan_Liberty_2020_darkmode.png/343px-Havan_Liberty_2020_darkmode.png",
+"light": "liberty.png",
+"name": "Liberty",
+"src": "https://liquipedia.net/commons/images/thumb/9/94/Havan_Liberty_2020_lightmode.png/343px-Havan_Liberty_2020_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c7/Havan_Liberty_2020_darkmode.png/343px-Havan_Liberty_2020_darkmode.png"
 },
 "life_s_a_game": {
 "checked": "2026-11-12",
@@ -1403,6 +2184,25 @@
 "name": "Lilmix",
 "src": "https://liquipedia.net/commons/images/thumb/e/ea/Lilmix_lightmode.png/400px-Lilmix_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/2/2a/Lilmix_darkmode.png/400px-Lilmix_darkmode.png"
+},
+"limitless": {
+"name": "Limitless",
+"src": "https://liquipedia.net/commons/images/thumb/2/21/Limitless_2022_lightmode.png/400px-Limitless_2022_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/3/39/Limitless_2022_darkmode.png/400px-Limitless_2022_darkmode.png"
+},
+"lowlandlions": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/b/b5/LowLandLions_2021_allmode.png/400px-LowLandLions_2021_allmode.png|https://liquipedia.net/commons/images/thumb/b/b5/LowLandLions_2021_allmode.png/400px-LowLandLions_2021_allmode.png",
+"light": "lowlandlions.png",
+"name": "LowLandLions",
+"src": "https://liquipedia.net/commons/images/thumb/b/b5/LowLandLions_2021_allmode.png/400px-LowLandLions_2021_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/b/b5/LowLandLions_2021_allmode.png/400px-LowLandLions_2021_allmode.png"
+},
+"lucid_dream": {
+"name": "Lucid Dream",
+"src": "https://liquipedia.net/commons/images/thumb/1/1a/Lucid_Dream_2019_allmode.png/369px-Lucid_Dream_2019_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/1/1a/Lucid_Dream_2019_allmode.png/369px-Lucid_Dream_2019_allmode.png"
 },
 "luminosity_gaming": {
 "checked": "2026-11-12",
@@ -1436,6 +2236,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/5/55/M80_2023_allmode.png/350px-M80_2023_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/5/55/M80_2023_allmode.png/350px-M80_2023_allmode.png"
 },
+"mad_lions": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/c/c3/MAD_Lions_2019_Teamcard_Logo.png/353px-MAD_Lions_2019_Teamcard_Logo.png|https://liquipedia.net/commons/images/thumb/c/c3/MAD_Lions_2019_Teamcard_Logo.png/353px-MAD_Lions_2019_Teamcard_Logo.png",
+"light": "mad_lions.png",
+"name": "MAD Lions",
+"src": "https://liquipedia.net/commons/images/thumb/c/c3/MAD_Lions_2019_Teamcard_Logo.png/353px-MAD_Lions_2019_Teamcard_Logo.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c3/MAD_Lions_2019_Teamcard_Logo.png/353px-MAD_Lions_2019_Teamcard_Logo.png"
+},
 "made_in_thailand": {
 "checked": "2026-11-12",
 "dark": "made_in_thailand-dark.png",
@@ -1444,6 +2253,24 @@
 "name": "Made in Thailand",
 "src": "https://liquipedia.net/commons/images/thumb/9/9a/Made_in_Thailand_2021_lightmode_full.png/400px-Made_in_Thailand_2021_lightmode_full.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/6/64/Made_in_Thailand_2021_darkmode_full.png/400px-Made_in_Thailand_2021_darkmode_full.png"
+},
+"make_your_destiny": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/9/92/Make_Your_Destiny_2022_allmode.png/400px-Make_Your_Destiny_2022_allmode.png|https://liquipedia.net/commons/images/thumb/9/92/Make_Your_Destiny_2022_allmode.png/400px-Make_Your_Destiny_2022_allmode.png",
+"light": "make_your_destiny.png",
+"name": "Make Your Destiny",
+"src": "https://liquipedia.net/commons/images/thumb/9/92/Make_Your_Destiny_2022_allmode.png/400px-Make_Your_Destiny_2022_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/9/92/Make_Your_Destiny_2022_allmode.png/400px-Make_Your_Destiny_2022_allmode.png"
+},
+"malvinas_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/7/75/Malvinas_Gaming_2019_lightmode.png/400px-Malvinas_Gaming_2019_lightmode.png|https://liquipedia.net/commons/images/thumb/7/75/Malvinas_Gaming_2019_lightmode.png/400px-Malvinas_Gaming_2019_lightmode.png",
+"light": "malvinas_gaming.png",
+"name": "Malvinas Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/7/75/Malvinas_Gaming_2019_lightmode.png/400px-Malvinas_Gaming_2019_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/7/75/Malvinas_Gaming_2019_lightmode.png/400px-Malvinas_Gaming_2019_lightmode.png"
 },
 "mana_esports": {
 "checked": "2026-11-12",
@@ -1471,6 +2298,20 @@
 "name": "MASONIC",
 "src": "https://liquipedia.net/commons/images/thumb/5/56/MASONIC_2022_lightmode.png/400px-MASONIC_2022_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/e/e0/MASONIC_2022_darkmode.png/400px-MASONIC_2022_darkmode.png"
+},
+"mazaalai": {
+"name": "Mazaalai",
+"src": "https://liquipedia.net/commons/images/thumb/1/14/Mazaalai_allmode.png/337px-Mazaalai_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/1/14/Mazaalai_allmode.png/337px-Mazaalai_allmode.png"
+},
+"meta_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/6/6f/Meta_Gaming_2020_allmode.png/323px-Meta_Gaming_2020_allmode.png|https://liquipedia.net/commons/images/thumb/6/6f/Meta_Gaming_2020_allmode.png/323px-Meta_Gaming_2020_allmode.png",
+"light": "meta_gaming.png",
+"name": "Meta Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/6/6f/Meta_Gaming_2020_allmode.png/323px-Meta_Gaming_2020_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/6/6f/Meta_Gaming_2020_allmode.png/323px-Meta_Gaming_2020_allmode.png"
 },
 "metizport": {
 "checked": "2026-11-12",
@@ -1554,10 +2395,28 @@
 "src": "https://liquipedia.net/commons/images/thumb/c/c2/MOUZ_2021_allmode.png/377px-MOUZ_2021_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/c/c2/MOUZ_2021_allmode.png/377px-MOUZ_2021_allmode.png"
 },
+"movistar_riders": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/b/be/Movistar_Riders_allmode.png/400px-Movistar_Riders_allmode.png|https://liquipedia.net/commons/images/thumb/b/be/Movistar_Riders_allmode.png/400px-Movistar_Riders_allmode.png",
+"light": "movistar_riders.png",
+"name": "Movistar Riders",
+"src": "https://liquipedia.net/commons/images/thumb/b/be/Movistar_Riders_allmode.png/400px-Movistar_Riders_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/b/be/Movistar_Riders_allmode.png/400px-Movistar_Riders_allmode.png"
+},
 "mythic": {
 "name": "Mythic",
 "src": "https://liquipedia.net/commons/images/thumb/b/b1/Mythic_allmode.png/381px-Mythic_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/b/b1/Mythic_allmode.png/381px-Mythic_allmode.png"
+},
+"nasr_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/f/fd/NASR_Esports_allmode.png/314px-NASR_Esports_allmode.png|https://liquipedia.net/commons/images/thumb/f/fd/NASR_Esports_allmode.png/314px-NASR_Esports_allmode.png",
+"light": "nasr_esports.png",
+"name": "NASR Esports",
+"src": "https://liquipedia.net/commons/images/thumb/f/fd/NASR_Esports_allmode.png/314px-NASR_Esports_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/f/fd/NASR_Esports_allmode.png/314px-NASR_Esports_allmode.png"
 },
 "natus_vincere": {
 "checked": "2026-11-12",
@@ -1595,6 +2454,33 @@
 "src": "https://liquipedia.net/commons/images/thumb/b/bb/Nemiga_Gaming_2020_temporary.png/400px-Nemiga_Gaming_2020_temporary.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/b/bb/Nemiga_Gaming_2020_temporary.png/400px-Nemiga_Gaming_2020_temporary.png"
 },
+"new_england_whalers": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/d/df/New_England_Whalers_allmode.png/400px-New_England_Whalers_allmode.png|https://liquipedia.net/commons/images/thumb/d/df/New_England_Whalers_allmode.png/400px-New_England_Whalers_allmode.png",
+"light": "new_england_whalers.png",
+"name": "New England Whalers",
+"src": "https://liquipedia.net/commons/images/thumb/d/df/New_England_Whalers_allmode.png/400px-New_England_Whalers_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/d/df/New_England_Whalers_allmode.png/400px-New_England_Whalers_allmode.png"
+},
+"new_identity": {
+"checked": "2026-11-13",
+"dark": "new_identity-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/3/3b/CSGO_default_lightmode.png/400px-CSGO_default_lightmode.png|https://liquipedia.net/commons/images/thumb/5/58/CSGO_default_darkmode.png/400px-CSGO_default_darkmode.png",
+"light": "new_identity.png",
+"name": "New Identity",
+"src": "https://liquipedia.net/commons/images/thumb/3/3b/CSGO_default_lightmode.png/400px-CSGO_default_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/5/58/CSGO_default_darkmode.png/400px-CSGO_default_darkmode.png"
+},
+"newhappy": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/f/f3/Newhappy_NEW_allmode.png/400px-Newhappy_NEW_allmode.png|https://liquipedia.net/commons/images/thumb/f/f3/Newhappy_NEW_allmode.png/400px-Newhappy_NEW_allmode.png",
+"light": "newhappy.png",
+"name": "NewHappy",
+"src": "https://liquipedia.net/commons/images/thumb/f/f3/Newhappy_NEW_allmode.png/400px-Newhappy_NEW_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/f/f3/Newhappy_NEW_allmode.png/400px-Newhappy_NEW_allmode.png"
+},
 "nexus_gaming": {
 "checked": "2026-11-12",
 "dark": null,
@@ -1608,6 +2494,15 @@
 "name": "NEXVOID",
 "src": "https://liquipedia.net/commons/images/thumb/f/f6/NEXVOID_2026_allmode.png/396px-NEXVOID_2026_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/f/f6/NEXVOID_2026_allmode.png/396px-NEXVOID_2026_allmode.png"
+},
+"nigma_galaxy": {
+"checked": "2026-11-13",
+"dark": "nigma_galaxy-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/6/67/Nigma_Galaxy_allmode.png/400px-Nigma_Galaxy_allmode.png|https://liquipedia.net/commons/images/thumb/5/56/Nigma_Galaxy_darkmode.png/400px-Nigma_Galaxy_darkmode.png",
+"light": "nigma_galaxy.png",
+"name": "Nigma Galaxy",
+"src": "https://liquipedia.net/commons/images/thumb/6/67/Nigma_Galaxy_allmode.png/400px-Nigma_Galaxy_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/5/56/Nigma_Galaxy_darkmode.png/400px-Nigma_Galaxy_darkmode.png"
 },
 "ninjas_in_pyjamas": {
 "checked": "2026-11-12",
@@ -1631,6 +2526,42 @@
 "name": "Nixuh",
 "src": "https://liquipedia.net/commons/images/thumb/2/20/Nixuh_2025_lightmode.png/247px-Nixuh_2025_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/6/6d/Nixuh_2025_darkmode.png/247px-Nixuh_2025_darkmode.png"
+},
+"no_limit_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/c/c7/No_Limit_Gaming_allmode.png/367px-No_Limit_Gaming_allmode.png|https://liquipedia.net/commons/images/thumb/c/c7/No_Limit_Gaming_allmode.png/367px-No_Limit_Gaming_allmode.png",
+"light": "no_limit_gaming.png",
+"name": "No Limit Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/c/c7/No_Limit_Gaming_allmode.png/367px-No_Limit_Gaming_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c7/No_Limit_Gaming_allmode.png/367px-No_Limit_Gaming_allmode.png"
+},
+"nocturns": {
+"checked": "2026-11-13",
+"dark": "nocturns-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/b/ba/Nocturns_lightmode.png/400px-Nocturns_lightmode.png|https://liquipedia.net/commons/images/thumb/2/21/Nocturns_darkmode.png/400px-Nocturns_darkmode.png",
+"light": "nocturns.png",
+"name": "Nocturns",
+"src": "https://liquipedia.net/commons/images/thumb/b/ba/Nocturns_lightmode.png/400px-Nocturns_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/2/21/Nocturns_darkmode.png/400px-Nocturns_darkmode.png"
+},
+"nordavind": {
+"checked": "2026-11-13",
+"dark": "nordavind-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/0/0e/Nordavind_lightmode.png/345px-Nordavind_lightmode.png|https://liquipedia.net/commons/images/thumb/1/1c/Nordavind_darkmode.png/345px-Nordavind_darkmode.png",
+"light": "nordavind.png",
+"name": "Nordavind",
+"src": "https://liquipedia.net/commons/images/thumb/0/0e/Nordavind_lightmode.png/345px-Nordavind_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/1/1c/Nordavind_darkmode.png/345px-Nordavind_darkmode.png"
+},
+"north": {
+"checked": "2026-11-13",
+"dark": "north-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/e/e4/North_2020_lightmode.png/400px-North_2020_lightmode.png|https://liquipedia.net/commons/images/thumb/7/74/North_2020_darkmode.png/400px-North_2020_darkmode.png",
+"light": "north.png",
+"name": "North",
+"src": "https://liquipedia.net/commons/images/thumb/e/e4/North_2020_lightmode.png/400px-North_2020_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/7/74/North_2020_darkmode.png/400px-North_2020_darkmode.png"
 },
 "nouns_esports": {
 "checked": "2026-11-12",
@@ -1695,6 +2626,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/f/fd/Off_Chops_lightmode.png/400px-Off_Chops_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/b/b5/Off_Chops_darkmode.png/400px-Off_Chops_darkmode.png"
 },
+"offset_esports": {
+"checked": "2026-11-13",
+"dark": "offset_esports-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/0/0b/OFFSET_Esports_lightmode.png/400px-OFFSET_Esports_lightmode.png|https://liquipedia.net/commons/images/thumb/3/3e/OFFSET_Esports_darkmode.png/400px-OFFSET_Esports_darkmode.png",
+"light": "offset_esports.png",
+"name": "OFFSET Esports",
+"src": "https://liquipedia.net/commons/images/thumb/0/0b/OFFSET_Esports_lightmode.png/400px-OFFSET_Esports_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/3/3e/OFFSET_Esports_darkmode.png/400px-OFFSET_Esports_darkmode.png"
+},
 "og": {
 "checked": "2026-11-12",
 "dark": null,
@@ -1713,6 +2653,34 @@
 "src": "https://liquipedia.net/commons/images/thumb/5/5a/OMEGA_team_lightmode.png/356px-OMEGA_team_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/f/f5/OMEGA_team_darkmode.png/356px-OMEGA_team_darkmode.png"
 },
+"onetap_gaming": {
+"name": "OneTap Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/e/ea/OneTap_Gaming_September_2022_allmode.png/372px-OneTap_Gaming_September_2022_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/e/ea/OneTap_Gaming_September_2022_allmode.png/372px-OneTap_Gaming_September_2022_allmode.png"
+},
+"onyx": {
+"name": "ONYX",
+"src": "https://liquipedia.net/commons/images/thumb/0/04/ONYX_lightmode.png/309px-ONYX_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/1/1f/ONYX_darkmode.png/309px-ONYX_darkmode.png"
+},
+"optic_gaming": {
+"checked": "2026-11-13",
+"dark": "optic_gaming-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/7/79/OpTic_Gaming_lightmode.png/400px-OpTic_Gaming_lightmode.png|https://liquipedia.net/commons/images/thumb/c/c4/OpTic_Gaming_darkmode.png/400px-OpTic_Gaming_darkmode.png",
+"light": "optic_gaming.png",
+"name": "OpTic Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/7/79/OpTic_Gaming_lightmode.png/400px-OpTic_Gaming_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c4/OpTic_Gaming_darkmode.png/400px-OpTic_Gaming_darkmode.png"
+},
+"order": {
+"checked": "2026-11-13",
+"dark": "order-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/5/54/ORDER_2022_lightmode.png/400px-ORDER_2022_lightmode.png|https://liquipedia.net/commons/images/thumb/4/41/ORDER_2022_darkmode.png/400px-ORDER_2022_darkmode.png",
+"light": "order.png",
+"name": "ORDER",
+"src": "https://liquipedia.net/commons/images/thumb/5/54/ORDER_2022_lightmode.png/400px-ORDER_2022_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/4/41/ORDER_2022_darkmode.png/400px-ORDER_2022_darkmode.png"
+},
 "overtake_sector": {
 "checked": "2026-11-12",
 "dark": "overtake_sector-dark.png",
@@ -1721,6 +2689,30 @@
 "name": "Overtake Sector",
 "src": "https://liquipedia.net/commons/images/thumb/6/6c/Overtake_lightmode.png/400px-Overtake_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/0/0c/Overtake_darkmode.png/400px-Overtake_darkmode.png"
+},
+"pact": {
+"name": "PACT",
+"src": "https://liquipedia.net/commons/images/thumb/8/8b/PACT_lightmode.png/400px-PACT_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/3/36/PACT_darkmode.png/400px-PACT_darkmode.png"
+},
+"panthers_gaming": {
+"name": "PANTHERS Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/6/6c/PANTHERS_Gaming_December_2016_lightmode.png/400px-PANTHERS_Gaming_December_2016_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/5/57/PANTHERS_Gaming_December_2016_darkmode.png/400px-PANTHERS_Gaming_December_2016_darkmode.png"
+},
+"paquet_gaming": {
+"name": "Paquetá Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/0/07/Paquet%C3%A1_Gaming_2021_lightmode.png/241px-Paquet%C3%A1_Gaming_2021_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/d/d0/Paquet%C3%A1_Gaming_2021_darkmode.png/241px-Paquet%C3%A1_Gaming_2021_darkmode.png"
+},
+"paradox_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/f/f8/Paradox_Gaming_allmode.png/400px-Paradox_Gaming_allmode.png|https://liquipedia.net/commons/images/thumb/f/f8/Paradox_Gaming_allmode.png/400px-Paradox_Gaming_allmode.png",
+"light": "paradox_esports.png",
+"name": "Paradox Esports",
+"src": "https://liquipedia.net/commons/images/thumb/f/f8/Paradox_Gaming_allmode.png/400px-Paradox_Gaming_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/f/f8/Paradox_Gaming_allmode.png/400px-Paradox_Gaming_allmode.png"
 },
 "parivision": {
 "checked": "2026-11-12",
@@ -1772,6 +2764,20 @@
 "src": "https://liquipedia.net/commons/images/thumb/c/cd/Phantom_Esports_lightmode.png/333px-Phantom_Esports_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/c/c6/Phantom_Esports_darkmode.png/333px-Phantom_Esports_darkmode.png"
 },
+"phoenix": {
+"name": "Phoenix",
+"src": "https://liquipedia.net/commons/images/thumb/a/ac/Phoenix_allmode.png/400px-Phoenix_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/a/ac/Phoenix_allmode.png/400px-Phoenix_allmode.png"
+},
+"planetkey_dynamics": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/b/bb/Planetkey_Dynamics_2017_allmode.png/400px-Planetkey_Dynamics_2017_allmode.png|https://liquipedia.net/commons/images/thumb/b/bb/Planetkey_Dynamics_2017_allmode.png/400px-Planetkey_Dynamics_2017_allmode.png",
+"light": "planetkey_dynamics.png",
+"name": "Planetkey Dynamics",
+"src": "https://liquipedia.net/commons/images/thumb/b/bb/Planetkey_Dynamics_2017_allmode.png/400px-Planetkey_Dynamics_2017_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/b/bb/Planetkey_Dynamics_2017_allmode.png/400px-Planetkey_Dynamics_2017_allmode.png"
+},
 "playing_ducks": {
 "checked": "2026-11-12",
 "dark": null,
@@ -1780,6 +2786,15 @@
 "name": "Playing Ducks",
 "src": "https://liquipedia.net/commons/images/thumb/2/2e/Playing_Ducks_2014_allmode.png/341px-Playing_Ducks_2014_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/2/2e/Playing_Ducks_2014_allmode.png/341px-Playing_Ducks_2014_allmode.png"
+},
+"pompa_team": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/4/4b/Pompa_Team_2023_allmode.png/400px-Pompa_Team_2023_allmode.png|https://liquipedia.net/commons/images/thumb/4/4b/Pompa_Team_2023_allmode.png/400px-Pompa_Team_2023_allmode.png",
+"light": "pompa_team.png",
+"name": "Pompa Team",
+"src": "https://liquipedia.net/commons/images/thumb/4/4b/Pompa_Team_2023_allmode.png/400px-Pompa_Team_2023_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/4/4b/Pompa_Team_2023_allmode.png/400px-Pompa_Team_2023_allmode.png"
 },
 "prestige_esport": {
 "name": "Prestige Esport",
@@ -1794,6 +2809,15 @@
 "name": "Procyon Team",
 "src": "https://liquipedia.net/commons/images/thumb/2/28/Procyon_Team_2025_allmode.png/400px-Procyon_Team_2025_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/2/28/Procyon_Team_2025_allmode.png/400px-Procyon_Team_2025_allmode.png"
+},
+"project_x": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/c/c8/Project_X_2020_allmode.png/400px-Project_X_2020_allmode.png|https://liquipedia.net/commons/images/thumb/c/c8/Project_X_2020_allmode.png/400px-Project_X_2020_allmode.png",
+"light": "project_x.png",
+"name": "Project X",
+"src": "https://liquipedia.net/commons/images/thumb/c/c8/Project_X_2020_allmode.png/400px-Project_X_2020_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c8/Project_X_2020_allmode.png/400px-Project_X_2020_allmode.png"
 },
 "quazar": {
 "checked": "2026-11-12",
@@ -1813,6 +2837,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/a/a9/Hesta_lightmode.png/400px-Hesta_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/3/31/Hesta_darkmode.png/400px-Hesta_darkmode.png"
 },
+"raptors_esports_club": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/a/a1/Raptors_Esports_Club_allmode.png/400px-Raptors_Esports_Club_allmode.png|https://liquipedia.net/commons/images/thumb/a/a1/Raptors_Esports_Club_allmode.png/400px-Raptors_Esports_Club_allmode.png",
+"light": "raptors_esports_club.png",
+"name": "Raptors Esports Club",
+"src": "https://liquipedia.net/commons/images/thumb/a/a1/Raptors_Esports_Club_allmode.png/400px-Raptors_Esports_Club_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/a/a1/Raptors_Esports_Club_allmode.png/400px-Raptors_Esports_Club_allmode.png"
+},
 "rare_atom": {
 "checked": "2026-11-12",
 "dark": null,
@@ -1822,6 +2855,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/c/cd/Rare_Atom_2024_allmode.png/400px-Rare_Atom_2024_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/c/cd/Rare_Atom_2024_allmode.png/400px-Rare_Atom_2024_allmode.png"
 },
+"rbg_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/5/58/RBG_Esports_2019_allmode.png/400px-RBG_Esports_2019_allmode.png|https://liquipedia.net/commons/images/thumb/5/58/RBG_Esports_2019_allmode.png/400px-RBG_Esports_2019_allmode.png",
+"light": "rbg_esports.png",
+"name": "RBG Esports",
+"src": "https://liquipedia.net/commons/images/thumb/5/58/RBG_Esports_2019_allmode.png/400px-RBG_Esports_2019_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/5/58/RBG_Esports_2019_allmode.png/400px-RBG_Esports_2019_allmode.png"
+},
 "reason_gaming": {
 "checked": "2026-11-12",
 "dark": null,
@@ -1830,6 +2872,20 @@
 "name": "Reason Gaming",
 "src": "https://liquipedia.net/commons/images/thumb/6/65/Reason_Gaming_allmode.png/393px-Reason_Gaming_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/6/65/Reason_Gaming_allmode.png/393px-Reason_Gaming_allmode.png"
+},
+"recall_the_end": {
+"name": "Recall THE END",
+"src": "https://liquipedia.net/commons/images/thumb/b/b3/Recall_THE_END_2017_allmode.png/400px-Recall_THE_END_2017_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/b/b3/Recall_THE_END_2017_allmode.png/400px-Recall_THE_END_2017_allmode.png"
+},
+"recon_5": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/c/ce/Recon_5_allmode.png/400px-Recon_5_allmode.png|https://liquipedia.net/commons/images/thumb/c/ce/Recon_5_allmode.png/400px-Recon_5_allmode.png",
+"light": "recon_5.png",
+"name": "Recon 5",
+"src": "https://liquipedia.net/commons/images/thumb/c/ce/Recon_5_allmode.png/400px-Recon_5_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/ce/Recon_5_allmode.png/400px-Recon_5_allmode.png"
 },
 "red_canids": {
 "checked": "2026-11-12",
@@ -1849,6 +2905,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/3/3b/Red_Canids_allmode.png/400px-Red_Canids_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/3/3b/Red_Canids_allmode.png/400px-Red_Canids_allmode.png"
 },
+"renegades": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/c/c7/Renegades_2019_allmode.png/374px-Renegades_2019_allmode.png|https://liquipedia.net/commons/images/thumb/c/c7/Renegades_2019_allmode.png/374px-Renegades_2019_allmode.png",
+"light": "renegades.png",
+"name": "Renegades",
+"src": "https://liquipedia.net/commons/images/thumb/c/c7/Renegades_2019_allmode.png/374px-Renegades_2019_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c7/Renegades_2019_allmode.png/374px-Renegades_2019_allmode.png"
+},
 "rhyno_esports": {
 "checked": "2026-11-12",
 "dark": null,
@@ -1857,6 +2922,15 @@
 "name": "Rhyno Esports",
 "src": "https://liquipedia.net/commons/images/thumb/7/75/Rhyno_Esports_2020_allmode.png/400px-Rhyno_Esports_2020_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/7/75/Rhyno_Esports_2020_allmode.png/400px-Rhyno_Esports_2020_allmode.png"
+},
+"river_plate_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/4/4b/River_Plate_Gaming_allmode.png/326px-River_Plate_Gaming_allmode.png|https://liquipedia.net/commons/images/thumb/4/4b/River_Plate_Gaming_allmode.png/326px-River_Plate_Gaming_allmode.png",
+"light": "river_plate_gaming.png",
+"name": "River Plate Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/4/4b/River_Plate_Gaming_allmode.png/326px-River_Plate_Gaming_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/4/4b/River_Plate_Gaming_allmode.png/326px-River_Plate_Gaming_allmode.png"
 },
 "rooster": {
 "checked": "2026-11-12",
@@ -1880,6 +2954,11 @@
 "name": "RUBY",
 "src": "https://liquipedia.net/commons/images/thumb/3/39/RUBY_allmode.png/369px-RUBY_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/3/39/RUBY_allmode.png/369px-RUBY_allmode.png"
+},
+"rugratz": {
+"name": "Rugratz",
+"src": "https://liquipedia.net/commons/images/thumb/b/b5/Rugratz_allmode.png/398px-Rugratz_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/b/b5/Rugratz_allmode.png/398px-Rugratz_allmode.png"
 },
 "rune_eaters_esports": {
 "checked": "2026-11-12",
@@ -1908,6 +2987,11 @@
 "src": "https://liquipedia.net/commons/images/thumb/8/85/Rustec_allmode.png/399px-Rustec_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/85/Rustec_allmode.png/399px-Rustec_allmode.png"
 },
+"salamander_gaming": {
+"name": "Salamander Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/9/98/Salamander_lightmode.png/391px-Salamander_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c4/Salamander_darkmode.png/391px-Salamander_darkmode.png"
+},
 "sangal_esports": {
 "checked": "2026-11-12",
 "dark": null,
@@ -1916,6 +3000,15 @@
 "name": "Sangal Esports",
 "src": "https://liquipedia.net/commons/images/thumb/7/7a/Sangal_Esports_2020_allmode.png/341px-Sangal_Esports_2020_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/7/7a/Sangal_Esports_2020_allmode.png/341px-Sangal_Esports_2020_allmode.png"
+},
+"santos_e_sports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/2/2e/Santos_e-Sports_2019_allmode.png/400px-Santos_e-Sports_2019_allmode.png|https://liquipedia.net/commons/images/thumb/2/2e/Santos_e-Sports_2019_allmode.png/400px-Santos_e-Sports_2019_allmode.png",
+"light": "santos_e_sports.png",
+"name": "Santos e-Sports",
+"src": "https://liquipedia.net/commons/images/thumb/2/2e/Santos_e-Sports_2019_allmode.png/400px-Santos_e-Sports_2019_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/2/2e/Santos_e-Sports_2019_allmode.png/400px-Santos_e-Sports_2019_allmode.png"
 },
 "sapphirekelownadotcom": {
 "checked": "2026-11-12",
@@ -1944,10 +3037,28 @@
 "src": "https://liquipedia.net/commons/images/thumb/f/fa/SAW_2021_allmode.png/400px-SAW_2021_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/f/fa/SAW_2021_allmode.png/400px-SAW_2021_allmode.png"
 },
+"sc_e_sports": {
+"checked": "2026-11-13",
+"dark": "sc_e_sports-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/b/ba/SC_e-Sports_lightmode.png/400px-SC_e-Sports_lightmode.png|https://liquipedia.net/commons/images/thumb/f/f4/SC_e-Sports_darkmode.png/400px-SC_e-Sports_darkmode.png",
+"light": "sc_e_sports.png",
+"name": "SC e-Sports",
+"src": "https://liquipedia.net/commons/images/thumb/b/ba/SC_e-Sports_lightmode.png/400px-SC_e-Sports_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/f/f4/SC_e-Sports_darkmode.png/400px-SC_e-Sports_darkmode.png"
+},
 "sd_invicta": {
 "name": "SD Invicta",
 "src": "https://liquipedia.net/commons/images/thumb/9/9f/SD_Invicta_2022_lightmode.png/347px-SD_Invicta_2022_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/0/0b/SD_Invicta_2022_darkmode.png/347px-SD_Invicta_2022_darkmode.png"
+},
+"sector_one": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/e/eb/Sector_One_2020_allmode.png/324px-Sector_One_2020_allmode.png|https://liquipedia.net/commons/images/thumb/e/eb/Sector_One_2020_allmode.png/324px-Sector_One_2020_allmode.png",
+"light": "sector_one.png",
+"name": "Sector One",
+"src": "https://liquipedia.net/commons/images/thumb/e/eb/Sector_One_2020_allmode.png/324px-Sector_One_2020_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/e/eb/Sector_One_2020_allmode.png/324px-Sector_One_2020_allmode.png"
 },
 "semperfi_esports": {
 "checked": "2026-11-12",
@@ -1994,6 +3105,24 @@
 "src": "https://liquipedia.net/commons/images/thumb/8/88/Sissi_State_Punks_2024_allmode.png/339px-Sissi_State_Punks_2024_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/88/Sissi_State_Punks_2024_allmode.png/339px-Sissi_State_Punks_2024_allmode.png"
 },
+"sj": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/c/cb/SJ_2021_logo.png/400px-SJ_2021_logo.png|https://liquipedia.net/commons/images/thumb/c/cb/SJ_2021_logo.png/400px-SJ_2021_logo.png",
+"light": "sj.png",
+"name": "SJ",
+"src": "https://liquipedia.net/commons/images/thumb/c/cb/SJ_2021_logo.png/400px-SJ_2021_logo.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/cb/SJ_2021_logo.png/400px-SJ_2021_logo.png"
+},
+"skade": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/4/43/SKADE_December_2019_allmode.png/400px-SKADE_December_2019_allmode.png|https://liquipedia.net/commons/images/thumb/4/43/SKADE_December_2019_allmode.png/400px-SKADE_December_2019_allmode.png",
+"light": "skade.png",
+"name": "SKADE",
+"src": "https://liquipedia.net/commons/images/thumb/4/43/SKADE_December_2019_allmode.png/400px-SKADE_December_2019_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/4/43/SKADE_December_2019_allmode.png/400px-SKADE_December_2019_allmode.png"
+},
 "skinrave_esports": {
 "checked": "2026-11-12",
 "dark": "skinrave_esports-dark.png",
@@ -2026,6 +3155,15 @@
 "src": "https://liquipedia.net/commons/images/8/85/SportsBetExpert_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/8/85/SportsBetExpert_allmode.png"
 },
+"sprout": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/f/f0/Sprout_allmode.png/237px-Sprout_allmode.png|https://liquipedia.net/commons/images/thumb/f/f0/Sprout_allmode.png/237px-Sprout_allmode.png",
+"light": "sprout.png",
+"name": "Sprout",
+"src": "https://liquipedia.net/commons/images/thumb/f/f0/Sprout_allmode.png/237px-Sprout_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/f/f0/Sprout_allmode.png/237px-Sprout_allmode.png"
+},
 "steel_helmet": {
 "checked": "2026-11-12",
 "dark": null,
@@ -2034,6 +3172,38 @@
 "name": "Steel Helmet",
 "src": "https://liquipedia.net/commons/images/thumb/5/5d/Steel_helmet_allmode.png/400px-Steel_helmet_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/5/5d/Steel_helmet_allmode.png/400px-Steel_helmet_allmode.png"
+},
+"strife_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/b/bc/Strife_Esports_2022_allmode.png/400px-Strife_Esports_2022_allmode.png|https://liquipedia.net/commons/images/thumb/b/bc/Strife_Esports_2022_allmode.png/400px-Strife_Esports_2022_allmode.png",
+"light": "strife_esports.png",
+"name": "Strife Esports",
+"src": "https://liquipedia.net/commons/images/thumb/b/bc/Strife_Esports_2022_allmode.png/400px-Strife_Esports_2022_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/b/bc/Strife_Esports_2022_allmode.png/400px-Strife_Esports_2022_allmode.png"
+},
+"supremacy_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/a/a9/Supremacy_Gaming_allmode.png|https://liquipedia.net/commons/images/a/a9/Supremacy_Gaming_allmode.png",
+"light": "supremacy_gaming.png",
+"name": "Supremacy Gaming",
+"src": "https://liquipedia.net/commons/images/a/a9/Supremacy_Gaming_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/a/a9/Supremacy_Gaming_allmode.png"
+},
+"swole_patrol": {
+"name": "Swole Patrol",
+"src": "https://liquipedia.net/commons/images/thumb/9/90/Swole_Patrol_2019_allmode.png/318px-Swole_Patrol_2019_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/9/90/Swole_Patrol_2019_allmode.png/318px-Swole_Patrol_2019_allmode.png"
+},
+"sws_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/e/e4/SWS_Gaming_allmode.png/400px-SWS_Gaming_allmode.png|https://liquipedia.net/commons/images/thumb/e/e4/SWS_Gaming_allmode.png/400px-SWS_Gaming_allmode.png",
+"light": "sws_gaming.png",
+"name": "SWS Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/e/e4/SWS_Gaming_allmode.png/400px-SWS_Gaming_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/e/e4/SWS_Gaming_allmode.png/400px-SWS_Gaming_allmode.png"
 },
 "take_flyte": {
 "checked": "2026-11-12",
@@ -2067,10 +3237,28 @@
 "src": "https://liquipedia.net/commons/images/thumb/0/08/Flag_of_Albania_4_by_3.png/400px-Flag_of_Albania_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/0/08/Flag_of_Albania_4_by_3.png/400px-Flag_of_Albania_4_by_3.png"
 },
+"team_argentina": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/b/b6/Flag_of_Argentina_4_by_3.png/400px-Flag_of_Argentina_4_by_3.png|https://liquipedia.net/commons/images/thumb/b/b6/Flag_of_Argentina_4_by_3.png/400px-Flag_of_Argentina_4_by_3.png",
+"light": "team_argentina.png",
+"name": "Team Argentina",
+"src": "https://liquipedia.net/commons/images/thumb/b/b6/Flag_of_Argentina_4_by_3.png/400px-Flag_of_Argentina_4_by_3.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/b/b6/Flag_of_Argentina_4_by_3.png/400px-Flag_of_Argentina_4_by_3.png"
+},
 "team_arrow": {
 "name": "Team-ARROW",
 "src": "https://liquipedia.net/commons/images/thumb/4/49/ARROW_lightmode.png/204px-ARROW_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/80/ARROW_darkmode.png/204px-ARROW_darkmode.png"
+},
+"team_aster": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/e/e7/Team_Aster_allmode.png/400px-Team_Aster_allmode.png|https://liquipedia.net/commons/images/thumb/e/e7/Team_Aster_allmode.png/400px-Team_Aster_allmode.png",
+"light": "team_aster.png",
+"name": "Team Aster",
+"src": "https://liquipedia.net/commons/images/thumb/e/e7/Team_Aster_allmode.png/400px-Team_Aster_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/e/e7/Team_Aster_allmode.png/400px-Team_Aster_allmode.png"
 },
 "team_austria": {
 "name": "Team Austria",
@@ -2092,6 +3280,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/0/0b/Flag_of_Belgium_4_by_3.png/400px-Flag_of_Belgium_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/0/0b/Flag_of_Belgium_4_by_3.png/400px-Flag_of_Belgium_4_by_3.png"
 },
+"team_blink": {
+"checked": "2026-11-13",
+"dark": "team_blink-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/1/1a/Team_BLINK_lightmode.png/400px-Team_BLINK_lightmode.png|https://liquipedia.net/commons/images/thumb/3/36/Team_Blink_darkmode.png/400px-Team_Blink_darkmode.png",
+"light": "team_blink.png",
+"name": "Team BLINK",
+"src": "https://liquipedia.net/commons/images/thumb/1/1a/Team_BLINK_lightmode.png/400px-Team_BLINK_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/3/36/Team_Blink_darkmode.png/400px-Team_Blink_darkmode.png"
+},
 "team_bulgaria": {
 "name": "Team Bulgaria",
 "src": "https://liquipedia.net/commons/images/thumb/0/04/Flag_of_Bulgaria_4_by_3.png/400px-Flag_of_Bulgaria_4_by_3.png",
@@ -2112,6 +3309,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/9/90/Flag_of_Czechia_4_by_3.png/400px-Flag_of_Czechia_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/9/90/Flag_of_Czechia_4_by_3.png/400px-Flag_of_Czechia_4_by_3.png"
 },
+"team_esca_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/4/40/ESCA_Gaming_allmode.png|https://liquipedia.net/commons/images/4/40/ESCA_Gaming_allmode.png",
+"light": "team_esca_gaming.png",
+"name": "Team ESCA Gaming",
+"src": "https://liquipedia.net/commons/images/4/40/ESCA_Gaming_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/4/40/ESCA_Gaming_allmode.png"
+},
 "team_falcons": {
 "checked": "2026-11-12",
 "dark": null,
@@ -2121,10 +3327,42 @@
 "src": "https://liquipedia.net/commons/images/thumb/8/83/Team_Falcons_2022_allmode.png/330px-Team_Falcons_2022_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/83/Team_Falcons_2022_allmode.png/330px-Team_Falcons_2022_allmode.png"
 },
+"team_fiend": {
+"name": "Team Fiend",
+"src": "https://liquipedia.net/commons/images/thumb/6/63/Team_Fiend_2021_darkmode.png/281px-Team_Fiend_2021_darkmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/6/63/Team_Fiend_2021_darkmode.png/281px-Team_Fiend_2021_darkmode.png"
+},
+"team_finest": {
+"checked": "2026-11-13",
+"dark": "team_finest-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/2/21/Team_Finest_lightmode.png/340px-Team_Finest_lightmode.png|https://liquipedia.net/commons/images/thumb/e/ef/Team_Finest_darkmode.png/340px-Team_Finest_darkmode.png",
+"light": "team_finest.png",
+"name": "Team Finest",
+"src": "https://liquipedia.net/commons/images/thumb/2/21/Team_Finest_lightmode.png/340px-Team_Finest_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/e/ef/Team_Finest_darkmode.png/340px-Team_Finest_darkmode.png"
+},
 "team_france": {
 "name": "Team France",
 "src": "https://liquipedia.net/commons/images/thumb/2/21/Flag_of_France_4_by_3.png/400px-Flag_of_France_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/2/21/Flag_of_France_4_by_3.png/400px-Flag_of_France_4_by_3.png"
+},
+"team_guatemala": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/0/01/Flag_of_Guatemala_4_by_3.png/400px-Flag_of_Guatemala_4_by_3.png|https://liquipedia.net/commons/images/thumb/0/01/Flag_of_Guatemala_4_by_3.png/400px-Flag_of_Guatemala_4_by_3.png",
+"light": "team_guatemala.png",
+"name": "Team Guatemala",
+"src": "https://liquipedia.net/commons/images/thumb/0/01/Flag_of_Guatemala_4_by_3.png/400px-Flag_of_Guatemala_4_by_3.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/0/01/Flag_of_Guatemala_4_by_3.png/400px-Flag_of_Guatemala_4_by_3.png"
+},
+"team_heretics": {
+"checked": "2026-11-13",
+"dark": "team_heretics-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/6/6d/Team_Heretics_2020_lightmode.png/317px-Team_Heretics_2020_lightmode.png|https://liquipedia.net/commons/images/thumb/d/da/Team_Heretics_2020_darkmode.png/320px-Team_Heretics_2020_darkmode.png",
+"light": "team_heretics.png",
+"name": "Team Heretics",
+"src": "https://liquipedia.net/commons/images/thumb/6/6d/Team_Heretics_2020_lightmode.png/317px-Team_Heretics_2020_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/d/da/Team_Heretics_2020_darkmode.png/320px-Team_Heretics_2020_darkmode.png"
 },
 "team_hungary": {
 "checked": "2026-11-12",
@@ -2134,6 +3372,20 @@
 "name": "Team Hungary",
 "src": "https://liquipedia.net/commons/images/thumb/3/34/Flag_of_Hungary_4_by_3.png/400px-Flag_of_Hungary_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/3/34/Flag_of_Hungary_4_by_3.png/400px-Flag_of_Hungary_4_by_3.png"
+},
+"team_indonesia": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/5/53/Flag_of_Indonesia_4_by_3.png/400px-Flag_of_Indonesia_4_by_3.png|https://liquipedia.net/commons/images/thumb/5/53/Flag_of_Indonesia_4_by_3.png/400px-Flag_of_Indonesia_4_by_3.png",
+"light": "team_indonesia.png",
+"name": "Team Indonesia",
+"src": "https://liquipedia.net/commons/images/thumb/5/53/Flag_of_Indonesia_4_by_3.png/400px-Flag_of_Indonesia_4_by_3.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/5/53/Flag_of_Indonesia_4_by_3.png/400px-Flag_of_Indonesia_4_by_3.png"
+},
+"team_iraq": {
+"name": "Team Iraq",
+"src": "https://liquipedia.net/commons/images/thumb/3/3a/Flag_of_Iraq_4_by_3.png/400px-Flag_of_Iraq_4_by_3.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/3/3a/Flag_of_Iraq_4_by_3.png/400px-Flag_of_Iraq_4_by_3.png"
 },
 "team_ireland": {
 "name": "Team Ireland",
@@ -2145,10 +3397,24 @@
 "src": "https://liquipedia.net/commons/images/thumb/0/04/Flag_of_Israel_4_by_3.png/400px-Flag_of_Israel_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/0/04/Flag_of_Israel_4_by_3.png/400px-Flag_of_Israel_4_by_3.png"
 },
+"team_kyrgyzstan": {
+"name": "Team Kyrgyzstan",
+"src": "https://liquipedia.net/commons/images/thumb/e/e7/Flag_of_Kyrgyzstan_4_by_3.png/400px-Flag_of_Kyrgyzstan_4_by_3.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/e/e7/Flag_of_Kyrgyzstan_4_by_3.png/400px-Flag_of_Kyrgyzstan_4_by_3.png"
+},
 "team_latvia": {
 "name": "Team Latvia",
 "src": "https://liquipedia.net/commons/images/thumb/1/1c/Flag_of_Latvia_4_by_3.png/400px-Flag_of_Latvia_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/1/1c/Flag_of_Latvia_4_by_3.png/400px-Flag_of_Latvia_4_by_3.png"
+},
+"team_ldlc": {
+"checked": "2026-11-13",
+"dark": "team_ldlc-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/3/33/LDLC_2020_lightmode.png/345px-LDLC_2020_lightmode.png|https://liquipedia.net/commons/images/thumb/9/95/LDLC_2020_darkmode.png/345px-LDLC_2020_darkmode.png",
+"light": "team_ldlc.png",
+"name": "Team LDLC",
+"src": "https://liquipedia.net/commons/images/thumb/3/33/LDLC_2020_lightmode.png/345px-LDLC_2020_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/9/95/LDLC_2020_darkmode.png/345px-LDLC_2020_darkmode.png"
 },
 "team_leisure": {
 "checked": "2026-11-12",
@@ -2178,6 +3444,16 @@
 "src": "https://liquipedia.net/commons/images/thumb/0/07/Flag_of_Luxembourg_4_by_3.png/400px-Flag_of_Luxembourg_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/0/07/Flag_of_Luxembourg_4_by_3.png/400px-Flag_of_Luxembourg_4_by_3.png"
 },
+"team_mongolia": {
+"name": "Team Mongolia",
+"src": "https://liquipedia.net/commons/images/thumb/d/de/Flag_of_Mongolia_4_by_3.png/400px-Flag_of_Mongolia_4_by_3.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/d/de/Flag_of_Mongolia_4_by_3.png/400px-Flag_of_Mongolia_4_by_3.png"
+},
+"team_montenegro": {
+"name": "Team Montenegro",
+"src": "https://liquipedia.net/commons/images/thumb/6/67/Flag_of_Montenegro_4_by_3.png/400px-Flag_of_Montenegro_4_by_3.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/6/67/Flag_of_Montenegro_4_by_3.png/400px-Flag_of_Montenegro_4_by_3.png"
+},
 "team_nemesis": {
 "checked": "2026-11-12",
 "dark": "team_nemesis-dark.png",
@@ -2201,6 +3477,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/b/ba/TEAM_NEXT_LEVEL_oct_24_allmode.png/400px-TEAM_NEXT_LEVEL_oct_24_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/b/ba/TEAM_NEXT_LEVEL_oct_24_allmode.png/400px-TEAM_NEXT_LEVEL_oct_24_allmode.png"
 },
+"team_nkt": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/7/7a/Team_NKT_2021_allmode.png/400px-Team_NKT_2021_allmode.png|https://liquipedia.net/commons/images/thumb/7/7a/Team_NKT_2021_allmode.png/400px-Team_NKT_2021_allmode.png",
+"light": "team_nkt.png",
+"name": "Team NKT",
+"src": "https://liquipedia.net/commons/images/thumb/7/7a/Team_NKT_2021_allmode.png/400px-Team_NKT_2021_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/7/7a/Team_NKT_2021_allmode.png/400px-Team_NKT_2021_allmode.png"
+},
 "team_north_macedonia": {
 "name": "Team North Macedonia",
 "src": "https://liquipedia.net/commons/images/thumb/d/d5/Flag_of_North_Macedonia_4_by_3.png/400px-Flag_of_North_Macedonia_4_by_3.png",
@@ -2214,6 +3499,25 @@
 "name": "Team Norway",
 "src": "https://liquipedia.net/commons/images/thumb/a/ae/Flag_of_Norway_4_by_3.png/400px-Flag_of_Norway_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/a/ae/Flag_of_Norway_4_by_3.png/400px-Flag_of_Norway_4_by_3.png"
+},
+"team_one_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/d/d0/Team_oNe_eSports_2019_allmode.png/400px-Team_oNe_eSports_2019_allmode.png|https://liquipedia.net/commons/images/thumb/d/d0/Team_oNe_eSports_2019_allmode.png/400px-Team_oNe_eSports_2019_allmode.png",
+"light": "team_one_esports.png",
+"name": "Team oNe eSports",
+"src": "https://liquipedia.net/commons/images/thumb/d/d0/Team_oNe_eSports_2019_allmode.png/400px-Team_oNe_eSports_2019_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/d/d0/Team_oNe_eSports_2019_allmode.png/400px-Team_oNe_eSports_2019_allmode.png"
+},
+"team_pakistan": {
+"name": "Team Pakistan",
+"src": "https://liquipedia.net/commons/images/thumb/0/04/Flag_of_Pakistan_4_by_3.png/400px-Flag_of_Pakistan_4_by_3.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/0/04/Flag_of_Pakistan_4_by_3.png/400px-Flag_of_Pakistan_4_by_3.png"
+},
+"team_palestine": {
+"name": "Team Palestine",
+"src": "https://liquipedia.net/commons/images/thumb/0/02/Flag_of_Palestine_4_by_3.png/400px-Flag_of_Palestine_4_by_3.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/0/02/Flag_of_Palestine_4_by_3.png/400px-Flag_of_Palestine_4_by_3.png"
 },
 "team_pigeons": {
 "name": "Team Pigeons",
@@ -2234,15 +3538,61 @@
 "src": "https://liquipedia.net/commons/images/thumb/d/d3/Flag_of_Portugal_4_by_3.png/400px-Flag_of_Portugal_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/d/d3/Flag_of_Portugal_4_by_3.png/400px-Flag_of_Portugal_4_by_3.png"
 },
+"team_queso": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/4/48/Team_Queso_allmode.png/373px-Team_Queso_allmode.png|https://liquipedia.net/commons/images/thumb/4/48/Team_Queso_allmode.png/373px-Team_Queso_allmode.png",
+"light": "team_queso.png",
+"name": "Team Queso",
+"src": "https://liquipedia.net/commons/images/thumb/4/48/Team_Queso_allmode.png/373px-Team_Queso_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/4/48/Team_Queso_allmode.png/373px-Team_Queso_allmode.png"
+},
+"team_reapers": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/1/13/Team_Reapers_allmode.png|https://liquipedia.net/commons/images/1/13/Team_Reapers_allmode.png",
+"light": "team_reapers.png",
+"name": "Team Reapers",
+"src": "https://liquipedia.net/commons/images/1/13/Team_Reapers_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/1/13/Team_Reapers_allmode.png"
+},
+"team_renewal": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/5/58/Team_Renewal.png/400px-Team_Renewal.png|https://liquipedia.net/commons/images/thumb/5/58/Team_Renewal.png/400px-Team_Renewal.png",
+"light": "team_renewal.png",
+"name": "Team Renewal",
+"src": "https://liquipedia.net/commons/images/thumb/5/58/Team_Renewal.png/400px-Team_Renewal.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/5/58/Team_Renewal.png/400px-Team_Renewal.png"
+},
+"team_romania": {
+"name": "Team Romania",
+"src": "https://liquipedia.net/commons/images/thumb/5/5b/Flag_of_Romania_4_by_3.png/400px-Flag_of_Romania_4_by_3.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/5/5b/Flag_of_Romania_4_by_3.png/400px-Flag_of_Romania_4_by_3.png"
+},
 "team_sampi": {
 "name": "Team Sampi",
 "src": "https://liquipedia.net/commons/images/thumb/1/13/Team_Sampi_2023_lightmode.png/359px-Team_Sampi_2023_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/5/5a/Team_Sampi_2023_darkmode.png/359px-Team_Sampi_2023_darkmode.png"
 },
+"team_secret": {
+"checked": "2026-11-13",
+"dark": "team_secret-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/0/07/Team_Secret_lightmode.png/400px-Team_Secret_lightmode.png|https://liquipedia.net/commons/images/thumb/d/d2/Team_Secret_darkmode.png/400px-Team_Secret_darkmode.png",
+"light": "team_secret.png",
+"name": "Team Secret",
+"src": "https://liquipedia.net/commons/images/thumb/0/07/Team_Secret_lightmode.png/400px-Team_Secret_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/d/d2/Team_Secret_darkmode.png/400px-Team_Secret_darkmode.png"
+},
 "team_serbia": {
 "name": "Team Serbia",
 "src": "https://liquipedia.net/commons/images/thumb/6/64/Flag_of_Serbia_4_by_3.png/400px-Flag_of_Serbia_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/6/64/Flag_of_Serbia_4_by_3.png/400px-Flag_of_Serbia_4_by_3.png"
+},
+"team_singularity": {
+"name": "Team Singularity",
+"src": "https://liquipedia.net/commons/images/thumb/f/f5/Team_Singularity_2022_lightmode.png/392px-Team_Singularity_2022_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/a/a0/Team_Singularity_2022_darkmode.png/392px-Team_Singularity_2022_darkmode.png"
 },
 "team_slovakia": {
 "name": "Team Slovakia",
@@ -2253,6 +3603,15 @@
 "name": "Team Solid",
 "src": "https://liquipedia.net/commons/images/thumb/2/24/Team_Solid_2024_lightmode.png/383px-Team_Solid_2024_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/3/34/Team_Solid_2024_darkmode.png/383px-Team_Solid_2024_darkmode.png"
+},
+"team_spain": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/d/d2/Flag_of_Spain_4_by_3.png/400px-Flag_of_Spain_4_by_3.png|https://liquipedia.net/commons/images/thumb/d/d2/Flag_of_Spain_4_by_3.png/400px-Flag_of_Spain_4_by_3.png",
+"light": "team_spain.png",
+"name": "Team Spain",
+"src": "https://liquipedia.net/commons/images/thumb/d/d2/Flag_of_Spain_4_by_3.png/400px-Flag_of_Spain_4_by_3.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/d/d2/Flag_of_Spain_4_by_3.png/400px-Flag_of_Spain_4_by_3.png"
 },
 "team_spirit": {
 "checked": "2026-11-12",
@@ -2295,6 +3654,20 @@
 "src": "https://liquipedia.net/commons/images/thumb/b/b4/Flag_of_Turkey_4_by_3.png/400px-Flag_of_Turkey_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/b/b4/Flag_of_Turkey_4_by_3.png/400px-Flag_of_Turkey_4_by_3.png"
 },
+"team_unique": {
+"checked": "2026-11-13",
+"dark": "team_unique-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/5/58/Team_Unique_2019_lightmode.png/400px-Team_Unique_2019_lightmode.png|https://liquipedia.net/commons/images/thumb/6/6b/Team_Unique_2019_darkmode.png/400px-Team_Unique_2019_darkmode.png",
+"light": "team_unique.png",
+"name": "Team Unique",
+"src": "https://liquipedia.net/commons/images/thumb/5/58/Team_Unique_2019_lightmode.png/400px-Team_Unique_2019_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/6/6b/Team_Unique_2019_darkmode.png/400px-Team_Unique_2019_darkmode.png"
+},
+"team_uzbekistan": {
+"name": "Team Uzbekistan",
+"src": "https://liquipedia.net/commons/images/thumb/4/4d/Flag_of_Uzbekistan_4_by_3.png/400px-Flag_of_Uzbekistan_4_by_3.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/4/4d/Flag_of_Uzbekistan_4_by_3.png/400px-Flag_of_Uzbekistan_4_by_3.png"
+},
 "team_vitality": {
 "checked": "2026-11-12",
 "dark": "team_vitality-dark.png",
@@ -2312,6 +3685,20 @@
 "name": "Team Voca",
 "src": "https://liquipedia.net/commons/images/thumb/d/de/Team_Voca_lightmode.png/400px-Team_Voca_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/2/29/Team_Voca_darkmode.png/400px-Team_Voca_darkmode.png"
+},
+"tenerife_titans": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/e/e8/Tenerife_Titans_2020_allmode.png/343px-Tenerife_Titans_2020_allmode.png|https://liquipedia.net/commons/images/thumb/e/e8/Tenerife_Titans_2020_allmode.png/343px-Tenerife_Titans_2020_allmode.png",
+"light": "tenerife_titans.png",
+"name": "Tenerife Titans",
+"src": "https://liquipedia.net/commons/images/thumb/e/e8/Tenerife_Titans_2020_allmode.png/343px-Tenerife_Titans_2020_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/e/e8/Tenerife_Titans_2020_allmode.png/343px-Tenerife_Titans_2020_allmode.png"
+},
+"the_dice": {
+"name": "The Dice",
+"src": "https://liquipedia.net/commons/images/thumb/d/de/The_Dice_2022_lightmode.png/400px-The_Dice_2022_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/8/8c/The_Dice_2022_darkmode.png/400px-The_Dice_2022_darkmode.png"
 },
 "the_huns_esports": {
 "checked": "2026-11-12",
@@ -2354,6 +3741,43 @@
 "src": "https://liquipedia.net/commons/images/thumb/d/d6/The_Suspect_jul_2024_lightmode.png/378px-The_Suspect_jul_2024_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/d/de/The_Suspect_jul_2024_darkmode.png/378px-The_Suspect_jul_2024_darkmode.png"
 },
+"the_union": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/b/b8/The_Union_allmode.png/329px-The_Union_allmode.png|https://liquipedia.net/commons/images/thumb/b/b8/The_Union_allmode.png/329px-The_Union_allmode.png",
+"light": "the_union.png",
+"name": "The Union",
+"src": "https://liquipedia.net/commons/images/thumb/b/b8/The_Union_allmode.png/329px-The_Union_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/b/b8/The_Union_allmode.png/329px-The_Union_allmode.png"
+},
+"third_impact": {
+"checked": "2026-11-13",
+"dark": "third_impact-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/0/09/Third_Impact_2020_lightmode.png/400px-Third_Impact_2020_lightmode.png|https://liquipedia.net/commons/images/thumb/7/78/Third_Impact_2020_darkmode.png/400px-Third_Impact_2020_darkmode.png",
+"light": "third_impact.png",
+"name": "Third Impact",
+"src": "https://liquipedia.net/commons/images/thumb/0/09/Third_Impact_2020_lightmode.png/400px-Third_Impact_2020_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/7/78/Third_Impact_2020_darkmode.png/400px-Third_Impact_2020_darkmode.png"
+},
+"thunderflash": {
+"name": "ThunderFlash",
+"src": "https://liquipedia.net/commons/images/thumb/f/f4/ThunderFlash_May_2023_lightmode.png/400px-ThunderFlash_May_2023_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/3/30/ThunderFlash_May_2023_darkmode.png/400px-ThunderFlash_May_2023_darkmode.png"
+},
+"tiger": {
+"name": "TIGER",
+"src": "https://liquipedia.net/commons/images/thumb/6/63/TIGER_2020_allmode.png/353px-TIGER_2020_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/6/63/TIGER_2020_allmode.png/353px-TIGER_2020_allmode.png"
+},
+"touchthecrown": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/4/41/TouchTheCrown_2022_allmode.png/400px-TouchTheCrown_2022_allmode.png|https://liquipedia.net/commons/images/thumb/4/41/TouchTheCrown_2022_allmode.png/400px-TouchTheCrown_2022_allmode.png",
+"light": "touchthecrown.png",
+"name": "TouchTheCrown",
+"src": "https://liquipedia.net/commons/images/thumb/4/41/TouchTheCrown_2022_allmode.png/400px-TouchTheCrown_2022_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/4/41/TouchTheCrown_2022_allmode.png/400px-TouchTheCrown_2022_allmode.png"
+},
 "tricked_esport": {
 "checked": "2026-11-12",
 "dark": null,
@@ -2362,6 +3786,38 @@
 "name": "Tricked Esport",
 "src": "https://liquipedia.net/commons/images/thumb/2/2e/Tricked_Esport_2025_allmode.png/400px-Tricked_Esport_2025_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/2/2e/Tricked_Esport_2025_allmode.png/400px-Tricked_Esport_2025_allmode.png"
+},
+"trident_esports": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/8/89/Trident_Esports_2018_allmode.png/400px-Trident_Esports_2018_allmode.png|https://liquipedia.net/commons/images/thumb/8/89/Trident_Esports_2018_allmode.png/400px-Trident_Esports_2018_allmode.png",
+"light": "trident_esports.png",
+"name": "Trident Esports",
+"src": "https://liquipedia.net/commons/images/thumb/8/89/Trident_Esports_2018_allmode.png/400px-Trident_Esports_2018_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/8/89/Trident_Esports_2018_allmode.png/400px-Trident_Esports_2018_allmode.png"
+},
+"triumph": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/0/0c/Triumph_2021.png/252px-Triumph_2021.png|https://liquipedia.net/commons/images/thumb/0/0c/Triumph_2021.png/252px-Triumph_2021.png",
+"light": "triumph.png",
+"name": "Triumph",
+"src": "https://liquipedia.net/commons/images/thumb/0/0c/Triumph_2021.png/252px-Triumph_2021.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/0/0c/Triumph_2021.png/252px-Triumph_2021.png"
+},
+"triumphant_song_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/d/d8/Triumphant_Song_Gaming_allmode.png|https://liquipedia.net/commons/images/d/d8/Triumphant_Song_Gaming_allmode.png",
+"light": "triumphant_song_gaming.png",
+"name": "Triumphant Song Gaming",
+"src": "https://liquipedia.net/commons/images/d/d8/Triumphant_Song_Gaming_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/d/d8/Triumphant_Song_Gaming_allmode.png"
+},
+"true_rippers_esports": {
+"name": "True Rippers Esports",
+"src": "https://liquipedia.net/commons/images/thumb/8/8a/True_Rippers_lightmode.png/274px-True_Rippers_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/8/8f/True_Rippers_darkmode.png/274px-True_Rippers_darkmode.png"
 },
 "tsm": {
 "checked": "2026-11-12",
@@ -2372,6 +3828,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/c/c8/TSM_2019_lightmode.png/400px-TSM_2019_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/d/dd/TSM_2019_darkmode.png/400px-TSM_2019_darkmode.png"
 },
+"tur_w_zgorzelec_esport": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/9/93/Tur%C3%B3w_Zgorzelec_allmode_full.png/399px-Tur%C3%B3w_Zgorzelec_allmode_full.png|https://liquipedia.net/commons/images/thumb/9/93/Tur%C3%B3w_Zgorzelec_allmode_full.png/399px-Tur%C3%B3w_Zgorzelec_allmode_full.png",
+"light": "tur_w_zgorzelec_esport.png",
+"name": "Turów Zgorzelec Esport",
+"src": "https://liquipedia.net/commons/images/thumb/9/93/Tur%C3%B3w_Zgorzelec_allmode_full.png/399px-Tur%C3%B3w_Zgorzelec_allmode_full.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/9/93/Tur%C3%B3w_Zgorzelec_allmode_full.png/399px-Tur%C3%B3w_Zgorzelec_allmode_full.png"
+},
 "turma_do_pagode": {
 "checked": "2026-11-12",
 "dark": null,
@@ -2381,6 +3846,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/e/ea/Turma_do_Pagode_allmode.png/183px-Turma_do_Pagode_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/e/ea/Turma_do_Pagode_allmode.png/183px-Turma_do_Pagode_allmode.png"
 },
+"twisted_minds": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/2/24/Twisted_Minds_2023_allmode.png/400px-Twisted_Minds_2023_allmode.png|https://liquipedia.net/commons/images/thumb/2/24/Twisted_Minds_2023_allmode.png/400px-Twisted_Minds_2023_allmode.png",
+"light": "twisted_minds.png",
+"name": "Twisted Minds",
+"src": "https://liquipedia.net/commons/images/thumb/2/24/Twisted_Minds_2023_allmode.png/400px-Twisted_Minds_2023_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/2/24/Twisted_Minds_2023_allmode.png/400px-Twisted_Minds_2023_allmode.png"
+},
 "tyloo": {
 "checked": "2026-11-12",
 "dark": null,
@@ -2389,6 +3863,33 @@
 "name": "TYLOO",
 "src": "https://liquipedia.net/commons/images/thumb/5/5f/TyLoo_2016_allmode.png/400px-TyLoo_2016_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/5/5f/TyLoo_2016_allmode.png/400px-TyLoo_2016_allmode.png"
+},
+"umx_gaming": {
+"checked": "2026-11-13",
+"dark": "umx_gaming-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/9/9d/UMX_Gaming_2021_lightmode.png/399px-UMX_Gaming_2021_lightmode.png|https://liquipedia.net/commons/images/thumb/c/c3/UMX_Gaming_2021_darkmode.png/399px-UMX_Gaming_2021_darkmode.png",
+"light": "umx_gaming.png",
+"name": "UMX Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/9/9d/UMX_Gaming_2021_lightmode.png/399px-UMX_Gaming_2021_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c3/UMX_Gaming_2021_darkmode.png/399px-UMX_Gaming_2021_darkmode.png"
+},
+"ungentium": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/7/7b/Ungentium_allmode.png/350px-Ungentium_allmode.png|https://liquipedia.net/commons/images/thumb/7/7b/Ungentium_allmode.png/350px-Ungentium_allmode.png",
+"light": "ungentium.png",
+"name": "Ungentium",
+"src": "https://liquipedia.net/commons/images/thumb/7/7b/Ungentium_allmode.png/350px-Ungentium_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/7/7b/Ungentium_allmode.png/350px-Ungentium_allmode.png"
+},
+"unicorns_of_love": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/7/70/Unicorns_Of_Love_allmode.png/400px-Unicorns_Of_Love_allmode.png|https://liquipedia.net/commons/images/thumb/7/70/Unicorns_Of_Love_allmode.png/400px-Unicorns_Of_Love_allmode.png",
+"light": "unicorns_of_love.png",
+"name": "Unicorns of Love",
+"src": "https://liquipedia.net/commons/images/thumb/7/70/Unicorns_Of_Love_allmode.png/400px-Unicorns_Of_Love_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/7/70/Unicorns_Of_Love_allmode.png/400px-Unicorns_Of_Love_allmode.png"
 },
 "unity_esports": {
 "checked": "2026-11-12",
@@ -2425,6 +3926,29 @@
 "name": "Verdant",
 "src": "https://liquipedia.net/commons/images/thumb/d/d6/Verdant_2023_allmode.png/319px-Verdant_2023_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/d/d6/Verdant_2023_allmode.png/319px-Verdant_2023_allmode.png"
+},
+"vertex_esports_club": {
+"name": "VERTEX Esports Club",
+"src": "https://liquipedia.net/commons/images/thumb/3/3f/VERTEX_Esports_Club_lightmode.png/380px-VERTEX_Esports_Club_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/1/1e/VERTEX_Esports_Club_darkmode.png/380px-VERTEX_Esports_Club_darkmode.png"
+},
+"vexed_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/c/c9/Vexed_Gaming_2018_allmode.png/327px-Vexed_Gaming_2018_allmode.png|https://liquipedia.net/commons/images/thumb/c/c9/Vexed_Gaming_2018_allmode.png/327px-Vexed_Gaming_2018_allmode.png",
+"light": "vexed_gaming.png",
+"name": "Vexed Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/c/c9/Vexed_Gaming_2018_allmode.png/327px-Vexed_Gaming_2018_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c9/Vexed_Gaming_2018_allmode.png/327px-Vexed_Gaming_2018_allmode.png"
+},
+"vici_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/c/ce/VICI_Gaming_allmode.png/391px-VICI_Gaming_allmode.png|https://liquipedia.net/commons/images/thumb/c/ce/VICI_Gaming_allmode.png/391px-VICI_Gaming_allmode.png",
+"light": "vici_gaming.png",
+"name": "ViCi Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/c/ce/VICI_Gaming_allmode.png/391px-VICI_Gaming_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/ce/VICI_Gaming_allmode.png/391px-VICI_Gaming_allmode.png"
 },
 "victores_sumus": {
 "checked": "2026-11-12",
@@ -2471,6 +3995,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/5/5d/Vitality_Academy_lightmode.png/400px-Vitality_Academy_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/e/e9/Vitality_Academy_darkmode.png/400px-Vitality_Academy_darkmode.png"
 },
+"volgare": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/4/4a/VOLGARE_allmode.png|https://liquipedia.net/commons/images/4/4a/VOLGARE_allmode.png",
+"light": "volgare.png",
+"name": "VOLGARE",
+"src": "https://liquipedia.net/commons/images/4/4a/VOLGARE_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/4/4a/VOLGARE_allmode.png"
+},
 "vp_prodigy": {
 "checked": "2026-11-12",
 "dark": null,
@@ -2498,6 +4031,11 @@
 "src": "https://liquipedia.net/commons/images/8/81/WDNMD_2022_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/8/81/WDNMD_2022_allmode.png"
 },
+"websterz": {
+"name": "Websterz",
+"src": "https://liquipedia.net/commons/images/thumb/8/84/Websterz_allmode.png/372px-Websterz_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/8/84/Websterz_allmode.png/372px-Websterz_allmode.png"
+},
 "wildcard": {
 "checked": "2026-11-12",
 "dark": "wildcard-dark.png",
@@ -2516,6 +4054,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/b/b3/Wildcard_2024_lightmode.png/338px-Wildcard_2024_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/7/77/Wildcard_2024_darkmode.png/338px-Wildcard_2024_darkmode.png"
 },
+"windigo_gaming": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/c/c0/Windigo_Gaming_allmode.png/380px-Windigo_Gaming_allmode.png|https://liquipedia.net/commons/images/thumb/c/c0/Windigo_Gaming_allmode.png/380px-Windigo_Gaming_allmode.png",
+"light": "windigo_gaming.png",
+"name": "Windigo Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/c/c0/Windigo_Gaming_allmode.png/380px-Windigo_Gaming_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/c/c0/Windigo_Gaming_allmode.png/380px-Windigo_Gaming_allmode.png"
+},
 "wings_up_gaming": {
 "checked": "2026-11-12",
 "dark": "wings_up_gaming-dark.png",
@@ -2525,10 +4072,33 @@
 "src": "https://liquipedia.net/commons/images/thumb/3/3f/Wings_Up_Gaming_lightmode.png/400px-Wings_Up_Gaming_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/8f/Wings_Up_Gaming_darkmode.png/400px-Wings_Up_Gaming_darkmode.png"
 },
+"winstrike_team": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/f/fd/Winstrike_Team_2019_allmode.png/400px-Winstrike_Team_2019_allmode.png|https://liquipedia.net/commons/images/thumb/f/fd/Winstrike_Team_2019_allmode.png/400px-Winstrike_Team_2019_allmode.png",
+"light": "winstrike_team.png",
+"name": "Winstrike Team",
+"src": "https://liquipedia.net/commons/images/thumb/f/fd/Winstrike_Team_2019_allmode.png/400px-Winstrike_Team_2019_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/f/fd/Winstrike_Team_2019_allmode.png/400px-Winstrike_Team_2019_allmode.png"
+},
+"wis_a_krak_w": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/7/74/Wis%C5%82a_Krak%C3%B3w_allmode.png/400px-Wis%C5%82a_Krak%C3%B3w_allmode.png|https://liquipedia.net/commons/images/thumb/7/74/Wis%C5%82a_Krak%C3%B3w_allmode.png/400px-Wis%C5%82a_Krak%C3%B3w_allmode.png",
+"light": "wis_a_krak_w.png",
+"name": "Wisła Kraków",
+"src": "https://liquipedia.net/commons/images/thumb/7/74/Wis%C5%82a_Krak%C3%B3w_allmode.png/400px-Wis%C5%82a_Krak%C3%B3w_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/7/74/Wis%C5%82a_Krak%C3%B3w_allmode.png/400px-Wis%C5%82a_Krak%C3%B3w_allmode.png"
+},
 "without_a_roof": {
 "name": "Without a Roof",
 "src": "https://liquipedia.net/commons/images/thumb/7/78/Without_a_Roof_lightmode.png/400px-Without_a_Roof_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/b/b7/Without_a_Roof_darkmode.png/400px-Without_a_Roof_darkmode.png"
+},
+"wolsung": {
+"name": "Wolsung",
+"src": "https://liquipedia.net/commons/images/thumb/5/56/Wolsung_2022_allmode.png/395px-Wolsung_2022_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/5/56/Wolsung_2022_allmode.png/395px-Wolsung_2022_allmode.png"
 },
 "wopa_esport": {
 "checked": "2026-11-12",
@@ -2557,6 +4127,24 @@
 "src": "https://liquipedia.net/commons/images/thumb/3/3d/WW_Team_%28Russian_team%29_2024_allmode.png/400px-WW_Team_%28Russian_team%29_2024_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/3/3d/WW_Team_%28Russian_team%29_2024_allmode.png/400px-WW_Team_%28Russian_team%29_2024_allmode.png"
 },
+"wygers_argentina": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/4/4d/Wygers_allmode.png|https://liquipedia.net/commons/images/4/4d/Wygers_allmode.png",
+"light": "wygers_argentina.png",
+"name": "Wygers Argentina",
+"src": "https://liquipedia.net/commons/images/4/4d/Wygers_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/4/4d/Wygers_allmode.png"
+},
+"x13": {
+"checked": "2026-11-13",
+"dark": "x13-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/0/0f/X13_lightmode.png/400px-X13_lightmode.png|https://liquipedia.net/commons/images/thumb/4/4e/X13_darkmode.png/400px-X13_darkmode.png",
+"light": "x13.png",
+"name": "X13",
+"src": "https://liquipedia.net/commons/images/thumb/0/0f/X13_lightmode.png/400px-X13_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/4/4e/X13_darkmode.png/400px-X13_darkmode.png"
+},
 "xi_antaichanggui": {
 "checked": "2026-11-12",
 "dark": null,
@@ -2575,6 +4163,11 @@
 "src": "https://liquipedia.net/commons/images/thumb/e/e9/Yawara_Esports_lightmode.png/400px-Yawara_Esports_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/8d/Yawara_Esports_darkmode.png/400px-Yawara_Esports_darkmode.png"
 },
+"yeah_gaming": {
+"name": "Yeah Gaming",
+"src": "https://liquipedia.net/commons/images/thumb/d/d0/Yeah_Gaming_2020_allmode.png/354px-Yeah_Gaming_2020_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/d/d0/Yeah_Gaming_2020_allmode.png/354px-Yeah_Gaming_2020_allmode.png"
+},
 "young_ninjas": {
 "checked": "2026-11-12",
 "dark": "young_ninjas-dark.png",
@@ -2592,6 +4185,15 @@
 "name": "Zero Tenacity",
 "src": "https://liquipedia.net/commons/images/thumb/e/e8/Zero_Tenacity_2025_lightmode.png/400px-Zero_Tenacity_2025_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/b/b7/Zero_Tenacity_2025_darkmode.png/400px-Zero_Tenacity_2025_darkmode.png"
+},
+"zigma": {
+"checked": "2026-11-13",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/9/9d/ZIGMA_new_teamcardimage.png/400px-ZIGMA_new_teamcardimage.png|https://liquipedia.net/commons/images/thumb/9/9d/ZIGMA_new_teamcardimage.png/400px-ZIGMA_new_teamcardimage.png",
+"light": "zigma.png",
+"name": "ZIGMA",
+"src": "https://liquipedia.net/commons/images/thumb/9/9d/ZIGMA_new_teamcardimage.png/400px-ZIGMA_new_teamcardimage.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/9/9d/ZIGMA_new_teamcardimage.png/400px-ZIGMA_new_teamcardimage.png"
 },
 "zomblers": {
 "checked": "2026-11-12",
