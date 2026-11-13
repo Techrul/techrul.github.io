@@ -1,24 +1,6 @@
 [
 {
-"date": "2026-11-13 08:00",
-"event": "BLAST/Rivals/2026/Fall",
-"event_name": "BLAST Rivals Fall 2026",
-"tier": "1",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "Team Vitality",
-"template": "team vitality 2023"
-},
-{
-"name": "MOUZ",
-"template": "mouz 2021"
-}
-]
-},
-{
-"date": "2026-11-13 10:30",
+"date": "2026-11-13 10:55",
 "event": "BLAST/Rivals/2026/Fall",
 "event_name": "BLAST Rivals Fall 2026",
 "tier": "1",
@@ -32,6 +14,24 @@
 {
 "name": "Team Falcons",
 "template": "team falcons 2022"
+}
+]
+},
+{
+"date": "2026-11-14 08:00",
+"event": "BLAST/Rivals/2026/Fall",
+"event_name": "BLAST Rivals Fall 2026",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Team Spirit",
+"template": "team spirit 2022"
+},
+{
+"name": "MOUZ",
+"template": "mouz 2021"
 }
 ]
 },
