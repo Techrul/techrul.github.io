@@ -215,3 +215,5 @@ tr[data-href]:hover>td,.row[data-href]:hover,.ev[data-href]:hover{background:var
 .h2hw-side input{min-width:0}
 .sub-h{font-size:1rem;margin:22px 0 8px}
 .t th.num,.t td.num{text-align:right;font-variant-numeric:tabular-nums}
+/* a row of chip groups (filters): room between the groups, and before what follows */
+.tools{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin:16px 0 14px}
