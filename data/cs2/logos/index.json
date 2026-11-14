@@ -1684,6 +1684,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/5/53/Espada_allmode.png/279px-Espada_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/5/53/Espada_allmode.png/279px-Espada_allmode.png"
 },
+"espionage": {
+"checked": "2026-11-14",
+"dark": "espionage-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/e/eb/Espionage_DK_lightmode.png/400px-Espionage_DK_lightmode.png|https://liquipedia.net/commons/images/thumb/e/eb/Espionage_DK_darkmode.png/400px-Espionage_DK_darkmode.png",
+"light": "espionage.png",
+"name": "Espionage",
+"src": "https://liquipedia.net/commons/images/thumb/e/eb/Espionage_DK_lightmode.png/400px-Espionage_DK_lightmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/e/eb/Espionage_DK_darkmode.png/400px-Espionage_DK_darkmode.png"
+},
 "esport_academy_copenhagen": {
 "checked": "2026-11-12",
 "dark": null,
@@ -5085,6 +5094,15 @@
 "src": "https://liquipedia.net/commons/images/thumb/9/90/Flag_of_Czechia_4_by_3.png/400px-Flag_of_Czechia_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/9/90/Flag_of_Czechia_4_by_3.png/400px-Flag_of_Czechia_4_by_3.png"
 },
+"team_ecuador": {
+"checked": "2026-11-14",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/9/94/Flag_of_Ecuador_4_by_3.png/400px-Flag_of_Ecuador_4_by_3.png|https://liquipedia.net/commons/images/thumb/9/94/Flag_of_Ecuador_4_by_3.png/400px-Flag_of_Ecuador_4_by_3.png",
+"light": "team_ecuador.png",
+"name": "Team Ecuador",
+"src": "https://liquipedia.net/commons/images/thumb/9/94/Flag_of_Ecuador_4_by_3.png/400px-Flag_of_Ecuador_4_by_3.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/9/94/Flag_of_Ecuador_4_by_3.png/400px-Flag_of_Ecuador_4_by_3.png"
+},
 "team_esca_gaming": {
 "checked": "2026-11-13",
 "dark": null,
@@ -5533,6 +5551,11 @@
 "src": "https://liquipedia.net/commons/images/thumb/6/66/Team_Spirit_2022_lightmode.png/343px-Team_Spirit_2022_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/80/Team_Spirit_2022_darkmode.png/343px-Team_Spirit_2022_darkmode.png"
 },
+"team_spotnet": {
+"name": "Team Spotnet",
+"src": "https://liquipedia.net/commons/images/thumb/0/01/Teamspotnet.png/376px-Teamspotnet.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/0/01/Teamspotnet.png/376px-Teamspotnet.png"
+},
 "team_sweden": {
 "name": "Team Sweden",
 "src": "https://liquipedia.net/commons/images/thumb/1/18/Flag_of_Sweden_4_by_3.png/400px-Flag_of_Sweden_4_by_3.png",
@@ -5610,6 +5633,15 @@
 "name": "Tempo Storm",
 "src": "https://liquipedia.net/commons/images/thumb/d/d3/Tempo_Storm_2018_allmode.png/400px-Tempo_Storm_2018_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/d/d3/Tempo_Storm_2018_allmode.png/400px-Tempo_Storm_2018_allmode.png"
+},
+"tempo_storm_se": {
+"checked": "2026-11-14",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/f/f4/Tempo_Storm_allmode.png/400px-Tempo_Storm_allmode.png|https://liquipedia.net/commons/images/thumb/f/f4/Tempo_Storm_allmode.png/400px-Tempo_Storm_allmode.png",
+"light": "tempo_storm_se.png",
+"name": "Tempo Storm SE",
+"src": "https://liquipedia.net/commons/images/thumb/f/f4/Tempo_Storm_allmode.png/400px-Tempo_Storm_allmode.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/f/f4/Tempo_Storm_allmode.png/400px-Tempo_Storm_allmode.png"
 },
 "tenerife_titans": {
 "checked": "2026-11-13",
@@ -6285,6 +6317,11 @@
 "name": "Wizards Esports Club",
 "src": "https://liquipedia.net/commons/images/thumb/d/d7/Wizards_Esports_Club_2020_lightmode.png/284px-Wizards_Esports_Club_2020_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/e/e2/Wizards_Esports_Club_2020_darkmode.png/284px-Wizards_Esports_Club_2020_darkmode.png"
+},
+"wololos": {
+"name": "Wololos",
+"src": "https://liquipedia.net/commons/images/thumb/4/4c/Wololos.png/324px-Wololos.png",
+"src_dark": "https://liquipedia.net/commons/images/thumb/4/4c/Wololos.png/324px-Wololos.png"
 },
 "wolsung": {
 "name": "Wolsung",
