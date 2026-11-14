@@ -166,6 +166,18 @@ def test_placements_merge_across_windows():
         assert [(x["place"], x["team"]) for x in st.placements["Major"]] == [("2", "B"), ("3-4", "A"), ("23-24", "C")]
 
 
+def test_compact_maps():
+    # as Liquipedia returns them (IEM Beijing 2026 with overtime; FACEIT Major London 2018, MR15)
+    games = [{"map": "Mirage", "scores": [16, 13], "status": "", "extradata": {
+                 "t1halfs": {"1": 8, "2": 4, "3": 2, "4": 2}, "t2halfs": {"1": 4, "2": 8, "3": 1, "4": 0},
+                 "t1sides": {"1": "ct", "2": "t", "3": "t", "4": "ct"}}},
+             {"map": "Dust II", "scores": [2, 16], "extradata": {"t1halfs": {"1": 2, "2": 0}, "t2halfs": {"1": 13, "2": 3},
+                                                                "t1sides": {"1": "t", "2": "ct"}}},
+             {"map": "Inferno", "scores": [0, 0], "status": "notplayed"}]
+    assert fetch_cs2.compact_maps(games) == [["Mirage", 16, 13, "cttc", [8, 4, 2, 2], [4, 8, 1, 0]],
+                                             ["Dust II", 2, 16, "tc", [2, 0], [13, 3]]]
+
+
 def test_month_settles_later():
     api = FakeApi(n_per_day=2, start=date(2026, 9, 1))
     with tempfile.TemporaryDirectory() as root:

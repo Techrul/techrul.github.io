@@ -546,24 +546,86 @@
     return usd >= 1e6 ? "$" + (usd / 1e6).toFixed(usd >= 1e7 ? 1 : 2).replace(/\.?0+$/, "") + "M" : usd >= 1e3 ? "$" + Math.round(usd / 1e3) + "k" : "$" + usd;
   };
   function wl(r) { return r && (r[0] + r[1]) ? r[0] + "–" + r[1] + ' <small>' + Math.round(100 * r[0] / (r[0] + r[1])) + "%</small>" : "–"; }
+  // rounds [won, lost, CT won, CT played, T won, T played, maps won, maps lost] -> a percentage and its share
+  function rpct(won, n) { return n ? (100 * won / n).toFixed(1) + "%" : "–"; }
+  function rshare(won, n) { return n ? won / n : null; }
+  S.roundRows = function (y, ra, rb) {  // compare rows for two teams' rounds: [label, a, b, compare a, compare b, higher better]
+    ra = ra || [0, 0, 0, 0, 0, 0, 0, 0]; rb = rb || [0, 0, 0, 0, 0, 0, 0, 0];
+    var mapsWL = function (r) { return r[6] + r[7] ? r[6] + "–" + r[7] + ' <small>' + Math.round(100 * r[6] / (r[6] + r[7])) + "%</small>" : "–"; };
+    return [[y + " maps", mapsWL(ra), mapsWL(rb), rshare(ra[6], ra[6] + ra[7]), rshare(rb[6], rb[6] + rb[7]), true],
+            [y + " round win %", rpct(ra[0], ra[0] + ra[1]), rpct(rb[0], rb[0] + rb[1]), rshare(ra[0], ra[0] + ra[1]), rshare(rb[0], rb[0] + rb[1]), true],
+            [y + " CT round win %", rpct(ra[2], ra[3]), rpct(rb[2], rb[3]), rshare(ra[2], ra[3]), rshare(rb[2], rb[3]), true],
+            [y + " T round win %", rpct(ra[4], ra[5]), rpct(rb[4], rb[5]), rshare(ra[4], ra[5]), rshare(rb[4], rb[5]), true]];
+  };
+  // head-to-head rows: maps (sets) won by each, and rounds (games) won by each with the share
+  function h2hRowsOf(cs2, h2h) {
+    if (!h2h || !h2h.totals) return [];
+    var t = h2h.totals, L = " (" + h2h.label + ")", u = cs2 ? ["Maps", "Rounds"] : ["Sets", "Games"];
+    if (!(t[0] + t[1] + t[2] + t[3])) return [];
+    var share = function (a, b) { return a + b ? ' <small>' + (100 * a / (a + b)).toFixed(1) + "%</small>" : ""; };
+    return [["H2H " + u[0].toLowerCase() + L, t[0] + share(t[0], t[1]), t[1] + share(t[1], t[0]), t[0], t[1], true],
+            ["H2H " + u[1].toLowerCase() + L, t[2] + share(t[2], t[3]), t[3] + share(t[3], t[2]), t[2], t[3], true]];
+  }
+  // tennis stats from a player file's "sets" [sets won, lost, games won, lost, tie-breaks won, lost] and "serve" sums
+  // [matches, then aces, double faults, serve points, 1st in, 1st won, 2nd won, service games, BP saved, BP faced for
+  // the player and again for the opponents]: [label, value (0-1 or a number), format, higher is better]
+  S.TENNIS_STATS = [
+    ["Sets won", function (g, s) { return g && g[0] + g[1] ? g[0] / (g[0] + g[1]) : null; }, "pct", true],
+    ["Games won", function (g, s) { return g && g[2] + g[3] ? g[2] / (g[2] + g[3]) : null; }, "pct", true],
+    ["Tie-breaks", function (g, s) { return g && g[4] + g[5] ? g[4] / (g[4] + g[5]) : null; }, "tb", true],
+    ["Aces per match", function (g, s) { return s && s[0] ? s[1] / s[0] : null; }, "num", true],
+    ["Double faults per match", function (g, s) { return s && s[0] ? s[2] / s[0] : null; }, "num", false],
+    ["1st serves in", function (g, s) { return s && s[3] ? s[4] / s[3] : null; }, "pct", true],
+    ["1st serve points won", function (g, s) { return s && s[4] ? s[5] / s[4] : null; }, "pct", true],
+    ["2nd serve points won", function (g, s) { return s && s[3] - s[4] ? s[6] / (s[3] - s[4]) : null; }, "pct", true],
+    ["Service games won", function (g, s) { return s && s[7] ? (s[7] - (s[9] - s[8])) / s[7] : null; }, "pct", true],
+    ["Break points saved", function (g, s) { return s && s[9] ? s[8] / s[9] : null; }, "pct", true],
+    ["Return points won", function (g, s) { return s && s[12] ? (s[12] - s[14] - s[15]) / s[12] : null; }, "pct", true],
+    ["Return games won", function (g, s) { return s && s[16] ? (s[18] - s[17]) / s[16] : null; }, "pct", true],
+    ["Break points converted", function (g, s) { return s && s[18] ? (s[18] - s[17]) / s[18] : null; }, "pct", true]
+  ];
+  S.tennisStat = function (st, g, s) {
+    var v = st[1](g, s);
+    if (v == null) return ["–", null];
+    if (st[2] === "tb") return [g[4] + "–" + g[5] + ' <small>' + Math.round(100 * v) + "%</small>", v];
+    return [st[2] === "pct" ? (100 * v).toFixed(1) + "%" : v.toFixed(1), v];
+  };
+  function tennisRows(y, pa, pb, compact) {
+    var k = "year:" + y, ga = (pa.sets || {})[k], gb = (pb.sets || {})[k], sa = (pa.serve || {})[k], sb = (pb.serve || {})[k];
+    return S.TENNIS_STATS.filter(function (st, i) { return !compact || [0, 1, 8, 11].indexOf(i) >= 0; }).map(function (st) {
+      var a = S.tennisStat(st, ga, sa), b = S.tennisStat(st, gb, sb);
+      return [y + " " + st[0].toLowerCase(), a[0], b[0], a[1], b[1], st[3]];
+    });
+  }
   function wpct(r) { return r && (r[0] + r[1]) ? r[0] / (r[0] + r[1]) : null; }
   function flip(score) { var p = String(score || "").split("–"); return p.length === 2 ? p[1] + "–" + p[0] : score; }
   function signed(n) { return n == null ? "–" : (n > 0 ? "+" : n < 0 ? "−" : "") + Math.abs(n).toLocaleString("en-US"); }
   // the compare rows: (sport, ranking entry A, B, profile file A, B) -> HTML
-  S.h2hRows = function (sport, A, B, pa, pb) {
+  // meetings -> head-to-head totals for the compare rows: CS2 [maps won, lost, rounds won, lost] from A's side
+  S.h2hTotals = function (sport, ms) {
+    var t = [0, 0, 0, 0];
+    (ms || []).forEach(function (m) {
+      if (sport === "cs2") { t[0] += m[8] || 0; t[1] += m[9] || 0; t[2] += m[6] || 0; t[3] += m[7] || 0; }
+      else { t[0] += m[5] || 0; t[1] += m[6] || 0; t[2] += m[7] || 0; t[3] += m[8] || 0; }
+    });
+    return t;
+  };
+  // h2h (optional): {totals: S.h2hTotals(...), label: "last 2 years"} adds head-to-head maps and rounds (sets and games)
+  S.h2hRows = function (sport, A, B, pa, pb, h2h, compact) {
     pa = pa || {}; pb = pb || {};
     var cs2 = sport === "cs2", OFF = cs2 ? "Valve" : "ATP", nm = function (e) { return cs2 ? e.short : e.name; };
       var sa = pa.season || {}, sb = pb.season || {}, y = sa.year || sb.year || "";
       var R = [  // [label, value a, value b, compare a, compare b, higher is better]
-        ["Projected win", null, null, null, null, true, "chance"],
+        ["Projected win", null, null, null, null, true, "chance"]].concat(h2hRowsOf(cs2, h2h)).concat([
         [OFF + " rank", A.official_rank ? "#" + A.official_rank : "–", B.official_rank ? "#" + B.official_rank : "–", A.official_rank, B.official_rank, false],
         [cs2 ? "Points" : "ATP points", S.num(cs2 ? A.points : A.official_points), S.num(cs2 ? B.points : B.official_points), cs2 ? A.points : A.official_points, cs2 ? B.points : B.official_points, true],
         ["Elo", S.num(A.elo), S.num(B.elo), A.elo, B.elo, true],
         [y + " win–loss", wl(sa.record), wl(sb.record), wpct(sa.record), wpct(sb.record), true],
-        ["All matches", wl((pa.record || {}).all), wl((pb.record || {}).all), wpct((pa.record || {}).all), wpct((pb.record || {}).all), true],
+        ["All matches", wl((pa.record || {}).all), wl((pb.record || {}).all), wpct((pa.record || {}).all), wpct((pb.record || {}).all), true]
+      ]).concat(cs2 ? S.roundRows(y, (pa.rounds || {})["year:" + y], (pb.rounds || {})["year:" + y]) : tennisRows(y, pa, pb, compact)).concat([
         [y + " titles", S.num(sa.titles), S.num(sb.titles), sa.titles, sb.titles, true],
         ["Titles", S.num((pa.titles || []).length), S.num((pb.titles || []).length), (pa.titles || []).length, (pb.titles || []).length, true]
-      ];
+      ]);
       if (cs2) R.push([y + " prize money", S.money(sa.prize), S.money(sb.prize), sa.prize, sb.prize, true],
                       ["Prize money", S.money(pa.prize), S.money(pb.prize), pa.prize, pb.prize, true]);
       R.push([y + " Elo change", signed(sa.elo), signed(sb.elo), sa.elo, sb.elo, true]);
@@ -640,17 +702,18 @@
         el.querySelector("#h2hw-score").innerHTML = ms ? '<b class="' + (wa > wb ? "lead" : "") + '">' + wa + '</b><i>–</i><b class="' + (wb > wa ? "lead" : "") + '">' + wb + "</b>" : "–";
         var last = ms && ms.length ? ms[ms.length - 1] : null, evs = (res[0][1] || {}).events || {};
         el.querySelector("#h2hw-last").innerHTML = (ms ? (ms.length ? "Last 2 years" + (cs2 ? ", every lineup" : "") : "No meetings in the last 2 years") : "") +
+
           (last ? '<br><small>Last: ' + S.esc((evs[last[1]] || [last[1]])[0]) + ", " + S.date(last[0]) + " · " + S.esc(nm(won(last) ? A : B)) + " won " + S.esc(won(last) ? (cs2 ? last[3] : last[4]) : (cs2 ? flip(last[3]) : last[4])) + "</small>" : "");
         el.querySelector("#h2hw-sa").innerHTML = side(A, pa);
         el.querySelector("#h2hw-sb").innerHTML = side(B, pb);
-        rows(pa, pb);
+        rows(pa, pb, ms);
       });
     }
     function side(e, p) {
       if (cs2) return (e.players || []).map(function (n, i) { return S.flag(e.flags && e.flags[i] !== "world" ? e.flags[i] : "") + S.esc(S.pname(n)); }).join(" ");
       return S.flag(e.iso) + [p.age ? Math.floor(p.age) + " yrs" : null, p.height ? p.height + " cm" : null, p.hand === "L" ? "Left-handed" : p.hand === "R" ? "Right-handed" : null].filter(Boolean).join(" · ");
     }
-    function rows(pa, pb) { el.querySelector("#h2hw-rows").innerHTML = S.h2hRows(o.sport, A, B, pa, pb); }
+    function rows(pa, pb, ms) { el.querySelector("#h2hw-rows").innerHTML = S.h2hRows(o.sport, A, B, pa, pb, ms && ms.length ? { totals: S.h2hTotals(o.sport, ms), label: "last 2 years" } : null, true); }
     draw();
   };
 

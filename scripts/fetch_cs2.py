@@ -30,7 +30,7 @@ REFRESH_EVENT_DAYS = 60
 SETTLE_DAYS = 21
 
 MATCH_FIELDS = ("objectname,match2id,pagename,parent,tournament,date,finished,winner,walkover,resulttype,bestof,"
-                "liquipediatier,liquipediatiertype,publishertier,type,extradata,match2opponents")
+                "liquipediatier,liquipediatiertype,publishertier,type,extradata,match2opponents,match2games")
 TOURNAMENT_FIELDS = ("pagename,name,shortname,startdate,enddate,prizepool,type,publishertier,liquipediatier,"
                      "liquipediatiertype,status,participantsnumber")
 PLACEMENT_FIELDS = ("objectname,pagename,parent,tournament,date,placement,opponentname,opponenttemplate,opponenttype,"
@@ -44,6 +44,24 @@ def _int(v, default=None):
         return int(float(v))
     except (TypeError, ValueError):
         return default
+
+
+def compact_maps(games):
+    """match2games -> [[map, rounds team 1, rounds team 2, team 1's side each half ("c"/"t", e.g. "ctct"),
+    team 1's rounds each half, team 2's rounds each half], ...] for maps that were played (halves and sides may be
+    empty where Liquipedia has none; overtime halves are included)."""
+    out = []
+    for g in games or []:
+        sc = g.get("scores") or []
+        if len(sc) != 2 or not all(isinstance(x, int) for x in sc) or sum(sc) == 0 or (g.get("status") or "") == "notplayed":
+            continue
+        ext = g.get("extradata") if isinstance(g.get("extradata"), dict) else {}
+        h1, h2, s1 = (ext.get(k) if isinstance(ext.get(k), dict) else {} for k in ("t1halfs", "t2halfs", "t1sides"))
+        keys = sorted((k for k in h1 if str(k).isdigit()), key=int)
+        sides = "".join((str(s1.get(k) or "?"))[:1].lower() for k in keys)
+        out.append([g.get("map") or "", sc[0], sc[1], sides if "?" not in sides else "",
+                    [_int(h1.get(k), 0) for k in keys], [_int(h2.get(k), 0) for k in keys]])
+    return out
 
 
 def compact_match(m, flags):
@@ -67,7 +85,8 @@ def compact_match(m, flags):
             "tier": m.get("liquipediatier") or "", "tiertype": m.get("liquipediatiertype") or "",
             "valve": m.get("publishertier") or "", "lan": (m.get("type") or "").lower() == "offline",
             "winner": _int(m.get("winner"), 0), "walkover": m.get("walkover") or "",
-            "resulttype": m.get("resulttype") or "", "bestof": _int(m.get("bestof")), "teams": teams}
+            "resulttype": m.get("resulttype") or "", "bestof": _int(m.get("bestof")), "teams": teams,
+            "maps": compact_maps(m.get("match2games"))}
 
 
 def compact_tournament(t):
@@ -299,6 +318,13 @@ def run(client, store, today, start, backfill=True, log=print):
         for marks in store.state["months"].values():
             marks.pop("placements", None)
         store.state["placements_merged"] = today.isoformat()
+        store.save()
+    if not store.state.get("maps_v1"):
+        # one-off: matches now carry their maps (rounds per half and side); fetch every month's matches again,
+        # newest first, alongside the backfill (two or three requests a month, over a couple of days)
+        for marks in store.state["months"].values():
+            marks.pop("matches", None)
+        store.state["maps_v1"] = today.isoformat()
         store.save()
     for month in months_back(today, start):
         first, nxt = month_bounds(month)

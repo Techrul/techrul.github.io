@@ -55,6 +55,35 @@ def weeks_at_one(series):
     return out
 
 
+SERVE = ("ace", "df", "svpt", "1stIn", "1stWon", "2ndWon", "SvGms", "bpSaved", "bpFaced")
+
+
+def score_parts(score):
+    """'6-3 6-7(4) 7-6(5)' -> [sets won, sets lost, games won, games lost, tie-breaks won, tie-breaks lost] for the
+    winner. Only finished sets count as sets (a retirement's set in progress adds its games); a match tie-break
+    ([10-8]) counts as a set and a tie-break, but not as games."""
+    out = [0, 0, 0, 0, 0, 0]
+    for tok in (score or "").split():
+        mt = re.fullmatch(r"\[(\d+)-(\d+)\]", tok)
+        if mt:
+            a, b = int(mt.group(1)), int(mt.group(2))
+            if max(a, b) >= 10 and abs(a - b) >= 2:
+                out[0 if a > b else 1] += 1
+                out[4 if a > b else 5] += 1
+            continue
+        m = re.fullmatch(r"(\d+)-(\d+)(?:\((\d+)\))?", tok)
+        if not m:
+            continue
+        a, b = int(m.group(1)), int(m.group(2))
+        out[2] += a
+        out[3] += b
+        if (max(a, b) >= 6 and abs(a - b) >= 2) or {a, b} == {7, 6}:
+            out[0 if a > b else 1] += 1
+            if {a, b} == {7, 6}:
+                out[4 if a > b else 5] += 1
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--raw", default="data/raw")
@@ -354,6 +383,12 @@ def main():
     upsets = {s_: [] for s_ in SKILL}
     season_year = last_day.year
     season_elo = defaultdict(float)  # Elo gained or lost in tour-level matches this calendar year
+    # sets and games [sets won, lost, games won, lost, tie-breaks won, lost], and serve and return stats: for each of
+    # the player and the opponent, the sums of SERVE (aces, double faults, serve points, first serves in, ...) over
+    # matches that have them; over all tour-level matches and this calendar year
+    sets_games = defaultdict(lambda: defaultdict(lambda: [0] * 6))
+    serve = defaultdict(lambda: defaultdict(lambda: [0] * (1 + 2 * len(SERVE))))
+    have_serve = 0
     for r in tour:
         w, l = r["winner_id"], r["loser_id"]
         ev = events[r["tourney_id"]]
@@ -376,6 +411,23 @@ def main():
                 recent[pid].pop(0)
             if r["_date"].year == season_year:
                 season_elo[pid] += change(key, 0 if won else 1).get("elo", 0)
+        if not r.get("_walkover"):
+            sg = score_parts(r["score"])
+            stats = {side: [r.get(f"{side}_{k}") or "" for k in SERVE] for side in ("w", "l")}
+            ok = all(v.replace(".0", "").isdigit() for vs in stats.values() for v in vs) and stats["w"][2] not in ("", "0")
+            if ok:
+                have_serve += 1
+            for pid, me, them, mine in ((w, "w", "l", sg), (l, "l", "w", [sg[1], sg[0], sg[3], sg[2], sg[5], sg[4]])):
+                for bucket in ("all", f"year:{r['_date'].year}"):
+                    tgt = sets_games[pid][bucket]
+                    for k in range(6):
+                        tgt[k] += mine[k]
+                    if ok:
+                        sv = serve[pid][bucket]
+                        sv[0] += 1
+                        for k in range(len(SERVE)):
+                            sv[1 + k] += int(float(stats[me][k]))
+                            sv[1 + len(SERVE) + k] += int(float(stats[them][k]))
         if pr and prior[w] >= MIN_MATCHES and prior[l] >= MIN_MATCHES and r["_date"] >= history_from:
             for system in SKILL:
                 if system in pr:
@@ -514,6 +566,9 @@ def main():
             "record": {k: v for k, v in record[pid].items()},
             "recent": list(reversed(recent[pid][-20:])),
             # this calendar year so far, like the ATP's "YTD" (tour-level matches; no prize money in the data)
+            # sets and games, and serve and return sums (see SERVE): all tour-level matches and this year
+            "sets": {k: v for k, v in sets_games[pid].items() if k in ("all", f"year:{season_year}")},
+            "serve": {k: v for k, v in serve[pid].items() if k in ("all", f"year:{season_year}")},
             "season": {"year": season_year, "record": record[pid].get(f"year:{season_year}", [0, 0]),
                        "titles": sum(1 for t in titles[pid] if t["year"] == season_year), "elo": round(season_elo.get(pid, 0))},
         }
@@ -642,10 +697,15 @@ def main():
         if w in listed and l in listed:
             ev = events[r["tourney_id"]]
             a_, b_ = sorted((w, l))
-            pairs[a_ + "|" + b_].append([r["_date"].strftime("%Y-%m-%d"), r["tourney_id"], r["round"], 0 if w == a_ else 1, r["score"]])
+            sg_ = score_parts(r["score"])  # the winner's sets won, lost, games won, lost
+            pairs[a_ + "|" + b_].append([r["_date"].strftime("%Y-%m-%d"), r["tourney_id"], r["round"], 0 if w == a_ else 1, r["score"]] + sg_[:4])
             ev_names[r["tourney_id"]] = [ev["name"], ev["level"], ev["key"]]
     dump("h2h.json", {"events": ev_names, "pairs": pairs})
     print(f"h2h: {len(pairs)} pairs, {sum(len(v) for v in pairs.values())} meetings")
+    msg = f"{have_serve} of {len(tour)} tour-level matches have serve stats"
+    print(msg)
+    if os.environ.get("GITHUB_ACTIONS"):
+        print(f"::notice title=Tennis serve stats::{msg}")
     # the head-to-head widget's default match-up: the best-ranked scheduled match at a Grand Slam, the ATP Finals or a
     # Masters 1000 in the coming week (ESPN's schedule), else #1 against #2 in the official ranking. "Best-ranked": both
     # players' ranks added up; on a tie, the match with the highest-ranked player in it
@@ -688,13 +748,15 @@ def main():
     print(f"featured match-up: {featured}")
 
     # the same per player (h2h/<id>.json), so the head-to-head widget loads only the two it compares:
-    # {"vs": {opponent id: [[date, event id, round, 1 if this player won, score]]}, "events": {...}}
+    # {"vs": {opponent id: [[date, event id, round, 1 if this player won, score, sets won, lost, games won, lost]]}, ...}
     by_p = defaultdict(lambda: defaultdict(list))
     for key_, ms in pairs.items():
         a_, b_ = key_.split("|")
-        for d_, tid, rnd, wi, sc in ms:
-            by_p[a_][b_].append([d_, tid, rnd, 1 if wi == 0 else 0, sc])
-            by_p[b_][a_].append([d_, tid, rnd, 1 if wi == 1 else 0, sc])
+        for d_, tid, rnd, wi, sc, *g in ms:
+            sw, sl, gw, gl = g if len(g) == 4 else (0, 0, 0, 0)  # from the winner's side
+            win_a = wi == 0
+            by_p[a_][b_].append([d_, tid, rnd, 1 if win_a else 0, sc] + ([sw, sl, gw, gl] if win_a else [sl, sw, gl, gw]))
+            by_p[b_][a_].append([d_, tid, rnd, 0 if win_a else 1, sc] + ([sl, sw, gl, gw] if win_a else [sw, sl, gw, gl]))
     os.makedirs(os.path.join(args.out, "h2h"), exist_ok=True)
     for pid_, vs in by_p.items():
         dump(os.path.join("h2h", f"{pid_}.json"), {"vs": vs, "events": {x[1]: ev_names[x[1]] for ms in vs.values() for x in ms}})

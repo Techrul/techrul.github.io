@@ -433,6 +433,31 @@ def main():
     match_days = defaultdict(list)
     season_year = as_of_date[:4]
     season_elo = defaultdict(float)  # Elo gained or lost in matches this calendar year
+    # rounds from the maps of each match: [rounds won, lost, CT rounds won, CT rounds played, T won, T played,
+    # maps won, maps lost], over all matches and this calendar year; and each map's [won, lost] in the last 12 months
+    rounds = defaultdict(lambda: defaultdict(lambda: [0] * 8))
+    map_pool = defaultdict(lambda: defaultdict(lambda: [0, 0]))
+    pool_from = (datetime.strptime(as_of_date, "%Y-%m-%d") - timedelta(days=365)).strftime("%Y-%m-%d")
+    def count_rounds(m, day):
+        for mp in m.get("maps") or []:
+            name, s1, s2, sides, h1, h2 = mp
+            for i, rid in enumerate(m["rid"]):
+                mine, theirs = (s1, s2) if i == 0 else (s2, s1)
+                hm, ht = (h1, h2) if i == 0 else (h2, h1)
+                for bucket in ("all", f"year:{day[:4]}"):
+                    r = rounds[rid][bucket]
+                    r[0] += mine
+                    r[1] += theirs
+                    if mine != theirs:
+                        r[6 if mine > theirs else 7] += 1
+                    if sides and len(sides) == len(hm):
+                        for k, sd in enumerate(sides):
+                            side = sd if i == 0 else ("t" if sd == "c" else "c")
+                            j = 2 if side == "c" else 4
+                            r[j] += hm[k]
+                            r[j + 1] += hm[k] + ht[k]
+                if day >= pool_from and name and mine != theirs:
+                    map_pool[rid][name][0 if mine > theirs else 1] += 1
     for m in played:
         wi = m["winner"] - 1
         wr, lr = m["rid"][wi], m["rid"][1 - wi]
@@ -460,6 +485,7 @@ def main():
             match_days[rid].append(day)
             if day[:4] == season_year:
                 season_elo[rid] += change(m["id"], 0 if won else 1).get("elo", 0)
+        count_rounds(m, day)
         # upsets: both teams with 20+ earlier matches (as for tennis) at S-, A- or B-tier main events, not their
         # qualifiers (tennis: tour level)
         if (pr and prior[wr] >= 20 and prior[lr] >= 20 and m["tier"] in TITLE_TIERS and not m.get("tiertype")
@@ -701,6 +727,9 @@ def main():
                                                  "official_rank", "official_points", "points", "points_live", "ranks",
                                                  "last_match", "region")},
             "prize": prize_all.get(rid, 0),
+            # [rounds won, lost, CT won, CT played, T won, T played, maps won, maps lost]; maps in the last 12 months
+            "rounds": {k: v for k, v in rounds[rid].items() if k in ("all", f"year:{season_year}")},
+            "map_pool": sorted(([n, w, l] for n, (w, l) in map_pool[rid].items()), key=lambda x: (-(x[1] + x[2]), x[0])),
             # this calendar year so far, like the ATP's "YTD"
             "season": {"year": int(season_year), "record": record[rid].get(f"year:{season_year}", [0, 0]),
                        "titles": sum(1 for t in titles[rid] if str(t["year"]) == season_year),
@@ -831,7 +860,8 @@ def main():
 
     # head-to-head between organisations, across all their rosters: one file per organisation of a listed roster
     # (h2h/<org>.json), so a page loads only the two it compares. A meeting: [date, event page, 1 if this org won,
-    # score from this org's side, this org's roster, the opponent's roster]
+    # score from this org's side, this org's roster, the opponent's roster, rounds won, rounds lost, maps won, maps
+    # lost (from the maps; 0s where the maps aren't known)]
     orgs = {ad.org_slug(roster[r].name) for r in has_profile if r in roster}
     by_org, org_name = defaultdict(lambda: defaultdict(list)), {}
     for m in played:
@@ -846,7 +876,11 @@ def main():
             org_name[me] = roster[my_r].name
             if me in orgs:
                 sc = f"{(s0, s1)[i]}–{(s0, s1)[1 - i]}" if isinstance(s0, int) and isinstance(s1, int) else ""
-                by_org[me][them].append([day, m["event"], 1 if wi == i else 0, sc, my_r, their_r])
+                rw_ = sum(mp[1] if i == 0 else mp[2] for mp in m.get("maps") or [])
+                rl_ = sum(mp[2] if i == 0 else mp[1] for mp in m.get("maps") or [])
+                mw_ = sum(1 for mp in m.get("maps") or [] if (mp[1] > mp[2]) == (i == 0) and mp[1] != mp[2])
+                ml_ = sum(1 for mp in m.get("maps") or [] if mp[1] != mp[2]) - mw_
+                by_org[me][them].append([day, m["event"], 1 if wi == i else 0, sc, my_r, their_r, rw_, rl_, mw_, ml_])
         e = events[m["event"]]
         ev_names[m["event"]] = [e["name"], e["tier"], series_key(m["event"]) if m["event"] in tracked else None]
     os.makedirs(os.path.join(args.out, "h2h"), exist_ok=True)

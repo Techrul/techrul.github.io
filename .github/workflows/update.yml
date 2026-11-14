@@ -129,7 +129,7 @@ jobs:
         # The output is kept in data/cs2/last_fetch.log (committed below) so a failed day can be diagnosed.
         run: |
           set -o pipefail
-          python -u scripts/fetch_cs2.py --start 2016-01 --max-requests 30 --per-hour 45 --max-minutes 5 2>&1 | tee data/cs2/last_fetch.log
+          python -u scripts/fetch_cs2.py --start 2016-01 --max-requests 40 --per-hour 45 --max-minutes 5 2>&1 | tee data/cs2/last_fetch.log
 
       # Team logos: up to 10 API requests (40 teams each) and 200 small images a run, from Liquipedia; kept in
       # data/cs2/logos (committed below with the rest of data/cs2), so each logo is downloaded once
