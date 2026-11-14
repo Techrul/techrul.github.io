@@ -1,575 +1,475 @@
 {
+ "maps_v1": "2026-11-14",
  "months": {
   "2017-06": {
-   "matches": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2017-07": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2017-08": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2017-09": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2017-10": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2017-11": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2017-12": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2018-01": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2018-02": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2018-03": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2018-04": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2018-05": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2018-06": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2018-07": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2018-08": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2018-09": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2018-10": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2018-11": {
-   "matches": "2026-11-13",
    "placements": "2026-11-13",
    "tournaments": "2026-11-13"
   },
   "2018-12": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2019-01": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2019-02": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2019-03": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2019-04": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2019-05": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2019-06": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2019-07": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2019-08": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2019-09": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2019-10": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2019-11": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2019-12": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2020-01": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2020-02": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2020-03": {
-   "matches": "2026-11-12",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2020-04": {
-   "matches": "2026-11-11",
    "placements": "2026-11-12",
    "tournaments": "2026-11-12"
   },
   "2020-05": {
-   "matches": "2026-11-11",
    "placements": "2026-11-11",
    "tournaments": "2026-11-11"
   },
   "2020-06": {
-   "matches": "2026-11-11",
    "placements": "2026-11-11",
    "tournaments": "2026-11-11"
   },
   "2020-07": {
-   "matches": "2026-11-11",
    "placements": "2026-11-11",
    "tournaments": "2026-11-11"
   },
   "2020-08": {
-   "matches": "2026-11-11",
    "placements": "2026-11-11",
    "tournaments": "2026-11-11"
   },
   "2020-09": {
-   "matches": "2026-11-11",
    "placements": "2026-11-11",
    "tournaments": "2026-11-11"
   },
   "2020-10": {
-   "matches": "2026-11-11",
    "placements": "2026-11-11",
    "tournaments": "2026-11-11"
   },
   "2020-11": {
-   "matches": "2026-11-11",
    "placements": "2026-11-11",
    "tournaments": "2026-11-11"
   },
   "2020-12": {
-   "matches": "2026-11-11",
    "placements": "2026-11-11",
    "tournaments": "2026-11-11"
   },
   "2021-01": {
-   "matches": "2026-11-11",
    "placements": "2026-11-11",
    "tournaments": "2026-11-11"
   },
   "2021-02": {
-   "matches": "2026-11-11",
    "placements": "2026-11-11",
    "tournaments": "2026-11-11"
   },
   "2021-03": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2021-04": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2021-05": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2021-06": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2021-07": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2021-08": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2021-09": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2021-10": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2021-11": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2021-12": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2022-01": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2022-02": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2022-03": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2022-04": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2022-05": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2022-06": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2022-07": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2022-08": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2022-09": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2022-10": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2022-11": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2022-12": {
-   "matches": "2026-11-10",
    "placements": "2026-11-10",
    "tournaments": "2026-11-10"
   },
   "2023-01": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2023-02": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2023-03": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2023-04": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2023-05": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2023-06": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2023-07": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2023-08": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2023-09": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2023-10": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2023-11": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2023-12": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2024-01": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2024-02": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2024-03": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2024-04": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2024-05": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2024-06": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2024-07": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2024-08": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2024-09": {
-   "matches": "2026-10-19",
    "placements": "2026-11-06",
    "tournaments": "2026-10-19"
   },
   "2024-10": {
-   "matches": "2026-10-19",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2024-11": {
-   "matches": "2026-10-19",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2024-12": {
-   "matches": "2026-10-19",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2025-01": {
-   "matches": "2026-10-19",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2025-02": {
-   "matches": "2026-10-19",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2025-03": {
-   "matches": "2026-10-19",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2025-04": {
-   "matches": "2026-10-19",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2025-05": {
-   "matches": "2026-10-19",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2025-06": {
-   "matches": "2026-10-19",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2025-07": {
-   "matches": "2026-10-19",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2025-08": {
-   "matches": "2026-10-19",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2025-09": {
-   "matches": "2026-10-19",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2025-10": {
-   "matches": "2026-10-19",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2025-11": {
-   "matches": "2026-10-19",
+   "matches": "2026-11-14",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2025-12": {
-   "matches": "2026-10-19",
+   "matches": "2026-11-14",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2026-01": {
-   "matches": "2026-10-19",
+   "matches": "2026-11-14",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2026-02": {
-   "matches": "2026-10-19",
+   "matches": "2026-11-14",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2026-03": {
-   "matches": "2026-10-19",
+   "matches": "2026-11-14",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2026-04": {
-   "matches": "2026-10-19",
+   "matches": "2026-11-14",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2026-05": {
-   "matches": "2026-10-19",
+   "matches": "2026-11-14",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2026-06": {
-   "matches": "2026-10-19",
+   "matches": "2026-11-14",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2026-07": {
-   "matches": "2026-10-19",
+   "matches": "2026-11-14",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2026-08": {
-   "matches": "2026-10-19",
+   "matches": "2026-11-14",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2026-09": {
-   "matches": "2026-10-22",
+   "matches": "2026-11-14",
    "placements": "2026-11-05",
    "tournaments": "2026-10-22"
   },
   "2026-10": {
-   "matches": "2026-10-19",
+   "matches": "2026-11-14",
    "placements": "2026-11-05",
    "tournaments": "2026-10-19"
   },
   "2026-11": {
-   "matches": "2026-11-01",
+   "matches": "2026-11-14",
    "placements": "2026-11-05",
    "tournaments": "2026-11-01"
   }
  },
  "placements_merged": "2026-11-05",
- "upcoming": "2026-11-13"
+ "upcoming": "2026-11-14"
 }

@@ -1,7 +1,61 @@
 refresh: matches since 2026-10-24, events since 2026-09-15
   request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-23]] AND [[date::<2026-11-15]] offset 0
-  HTTP 429 (rate limited), waiting 15 min before retrying
-stopped early (time limit for this run reached); the next run continues from here
-requests used: 1
-206140 matches stored, 14848 tournaments, 8722 events with prize money, 66717 players; 113 of 131 months fetched (2016-01 to 2026-11)
-::notice title=CS2 fetch::stopped early (time limit for this run reached); the next run continues from here; 1 requests; 206140 matches stored, 14848 tournaments, 8722 events with prize money, 66717 players; 113 of 131 months fetched (2016-01 to 2026-11)
+  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-23]] AND [[date::<2026-11-15]] offset 1000
+  request 3: tournament [[enddate::>2026-09-14]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-15]] offset 0
+  request 4: placement [[prizemoney::>0]] AND [[date::>2026-09-14]] AND [[date::<2026-11-15]] offset 0
+  1194 matches, 294 tournaments, 863 prize rows
+  request 5: match [[finished::0]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-12]] AND [[date::<2026-11-22]] AND offset 0
+  scheduled S- and A-tier matches (next week): 6
+  request 6: tournament [[startdate::>2026-11-14]] AND [[liquipediatier::1]] offset 0
+  request 7: tournament [[startdate::>2026-11-14]] AND [[liquipediatier::2]] offset 0
+  upcoming S- and A-tier tournaments: 40
+  request 8: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-31]] AND [[date::<2026-12-01]] offset 0
+  2026-11 matches: 752
+  request 9: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-09-30]] AND [[date::<2026-11-01]] offset 0
+  request 10: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-09-30]] AND [[date::<2026-11-01]] offset 1000
+  request 11: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-09-30]] AND [[date::<2026-11-01]] offset 2000
+  2026-10 matches: 2160
+  request 12: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-08-31]] AND [[date::<2026-10-01]] offset 0
+  request 13: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-08-31]] AND [[date::<2026-10-01]] offset 1000
+  request 14: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-08-31]] AND [[date::<2026-10-01]] offset 2000
+  2026-09 matches: 2454
+  request 15: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-07-31]] AND [[date::<2026-09-01]] offset 0
+  request 16: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-07-31]] AND [[date::<2026-09-01]] offset 1000
+  2026-08 matches: 1955
+  request 17: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-06-30]] AND [[date::<2026-08-01]] offset 0
+  request 18: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-06-30]] AND [[date::<2026-08-01]] offset 1000
+  2026-07 matches: 1462
+  request 19: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-05-31]] AND [[date::<2026-07-01]] offset 0
+  request 20: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-05-31]] AND [[date::<2026-07-01]] offset 1000
+  2026-06 matches: 1427
+  request 21: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-04-30]] AND [[date::<2026-06-01]] offset 0
+  request 22: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-04-30]] AND [[date::<2026-06-01]] offset 1000
+  2026-05 matches: 1866
+  request 23: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-03-31]] AND [[date::<2026-05-01]] offset 0
+  request 24: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-03-31]] AND [[date::<2026-05-01]] offset 1000
+  request 25: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-03-31]] AND [[date::<2026-05-01]] offset 2000
+  2026-04 matches: 2154
+  request 26: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-02-28]] AND [[date::<2026-04-01]] offset 0
+  request 27: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-02-28]] AND [[date::<2026-04-01]] offset 1000
+  request 28: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-02-28]] AND [[date::<2026-04-01]] offset 2000
+  2026-03 matches: 2835
+  request 29: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-01-31]] AND [[date::<2026-03-01]] offset 0
+  request 30: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-01-31]] AND [[date::<2026-03-01]] offset 1000
+  request 31: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-01-31]] AND [[date::<2026-03-01]] offset 2000
+  2026-02 matches: 2111
+  request 32: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2025-12-31]] AND [[date::<2026-02-01]] offset 0
+  request 33: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2025-12-31]] AND [[date::<2026-02-01]] offset 1000
+  2026-01 matches: 1142
+  request 34: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2025-11-30]] AND [[date::<2026-01-01]] offset 0
+  request 35: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2025-11-30]] AND [[date::<2026-01-01]] offset 1000
+  2025-12 matches: 1051
+  request 36: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2025-10-31]] AND [[date::<2025-12-01]] offset 0
+  request 37: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2025-10-31]] AND [[date::<2025-12-01]] offset 1000
+  request 38: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2025-10-31]] AND [[date::<2025-12-01]] offset 2000
+  2025-11 matches: 2059
+  request 39: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2025-09-30]] AND [[date::<2025-11-01]] offset 0
+  request 40: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2025-09-30]] AND [[date::<2025-11-01]] offset 1000
+stopped early (request budget for this run used (40)); the next run continues from here
+requests used: 40
+206298 matches stored, 14850 tournaments, 8724 events with prize money, 66762 players; 13 of 131 months fetched (2016-01 to 2026-11)
+::notice title=CS2 fetch::stopped early (request budget for this run used (40)); the next run continues from here; 40 requests; 206298 matches stored, 14850 tournaments, 8724 events with prize money, 66762 players; 13 of 131 months fetched (2016-01 to 2026-11)
