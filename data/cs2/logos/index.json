@@ -1155,6 +1155,10 @@
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/89/Counter_Logic_Gaming_Red_allmode.png/400px-Counter_Logic_Gaming_Red_allmode.png"
 },
 "cplay": {
+"checked": "2026-11-15",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/f/f1/CPLAY_2018_allmode.png/400px-CPLAY_2018_allmode.png|https://liquipedia.net/commons/images/thumb/f/f1/CPLAY_2018_allmode.png/400px-CPLAY_2018_allmode.png",
+"light": "cplay.png",
 "name": "CPLAY",
 "src": "https://liquipedia.net/commons/images/thumb/f/f1/CPLAY_2018_allmode.png/400px-CPLAY_2018_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/f/f1/CPLAY_2018_allmode.png/400px-CPLAY_2018_allmode.png"
@@ -2438,6 +2442,10 @@
 "src_dark": "https://liquipedia.net/commons/images/thumb/1/1c/Ground_Zero_Gaming_2019_allmode.png/400px-Ground_Zero_Gaming_2019_allmode.png"
 },
 "gtz_esports": {
+"checked": "2026-11-15",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/3/3b/GTZ_ESPORTS_allmode.png/354px-GTZ_ESPORTS_allmode.png|https://liquipedia.net/commons/images/thumb/3/3b/GTZ_ESPORTS_allmode.png/354px-GTZ_ESPORTS_allmode.png",
+"light": "gtz_esports.png",
 "name": "GTZ.ESPORTS",
 "src": "https://liquipedia.net/commons/images/thumb/3/3b/GTZ_ESPORTS_allmode.png/354px-GTZ_ESPORTS_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/3/3b/GTZ_ESPORTS_allmode.png/354px-GTZ_ESPORTS_allmode.png"

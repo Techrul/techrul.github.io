@@ -1,23 +1,5 @@
 [
 {
-"date": "2026-11-15 08:00",
-"event": "BLAST/Rivals/2026/Fall",
-"event_name": "BLAST Rivals Fall 2026",
-"tier": "1",
-"tiertype": "",
-"bestof": 5,
-"teams": [
-{
-"name": "FURIA",
-"template": "furia 2025"
-},
-{
-"name": "Team Spirit",
-"template": "team spirit 2022"
-}
-]
-},
-{
 "date": "2026-11-17 11:00",
 "event": "Stake_Ranked/Episode_6",
 "event_name": "Stake Ranked Episode 6",
