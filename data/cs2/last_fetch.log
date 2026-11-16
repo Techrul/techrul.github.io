@@ -3,13 +3,10 @@ refresh: matches since 2026-10-26, events since 2026-09-17
   request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-25]] AND [[date::<2026-11-17]] offset 1000
   request 3: tournament [[enddate::>2026-09-16]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-17]] offset 0
   request 4: placement [[prizemoney::>0]] AND [[date::>2026-09-16]] AND [[date::<2026-11-17]] offset 0
-  1204 matches, 291 tournaments, 925 prize rows
+  1241 matches, 292 tournaments, 928 prize rows
   request 5: match [[finished::0]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-14]] AND [[date::<2026-11-24]] AND offset 0
   scheduled S- and A-tier matches (next week): 4
-  request 6: tournament [[startdate::>2026-11-16]] AND [[liquipediatier::1]] offset 0
-  request 7: tournament [[startdate::>2026-11-16]] AND [[liquipediatier::2]] offset 0
-  upcoming S- and A-tier tournaments: 39
-  request 8: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2021-03-31]] AND [[date::<2021-05-01]] offset 0
+  request 6: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2021-03-31]] AND [[date::<2021-05-01]] offset 0
 error: HTTP 504 for match: <html>
 <head><title>504 Gateway Time-out</title></head>
 <body>
@@ -18,8 +15,8 @@ error: HTTP 504 for match: <html>
 </body>
 </html>
 
-requests used: 8
-207075 matches stored, 14851 tournaments, 8727 events with prize money, 66808 players; 67 of 131 months fetched (2016-01 to 2026-11)
+requests used: 6
+207109 matches stored, 14852 tournaments, 8728 events with prize money, 66818 players; 67 of 131 months fetched (2016-01 to 2026-11)
 ::notice title=CS2 fetch::error: HTTP 504 for match: <html>
 <head><title>504 Gateway Time-out</title></head>
 <body>
@@ -27,4 +24,4 @@ requests used: 8
 <hr><center>nginx</center>
 </body>
 </html>
-; 8 requests; 207075 matches stored, 14851 tournaments, 8727 events with prize money, 66808 players; 67 of 131 months fetched (2016-01 to 2026-11)
+; 6 requests; 207109 matches stored, 14852 tournaments, 8728 events with prize money, 66818 players; 67 of 131 months fetched (2016-01 to 2026-11)
