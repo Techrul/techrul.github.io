@@ -717,6 +717,98 @@
     draw();
   };
 
+  // ---------------------------------------------------------------- dropdowns in the site's style
+  // Every <select> gets a button and a menu drawn like the rest of the site (browsers draw an open <select> their own
+  // way). The <select> stays in the page, hidden, and is still what pages read and listen to: picking an item sets it
+  // and fires its "change" event, and setting its value from code updates the button.
+  var openMenu = null;
+  function closeMenu(focusBtn) {
+    if (!openMenu) return;
+    var m = openMenu; openMenu = null;
+    m.menu.remove(); m.btn.setAttribute("aria-expanded", "false");
+    if (focusBtn) m.btn.focus();
+  }
+  function enhanceSelect(sel) {
+    if (sel.dataset.xsel || sel.multiple || sel.size > 1) return;
+    sel.dataset.xsel = "1";
+    var wrap = document.createElement("span"), btn = document.createElement("button");
+    wrap.className = "xsel";
+    btn.type = "button";
+    btn.className = (sel.className ? sel.className + " " : "") + "xsel-btn";
+    btn.setAttribute("aria-haspopup", "listbox");
+    btn.setAttribute("aria-expanded", "false");
+    if (sel.getAttribute("aria-label")) btn.setAttribute("aria-label", sel.getAttribute("aria-label"));
+    sel.parentNode.insertBefore(wrap, sel);
+    wrap.appendChild(sel); wrap.appendChild(btn);
+    sel.hidden = true; sel.tabIndex = -1;
+    function sync() { var o = sel.options[sel.selectedIndex]; btn.textContent = o ? o.text : ""; btn.disabled = sel.disabled; }
+    sync();
+    // code that sets the value or replaces the options updates the button too
+    ["value", "selectedIndex"].forEach(function (prop) {
+      var d = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, prop);
+      Object.defineProperty(sel, prop, { configurable: true, get: function () { return d.get.call(this); }, set: function (v) { d.set.call(this, v); sync(); } });
+    });
+    new MutationObserver(sync).observe(sel, { childList: true, subtree: true, attributes: true, attributeFilter: ["selected", "disabled"] });
+    sel.addEventListener("change", sync);
+
+    function choose(i) {
+      closeMenu(true);
+      if (i === sel.selectedIndex) return;
+      Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "selectedIndex").set.call(sel, i); sync();
+      sel.dispatchEvent(new Event("input", { bubbles: true }));
+      sel.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+    function open() {
+      closeMenu();
+      var menu = document.createElement("div"), act = sel.selectedIndex;
+      menu.className = "xsel-menu";
+      menu.setAttribute("role", "listbox");
+      menu.tabIndex = -1;
+      menu.innerHTML = Array.prototype.map.call(sel.options, function (o, i) {
+        return '<div class="xsel-opt' + (o.disabled ? " off" : "") + '" role="option" id="xo' + i + '" data-i="' + i + '" aria-selected="' + (i === sel.selectedIndex) + '">' + S.esc(o.text) + "</div>";
+      }).join("");
+      wrap.appendChild(menu);
+      // open upward when there's no room below
+      var r = btn.getBoundingClientRect();
+      if (r.bottom + menu.offsetHeight + 8 > window.innerHeight && r.top > menu.offsetHeight + 8) menu.classList.add("up");
+      if (r.left + menu.offsetWidth > document.documentElement.clientWidth - 8) menu.classList.add("right");
+      openMenu = { menu: menu, btn: btn };
+      btn.setAttribute("aria-expanded", "true");
+      function mark(i) {
+        act = Math.max(0, Math.min(sel.options.length - 1, i));
+        menu.querySelectorAll(".xsel-opt").forEach(function (el) { el.classList.toggle("act", +el.dataset.i === act); });
+        var el = menu.querySelector('[data-i="' + act + '"]');
+        if (el) { menu.setAttribute("aria-activedescendant", el.id); el.scrollIntoView({ block: "nearest" }); }
+      }
+      mark(act);
+      menu.addEventListener("mousemove", function (e) { var o = e.target.closest(".xsel-opt"); if (o && +o.dataset.i !== act) mark(+o.dataset.i); });
+      menu.addEventListener("click", function (e) { var o = e.target.closest(".xsel-opt"); if (o && !o.classList.contains("off")) choose(+o.dataset.i); });
+      menu.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if (k === "ArrowDown" || k === "ArrowUp") { e.preventDefault(); mark(act + (k === "ArrowDown" ? 1 : -1)); }
+        else if (k === "Home" || k === "End") { e.preventDefault(); mark(k === "Home" ? 0 : sel.options.length - 1); }
+        else if (k === "Enter" || k === " ") { e.preventDefault(); choose(act); }
+        else if (k === "Escape") { e.preventDefault(); closeMenu(true); }
+        else if (k === "Tab") closeMenu();
+      });
+      menu.focus();
+    }
+    btn.addEventListener("click", function () { if (openMenu && openMenu.btn === btn) closeMenu(); else open(); });
+    btn.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); open(); }
+    });
+  }
+  document.addEventListener("mousedown", function (e) { if (openMenu && !openMenu.menu.contains(e.target) && e.target !== openMenu.btn) closeMenu(); });
+  window.addEventListener("resize", function () { closeMenu(); });
+  function enhanceAll(root) { (root.querySelectorAll ? root.querySelectorAll("select") : []).forEach(enhanceSelect); }
+  function startSelects() {
+    enhanceAll(document);
+    new MutationObserver(function (muts) {
+      muts.forEach(function (m) { m.addedNodes.forEach(function (n) { if (n.nodeType === 1) { if (n.tagName === "SELECT") enhanceSelect(n); else enhanceAll(n); } }); });
+    }).observe(document.body, { childList: true, subtree: true });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", startSelects); else startSelects();
+
   S.alignNums = alignNums;
   document.addEventListener("DOMContentLoaded", function () {
     alignNums(document.body);

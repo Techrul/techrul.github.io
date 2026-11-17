@@ -217,3 +217,23 @@ tr[data-href]:hover>td,.row[data-href]:hover,.ev[data-href]:hover{background:var
 .t th.num,.t td.num{text-align:right;font-variant-numeric:tabular-nums}
 /* a row of chip groups (filters): room between the groups, and before what follows */
 .tools{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin:16px 0 14px}
+
+/* dropdowns drawn in the site's style (site.js turns each <select> into a button and a menu) */
+.xsel{position:relative;display:inline-flex;vertical-align:middle}
+.xsel-btn{font:inherit;color:var(--ink);cursor:pointer;text-align:left;white-space:nowrap}
+.xsel-btn:disabled{opacity:.5;cursor:default}
+.xsel-menu{position:absolute;z-index:50;top:calc(100% + 6px);left:0;min-width:100%;max-height:min(340px,60vh);overflow:auto;
+  background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.28);outline:none}
+.xsel-menu.up{top:auto;bottom:calc(100% + 6px)}
+.xsel-menu.right{left:auto;right:0}
+.xsel-opt{padding:7px 12px 7px 28px;border-radius:8px;white-space:nowrap;cursor:pointer;font-size:.92rem;position:relative}
+.xsel-opt.act{background:var(--head)}
+.xsel-opt[aria-selected="true"]{font-weight:700}
+.xsel-opt[aria-selected="true"]::before{content:"";position:absolute;left:11px;top:50%;width:8px;height:4px;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:translateY(-70%) rotate(-45deg)}
+.xsel-opt.off{opacity:.45;cursor:default}
+.season .xsel-btn{font-weight:600;background:transparent;border:0;padding:6px 6px;text-align:center;min-width:5.5em}
+.season .xsel-btn:hover{background:var(--head)}
+/* the season picker's pill clipped its menu: let the menu out, and round the end buttons instead */
+.season{overflow:visible!important}
+.season > .sbtn:first-child{border-radius:999px 0 0 999px}
+.season > .sbtn:last-child{border-radius:0 999px 999px 0}
