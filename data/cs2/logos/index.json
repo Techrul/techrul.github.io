@@ -629,6 +629,10 @@
 "src_dark": "https://liquipedia.net/commons/images/thumb/4/49/BASEMENT_BOYS_darkmode.png/400px-BASEMENT_BOYS_darkmode.png"
 },
 "baskonia_esports": {
+"checked": "2026-11-17",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/8/86/Baskonia_eSports_allmode.png/379px-Baskonia_eSports_allmode.png|https://liquipedia.net/commons/images/thumb/8/86/Baskonia_eSports_allmode.png/379px-Baskonia_eSports_allmode.png",
+"light": "baskonia_esports.png",
 "name": "Baskonia eSports",
 "src": "https://liquipedia.net/commons/images/thumb/8/86/Baskonia_eSports_allmode.png/379px-Baskonia_eSports_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/8/86/Baskonia_eSports_allmode.png/379px-Baskonia_eSports_allmode.png"
