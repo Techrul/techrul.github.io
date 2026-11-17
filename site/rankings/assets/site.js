@@ -479,15 +479,15 @@
     if (!el) return;
     var sport = S.sport();
     var cs2 = '<p>CS2 match data: <a href="https://liquipedia.net/counterstrike/" rel="noopener">Liquipedia</a>, licensed <a href="https://liquipedia.net/commons/Liquipedia:Copyrights" rel="noopener license">CC BY-SA 3.0</a>; ' +
-      "the CS2 rankings and records derived from it are shared under the same licence. VRS: Valve\u2019s public counter-strike_regional_standings code, run unchanged; Valve\u2019s official standings from the same repository.</p>";
+      "the CS2 rankings and records derived from it are shared under the same licence. Team logos: the teams\u2019 trademarks, from Liquipedia, shown small to identify the teams. VRS: Valve\u2019s public counter-strike_regional_standings code, run unchanged; Valve\u2019s official standings from the same repository.</p>";
     if (sport === "cs2") {
       el.innerHTML = cs2 + "<p>Non-commercial project, not affiliated with Valve, Liquipedia or HLTV.</p>";
       return;
     }
     el.innerHTML = (sport ? "" : cs2) + "<p>Match data: TennisMyLife (stats.tennismylife.org), built on Jeff Sackmann's Tennis Abstract data (CC BY-NC-SA 4.0). " +
-      "Prize money: Wikipedia (CC BY-SA 4.0). Trophy photos: Wikimedia Commons contributors, credited on each tournament page. VRS: Valve's public counter-strike_regional_standings code, run unchanged. " +
+      "Official ATP ranking (since January 2026) and upcoming matches: ESPN. Prize money: Wikipedia (CC BY-SA 4.0). Trophy photos: Wikimedia Commons contributors, credited on each tournament page. VRS: Valve's public counter-strike_regional_standings code, run unchanged. " +
       "Derived rankings and records on this site are shared under CC BY-NC-SA 4.0.</p>" +
-      "<p>Non-commercial project, not affiliated with the ATP, TennisMyLife or Valve.</p>";
+      "<p>Non-commercial project, not affiliated with the ATP, TennisMyLife, ESPN or Valve.</p>";
   };
   // ---------------------------------------------------------------- number alignment
   // Columns of numbers need same-width digits (tabular figures) to line up. Schibsted Grotesk's tabular
