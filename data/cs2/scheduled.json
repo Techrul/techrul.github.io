@@ -1,60 +1,6 @@
 [
 {
-"date": "2026-11-18 11:00",
-"event": "Stake_Ranked/Episode_6",
-"event_name": "Stake Ranked Episode 6",
-"tier": "2",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "BIG",
-"template": "big 2020"
-},
-{
-"name": "Betclic Apogee Esports",
-"template": "betclic apogee esports"
-}
-]
-},
-{
-"date": "2026-11-18 13:30",
-"event": "Stake_Ranked/Episode_6",
-"event_name": "Stake Ranked Episode 6",
-"tier": "2",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "UNiTY esports",
-"template": "unity esports"
-},
-{
-"name": "GamerLegion",
-"template": "gamerlegion 2026"
-}
-]
-},
-{
-"date": "2026-11-18 16:00",
-"event": "Stake_Ranked/Episode_6",
-"event_name": "Stake Ranked Episode 6",
-"tier": "2",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "Sangal Esports",
-"template": "sangal esports 2020"
-},
-{
-"name": "IC Esports",
-"template": "ic esports 2026"
-}
-]
-},
-{
-"date": "2026-11-18 18:30",
+"date": "2026-11-18 18:50",
 "event": "Stake_Ranked/Episode_6",
 "event_name": "Stake Ranked Episode 6",
 "tier": "2",
@@ -68,6 +14,24 @@
 {
 "name": "Luminosity Gaming",
 "template": "luminosity gaming 2018"
+}
+]
+},
+{
+"date": "2026-11-19 11:00",
+"event": "Stake_Ranked/Episode_6",
+"event_name": "Stake Ranked Episode 6",
+"tier": "2",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "IC Esports",
+"template": "ic esports 2026"
+},
+{
+"name": "GamerLegion",
+"template": "gamerlegion 2026"
 }
 ]
 },
