@@ -393,6 +393,10 @@
 "src_dark": "https://liquipedia.net/commons/images/thumb/a/a7/Apeks_2021_darkmode.png/400px-Apeks_2021_darkmode.png"
 },
 "apeks_rebels": {
+"checked": "2026-11-18",
+"dark": "apeks_rebels-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/2/22/Apeks_2021_lightmode.png/400px-Apeks_2021_lightmode.png|https://liquipedia.net/commons/images/thumb/a/a7/Apeks_2021_darkmode.png/400px-Apeks_2021_darkmode.png",
+"light": "apeks_rebels.png",
 "name": "Apeks Rebels",
 "src": "https://liquipedia.net/commons/images/thumb/2/22/Apeks_2021_lightmode.png/400px-Apeks_2021_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/a/a7/Apeks_2021_darkmode.png/400px-Apeks_2021_darkmode.png"

@@ -1,12 +1,15 @@
-refresh: matches since 2026-10-27, events since 2026-09-18
-  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-26]] AND [[date::<2026-11-18]] offset 0
-  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-26]] AND [[date::<2026-11-18]] offset 1000
-  request 3: tournament [[enddate::>2026-09-17]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-18]] offset 0
-  request 4: placement [[prizemoney::>0]] AND [[date::>2026-09-17]] AND [[date::<2026-11-18]] offset 0
-  1205 matches, 294 tournaments, 919 prize rows
-  request 5: match [[finished::0]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-15]] AND [[date::<2026-11-25]] AND offset 0
+refresh: matches since 2026-10-28, events since 2026-09-19
+  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-27]] AND [[date::<2026-11-19]] offset 0
+  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-27]] AND [[date::<2026-11-19]] offset 1000
+  request 3: tournament [[enddate::>2026-09-18]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-19]] offset 0
+  request 4: placement [[prizemoney::>0]] AND [[date::>2026-09-18]] AND [[date::<2026-11-19]] offset 0
+  1175 matches, 290 tournaments, 920 prize rows
+  request 5: match [[finished::0]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-16]] AND [[date::<2026-11-26]] AND offset 0
   scheduled S- and A-tier matches (next week): 12
-  request 6: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2021-03-31]] AND [[date::<2021-05-01]] offset 0
+  request 6: tournament [[startdate::>2026-11-18]] AND [[liquipediatier::1]] offset 0
+  request 7: tournament [[startdate::>2026-11-18]] AND [[liquipediatier::2]] offset 0
+  upcoming S- and A-tier tournaments: 38
+  request 8: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2021-03-31]] AND [[date::<2021-05-01]] offset 0
 error: HTTP 504 for match: <html>
 <head><title>504 Gateway Time-out</title></head>
 <body>
@@ -15,8 +18,8 @@ error: HTTP 504 for match: <html>
 </body>
 </html>
 
-requests used: 6
-207137 matches stored, 14852 tournaments, 8728 events with prize money, 66819 players; 67 of 131 months fetched (2016-01 to 2026-11)
+requests used: 8
+207154 matches stored, 14852 tournaments, 8729 events with prize money, 66819 players; 67 of 131 months fetched (2016-01 to 2026-11)
 ::notice title=CS2 fetch::error: HTTP 504 for match: <html>
 <head><title>504 Gateway Time-out</title></head>
 <body>
@@ -24,4 +27,4 @@ requests used: 6
 <hr><center>nginx</center>
 </body>
 </html>
-; 6 requests; 207137 matches stored, 14852 tournaments, 8728 events with prize money, 66819 players; 67 of 131 months fetched (2016-01 to 2026-11)
+; 8 requests; 207154 matches stored, 14852 tournaments, 8729 events with prize money, 66819 players; 67 of 131 months fetched (2016-01 to 2026-11)

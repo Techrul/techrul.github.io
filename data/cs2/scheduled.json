@@ -1,41 +1,5 @@
 [
 {
-"date": "2026-11-17 15:20",
-"event": "Stake_Ranked/Episode_6",
-"event_name": "Stake Ranked Episode 6",
-"tier": "2",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "Ninjas in Pyjamas",
-"template": "ninjas in pyjamas 2021"
-},
-{
-"name": "UNiTY esports",
-"template": "unity esports"
-}
-]
-},
-{
-"date": "2026-11-17 18:30",
-"event": "Stake_Ranked/Episode_6",
-"event_name": "Stake Ranked Episode 6",
-"tier": "2",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "Luminosity Gaming",
-"template": "luminosity gaming 2018"
-},
-{
-"name": "GamerLegion",
-"template": "gamerlegion 2026"
-}
-]
-},
-{
 "date": "2026-11-18 11:00",
 "event": "Stake_Ranked/Episode_6",
 "event_name": "Stake Ranked Episode 6",
@@ -54,6 +18,24 @@
 ]
 },
 {
+"date": "2026-11-18 13:30",
+"event": "Stake_Ranked/Episode_6",
+"event_name": "Stake Ranked Episode 6",
+"tier": "2",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "UNiTY esports",
+"template": "unity esports"
+},
+{
+"name": "GamerLegion",
+"template": "gamerlegion 2026"
+}
+]
+},
+{
 "date": "2026-11-18 16:00",
 "event": "Stake_Ranked/Episode_6",
 "event_name": "Stake Ranked Episode 6",
@@ -68,6 +50,24 @@
 {
 "name": "IC Esports",
 "template": "ic esports 2026"
+}
+]
+},
+{
+"date": "2026-11-18 18:30",
+"event": "Stake_Ranked/Episode_6",
+"event_name": "Stake Ranked Episode 6",
+"tier": "2",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Ninjas in Pyjamas",
+"template": "ninjas in pyjamas 2021"
+},
+{
+"name": "Luminosity Gaming",
+"template": "luminosity gaming 2018"
 }
 ]
 },
