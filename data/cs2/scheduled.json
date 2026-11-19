@@ -1,23 +1,5 @@
 [
 {
-"date": "2026-11-18 18:50",
-"event": "Stake_Ranked/Episode_6",
-"event_name": "Stake Ranked Episode 6",
-"tier": "2",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "Ninjas in Pyjamas",
-"template": "ninjas in pyjamas 2021"
-},
-{
-"name": "Luminosity Gaming",
-"template": "luminosity gaming 2018"
-}
-]
-},
-{
 "date": "2026-11-19 11:00",
 "event": "Stake_Ranked/Episode_6",
 "event_name": "Stake Ranked Episode 6",
@@ -32,6 +14,42 @@
 {
 "name": "GamerLegion",
 "template": "gamerlegion 2026"
+}
+]
+},
+{
+"date": "2026-11-19 13:30",
+"event": "Stake_Ranked/Episode_6",
+"event_name": "Stake Ranked Episode 6",
+"tier": "2",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Ninjas in Pyjamas",
+"template": "ninjas in pyjamas 2021"
+},
+{
+"name": "BIG",
+"template": "big 2020"
+}
+]
+},
+{
+"date": "2026-11-19 16:00",
+"event": "Stake_Ranked/Episode_6",
+"event_name": "Stake Ranked Episode 6",
+"tier": "2",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Luminosity Gaming",
+"template": "luminosity gaming 2018"
+},
+{
+"name": "Sangal Esports",
+"template": "sangal esports 2020"
 }
 ]
 },
