@@ -1,23 +1,5 @@
 [
 {
-"date": "2026-11-20 13:00",
-"event": "Stake_Ranked/Episode_6",
-"event_name": "Stake Ranked Episode 6",
-"tier": "2",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "Luminosity Gaming",
-"template": "luminosity gaming 2018"
-},
-{
-"name": "BIG",
-"template": "big 2020"
-}
-]
-},
-{
 "date": "2026-11-24 04:00",
 "event": "PGL/2026/Singapore",
 "event_name": "PGL Major Singapore 2026: Stage 1",

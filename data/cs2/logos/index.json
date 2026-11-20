@@ -1783,6 +1783,10 @@
 "src_dark": "https://liquipedia.net/commons/images/thumb/7/74/Evil_Geniuses_2020_darkmode.png/299px-Evil_Geniuses_2020_darkmode.png"
 },
 "evilvice_esports": {
+"checked": "2026-11-20",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/7/74/Evilvice_Esports_2018_allmode.png/308px-Evilvice_Esports_2018_allmode.png|https://liquipedia.net/commons/images/thumb/7/74/Evilvice_Esports_2018_allmode.png/308px-Evilvice_Esports_2018_allmode.png",
+"light": "evilvice_esports.png",
 "name": "Evilvice Esports",
 "src": "https://liquipedia.net/commons/images/thumb/7/74/Evilvice_Esports_2018_allmode.png/308px-Evilvice_Esports_2018_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/7/74/Evilvice_Esports_2018_allmode.png/308px-Evilvice_Esports_2018_allmode.png"
