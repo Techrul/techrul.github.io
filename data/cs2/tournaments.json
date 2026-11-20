@@ -8660,6 +8660,7 @@
 "Highclickers/German_Esport_League/Season_1/Relegation": {"name":"German Esport League Season 1: Relegation","start":"2020-06-27","end":"2020-06-28","pool":0,"lan":false,"type":"Online","valve":"","tier":"4","tiertype":"Qualifier","status":"","teams":4},
 "Highclickers/German_Esport_League/Season_2": {"name":"German Esport League Season 2","start":"2020-09-06","end":"2020-12-19","pool":3399,"lan":false,"type":"Online","valve":"","tier":"4","tiertype":"","status":"","teams":8},
 "Hikari4ever_Arrival_Asia_Cup/2026": {"name":"Hikari4ever Arrival Asia Cup 2026","start":"2026-09-26","end":"2026-09-30","pool":7757,"lan":false,"type":"Online","valve":"","tier":"4","tiertype":"","status":"","teams":8},
+"Hikari4ever_Arrival_Open/Season_1": {"name":"Hikari4ever Arrival Open Season 1","start":"2026-11-20","end":"2026-12-06","pool":1800,"lan":false,"type":"Online","valve":"","tier":"4","tiertype":"","status":"","teams":5},
 "Hikari4ever_Redhead_Bounty/2026": {"name":"Hikari4ever Redhead Bounty 2026","start":"2026-08-17","end":"2026-08-27","pool":743,"lan":false,"type":"Online","valve":"","tier":"4","tiertype":"","status":"","teams":8},
 "Hipfired_Media/2020/HIPFIRED_CUP": {"name":"HIPFIRED CUP","start":"2020-03-27","end":"2020-04-15","pool":12500,"lan":false,"type":"Online","valve":"","tier":"4","tiertype":"","status":"cancelled","teams":8},
 "Hitpoint/Game_Access_Arena": {"name":"Hitpoint Game Access Arena","start":"2018-06-02","end":"2018-06-02","pool":3163,"lan":true,"type":"Offline","valve":"","tier":"4","tiertype":"","status":"","teams":4},
