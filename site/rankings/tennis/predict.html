@@ -140,7 +140,7 @@
         "Split decision: " + favA + " of " + counted + " favour " + S.esc(A.name) + ", " + favB + " favour " + S.esc(B.name) + ".") : "";
 
       out.innerHTML =
-        '<div class="vs"><div class="side">' + S.player(A) + "<small>Official " + (A.official_rank ? "#" + A.official_rank : "unranked") + S.outTag(A.last_match, res[0].meta.data_as_of) + '</small></div><div class="mid">vs</div><div class="side b">' + S.player(B) +
+        '<div class="vs"><div class="side">' + S.player(A) + "<small>Official " + (A.official_rank ? "#" + A.official_rank : "unranked") + S.outTag(A.last_match, res[0].meta.data_as_of) + '</small></div><div class="mid" id="h2hmid">vs</div><div class="side b">' + S.player(B) +
         "<small>Official " + (B.official_rank ? "#" + B.official_rank : "unranked") + S.outTag(B.last_match, res[0].meta.data_as_of) + "</small></div></div>" +
         '<div class="card" style="padding:0;margin-top:14px">' + rows + "</div>" +
         '<div id="inact" style="margin-top:12px"></div>' +
@@ -172,6 +172,11 @@
           label: WINS.filter(function (w) { return w[0] === H2H_WIN; })[0][1].toLowerCase() } : null);
         var wa = ms.filter(function (m) { return m[3] === 1; }).length, wb = ms.length - wa;
         var box = document.getElementById("h2h");
+        // the record up top, between the two players, for the same period
+        var per = WINS.filter(function (w) { return w[0] === H2H_WIN; })[0][1].toLowerCase();
+        document.getElementById("h2hmid").innerHTML = ms.length ?
+          '<b class="h2hrec"><span class="' + (wa > wb ? "lead" : "") + '">' + wa + '</span>–<span class="' + (wb > wa ? "lead" : "") + '">' + wb + "</span></b><small>H2H, " + S.esc(per) + "</small>" :
+          "vs<small>No meetings, " + S.esc(per) + "</small>";
         if (!ms.length) { box.innerHTML = '<p class="note">No tour-level meetings' + (days ? " in this period" : " in the data") + ".</p>"; return; }
         box.innerHTML = '<div class="h2h"><b>' + wa + "–" + wb + "</b><span>" + (wa === wb ? "Level" : S.esc((wa > wb ? A : B).name) + " leads") + " in tour-level matches" + (days ? " in this period" : " in the data") + "</span></div>" +
           '<div class="tablewrap"><table class="t"><thead><tr><th>Date</th><th>Event</th><th>Round</th><th>Winner</th><th>Score</th></tr></thead><tbody>' + ms.map(function (m) {

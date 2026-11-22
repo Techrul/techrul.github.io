@@ -145,7 +145,7 @@
         "Split decision: " + favA + " of " + counted + " favour " + S.esc(nm(A)) + ", " + favB + " favour " + S.esc(nm(B)) + ".") : "";
 
       out.innerHTML =
-        '<div class="vs"><div class="side">' + link(A) + roster(A) + "<small>Valve " + (A.official_rank ? "#" + A.official_rank : "unranked") + (A.region ? " · " + S.esc(A.region) : "") + S.outTag(A.last_match, res[0].meta.data_as_of) + '</small></div><div class="mid">vs</div><div class="side b">' + link(B) + roster(B) +
+        '<div class="vs"><div class="side">' + link(A) + roster(A) + "<small>Valve " + (A.official_rank ? "#" + A.official_rank : "unranked") + (A.region ? " · " + S.esc(A.region) : "") + S.outTag(A.last_match, res[0].meta.data_as_of) + '</small></div><div class="mid" id="h2hmid">vs</div><div class="side b">' + link(B) + roster(B) +
         "<small>Valve " + (B.official_rank ? "#" + B.official_rank : "unranked") + (B.region ? " · " + S.esc(B.region) : "") + S.outTag(B.last_match, res[0].meta.data_as_of) + "</small></div></div>" +
         '<div class="card" style="padding:0;margin-top:14px">' + rows + "</div>" +
         '<div id="inact" style="margin-top:12px"></div>' +
@@ -184,6 +184,11 @@
         var rw = 0, rl = 0;
         ms.forEach(function (m) { rw += m[6] || 0; rl += m[7] || 0; });
         var box = document.getElementById("h2h");
+        // the record up top, between the two teams, for the same period and lineups
+        var per = WINS.filter(function (w) { return w[0] === H2H_WIN; })[0][1].toLowerCase() + (H2H_LINEUPS ? ", these lineups" : "");
+        document.getElementById("h2hmid").innerHTML = ms.length ?
+          '<b class="h2hrec"><span class="' + (wa > wb ? "lead" : "") + '">' + wa + '</span>–<span class="' + (wb > wa ? "lead" : "") + '">' + wb + "</span></b><small>H2H, " + S.esc(per) + "</small>" :
+          'vs<small>' + (fa ? "No meetings, " + S.esc(per) : "") + "</small>";
         if (!fa) { box.innerHTML = '<p class="note">No head-to-head data for ' + S.esc(nm(A)) + " yet.</p>"; return; }
         if (!ms.length) { box.innerHTML = '<p class="note">No meetings ' + (H2H_LINEUPS ? "between these two lineups" : "between these organisations") + (days ? " in this period" : " in the data") + ".</p>"; return; }
         box.innerHTML = '<div class="h2h"><b>' + wa + "–" + wb + "</b><span>" + (wa === wb ? "Level" : S.esc(nm(wa > wb ? A : B)) + " leads") +
