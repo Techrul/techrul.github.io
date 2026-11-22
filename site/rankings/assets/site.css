@@ -237,3 +237,9 @@ tr[data-href]:hover>td,.row[data-href]:hover,.ev[data-href]:hover{background:var
 .season{overflow:visible!important}
 .season > .sbtn:first-child{border-radius:999px 0 0 999px}
 .season > .sbtn:last-child{border-radius:0 999px 999px 0}
+
+/* Predict: the head-to-head record between the two sides */
+.vs .mid{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
+.vs .mid small{display:block;font-size:.75rem;font-weight:400;color:var(--muted);white-space:nowrap}
+.h2hrec{font-size:1.8rem;font-weight:800;color:var(--muted);white-space:nowrap;line-height:1.1}
+.h2hrec .lead{color:var(--ink)}
