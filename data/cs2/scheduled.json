@@ -1,109 +1,145 @@
 [
 {
-"date": "2026-11-14 08:00",
-"event": "BLAST/Rivals/2026/Fall",
-"event_name": "BLAST Rivals Fall 2026",
+"date": "2026-11-24 04:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
 "tier": "1",
 "tiertype": "",
-"bestof": 3,
+"bestof": 1,
 "teams": [
 {
-"name": "Team Spirit",
-"template": "team spirit 2022"
+"name": "HEROIC",
+"template": "heroic sep 2024"
 },
 {
-"name": "MOUZ",
-"template": "mouz 2021"
+"name": "Imperial Esports",
+"template": "imperial esports 2022"
 }
 ]
 },
 {
-"date": "2026-11-14 10:30",
-"event": "BLAST/Rivals/2026/Fall",
-"event_name": "BLAST Rivals Fall 2026",
+"date": "2026-11-24 04:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
 "tier": "1",
 "tiertype": "",
-"bestof": 3,
+"bestof": 1,
 "teams": [
 {
-"name": "FURIA",
-"template": "furia 2025"
+"name": "9z Team",
+"template": "9z team 2026"
 },
 {
-"name": "Team Falcons",
-"template": "team falcons 2022"
+"name": "Lynn Vision Gaming",
+"template": "lynn vision gaming 2024"
 }
 ]
 },
 {
-"date": "2026-11-17 11:00",
-"event": "Stake_Ranked/Episode_6",
-"event_name": "Stake Ranked Episode 6",
-"tier": "2",
+"date": "2026-11-24 05:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
+"tier": "1",
 "tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "Betclic Apogee Esports",
-"template": "betclic apogee esports"
-},
-{
-"name": "IC Esports",
-"template": "ic esports 2026"
-}
-]
-},
-{
-"date": "2026-11-17 13:30",
-"event": "Stake_Ranked/Episode_6",
-"event_name": "Stake Ranked Episode 6",
-"tier": "2",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "BIG",
-"template": "big 2020"
-},
-{
-"name": "Sangal Esports",
-"template": "sangal esports 2020"
-}
-]
-},
-{
-"date": "2026-11-17 16:00",
-"event": "Stake_Ranked/Episode_6",
-"event_name": "Stake Ranked Episode 6",
-"tier": "2",
-"tiertype": "",
-"bestof": 3,
+"bestof": 1,
 "teams": [
 {
 "name": "Ninjas in Pyjamas",
 "template": "ninjas in pyjamas 2021"
 },
 {
-"name": "UNiTY esports",
-"template": "unity esports"
+"name": "M80",
+"template": "m80 orig"
 }
 ]
 },
 {
-"date": "2026-11-17 18:30",
-"event": "Stake_Ranked/Episode_6",
-"event_name": "Stake Ranked Episode 6",
-"tier": "2",
+"date": "2026-11-24 05:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
+"tier": "1",
 "tiertype": "",
-"bestof": 3,
+"bestof": 1,
 "teams": [
 {
-"name": "Luminosity Gaming",
-"template": "luminosity gaming 2018"
+"name": "100 Thieves",
+"template": "100 thieves 2026"
 },
 {
-"name": "GamerLegion",
-"template": "gamerlegion 2026"
+"name": "Chinggis Warriors",
+"template": "chinggis warriors"
+}
+]
+},
+{
+"date": "2026-11-24 06:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
+"tier": "1",
+"tiertype": "",
+"bestof": 1,
+"teams": [
+{
+"name": "PARIVISION",
+"template": "pvision 2026"
+},
+{
+"name": "DENDELE CS",
+"template": "dendele cs 2026"
+}
+]
+},
+{
+"date": "2026-11-24 06:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
+"tier": "1",
+"tiertype": "",
+"bestof": 1,
+"teams": [
+{
+"name": "Team Liquid",
+"template": "team liquid 2024"
+},
+{
+"name": "BC.Game Esports",
+"template": "gosh 2026"
+}
+]
+},
+{
+"date": "2026-11-24 07:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
+"tier": "1",
+"tiertype": "",
+"bestof": 1,
+"teams": [
+{
+"name": "FaZe Clan",
+"template": "faze clan 2026"
+},
+{
+"name": "Wildcard",
+"template": "wildcard 2024"
+}
+]
+},
+{
+"date": "2026-11-24 07:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
+"tier": "1",
+"tiertype": "",
+"bestof": 1,
+"teams": [
+{
+"name": "Eternal Fire",
+"template": "eternal fire 2023"
+},
+{
+"name": "FlyQuest",
+"template": "flyquest 2021"
 }
 ]
 }
