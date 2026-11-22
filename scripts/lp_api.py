@@ -19,6 +19,7 @@ from datetime import datetime, timedelta, timezone
 
 BASE = "https://api.liquipedia.net/api/v3/"
 PAGE = 1000  # rows per request (the API's maximum page size)
+MIN_PAGE = 125  # the smallest page get_all falls back to when the API times out
 
 
 class StopRun(Exception):
@@ -34,7 +35,13 @@ class RateLimited(StopRun):
 
 
 class ApiError(Exception):
-    pass
+    def __init__(self, msg, status=None):
+        super().__init__(msg)
+        self.status = status
+
+
+class TooSlow(ApiError):
+    """The API timed out building the answer (HTTP 504, or the request timed out): a smaller page may go through."""
 
 
 def _decode(body):
@@ -57,6 +64,7 @@ class Client:
         self.sleep, self.clock, self.log = sleep, clock, log
         self.opener = opener or urllib.request.urlopen
         self.sent = 0
+        self.page_size = PAGE  # get_all's page size; halved when the API times out
         self._times = deque()
         self.deadline = clock() + max_seconds if max_seconds else None
 
@@ -106,8 +114,14 @@ class Client:
                         self._sleep_until(wait)
                         continue
                     raise RateLimited(f"HTTP 429 after {self.retries_429} retries: {text[:200]}")
-                raise ApiError(f"HTTP {e.code} for {datapoint}: {text[:500]}")
-            except (urllib.error.URLError, TimeoutError) as e:
+                if e.code in (502, 503, 504):
+                    raise TooSlow(f"HTTP {e.code} for {datapoint}", e.code)
+                raise ApiError(f"HTTP {e.code} for {datapoint}: {text[:500]}", e.code)
+            except TimeoutError as e:
+                raise TooSlow(f"timed out for {datapoint}: {e}")
+            except urllib.error.URLError as e:
+                if isinstance(getattr(e, "reason", None), TimeoutError):
+                    raise TooSlow(f"timed out for {datapoint}: {e}")
                 raise ApiError(f"network error for {datapoint}: {e}")
             try:
                 data = json.loads(text)
@@ -126,8 +140,18 @@ class Client:
         (the caller then keeps nothing from this call, so a half-fetched window is never saved as complete)."""
         rows, offset = [], 0
         while True:
-            page = self.get(datapoint, conditions=conditions, query=query, order=order, limit=PAGE, offset=offset)
+            size = self.page_size
+            try:
+                page = self.get(datapoint, conditions=conditions, query=query, order=order, limit=size, offset=offset)
+            except TooSlow as e:
+                # a heavy page (a busy month's matches with all their maps) can time out on the API's side: ask for
+                # half as many rows, and keep the smaller size for the rest of this run
+                if size <= MIN_PAGE:
+                    raise
+                self.page_size = max(MIN_PAGE, size // 2)
+                self.log(f"  {e}: asking for {self.page_size} rows at a time")
+                continue
             rows.extend(page)
-            if len(page) < PAGE:
+            if len(page) < size:
                 return rows
-            offset += PAGE
+            offset += size

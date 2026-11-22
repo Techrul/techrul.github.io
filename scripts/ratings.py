@@ -200,8 +200,11 @@ def load_espn_rankings(folder, all_rows):
     return dict(out)
 
 
-def official_ranking(all_rows, weekly, as_of, mode="auto", max_age_days=10, top_n=150, ledger_cache=None):
+def official_ranking(all_rows, weekly, as_of, mode="auto", max_age_days=21, top_n=150, ledger_cache=None):
     """Return (info, {player_id: (rank, points, name)}).
+
+    A published ranking up to three weeks old is shown as it is, with its date: ESPN's feed sometimes skips a week,
+    and the last real ranking is better than an estimate (which drifts; it had Zverev and Sinner level in Nov 2026).
 
     weekly:    use the newest weekly ATP ranking snapshot (exact, one date for everyone).
     estimated: when no recent snapshot exists. Each player's last known official points (from the

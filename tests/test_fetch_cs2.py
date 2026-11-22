@@ -199,6 +199,20 @@ def test_paging():
     assert len({r["objectname"] for r in rows}) == len(rows)
 
 
+def test_504_halves_the_page():
+    # the API times out on pages over 300 rows: get_all falls back to smaller pages and still gets every row
+    api = FakeApi(n_per_day=40, start=date(2026, 3, 1))
+    real = api.__call__
+    def slow(req, timeout=0):
+        if int(dict(urllib.parse.parse_qsl(urllib.parse.urlparse(req.full_url).query))["limit"]) > 300:
+            api.calls.append(req.full_url)
+            raise urllib.error.HTTPError(req.full_url, 504, "Gateway Time-out", email.message.Message(), io.BytesIO(b"<html>504</html>"))
+        return real(req, timeout)
+    c, _ = client(slow, max_requests=40)
+    rows = c.get_all("match", "[[date::>2026-02-28]] AND [[date::<2026-04-01]]")
+    assert len(rows) == 31 * 40 and len({r["objectname"] for r in rows}) == len(rows) and c.page_size == 250
+
+
 def test_429_waits_then_stops():
     api = FakeApi(n_per_day=1, start=date(2026, 10, 1))
     api.fail_429_on = {1}
