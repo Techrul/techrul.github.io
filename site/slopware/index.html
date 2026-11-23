@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" data-theme="black">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>slopware</title>
+<meta name="description" content="slopware: everyday apps vibe-coded with Claude, to see whether a bad coder can vibe-code something good.">
+<link rel="stylesheet" href="../rankings/assets/site.css">
+<script>
+  // same theme choice as the rest of the site (stored per browser)
+  (function () { var t; try { t = localStorage.getItem("theme"); } catch (e) {}
+    document.documentElement.setAttribute("data-theme", ["black", "light", "mocha"].indexOf(t) >= 0 ? t : "black"); })();
+</script>
+<style>
+.hero{margin:12px 0 26px}
+.hero h1{font-size:clamp(2.2rem,6vw,3.2rem)}
+.crumbs{color:var(--muted);font-size:.9rem;margin:0 0 6px}
+.crumbs a{color:var(--muted)}
+.builds{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.build{display:flex;flex-direction:column;gap:8px;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 18px 16px}
+a.build:hover{border-color:var(--muted)}
+.build h2{font-size:1.25rem;margin:0;display:flex;align-items:baseline;gap:10px}
+.build .num{font-size:.8rem;color:var(--muted);font-weight:600;font-variant-numeric:tabular-nums}
+.build p{margin:0}
+.build .go{margin-top:auto;font-weight:600}
+.links{display:flex;flex-wrap:wrap;gap:14px;margin:4px 0 0}
+.links a{font-weight:600}
+.alts{margin:0;padding-left:1.2em}
+.alts li{margin:3px 0}
+.placeholder{border:1.5px dashed var(--line);border-radius:12px;padding:22px 18px;color:var(--muted);text-align:center}
+section{margin:0 0 28px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="brand" href="../">Techrul</a>
+    <span class="spacer"></span>
+    <div class="themes" role="group" aria-label="Theme">
+      <button class="theme" type="button" data-theme="black">Black</button><button class="theme" type="button" data-theme="light">Light</button><button class="theme" type="button" data-theme="mocha">Mocha</button>
+    </div>
+    <a class="ghlink" href="https://github.com/Techrul/slopware" target="_blank" rel="noopener" title="slopware on GitHub" aria-label="slopware on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M6.766 11.328c-2.063-.25-3.516-1.734-3.516-3.656 0-.781.281-1.625.75-2.188-.203-.515-.172-1.609.063-2.062.625-.078 1.468.25 1.968.703.594-.187 1.219-.281 1.985-.281.765 0 1.39.094 1.953.265.484-.437 1.344-.765 1.969-.687.218.422.25 1.515.046 2.047.5.593.766 1.39.766 2.203 0 1.922-1.453 3.375-3.547 3.64.531.344.89 1.094.89 1.954v1.625c0 .468.391.734.86.547C13.781 14.359 16 11.53 16 8.03 16 3.61 12.406 0 7.984 0 3.563 0 0 3.61 0 8.031a7.88 7.88 0 0 0 5.172 7.422c.422.156.828-.125.828-.547v-1.25c-.219.094-.5.156-.75.156-1.031 0-1.64-.562-2.078-1.609-.172-.422-.36-.672-.719-.719-.187-.015-.25-.093-.25-.187 0-.188.313-.328.625-.328.453 0 .844.281 1.25.86.313.452.64.655 1.031.655s.641-.14 1-.5c.266-.265.47-.5.657-.656"/></svg></a>
+  </header>
+  <main>
+    <section class="hero">
+      <p class="crumbs"><a href="../">Techrul</a> /</p>
+      <h1>slopware</h1>
+      <p class="lede">Can a bad coder vibe-code something good? Everyday apps, vibe-coded with Claude, and how they stack up against the real thing.</p>
+      <div class="links"><a href="https://github.com/Techrul/slopware" target="_blank" rel="noopener">GitHub →</a></div>
+    </section>
+    <section>
+      <div class="builds">
+        <a class="build" href="sloppad.html">
+          <h2><span class="num">#001</span>SlopPad</h2>
+          <p>A notepad and text editor.</p>
+          <span class="go">Open SlopPad →</span>
+        </a>
+        <a class="build" href="slopview.html">
+          <h2><span class="num">#002</span>SlopView</h2>
+          <p>An image viewer.</p>
+          <span class="go">Open SlopView →</span>
+        </a>
+      </div>
+    </section>
+  </main>
+  <footer class="foot"><p>slopware is vibe-coded with Claude, MIT licensed. Not meant for serious use: each page links better alternatives.</p></footer>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  function set(t) {
+    root.setAttribute("data-theme", t);
+    document.querySelectorAll(".theme").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.theme === t ? "true" : "false"); });
+  }
+  set(root.getAttribute("data-theme"));
+  document.querySelectorAll(".theme").forEach(function (b) {
+    b.addEventListener("click", function () { set(b.dataset.theme); try { localStorage.setItem("theme", b.dataset.theme); } catch (e) {} });
+  });
+})();
+</script>
+</body>
+</html>

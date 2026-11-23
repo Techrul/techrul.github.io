@@ -331,7 +331,13 @@ def run(client, store, today, start, backfill=True, log=print):
         for kind, fn in KINDS:
             if not needs_fetch(store.state, month, kind, today):
                 continue
-            count = fn(client, store, first, nxt)
+            try:
+                count = fn(client, store, first, nxt)
+            except lp_api.TooSlow as e:
+                # even small pages time out for this month: leave it for a later run and carry on with the others
+                log(f"  {month} {kind}: skipped this run ({e})")
+                done.setdefault("skipped", []).append(f"{month} {kind}")
+                continue
             store.mark(month, kind, today)
             store.save()
             log(f"  {month} {kind}: {count}")
