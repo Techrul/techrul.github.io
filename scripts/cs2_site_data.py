@@ -608,13 +608,42 @@ def main():
         linked.add(rid)
         return person(rid)
 
+    # the name each lineup played under, by date (a lineup keeps its id through org changes, Valve's rule)
+    names_of = defaultdict(list)
+    for m in played:
+        d_ = datetime.fromtimestamp(m["time"], timezone.utc).strftime("%Y-%m-%d")
+        for i, r in enumerate(m["rid"]):
+            names_of[r].append((d_, m["teams"][i].get("name") or ""))
+    for v_ in names_of.values():
+        v_.sort()
+    PEAK_MIN_MATCHES = 40
+
+    def name_at(rid, day):
+        """The name the lineup played under on `day` (its last match up to then, else its first after)."""
+        lst = names_of.get(rid)
+        if not lst:
+            return None
+        i = bisect.bisect_right(lst, (day, "\uffff")) - 1
+        return (lst[i] if i >= 0 else lst[0])[1] or None
+
     def records_for(win, start):
         first_w = next((i for i, d in enumerate(week_dates) if d >= start), len(weeks))
 
         def top_peaks(system, n=15):
-            rows_ = sorted(peaks[win][system].items(), key=lambda kv: (-kv[1][0], kv[0]))[:n]
-            return [{**P(r), "value": round(v, 1 if system.startswith("openskill") else None), "date": d.strftime("%Y-%m-%d")}
-                    for r, (v, d) in rows_]
+            # lineups with PEAK_MIN_MATCHES+ matches only (a hot streak of a few weeks isn't an all-time peak), each
+            # under the name it played under that week: Gambit's 2021 peak is Gambit's, though the lineup is Cloud9 now
+            rows_ = sorted(((r, vd) for r, vd in peaks[win][system].items() if len(names_of.get(r, ())) >= PEAK_MIN_MATCHES),
+                           key=lambda kv: (-kv[1][0], kv[0]))[:n]
+            out_ = []
+            for r, (v, d) in rows_:
+                e = {k: x for k, x in P(r).items() if k not in ("org", "logo")}
+                nm = name_at(r, d.strftime("%Y-%m-%d"))
+                if nm:
+                    e.update(name=ad.short_name(nm), full=nm, **ad.logo_fields(nm, logo_have))
+                else:
+                    e.update({k: x for k, x in P(r).items() if k in ("org", "logo")})
+                out_.append({**e, "value": round(v, 1 if system.startswith("openskill") else None), "date": d.strftime("%Y-%m-%d")})
+            return out_
 
         no1 = {}
         for system, series in number_one.items():
