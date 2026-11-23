@@ -1,27 +1,55 @@
-refresh: matches since 2026-11-01, events since 2026-09-23
-  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-31]] AND [[date::<2026-11-23]] offset 0
-  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-10-31]] AND [[date::<2026-11-23]] offset 1000
-  request 3: tournament [[enddate::>2026-09-22]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-23]] offset 0
-  request 4: placement [[prizemoney::>0]] AND [[date::>2026-09-22]] AND [[date::<2026-11-23]] offset 0
-  1208 matches, 290 tournaments, 956 prize rows
-  request 5: match [[finished::0]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-20]] AND [[date::<2026-11-30]] AND offset 0
+refresh: matches since 2026-11-02, events since 2026-09-24
+  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-01]] AND [[date::<2026-11-24]] offset 0
+  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-01]] AND [[date::<2026-11-24]] offset 1000
+  request 3: tournament [[enddate::>2026-09-23]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-24]] offset 0
+  request 4: placement [[prizemoney::>0]] AND [[date::>2026-09-23]] AND [[date::<2026-11-24]] offset 0
+  1133 matches, 293 tournaments, 948 prize rows
+  request 5: match [[finished::0]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-21]] AND [[date::<2026-12-01]] AND offset 0
   scheduled S- and A-tier matches (next week): 8
-  request 6: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2021-03-31]] AND [[date::<2021-05-01]] offset 0
-error: HTTP 504 for match: <html>
-<head><title>504 Gateway Time-out</title></head>
-<body>
-<center><h1>504 Gateway Time-out</h1></center>
-<hr><center>nginx</center>
-</body>
-</html>
-
-requests used: 6
-207402 matches stored, 14866 tournaments, 8738 events with prize money, 66915 players; 67 of 131 months fetched (2016-01 to 2026-11)
-::notice title=CS2 fetch::error: HTTP 504 for match: <html>
-<head><title>504 Gateway Time-out</title></head>
-<body>
-<center><h1>504 Gateway Time-out</h1></center>
-<hr><center>nginx</center>
-</body>
-</html>
-; 6 requests; 207402 matches stored, 14866 tournaments, 8738 events with prize money, 66915 players; 67 of 131 months fetched (2016-01 to 2026-11)
+  request 6: tournament [[startdate::>2026-11-23]] AND [[liquipediatier::1]] offset 0
+  request 7: tournament [[startdate::>2026-11-23]] AND [[liquipediatier::2]] offset 0
+  upcoming S- and A-tier tournaments: 38
+  request 8: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2021-03-31]] AND [[date::<2021-05-01]] offset 0
+  request 9: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2021-03-31]] AND [[date::<2021-05-01]] offset 1000
+  request 10: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2021-03-31]] AND [[date::<2021-05-01]] offset 2000
+  2021-04 matches: 2486
+  request 11: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2021-02-28]] AND [[date::<2021-04-01]] offset 0
+  request 12: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2021-02-28]] AND [[date::<2021-04-01]] offset 1000
+  request 13: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2021-02-28]] AND [[date::<2021-04-01]] offset 2000
+  2021-03 matches: 2578
+  request 14: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2021-01-31]] AND [[date::<2021-03-01]] offset 0
+  request 15: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2021-01-31]] AND [[date::<2021-03-01]] offset 1000
+  2021-02 matches: 1660
+  request 16: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-12-31]] AND [[date::<2021-02-01]] offset 0
+  request 17: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-12-31]] AND [[date::<2021-02-01]] offset 1000
+  2021-01 matches: 1085
+  request 18: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-11-30]] AND [[date::<2021-01-01]] offset 0
+  request 19: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-11-30]] AND [[date::<2021-01-01]] offset 1000
+  2020-12 matches: 1365
+  request 20: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-10-31]] AND [[date::<2020-12-01]] offset 0
+  request 21: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-10-31]] AND [[date::<2020-12-01]] offset 1000
+  request 22: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-10-31]] AND [[date::<2020-12-01]] offset 2000
+  2020-11 matches: 2022
+  request 23: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-09-30]] AND [[date::<2020-11-01]] offset 0
+  request 24: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-09-30]] AND [[date::<2020-11-01]] offset 1000
+  request 25: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-09-30]] AND [[date::<2020-11-01]] offset 2000
+  2020-10 matches: 2733
+  request 26: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-08-31]] AND [[date::<2020-10-01]] offset 0
+  request 27: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-08-31]] AND [[date::<2020-10-01]] offset 1000
+  request 28: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-08-31]] AND [[date::<2020-10-01]] offset 2000
+  2020-09 matches: 2259
+  request 29: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-07-31]] AND [[date::<2020-09-01]] offset 0
+  request 30: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-07-31]] AND [[date::<2020-09-01]] offset 1000
+  2020-08 matches: 1676
+  request 31: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-06-30]] AND [[date::<2020-08-01]] offset 0
+  request 32: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-06-30]] AND [[date::<2020-08-01]] offset 1000
+  2020-07 matches: 1667
+  request 33: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-05-31]] AND [[date::<2020-07-01]] offset 0
+  request 34: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-05-31]] AND [[date::<2020-07-01]] offset 1000
+  request 35: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-05-31]] AND [[date::<2020-07-01]] offset 2000
+  2020-06 matches: 2266
+  request 36: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2020-04-30]] AND [[date::<2020-06-01]] offset 0
+stopped early (time limit for this run reached); the next run continues from here
+requests used: 36
+207521 matches stored, 14870 tournaments, 8738 events with prize money, 66916 players; 78 of 131 months fetched (2016-01 to 2026-11)
+::notice title=CS2 fetch::stopped early (time limit for this run reached); the next run continues from here; 36 requests; 207521 matches stored, 14870 tournaments, 8738 events with prize money, 66916 players; 78 of 131 months fetched (2016-01 to 2026-11)
