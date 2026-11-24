@@ -154,6 +154,15 @@ def main():
                "6m": last_day - timedelta(days=182), "1y": last_day - timedelta(days=365), "2y": last_day - timedelta(days=730),
                "all": history_from}
     peaks = {win: {s_: {} for s_ in SKILL + ("vrs",)} for win in WINDOWS}  # window -> system -> pid -> (value, day)
+    # dominance: each week's #1 and its lead over #2; per player the biggest lead (lead, day, the #2 that week)
+    dominance = {win: {s_: {} for s_ in SKILL} for win in WINDOWS}
+
+    def keep_lead(system, pid, lead, day, second):
+        for win, start in WINDOWS.items():
+            if day >= start:
+                cur = dominance[win][system].get(pid)
+                if cur is None or lead > cur[0]:
+                    dominance[win][system][pid] = (lead, day, second)
     rises = {win: {s_: {} for s_ in SKILL} for win in WINDOWS}  # window -> system -> pid -> (gain, week date)
 
     def keep_max(store, system, pid, v, day):
@@ -202,6 +211,9 @@ def main():
             for system, rk in ranks.items():
                 if day.weekday() == 0:  # the extra end-of-data snapshot is not a ranking week
                     number_one[system].append((w, min(rk, key=rk.get)))
+                    if len(pool) >= 2:
+                        a_, b_ = sorted(pool, key=lambda p_: -scores[system][p_])[:2]
+                        keep_lead(system, a_, scores[system][a_] - scores[system][b_], day, b_)
                 for p in pool:
                     keep_max(peaks, system, p, scores[system][p], day)
             for system in raw:
@@ -593,6 +605,12 @@ def main():
             return [{**person(p), "value": round(v, 1 if system.startswith("openskill") else None), "date": d.strftime("%Y-%m-%d")}
                     for p, (v, d) in rows_]
 
+        def top_dominance(system, n=15):
+            rows_ = sorted(dominance[win][system].items(), key=lambda kv: -kv[1][0])[:n]
+            dec = 1 if system.startswith("openskill") else 0
+            return [{**person(p), "value": round(lead, dec) if dec else round(lead), "date": d.strftime("%Y-%m-%d"),
+                     "second": person(s2)} for p, (lead, d, s2) in rows_]
+
         no1 = {}
         for system, series in number_one.items():
             if system == "official":
@@ -636,6 +654,7 @@ def main():
             "from": weeks[first_w] if first_w < len(weeks) else None,
             "weeks_at_1": no1,
             "peaks": {s_: top_peaks(s_) for s_ in SKILL + ("vrs",) if peaks[win][s_]},
+            "dominance": {s_: top_dominance(s_) for s_ in SKILL if dominance[win][s_]},
             "upsets": {s_: upset_rows(s_) for s_ in SKILL},
             "rises": {s_: rise_rows(s_) for s_ in SKILL},
             "disagreements": gap_rows,
