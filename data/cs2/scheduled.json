@@ -1,6 +1,6 @@
 [
 {
-"date": "2026-11-24 04:00",
+"date": "2026-11-25 06:00",
 "event": "PGL/2026/Singapore",
 "event_name": "PGL Major Singapore 2026: Stage 1",
 "tier": "1",
@@ -12,121 +12,13 @@
 "template": "heroic sep 2024"
 },
 {
-"name": "Imperial Esports",
-"template": "imperial esports 2022"
-}
-]
-},
-{
-"date": "2026-11-24 04:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 1,
-"teams": [
-{
-"name": "9z Team",
-"template": "9z team 2026"
-},
-{
-"name": "Lynn Vision Gaming",
-"template": "lynn vision gaming 2024"
-}
-]
-},
-{
-"date": "2026-11-24 05:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 1,
-"teams": [
-{
-"name": "Ninjas in Pyjamas",
-"template": "ninjas in pyjamas 2021"
-},
-{
 "name": "M80",
 "template": "m80 orig"
 }
 ]
 },
 {
-"date": "2026-11-24 05:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 1,
-"teams": [
-{
-"name": "100 Thieves",
-"template": "100 thieves 2026"
-},
-{
-"name": "Chinggis Warriors",
-"template": "chinggis warriors"
-}
-]
-},
-{
-"date": "2026-11-24 06:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 1,
-"teams": [
-{
-"name": "PARIVISION",
-"template": "pvision 2026"
-},
-{
-"name": "DENDELE CS",
-"template": "dendele cs 2026"
-}
-]
-},
-{
-"date": "2026-11-24 06:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 1,
-"teams": [
-{
-"name": "Team Liquid",
-"template": "team liquid 2024"
-},
-{
-"name": "BC.Game Esports",
-"template": "gosh 2026"
-}
-]
-},
-{
-"date": "2026-11-24 07:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 1,
-"teams": [
-{
-"name": "FaZe Clan",
-"template": "faze clan 2026"
-},
-{
-"name": "Wildcard",
-"template": "wildcard 2024"
-}
-]
-},
-{
-"date": "2026-11-24 07:00",
+"date": "2026-11-25 06:00",
 "event": "PGL/2026/Singapore",
 "event_name": "PGL Major Singapore 2026: Stage 1",
 "tier": "1",
@@ -138,8 +30,116 @@
 "template": "eternal fire 2023"
 },
 {
+"name": "100 Thieves",
+"template": "100 thieves 2026"
+}
+]
+},
+{
+"date": "2026-11-25 07:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
+"tier": "1",
+"tiertype": "",
+"bestof": 1,
+"teams": [
+{
+"name": "PARIVISION",
+"template": "pvision 2026"
+},
+{
+"name": "FaZe Clan",
+"template": "faze clan 2026"
+}
+]
+},
+{
+"date": "2026-11-25 07:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
+"tier": "1",
+"tiertype": "",
+"bestof": 1,
+"teams": [
+{
+"name": "Wildcard",
+"template": "wildcard 2024"
+},
+{
+"name": "Lynn Vision Gaming",
+"template": "lynn vision gaming 2024"
+}
+]
+},
+{
+"date": "2026-11-25 08:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Imperial Esports",
+"template": "imperial esports 2022"
+},
+{
 "name": "FlyQuest",
 "template": "flyquest 2021"
+}
+]
+},
+{
+"date": "2026-11-25 08:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "9z Team",
+"template": "9z team 2026"
+},
+{
+"name": "DENDELE CS",
+"template": "dendele cs 2026"
+}
+]
+},
+{
+"date": "2026-11-25 10:30",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Ninjas in Pyjamas",
+"template": "ninjas in pyjamas 2021"
+},
+{
+"name": "Team Liquid",
+"template": "team liquid 2024"
+}
+]
+},
+{
+"date": "2026-11-25 10:30",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "BC.Game Esports",
+"template": "gosh 2026"
+},
+{
+"name": "Chinggis Warriors",
+"template": "chinggis warriors"
 }
 ]
 }
