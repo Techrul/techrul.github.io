@@ -44,12 +44,12 @@
 "bestof": 1,
 "teams": [
 {
-"name": "PARIVISION",
-"template": "pvision 2026"
+"name": "Wildcard",
+"template": "wildcard 2024"
 },
 {
-"name": "FaZe Clan",
-"template": "faze clan 2026"
+"name": "Lynn Vision Gaming",
+"template": "lynn vision gaming 2024"
 }
 ]
 },
@@ -62,12 +62,12 @@
 "bestof": 1,
 "teams": [
 {
-"name": "Wildcard",
-"template": "wildcard 2024"
+"name": "PARIVISION",
+"template": "pvision 2026"
 },
 {
-"name": "Lynn Vision Gaming",
-"template": "lynn vision gaming 2024"
+"name": "FaZe Clan",
+"template": "faze clan 2026"
 }
 ]
 },
