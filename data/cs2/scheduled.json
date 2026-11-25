@@ -1,96 +1,6 @@
 [
 {
-"date": "2026-11-25 06:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 1,
-"teams": [
-{
-"name": "HEROIC",
-"template": "heroic sep 2024"
-},
-{
-"name": "M80",
-"template": "m80 orig"
-}
-]
-},
-{
-"date": "2026-11-25 06:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 1,
-"teams": [
-{
-"name": "Eternal Fire",
-"template": "eternal fire 2023"
-},
-{
-"name": "100 Thieves",
-"template": "100 thieves 2026"
-}
-]
-},
-{
-"date": "2026-11-25 07:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 1,
-"teams": [
-{
-"name": "Wildcard",
-"template": "wildcard 2024"
-},
-{
-"name": "Lynn Vision Gaming",
-"template": "lynn vision gaming 2024"
-}
-]
-},
-{
-"date": "2026-11-25 07:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 1,
-"teams": [
-{
-"name": "PARIVISION",
-"template": "pvision 2026"
-},
-{
-"name": "FaZe Clan",
-"template": "faze clan 2026"
-}
-]
-},
-{
-"date": "2026-11-25 08:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "Imperial Esports",
-"template": "imperial esports 2022"
-},
-{
-"name": "FlyQuest",
-"template": "flyquest 2021"
-}
-]
-},
-{
-"date": "2026-11-25 08:00",
+"date": "2026-11-25 08:05",
 "event": "PGL/2026/Singapore",
 "event_name": "PGL Major Singapore 2026: Stage 1",
 "tier": "1",
@@ -104,6 +14,24 @@
 {
 "name": "DENDELE CS",
 "template": "dendele cs 2026"
+}
+]
+},
+{
+"date": "2026-11-25 08:30",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "Imperial Esports",
+"template": "imperial esports 2022"
+},
+{
+"name": "FlyQuest",
+"template": "flyquest 2021"
 }
 ]
 },

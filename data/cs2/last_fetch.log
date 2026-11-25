@@ -1,75 +1,28 @@
-refresh: matches since 2026-11-03, events since 2026-09-25
-  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-02]] AND [[date::<2026-11-25]] offset 0
-  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-02]] AND [[date::<2026-11-25]] offset 1000
-  request 3: tournament [[enddate::>2026-09-24]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-25]] offset 0
-  request 4: placement [[prizemoney::>0]] AND [[date::>2026-09-24]] AND [[date::<2026-11-25]] offset 0
-  1192 matches, 304 tournaments, 940 prize rows
-  request 5: match [[finished::0]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-22]] AND [[date::<2026-12-02]] AND offset 0
-  scheduled S- and A-tier matches (next week): 8
-  request 6: placement [[prizemoney::>0]] AND [[date::>2016-11-30]] AND [[date::<2017-01-01]] offset 0
-  2016-12 placements: 251
-  request 7: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-10-31]] AND [[date::<2016-12-01]] offset 0
-  request 8: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-10-31]] AND [[date::<2016-12-01]] offset 1000
-  2016-11 matches: 1347
-  request 9: tournament [[enddate::>2016-10-31]] AND [[enddate::<2016-12-01]] offset 0
-  2016-11 tournaments: 123
-  request 10: placement [[prizemoney::>0]] AND [[date::>2016-10-31]] AND [[date::<2016-12-01]] offset 0
-  2016-11 placements: 370
-  request 11: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-09-30]] AND [[date::<2016-11-01]] offset 0
-  request 12: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-09-30]] AND [[date::<2016-11-01]] offset 1000
-  2016-10 matches: 1598
-  request 13: tournament [[enddate::>2016-09-30]] AND [[enddate::<2016-11-01]] offset 0
-  2016-10 tournaments: 128
-  request 14: placement [[prizemoney::>0]] AND [[date::>2016-09-30]] AND [[date::<2016-11-01]] offset 0
-  2016-10 placements: 311
-  request 15: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-08-31]] AND [[date::<2016-10-01]] offset 0
-  request 16: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-08-31]] AND [[date::<2016-10-01]] offset 1000
-  2016-09 matches: 1689
-  request 17: tournament [[enddate::>2016-08-31]] AND [[enddate::<2016-10-01]] offset 0
-  2016-09 tournaments: 130
-  request 18: placement [[prizemoney::>0]] AND [[date::>2016-08-31]] AND [[date::<2016-10-01]] offset 0
-  2016-09 placements: 225
-  request 19: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-07-31]] AND [[date::<2016-09-01]] offset 0
-  request 20: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-07-31]] AND [[date::<2016-09-01]] offset 1000
-  2016-08 matches: 1182
-  request 21: tournament [[enddate::>2016-07-31]] AND [[enddate::<2016-09-01]] offset 0
-  2016-08 tournaments: 116
-  request 22: placement [[prizemoney::>0]] AND [[date::>2016-07-31]] AND [[date::<2016-09-01]] offset 0
-  2016-08 placements: 284
-  request 23: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-06-30]] AND [[date::<2016-08-01]] offset 0
-  2016-07 matches: 924
-  request 24: tournament [[enddate::>2016-06-30]] AND [[enddate::<2016-08-01]] offset 0
-  2016-07 tournaments: 77
-  request 25: placement [[prizemoney::>0]] AND [[date::>2016-06-30]] AND [[date::<2016-08-01]] offset 0
-  2016-07 placements: 209
-  request 26: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-05-31]] AND [[date::<2016-07-01]] offset 0
-  request 27: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-05-31]] AND [[date::<2016-07-01]] offset 1000
-  2016-06 matches: 1179
-  request 28: tournament [[enddate::>2016-05-31]] AND [[enddate::<2016-07-01]] offset 0
-  2016-06 tournaments: 78
-  request 29: placement [[prizemoney::>0]] AND [[date::>2016-05-31]] AND [[date::<2016-07-01]] offset 0
-  2016-06 placements: 210
-  request 30: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-04-30]] AND [[date::<2016-06-01]] offset 0
-  2016-05 matches: 916
-  request 31: tournament [[enddate::>2016-04-30]] AND [[enddate::<2016-06-01]] offset 0
-  2016-05 tournaments: 84
-  request 32: placement [[prizemoney::>0]] AND [[date::>2016-04-30]] AND [[date::<2016-06-01]] offset 0
-  2016-05 placements: 227
-  request 33: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-03-31]] AND [[date::<2016-05-01]] offset 0
-  request 34: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-03-31]] AND [[date::<2016-05-01]] offset 1000
-  2016-04 matches: 1088
-  request 35: tournament [[enddate::>2016-03-31]] AND [[enddate::<2016-05-01]] offset 0
-  2016-04 tournaments: 78
-  request 36: placement [[prizemoney::>0]] AND [[date::>2016-03-31]] AND [[date::<2016-05-01]] offset 0
-  2016-04 placements: 243
-  request 37: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-02-29]] AND [[date::<2016-04-01]] offset 0
-  request 38: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-02-29]] AND [[date::<2016-04-01]] offset 1000
-  2016-03 matches: 1531
-  request 39: tournament [[enddate::>2016-02-29]] AND [[enddate::<2016-04-01]] offset 0
-  2016-03 tournaments: 76
-  request 40: placement [[prizemoney::>0]] AND [[date::>2016-02-29]] AND [[date::<2016-04-01]] offset 0
-  2016-03 placements: 154
-stopped early (request budget for this run used (40)); the next run continues from here
-requests used: 40
-226324 matches stored, 16323 tournaments, 9681 events with prize money, 73526 players; 129 of 131 months fetched (2016-01 to 2026-11)
-::notice title=CS2 fetch::stopped early (request budget for this run used (40)); the next run continues from here; 40 requests; 226324 matches stored, 16323 tournaments, 9681 events with prize money, 73526 players; 129 of 131 months fetched (2016-01 to 2026-11)
+refresh: matches since 2026-11-04, events since 2026-09-26
+  request 1: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-03]] AND [[date::<2026-11-26]] offset 0
+  request 2: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-03]] AND [[date::<2026-11-26]] offset 1000
+  request 3: tournament [[enddate::>2026-09-25]] AND [[enddate::<2029-01-01]] AND [[startdate::<2026-11-26]] offset 0
+  request 4: placement [[prizemoney::>0]] AND [[date::>2026-09-25]] AND [[date::<2026-11-26]] offset 0
+  1176 matches, 306 tournaments, 925 prize rows
+  request 5: match [[finished::0]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2026-11-23]] AND [[date::<2026-12-03]] AND offset 0
+  scheduled S- and A-tier matches (next week): 4
+  request 6: tournament [[startdate::>2026-11-25]] AND [[liquipediatier::1]] offset 0
+  request 7: tournament [[startdate::>2026-11-25]] AND [[liquipediatier::2]] offset 0
+  upcoming S- and A-tier tournaments: 37
+  request 8: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-01-31]] AND [[date::<2016-03-01]] offset 0
+  request 9: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2016-01-31]] AND [[date::<2016-03-01]] offset 1000
+  2016-02 matches: 1033
+  request 10: tournament [[enddate::>2016-01-31]] AND [[enddate::<2016-03-01]] offset 0
+  2016-02 tournaments: 62
+  request 11: placement [[prizemoney::>0]] AND [[date::>2016-01-31]] AND [[date::<2016-03-01]] offset 0
+  2016-02 placements: 144
+  request 12: match [[finished::1]] AND [[liquipediatiertype::!Showmatch]] AND [[date::>2015-12-31]] AND [[date::<2016-02-01]] offset 0
+  2016-01 matches: 826
+  request 13: tournament [[enddate::>2015-12-31]] AND [[enddate::<2016-02-01]] offset 0
+  2016-01 tournaments: 75
+  request 14: placement [[prizemoney::>0]] AND [[date::>2015-12-31]] AND [[date::<2016-02-01]] offset 0
+  2016-01 placements: 151
+finished: everything up to date
+requests used: 14
+228181 matches stored, 16461 tournaments, 9767 events with prize money, 74170 players; 131 of 131 months fetched (2016-01 to 2026-11)
+::notice title=CS2 fetch::finished: everything up to date; 14 requests; 228181 matches stored, 16461 tournaments, 9767 events with prize money, 74170 players; 131 of 131 months fetched (2016-01 to 2026-11)
