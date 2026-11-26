@@ -1,60 +1,6 @@
 [
 {
-"date": "2026-11-26 06:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "HEROIC",
-"template": "heroic sep 2024"
-},
-{
-"name": "FaZe Clan",
-"template": "faze clan 2026"
-}
-]
-},
-{
-"date": "2026-11-26 06:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "M80",
-"template": "m80 orig"
-},
-{
-"name": "Eternal Fire",
-"template": "eternal fire 2023"
-}
-]
-},
-{
-"date": "2026-11-26 08:30",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "100 Thieves",
-"template": "100 thieves 2026"
-},
-{
-"name": "9z Team",
-"template": "9z team 2026"
-}
-]
-},
-{
-"date": "2026-11-26 08:30",
+"date": "2026-11-27 06:00",
 "event": "PGL/2026/Singapore",
 "event_name": "PGL Major Singapore 2026: Stage 1",
 "tier": "1",
@@ -66,31 +12,13 @@
 "template": "lynn vision gaming 2024"
 },
 {
-"name": "PARIVISION",
-"template": "pvision 2026"
+"name": "HEROIC",
+"template": "heroic sep 2024"
 }
 ]
 },
 {
-"date": "2026-11-26 11:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "Wildcard",
-"template": "wildcard 2024"
-},
-{
-"name": "Chinggis Warriors",
-"template": "chinggis warriors"
-}
-]
-},
-{
-"date": "2026-11-26 11:00",
+"date": "2026-11-27 08:30",
 "event": "PGL/2026/Singapore",
 "event_name": "PGL Major Singapore 2026: Stage 1",
 "tier": "1",
@@ -102,8 +30,26 @@
 "template": "imperial esports 2022"
 },
 {
-"name": "Team Liquid",
-"template": "team liquid 2024"
+"name": "Wildcard",
+"template": "wildcard 2024"
+}
+]
+},
+{
+"date": "2026-11-27 11:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 1",
+"tier": "1",
+"tiertype": "",
+"bestof": 3,
+"teams": [
+{
+"name": "M80",
+"template": "m80 orig"
+},
+{
+"name": "100 Thieves",
+"template": "100 thieves 2026"
 }
 ]
 }
