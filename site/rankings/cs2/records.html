@@ -63,10 +63,13 @@
         }));
       } },
     { id: "peak", title: "Highest ratings", note: function (k) {
-        return k === "vrs" ? "Each team’s highest weekly VRS points total in this period." : "Each team’s best weekly rating in this period: the strongest teams of the era, not just today’s. Numbers only compare within one system.";
+        return k === "vrs" ? "Each team’s highest weekly VRS points total in this period." :
+          "Each team’s best week in this period, ranked by how far its rating stood above the field that Monday (the average of #5 to #20). Ratings drift upward as the scene gets deeper, so a raw 2019 rating can’t be held against a 2026 one; the gap to the chasing pack can. Numbers only compare within one system.";
       }, draw: function (k, rows) {
-        return table([[""], ["Team"], [k === "vrs" ? "Points" : "Rating", 1], ["Week of"]], rows.map(function (x, i) {
-          return '<tr data-href="team.html?id=' + encodeURIComponent(x.id) + '"><td class="rk">' + (i + 1) + "</td><td>" + S.team(x) + '</td><td class="n">' + fmtRating(k, x.value) + "</td><td>" + S.date(x.date) + "</td></tr>";
+        var adj = rows.length && rows[0].above != null;
+        return table([[""], ["Team"]].concat(adj ? [["Above field", 1]] : []).concat([[k === "vrs" ? "Points" : "Rating", 1], ["Week of"]]), rows.map(function (x, i) {
+          return '<tr data-href="team.html?id=' + encodeURIComponent(x.id) + '"><td class="rk">' + (i + 1) + "</td><td>" + S.team(x) +
+            (adj ? '</td><td class="n"><b>+' + fmtRating(k, x.above) + "</b>" : "") + '</td><td class="n">' + fmtRating(k, x.value) + "</td><td>" + S.date(x.date) + "</td></tr>";
         }));
       } },
     { id: "dom", title: "Most dominant #1s", note: function (k) {
