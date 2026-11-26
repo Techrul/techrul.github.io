@@ -220,6 +220,16 @@ def main():
                "6m": last_day - timedelta(days=182), "1y": last_day - timedelta(days=365), "2y": last_day - timedelta(days=730),
                "all": history_from}
     peaks = {win: {s_: {} for s_ in SKILL + ("vrs",)} for win in WINDOWS}
+    # dominance: each week's #1 and its lead over #2 under each system; per team its biggest lead
+    # {win: {system: {roster: (lead, day, the #2 that week)}}}. Leads compare across eras better than ratings do
+    dominance = {win: {s_: {} for s_ in SKILL} for win in WINDOWS}
+
+    def keep_lead(system, rid, lead, day, second):
+        for win, start in WINDOWS.items():
+            if day >= start:
+                cur = dominance[win][system].get(rid)
+                if cur is None or lead > cur[0]:
+                    dominance[win][system][rid] = (lead, day, second)
     rises = {win: {s_: {} for s_ in SKILL} for win in WINDOWS}
 
     def keep_max(store, system, rid, v, day):
@@ -265,6 +275,9 @@ def main():
             for system, rk in ranks.items():
                 if day.weekday() == 0:
                     number_one[system].append((w, min(rk, key=rk.get)))
+                    if len(pool) >= 2:
+                        a_, b_ = sorted(pool, key=lambda p: -scores[system][p])[:2]
+                        keep_lead(system, a_, scores[system][a_] - scores[system][b_], day, b_)
                 for p in pool:
                     keep_max(peaks, system, p, scores[system][p], day)
             for system in raw:
@@ -608,13 +621,58 @@ def main():
         linked.add(rid)
         return person(rid)
 
+    # the name each lineup played under, by date (a lineup keeps its id through org changes, Valve's rule)
+    names_of = defaultdict(list)
+    for m in played:
+        d_ = datetime.fromtimestamp(m["time"], timezone.utc).strftime("%Y-%m-%d")
+        for i, r in enumerate(m["rid"]):
+            names_of[r].append((d_, m["teams"][i].get("name") or ""))
+    for v_ in names_of.values():
+        v_.sort()
+    PEAK_MIN_MATCHES = 40
+
+    def name_at(rid, day):
+        """The name the lineup played under on `day` (its last match up to then, else its first after)."""
+        lst = names_of.get(rid)
+        if not lst:
+            return None
+        i = bisect.bisect_right(lst, (day, "\uffff")) - 1
+        return (lst[i] if i >= 0 else lst[0])[1] or None
+
     def records_for(win, start):
         first_w = next((i for i, d in enumerate(week_dates) if d >= start), len(weeks))
 
         def top_peaks(system, n=15):
-            rows_ = sorted(peaks[win][system].items(), key=lambda kv: (-kv[1][0], kv[0]))[:n]
-            return [{**P(r), "value": round(v, 1 if system.startswith("openskill") else None), "date": d.strftime("%Y-%m-%d")}
-                    for r, (v, d) in rows_]
+            # lineups with PEAK_MIN_MATCHES+ matches only (a hot streak of a few weeks isn't an all-time peak), each
+            # under the name it played under that week: Gambit's 2021 peak is Gambit's, though the lineup is Cloud9 now
+            rows_ = sorted(((r, vd) for r, vd in peaks[win][system].items() if len(names_of.get(r, ())) >= PEAK_MIN_MATCHES),
+                           key=lambda kv: (-kv[1][0], kv[0]))[:n]
+            out_ = []
+            for r, (v, d) in rows_:
+                e = {k: x for k, x in P(r).items() if k not in ("org", "logo")}
+                nm = name_at(r, d.strftime("%Y-%m-%d"))
+                if nm:
+                    e.update(name=ad.short_name(nm), full=nm, **ad.logo_fields(nm, logo_have))
+                else:
+                    e.update({k: x for k, x in P(r).items() if k in ("org", "logo")})
+                out_.append({**e, "value": round(v, 1 if system.startswith("openskill") else None), "date": d.strftime("%Y-%m-%d")})
+            return out_
+
+        def era(r, d):
+            """A lineup as it was named on day d (and that org's logo)."""
+            e = {k: x for k, x in P(r).items() if k not in ("org", "logo")}
+            nm = name_at(r, d.strftime("%Y-%m-%d"))
+            if nm:
+                e.update(name=ad.short_name(nm), full=nm, **ad.logo_fields(nm, logo_have))
+            return e
+
+        def top_dominance(system, n=15):
+            rows_ = sorted(((r, x) for r, x in dominance[win][system].items() if len(names_of.get(r, ())) >= PEAK_MIN_MATCHES),
+                           key=lambda kv: (-kv[1][0], kv[0]))[:n]
+            dec = 1 if system.startswith("openskill") else 0
+            return [{**era(r, d), "value": round(lead, dec) if dec else round(lead), "date": d.strftime("%Y-%m-%d"),
+                     "second": {k: x for k, x in era(s2, d).items() if k in ("id", "name", "full", "org", "logo")}}
+                    for r, (lead, d, s2) in rows_]
 
         no1 = {}
         for system, series in number_one.items():
@@ -664,6 +722,7 @@ def main():
                     for system, d in gaps.items() if d}
         return {"from": weeks[first_w] if first_w < len(weeks) else None, "weeks_at_1": no1,
                 "peaks": {s_: top_peaks(s_) for s_ in SKILL + ("vrs",) if peaks[win][s_]},
+                "dominance": {s_: top_dominance(s_) for s_ in SKILL if dominance[win][s_]},
                 "upsets": {s_: upset_rows(s_) for s_ in SKILL}, "rises": {s_: rise_rows(s_) for s_ in SKILL},
                 "disagreements": gap_rows}
 
