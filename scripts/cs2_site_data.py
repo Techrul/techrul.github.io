@@ -231,6 +231,18 @@ def main():
                 if cur is None or lead > cur[0]:
                     dominance[win][system][rid] = (lead, day, second)
     rises = {win: {s_: {} for s_ in SKILL} for win in WINDOWS}
+    # peaks above the field: rating minus the average of that week's #5-#20. Ratings drift up as the pool grows
+    # deeper (Glicko-2's #10 went from ~1,950 in 2018 to ~2,150 now), so raw peaks favour recent teams; the
+    # distance to the chasing pack compares eras. {win: {system: {roster: (above, day, rating)}}}
+    peaks_adj = {win: {s_: {} for s_ in SKILL} for win in WINDOWS}
+    FIELD_FROM, FIELD_TO = 4, 20  # ranks #5-#20
+
+    def keep_adj(system, rid, above, day, v):
+        for win, start in WINDOWS.items():
+            if day >= start:
+                cur = peaks_adj[win][system].get(rid)
+                if cur is None or above > cur[0]:
+                    peaks_adj[win][system][rid] = (above, day, v)
 
     def keep_max(store, system, rid, v, day):
         for win, start in WINDOWS.items():
@@ -280,6 +292,11 @@ def main():
                         keep_lead(system, a_, scores[system][a_] - scores[system][b_], day, b_)
                 for p in pool:
                     keep_max(peaks, system, p, scores[system][p], day)
+                if day.weekday() == 0 and len(pool) >= FIELD_TO:
+                    order = sorted(pool, key=lambda p: -scores[system][p])
+                    field = sum(scores[system][p] for p in order[FIELD_FROM:FIELD_TO]) / (FIELD_TO - FIELD_FROM)
+                    for p in order[:FIELD_FROM + 1]:
+                        keep_adj(system, p, scores[system][p] - field, day, scores[system][p])
             for system in raw:
                 before = prev_scores.get(system, {})
                 for p in pool:
@@ -644,18 +661,22 @@ def main():
 
         def top_peaks(system, n=15):
             # lineups with PEAK_MIN_MATCHES+ matches only (a hot streak of a few weeks isn't an all-time peak), each
-            # under the name it played under that week: Gambit's 2021 peak is Gambit's, though the lineup is Cloud9 now
-            rows_ = sorted(((r, vd) for r, vd in peaks[win][system].items() if len(names_of.get(r, ())) >= PEAK_MIN_MATCHES),
+            # under the name it played under that week: Gambit's 2021 peak is Gambit's, though the lineup is Cloud9 now.
+            # Skill models rank by distance above the field (see peaks_adj); VRS by points (already relative)
+            store = peaks_adj[win][system] if system in peaks_adj[win] else {r: (v, d, v) for r, (v, d) in peaks[win][system].items()}
+            rows_ = sorted(((r, x) for r, x in store.items() if len(names_of.get(r, ())) >= PEAK_MIN_MATCHES),
                            key=lambda kv: (-kv[1][0], kv[0]))[:n]
+            dec = 1 if system.startswith("openskill") else None
             out_ = []
-            for r, (v, d) in rows_:
+            for r, (above, d, v) in rows_:
                 e = {k: x for k, x in P(r).items() if k not in ("org", "logo")}
                 nm = name_at(r, d.strftime("%Y-%m-%d"))
                 if nm:
                     e.update(name=ad.short_name(nm), full=nm, **ad.logo_fields(nm, logo_have))
                 else:
                     e.update({k: x for k, x in P(r).items() if k in ("org", "logo")})
-                out_.append({**e, "value": round(v, 1 if system.startswith("openskill") else None), "date": d.strftime("%Y-%m-%d")})
+                out_.append({**e, "value": round(v, dec), "date": d.strftime("%Y-%m-%d"),
+                             **({"above": round(above, dec)} if system in peaks_adj[win] else {})})
             return out_
 
         def era(r, d):
@@ -721,7 +742,7 @@ def main():
                              for r, (g, rk, off, w) in sorted(d.items(), key=lambda kv: (-abs(kv[1][0]), kv[0]))[:15]]
                     for system, d in gaps.items() if d}
         return {"from": weeks[first_w] if first_w < len(weeks) else None, "weeks_at_1": no1,
-                "peaks": {s_: top_peaks(s_) for s_ in SKILL + ("vrs",) if peaks[win][s_]},
+                "peaks": {s_: top_peaks(s_) for s_ in SKILL + ("vrs",) if peaks_adj[win].get(s_) or (s_ == "vrs" and peaks[win][s_])},
                 "dominance": {s_: top_dominance(s_) for s_ in SKILL if dominance[win][s_]},
                 "upsets": {s_: upset_rows(s_) for s_ in SKILL}, "rises": {s_: rise_rows(s_) for s_ in SKILL},
                 "disagreements": gap_rows}
