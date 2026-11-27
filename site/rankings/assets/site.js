@@ -679,11 +679,24 @@
     });
     S.autocomplete(ia, choices, function (it) { A = byId[it.id]; draw(); }, { selectOnFocus: true, empty: "Nobody by that name" });
     S.autocomplete(ib, choices, function (it) { B = byId[it.id]; draw(); }, { selectOnFocus: true, empty: "Nobody by that name" });
-    ia.addEventListener("blur", function () { setTimeout(function () { ia.value = nm(A); }, 150); });
-    ib.addEventListener("blur", function () { setTimeout(function () { ib.value = nm(B); }, 150); });
+    // each name box hugs its text (a chip, not a full-width field), and widens a little while typing
+    var ctx = document.createElement("canvas").getContext("2d");
+    function fit(inp) {
+      var cs = getComputedStyle(inp);
+      ctx.font = cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily;
+      var pad = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
+      var w = Math.ceil(ctx.measureText(inp.value || " ").width + pad + 2);
+      inp.style.width = (document.activeElement === inp ? Math.max(w, 170) : w) + "px";
+    }
+    [ia, ib].forEach(function (inp) {
+      inp.title = "Pick another " + (cs2 ? "team" : "player");
+      ["input", "focus"].forEach(function (ev) { inp.addEventListener(ev, function () { fit(inp); }); });
+      inp.addEventListener("blur", function () { setTimeout(function () { inp.value = nm(inp === ia ? A : B); fit(inp); }, 150); });
+    });
+    window.addEventListener("resize", function () { fit(ia); fit(ib); });
 
     function draw() {
-      ia.value = nm(A); ib.value = nm(B);
+      ia.value = nm(A); ib.value = nm(B); fit(ia); fit(ib);
       el.querySelector("#h2hw-la").innerHTML = cs2 ? S.logo(A, "md") : "";
       el.querySelector("#h2hw-lb").innerHTML = cs2 ? S.logo(B, "md") : "";
       var why = el.querySelector("#h2hw-why");

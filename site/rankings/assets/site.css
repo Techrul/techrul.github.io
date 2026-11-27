@@ -175,7 +175,7 @@ tr[data-href]:hover>td,.row[data-href]:hover,.ev[data-href]:hover{background:var
 .h2hw-head h2{margin:0;font-size:1.1rem}
 .h2hw-why{color:var(--muted);font-size:.86rem;display:inline-flex;align-items:center;gap:8px}
 .h2hw-pick{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:center;margin-top:12px}
-.h2hw-pick input{font:inherit;font-size:1.15rem;font-weight:700;width:100%;border:1.5px solid transparent;border-radius:10px;padding:6px 8px;background:transparent;color:var(--ink);cursor:pointer}
+.h2hw-pick input{font:inherit;font-size:1.15rem;font-weight:700;max-width:100%;border:1.5px solid transparent;border-radius:10px;padding:4px 8px;background:transparent;color:var(--ink);cursor:pointer;text-overflow:ellipsis}
 .h2hw-pick input:hover,.h2hw-pick input:focus{border-color:var(--line);background:var(--bg);outline:none}
 .h2hw-pick input.b{text-align:right}
 .h2hw-score{font-size:1.9rem;font-weight:800;white-space:nowrap;display:flex;gap:6px;align-items:baseline}
@@ -210,9 +210,10 @@ tr[data-href]:hover>td,.row[data-href]:hover,.ev[data-href]:hover{background:var
 .tlogo.md{width:30px;height:30px;margin-right:8px;vertical-align:middle}
 :root[data-theme="light"] .tlogo.lg-d, :root:not([data-theme="light"]) .tlogo.lg-l{display:none}
 .h2hw-side{display:flex;align-items:center;min-width:0}
+.h2hw-side.b{justify-content:flex-end}
 .h2hw-side > span{display:flex;flex:none}
 .h2hw-side.b .tlogo{margin:0 0 0 8px}
-.h2hw-side input{min-width:0}
+.h2hw-side input{min-width:0;flex:0 1 auto}
 .sub-h{font-size:1rem;margin:22px 0 8px}
 .t th.num,.t td.num{text-align:right;font-variant-numeric:tabular-nums}
 /* a row of chip groups (filters): room between the groups, and before what follows */
