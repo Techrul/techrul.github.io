@@ -6204,6 +6204,10 @@
 "src_dark": "https://liquipedia.net/commons/images/thumb/f/f0/Flag_of_Poland_4_by_3.png/400px-Flag_of_Poland_4_by_3.png"
 },
 "team_portugal": {
+"checked": "2026-11-27",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/d/d3/Flag_of_Portugal_4_by_3.png/400px-Flag_of_Portugal_4_by_3.png|https://liquipedia.net/commons/images/thumb/d/d3/Flag_of_Portugal_4_by_3.png/400px-Flag_of_Portugal_4_by_3.png",
+"light": "team_portugal.png",
 "name": "Team Portugal",
 "src": "https://liquipedia.net/commons/images/thumb/d/d3/Flag_of_Portugal_4_by_3.png/400px-Flag_of_Portugal_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/d/d3/Flag_of_Portugal_4_by_3.png/400px-Flag_of_Portugal_4_by_3.png"
@@ -6306,6 +6310,10 @@
 "src_dark": "https://liquipedia.net/commons/images/thumb/d/d2/Team_Secret_darkmode.png/400px-Team_Secret_darkmode.png"
 },
 "team_serbia": {
+"checked": "2026-11-27",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/6/64/Flag_of_Serbia_4_by_3.png/400px-Flag_of_Serbia_4_by_3.png|https://liquipedia.net/commons/images/thumb/6/64/Flag_of_Serbia_4_by_3.png/400px-Flag_of_Serbia_4_by_3.png",
+"light": "team_serbia.png",
 "name": "Team Serbia",
 "src": "https://liquipedia.net/commons/images/thumb/6/64/Flag_of_Serbia_4_by_3.png/400px-Flag_of_Serbia_4_by_3.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/6/64/Flag_of_Serbia_4_by_3.png/400px-Flag_of_Serbia_4_by_3.png"

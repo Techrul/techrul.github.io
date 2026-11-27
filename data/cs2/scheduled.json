@@ -1,15 +1,141 @@
 [
 {
-"date": "2026-11-27 12:00",
+"date": "2026-11-28 04:00",
 "event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
+"event_name": "PGL Major Singapore 2026: Stage 2",
 "tier": "1",
 "tiertype": "",
-"bestof": 3,
+"bestof": 1,
 "teams": [
 {
-"name": "M80",
-"template": "m80 orig"
+"name": "FUT Esports",
+"template": "fut esports"
+},
+{
+"name": "FlyQuest",
+"template": "flyquest 2021"
+}
+]
+},
+{
+"date": "2026-11-28 04:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 2",
+"tier": "1",
+"tiertype": "",
+"bestof": 1,
+"teams": [
+{
+"name": "The MongolZ",
+"template": "the mongolz 2024 03"
+},
+{
+"name": "Lynn Vision Gaming",
+"template": "lynn vision gaming 2024"
+}
+]
+},
+{
+"date": "2026-11-28 05:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 2",
+"tier": "1",
+"tiertype": "",
+"bestof": 1,
+"teams": [
+{
+"name": "Nemiga Gaming",
+"template": "nemiga gaming 2021"
+},
+{
+"name": "Ninjas in Pyjamas",
+"template": "ninjas in pyjamas 2021"
+}
+]
+},
+{
+"date": "2026-11-28 05:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 2",
+"tier": "1",
+"tiertype": "",
+"bestof": 1,
+"teams": [
+{
+"name": "Astralis",
+"template": "astralis 2020"
+},
+{
+"name": "Imperial Esports",
+"template": "imperial esports 2022"
+}
+]
+},
+{
+"date": "2026-11-28 06:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 2",
+"tier": "1",
+"tiertype": "",
+"bestof": 1,
+"teams": [
+{
+"name": "G2 Esports",
+"template": "g2 esports 2019"
+},
+{
+"name": "Team Liquid",
+"template": "team liquid 2024"
+}
+]
+},
+{
+"date": "2026-11-28 06:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 2",
+"tier": "1",
+"tiertype": "",
+"bestof": 1,
+"teams": [
+{
+"name": "1w Team",
+"template": "the one 2026"
+},
+{
+"name": "Eternal Fire",
+"template": "eternal fire 2023"
+}
+]
+},
+{
+"date": "2026-11-28 07:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 2",
+"tier": "1",
+"tiertype": "",
+"bestof": 1,
+"teams": [
+{
+"name": "Natus Vincere",
+"template": "natus vincere 2021"
+},
+{
+"name": "PARIVISION",
+"template": "pvision 2026"
+}
+]
+},
+{
+"date": "2026-11-28 07:00",
+"event": "PGL/2026/Singapore",
+"event_name": "PGL Major Singapore 2026: Stage 2",
+"tier": "1",
+"tiertype": "",
+"bestof": 1,
+"teams": [
+{
+"name": "MIBR",
+"template": "mibr"
 },
 {
 "name": "100 Thieves",
