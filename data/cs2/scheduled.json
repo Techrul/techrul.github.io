@@ -1,42 +1,6 @@
 [
 {
-"date": "2026-11-27 06:00",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "Lynn Vision Gaming",
-"template": "lynn vision gaming 2024"
-},
-{
-"name": "HEROIC",
-"template": "heroic sep 2024"
-}
-]
-},
-{
-"date": "2026-11-27 08:30",
-"event": "PGL/2026/Singapore",
-"event_name": "PGL Major Singapore 2026: Stage 1",
-"tier": "1",
-"tiertype": "",
-"bestof": 3,
-"teams": [
-{
-"name": "Imperial Esports",
-"template": "imperial esports 2022"
-},
-{
-"name": "Wildcard",
-"template": "wildcard 2024"
-}
-]
-},
-{
-"date": "2026-11-27 11:00",
+"date": "2026-11-27 12:00",
 "event": "PGL/2026/Singapore",
 "event_name": "PGL Major Singapore 2026: Stage 1",
 "tier": "1",

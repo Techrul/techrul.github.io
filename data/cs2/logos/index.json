@@ -1005,6 +1005,10 @@
 "src_dark": "https://liquipedia.net/commons/images/thumb/9/92/Boss_CS2_allmode.png/400px-Boss_CS2_allmode.png"
 },
 "bounty_hunters_esports": {
+"checked": "2026-11-27",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/9/99/Bounty_Hunters_2026_allmode.png/292px-Bounty_Hunters_2026_allmode.png|https://liquipedia.net/commons/images/thumb/9/99/Bounty_Hunters_2026_allmode.png/292px-Bounty_Hunters_2026_allmode.png",
+"light": "bounty_hunters_esports.png",
 "name": "Bounty Hunters Esports",
 "src": "https://liquipedia.net/commons/images/thumb/9/99/Bounty_Hunters_2026_allmode.png/292px-Bounty_Hunters_2026_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/9/99/Bounty_Hunters_2026_allmode.png/292px-Bounty_Hunters_2026_allmode.png"
@@ -4183,6 +4187,10 @@
 "src_dark": "https://liquipedia.net/commons/images/thumb/1/1e/Nexus_Gaming_2020_allmode.png/267px-Nexus_Gaming_2020_allmode.png"
 },
 "nexvoid": {
+"checked": "2026-11-27",
+"dark": null,
+"got": "https://liquipedia.net/commons/images/thumb/f/f6/NEXVOID_2026_allmode.png/396px-NEXVOID_2026_allmode.png|https://liquipedia.net/commons/images/thumb/f/f6/NEXVOID_2026_allmode.png/396px-NEXVOID_2026_allmode.png",
+"light": "nexvoid.png",
 "name": "NEXVOID",
 "src": "https://liquipedia.net/commons/images/thumb/f/f6/NEXVOID_2026_allmode.png/396px-NEXVOID_2026_allmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/f/f6/NEXVOID_2026_allmode.png/396px-NEXVOID_2026_allmode.png"
@@ -6332,6 +6340,10 @@
 "src_dark": "https://liquipedia.net/commons/images/thumb/2/21/Flag_of_Slovakia_4_by_3.png/400px-Flag_of_Slovakia_4_by_3.png"
 },
 "team_solid": {
+"checked": "2026-11-27",
+"dark": "team_solid-dark.png",
+"got": "https://liquipedia.net/commons/images/thumb/2/24/Team_Solid_2024_lightmode.png/383px-Team_Solid_2024_lightmode.png|https://liquipedia.net/commons/images/thumb/3/34/Team_Solid_2024_darkmode.png/383px-Team_Solid_2024_darkmode.png",
+"light": "team_solid.png",
 "name": "Team Solid",
 "src": "https://liquipedia.net/commons/images/thumb/2/24/Team_Solid_2024_lightmode.png/383px-Team_Solid_2024_lightmode.png",
 "src_dark": "https://liquipedia.net/commons/images/thumb/3/34/Team_Solid_2024_darkmode.png/383px-Team_Solid_2024_darkmode.png"
