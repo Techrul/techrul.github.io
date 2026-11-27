@@ -252,6 +252,19 @@ def main():
                     store[win][system][rid] = (v, day)
     prev_scores = {}
     week_index_of = {}
+    # proven at the top level: PROVEN_MATCHES+ matches at S- or A-tier events (main events or their qualifiers)
+    # in the year up to that week
+    PROVEN_MATCHES = 15
+    top_times = defaultdict(list)
+    for m in played:
+        if m["tier"] in TRACKED_TIERS:
+            for r_ in m["rid"]:
+                top_times[r_].append(m["time"])
+
+    def top_level(rid, day):
+        ts = top_times.get(rid, ())
+        t1 = day.replace(tzinfo=timezone.utc).timestamp()
+        return bisect.bisect_left(ts, t1) - bisect.bisect_left(ts, t1 - 365 * 86400)
 
     def make_on_week(suffix):
         def on_week(day, elo, g2, osk, last_match, count):
@@ -284,16 +297,19 @@ def main():
                     o = osk.get(r)
                     return o.ordinal() if o else 0.0
                 event_stats(day, scorer, (["elo"] if not suffix else []) + ["glicko" + suffix, "openskill" + suffix])
+            # records about the top (weeks at #1, dominance, peaks) only count proven teams: a team that farms its
+            # own region's small events can top Elo without ever meeting the best (TYLOO 2020-21, ViCi 2017)
+            proven = [p for p in pool if top_level(p, day) >= PROVEN_MATCHES] if day.weekday() == 0 else []
             for system, rk in ranks.items():
-                if day.weekday() == 0:
-                    number_one[system].append((w, min(rk, key=rk.get)))
-                    if len(pool) >= 2:
-                        a_, b_ = sorted(pool, key=lambda p: -scores[system][p])[:2]
+                if day.weekday() == 0 and proven:
+                    order = sorted(proven, key=lambda p: (-scores[system][p], p))
+                    number_one[system].append((w, order[0]))
+                    if len(order) >= 2:
+                        a_, b_ = order[:2]
                         keep_lead(system, a_, scores[system][a_] - scores[system][b_], day, b_)
                 for p in pool:
                     keep_max(peaks, system, p, scores[system][p], day)
-                if day.weekday() == 0 and len(pool) >= FIELD_TO:
-                    order = sorted(pool, key=lambda p: -scores[system][p])
+                if day.weekday() == 0 and len(proven) >= FIELD_TO:
                     field = sum(scores[system][p] for p in order[FIELD_FROM:FIELD_TO]) / (FIELD_TO - FIELD_FROM)
                     for p in order[:FIELD_FROM + 1]:
                         keep_adj(system, p, scores[system][p] - field, day, scores[system][p])
@@ -702,7 +718,8 @@ def main():
             stats = weeks_at_one(sorted(x for x in series if x[0] >= first_w))
             rows_ = sorted(stats.items(), key=lambda kv: (-kv[1][0], -kv[1][1], kv[0]))[:10]
             if rows_:
-                no1[system] = [{**P(r), "weeks": t, "longest": b_, "from": weeks[a_], "to": weeks[z]} for r, (t, b_, a_, z) in rows_]
+                no1[system] = [{**era(r, datetime.strptime(weeks[z], "%Y-%m-%d")), "weeks": t, "longest": b_, "from": weeks[a_], "to": weeks[z]}
+                               for r, (t, b_, a_, z) in rows_]
 
         def upset_rows(system):
             rows_ = sorted((u for u in upsets[system] if datetime.fromtimestamp(by_id[u[1]]["time"], timezone.utc).replace(tzinfo=None) >= start),

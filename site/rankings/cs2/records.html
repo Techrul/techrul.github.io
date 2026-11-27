@@ -56,7 +56,7 @@
 
   var BLOCKS = [
     { id: "no1", title: "Weeks at #1", note: function (k) {
-        return k === "vrs" ? "Counted every Monday, from Valve’s code run on that Monday’s data." : "Counted every Monday, among teams with 15+ matches and one in the last 90 days.";
+        return k === "vrs" ? "Counted every Monday, from Valve’s code run on that Monday’s data." : "Counted every Monday, among teams with 15+ matches and one in the last 90 days. Only proven teams count: 15+ matches at S- or A-tier events in the year before, so a team beating up its own region’s small events can’t claim the top spot.";
       }, draw: function (k, rows) {
         return table([[""], ["Team"], ["Weeks", 1], ["Longest run", 1], ["First"], ["Last"]], rows.map(function (x, i) {
           return '<tr data-href="team.html?id=' + encodeURIComponent(x.id) + '"><td class="rk">' + (i + 1) + "</td><td>" + S.team(x) + '</td><td class="n">' + x.weeks + '</td><td class="n">' + x.longest + "</td><td>" + S.date(x.from) + "</td><td>" + S.date(x.to) + "</td></tr>";
@@ -64,7 +64,7 @@
       } },
     { id: "peak", title: "Highest ratings", note: function (k) {
         return k === "vrs" ? "Each team’s highest weekly VRS points total in this period." :
-          "Each team’s best week in this period, ranked by how far its rating stood above the field that Monday (the average of #5 to #20). Ratings drift upward as the scene gets deeper, so a raw 2019 rating can’t be held against a 2026 one; the gap to the chasing pack can. Numbers only compare within one system.";
+          "Each team’s best week in this period, ranked by how far its rating stood above the field that Monday (the average of #5 to #20). Ratings drift upward as the scene gets deeper, so a raw 2019 rating can’t be held against a 2026 one; the gap to the chasing pack can. Only proven teams count: 15+ matches at S- or A-tier events in the year before, so a team beating up its own region’s small events can’t claim the top spot. Numbers only compare within one system.";
       }, draw: function (k, rows) {
         var adj = rows.length && rows[0].above != null;
         return table([[""], ["Team"]].concat(adj ? [["Above field", 1]] : []).concat([[k === "vrs" ? "Points" : "Rating", 1], ["Week of"]]), rows.map(function (x, i) {
@@ -73,7 +73,7 @@
         }));
       } },
     { id: "dom", title: "Most dominant #1s", note: function (k) {
-        return "The biggest lead a #1 had over the #2 team, any Monday in this period (each team’s best week). A lead says more than a rating across eras: ratings drift as the field changes, a lead is measured against the best rival of the time.";
+        return "The biggest lead a #1 had over the #2 team, any Monday in this period (each team’s best week). A lead says more than a rating across eras: ratings drift as the field changes, a lead is measured against the best rival of the time. Only proven teams count: 15+ matches at S- or A-tier events in the year before, so a team beating up its own region’s small events can’t claim the top spot.";
       }, draw: function (k, rows) {
         return table([[""], ["Team"], ["Lead", 1], ["Over"], ["Week of"]], rows.map(function (x, i) {
           return '<tr data-href="team.html?id=' + encodeURIComponent(x.id) + '"><td class="rk">' + (i + 1) + "</td><td>" + S.team(x) + '</td><td class="n">+' + fmtRating(k, x.value) +
