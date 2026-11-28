@@ -7,37 +7,24 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Probe
+      - name: Probe 2
         run: |
           UA="techrul.github.io probe (one-off; contact via github.com/Techrul)"
-          get() { echo "=== $1"; curl -sSL -m 20 -A "$UA" -w '\n[status %{http_code} type %{content_type}]\n' "$1" | head -c ${2:-1500}; echo; }
-          UUID=$(curl -s https://api.mojang.com/users/profiles/minecraft/Techrul | python3 -c 'import sys,json;print(json.load(sys.stdin)["id"])')
-          echo "uuid $UUID"
-          D=$(python3 -c "u='$UUID';print(f'{u[:8]}-{u[8:12]}-{u[12:16]}-{u[16:20]}-{u[20:]}')")
-          # mcpvp
-          get "https://www.mcpvp.com/tiers/data?uuid=$UUID" 3000
-          get "https://www.mcpvp.com/tiers/data?name=Techrul" 3000
-          get "https://www.mcpvp.com/tiers/data/$UUID" 3000
-          curl -sSL -m 20 -A "$UA" "https://mcpvp.com/@Techrul" -o mc.html; echo "mcpvp profile bytes $(wc -c < mc.html)"
-          grep -o '<title>[^<]*' mc.html; grep -oE '(src|href)="[^"]+\.js[^"]*"' mc.html | head -20
-          grep -oE '"/?api/[^"]{0,80}"|https?://[a-z0-9.-]*api[a-z0-9.-]*[^"'"'"' ]{0,60}' mc.html | sort -u | head -20
-          grep -oiE '(HT|MT|LT)[1-6]|[0-9,]+ ?(pts|points)' mc.html | sort | uniq -c | head
-          # pvphq
-          curl -sSL -m 20 -A "$UA" "https://pvphq.com/player/$D" -o hq.html; echo "pvphq profile bytes $(wc -c < hq.html)"
-          grep -o '<title>[^<]*' hq.html
-          grep -oE '(src|href)="[^"]+\.js[^"]*"' hq.html | head -20
-          for js in $(grep -oE 'src="[^"]+\.js[^"]*"' hq.html | sed 's/src="//;s/"$//' | head -8); do
-            case "$js" in http*) u=$js;; *) u="https://pvphq.com$js";; esac
-            curl -sSL -m 20 -A "$UA" "$u" | grep -oE '["`'"'"'](https?://[^"`'"'"' ]*)?/api/[^"`'"'"' ]{0,80}' | sort -u | head -15 | sed "s|^|$js: |"
-          done
-          grep -oE '"/?api/[^"]{0,80}"|https?://api\.[^"'"'"' ]{0,80}' hq.html | sort -u | head -20
-          grep -oE '__NEXT_DATA__|self\.__next_f|window\.__[A-Z_]+' hq.html | sort | uniq -c
+          for u in /api/v1/players/Techrul /api/v1/meta "/api/v1/players/Techrul/breakdown/sword?limit=5"; do
+            echo "=== $u"; curl -sSL -m 20 -A "$UA" -H 'Accept: application/json' -w '\n[status %{http_code} %{content_type}]\n' "https://pvphq.com$u" | head -c 6000; echo; done
+          curl -sSL -m 20 -A "$UA" -o hq.js "https://pvphq.com/assets/index-CtyNN4uq.js"
+          grep -oE '`/api/v1/[^`]{0,100}`|"/api/v1/[^"]{0,100}"' hq.js | sort -u
+          grep -oE 'Access-Control[^,]{0,60}' hq.js | head -3
+          curl -sSI -m 20 -A "$UA" -H 'Origin: https://techrul.github.io' https://pvphq.com/api/v1/players/Techrul | grep -i 'access-control\|cache-control\|ratelimit\|retry'
+          curl -sSL -m 20 -A "$UA" "https://mcpvp.com/@Techrul" -o mc.html
           python3 - <<'PY'
           import re
-          for f in ("mc.html","hq.html"):
-              s=open(f,errors="ignore").read()
-              i=s.find("Techrul")
-              print(f, "mentions Techrul:", s.count("Techrul"))
-              txt=re.sub(r"<[^>]+>"," ",s); txt=re.sub(r"\s+"," ",txt)
-              j=txt.find("Techrul"); print(txt[max(0,j-200):j+1200] if j>=0 else txt[:600]); print()
+          s=open("mc.html",errors="ignore").read()
+          body=s[s.find("<body"):]
+          for m in re.finditer(r'<[^>]*data-tier-code="([A-Z0-9?]+)"[^>]*>', body):
+              seg=body[m.start():m.start()+700]
+              txt=re.sub(r"<[^>]+>"," ",seg); txt=re.sub(r"\s+"," ",txt).strip()
+              print(m.group(1),"|",txt[:160])
+          txt=re.sub(r"<script.*?</script>|<style.*?</style>"," ",body,flags=re.S); txt=re.sub(r"<[^>]+>"," ",txt); txt=re.sub(r"\s+"," ",txt)
+          j=txt.find("Techrul"); print("TEXT:",txt[j:j+2500])
           PY
