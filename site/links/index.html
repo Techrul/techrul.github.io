@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Techrul · links</title>
-<meta name="description" content="Techrul on YouTube, Twitch, GitHub, NameMC, Steam, Reddit, Spotify, Roblox, Scratch and Freesound.">
+<meta name="description" content="Techrul on YouTube, Twitch, GitHub, NameMC, Minecraft PvP, Steam, Reddit, Spotify, Roblox, Scratch and Freesound.">
 <link rel="stylesheet" href="../rankings/assets/site.css">
 <script>
   // same theme choice as the rest of the site (stored per browser)
@@ -83,6 +83,11 @@
         <span class="tx"><b>NameMC</b><small>Techrul.2</small></span>
         <span class="go" aria-hidden="true">↗</span>
       </a></li>
+      <li><a class="lk" href="../pvp/" data-s="minecraft pvp tiers pvphq mcpvp rating ranked sword mace stats" style="--brand:#E8BE3C">
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 17.5 3 6V3h3l11.5 11.5"/><path d="m13 19 6-6"/><path d="m16 16 4 4"/><path d="m19 21 2-2"/><path d="M9.5 6.5 14 2h3v3l-4.5 4.5"/><path d="m5 13 6 6"/><path d="m8 16-4 4"/><path d="m3 19 2 2"/></g></svg></span>
+        <span class="tx"><b>Minecraft PvP</b><small id="pvpsum">Tiers and ratings on PVPHQ and mcpvp</small></span>
+        <span class="go" aria-hidden="true">→</span>
+      </a></li>
       <li><a class="lk" href="https://steamcommunity.com/id/Techrul" target="_blank" rel="noopener me" data-s="steam techrul games gaming pc" style="--brand:var(--ink)">
         <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/></svg></span>
         <span class="tx"><b>Steam</b><small>Techrul</small></span>
@@ -144,6 +149,14 @@
     return first;
   }
   q.addEventListener("input", filter);
+
+  // the PvP card shows the current tiers (same data as the /pvp/ page)
+  fetch("../pvp/data.json", {cache: "no-cache"}).then(function (r) { return r.json(); }).then(function (D) {
+    var bits = [];
+    if (D.pvphq && D.pvphq.best) bits.push("PVPHQ " + D.pvphq.best.tier + " " + D.pvphq.best.gametypeName);
+    if (D.mcpvp && D.mcpvp.overall) bits.push("mcpvp " + D.mcpvp.overall);
+    if (bits.length) document.getElementById("pvpsum").textContent = bits.join(" · ");
+  }).catch(function () {});
   q.addEventListener("keydown", function (e) {
     if (e.key === "Enter") { var f = filter(); if (f) window.open(f.href, "_blank", "noopener"); }
     else if (e.key === "Escape") { q.value = ""; filter(); q.blur(); }

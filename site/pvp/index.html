@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en" data-theme="black">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Techrul · Minecraft PvP</title>
+<meta name="description" content="Techrul's Minecraft PvP tiers, ratings and recent matches on PVPHQ and mcpvp.com, updated a few times a day.">
+<link rel="stylesheet" href="../rankings/assets/site.css">
+<script>
+  // same theme choice as the rest of the site (stored per browser)
+  (function () { var t; try { t = localStorage.getItem("theme"); } catch (e) {}
+    document.documentElement.setAttribute("data-theme", ["black", "light", "mocha"].indexOf(t) >= 0 ? t : "black"); })();
+</script>
+<style>
+.pv{max-width:900px;margin:0 auto}
+.hero{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:6px 0 26px}
+.hero .skin{width:92px;height:auto;image-rendering:pixelated;flex:none;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.hero h1{font-size:clamp(2rem,6vw,2.8rem);margin:0;line-height:1.05}
+.hero p{margin:6px 0 0;color:var(--muted)}
+.hero .crumbs{font-size:.9rem;margin:0 0 4px}
+.hero .crumbs a{color:var(--muted)}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.bdg{display:flex;align-items:center;gap:10px;padding:8px 12px 8px 8px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);text-decoration:none;color:var(--ink)}
+a.bdg:hover{border-color:var(--muted)}
+.bdg small{display:block;color:var(--muted);font-size:.78rem}
+.bdg b{font-size:1rem}
+.tier{display:inline-grid;place-items:center;min-width:46px;height:30px;padding:0 8px;border-radius:8px;font-weight:800;font-size:.95rem;letter-spacing:.02em;
+  color:#fff;background:var(--tc,#555);text-shadow:0 1px 0 rgba(0,0,0,.35)}
+.tier.lg{min-width:64px;height:40px;font-size:1.25rem;border-radius:10px}
+.tier.un{background:transparent;color:var(--muted);border:1.5px dashed var(--line);text-shadow:none;font-weight:600;font-size:.8rem}
+.src{margin:0 0 34px}
+.src-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 4px}
+.src-h h2{margin:0}
+.src-h a{font-size:.9rem;font-weight:600}
+.src-h .upd{color:var(--muted);font-size:.85rem;margin-left:auto}
+.kits{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:12px 0 4px}
+.kit{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.kit .top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.kit .nm{font-weight:700;font-size:1.05rem}
+.kit .rt{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.9rem}
+.kit .rt b{color:var(--ink);font-size:1.15rem}
+.prog{height:8px;border-radius:99px;background:color-mix(in srgb,var(--muted) 22%,transparent);overflow:hidden}
+.prog i{display:block;height:100%;border-radius:99px;background:var(--tc,var(--ink))}
+.kit .meta{color:var(--muted);font-size:.84rem;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin:14px 0}
+.mini>div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.mini small{display:block;color:var(--muted);font-size:.8rem}
+.mini b{font-size:1.3rem;font-variant-numeric:tabular-nums}
+.cols{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;align-items:start}
+@media (max-width:760px){.cols{grid-template-columns:1fr}}
+.chart{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 12px 6px;margin:12px 0}
+.chart svg{display:block;width:100%;height:auto}
+.chart .ax{fill:var(--muted);font-size:11px}
+.chart .gl{stroke:var(--line);stroke-width:1}
+.res{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;font-weight:800;font-size:.75rem;color:var(--on-ink)}
+.res.w{background:var(--up)} .res.l{background:var(--down)} .res.d{background:var(--muted)}
+table.t td.dim,table.t th.dim{color:var(--muted)}
+.strip{display:flex;gap:4px;flex-wrap:wrap;margin:8px 0 2px}
+.tag{font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:1px 7px;white-space:nowrap}
+.empty{color:var(--muted);border:1.5px dashed var(--line);border-radius:12px;padding:18px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="brand" href="../">Techrul</a>
+    <span class="spacer"></span>
+    <div class="themes" role="group" aria-label="Theme">
+      <button class="theme" type="button" data-theme="black">Black</button><button class="theme" type="button" data-theme="light">Light</button><button class="theme" type="button" data-theme="mocha">Mocha</button>
+    </div>
+  </header>
+  <main class="pv" id="app">
+    <p class="note">Loading…</p>
+  </main>
+  <footer class="foot pv">
+    <p>Stats from <a href="https://pvphq.com" target="_blank" rel="noopener">PVPHQ</a> and <a href="https://www.mcpvp.com" target="_blank" rel="noopener">mcpvp.com</a>,
+      fetched a few times a day (neither publishes an API, so this reads what their own sites show). Not affiliated with either.
+      Skin render by <a href="https://mc-heads.net" target="_blank" rel="noopener">mc-heads.net</a>.</p>
+    <p><a href="../links/">← All my links</a></p>
+  </footer>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  function setTheme(t) {
+    root.setAttribute("data-theme", t);
+    document.querySelectorAll(".theme").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.theme === t ? "true" : "false"); });
+  }
+  setTheme(root.getAttribute("data-theme"));
+  document.querySelectorAll(".theme").forEach(function (b) {
+    b.addEventListener("click", function () { setTheme(b.dataset.theme); try { localStorage.setItem("theme", b.dataset.theme); } catch (e) {} });
+  });
+
+  // mcpvp's own tier colours (from its site)
+  var MC = {HT1:"#FFDA55",MT1:"#E8BE3C",LT1:"#C4A34B",HT2:"#9EB3D1",MT2:"#91A0B7",LT2:"#858D9C",HT3:"#EB9138",MT3:"#D47D32",LT3:"#BD6B2B",
+    HT4:"#9FD27F",MT4:"#89BD68",LT4:"#739F57",HT5:"#4974B5",MT5:"#385C94",LT5:"#284775",HT6:"#4C3B30",MT6:"#45352B",LT6:"#36291F"};
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function tier(code, color, big) {
+    if (!code || code === "Unranked" || code === "???") return '<span class="tier un' + (big ? " lg" : "") + '">' + esc(code === "???" ? "?" : "Unranked") + "</span>";
+    return '<span class="tier' + (big ? " lg" : "") + '" style="--tc:' + esc(color || MC[code] || "#555") + '">' + esc(code) + "</span>";
+  }
+  function ago(sec) {
+    if (!sec) return "";
+    var d = Math.max(0, Date.now() / 1000 - sec);
+    if (d < 3600) return Math.max(1, Math.round(d / 60)) + " min ago";
+    if (d < 86400) return Math.round(d / 3600) + " h ago";
+    return Math.round(d / 86400) + " days ago";
+  }
+  function day(ms) { return new Date(ms).toLocaleDateString(undefined, {day: "numeric", month: "short"}); }
+  function pct(w, l) { return w + l ? Math.round(100 * w / (w + l)) + "%" : "–"; }
+  function res(won) { return '<span class="res ' + (won === "draw" ? "d" : won ? "w" : "l") + '">' + (won === "draw" ? "D" : won ? "W" : "L") + "</span>"; }
+
+  function chart(hist, kits) {
+    // rating over time per kit, one line each (PVPHQ only records a point per ranked game after placements)
+    var series = Object.keys(hist).filter(function (g) { return hist[g].length >= 2; });
+    if (!series.length) return "";
+    var all = [].concat.apply([], series.map(function (g) { return hist[g]; }));
+    var t0 = Math.min.apply(null, all.map(function (p) { return p[0]; })), t1 = Math.max.apply(null, all.map(function (p) { return p[0]; }));
+    var r0 = Math.min.apply(null, all.map(function (p) { return p[1]; })), r1 = Math.max.apply(null, all.map(function (p) { return p[1]; }));
+    var pad = Math.max(25, (r1 - r0) * 0.15); r0 = Math.floor((r0 - pad) / 25) * 25; r1 = Math.ceil((r1 + pad) / 25) * 25;
+    var W = 600, H = 200, L = 42, R = 10, T = 10, B = 24;
+    function x(t) { return L + (t1 === t0 ? (W - L - R) / 2 : (t - t0) / (t1 - t0) * (W - L - R)); }
+    function y(r) { return T + (1 - (r - r0) / (r1 - r0)) * (H - T - B); }
+    var g = "", step = Math.max(25, Math.ceil((r1 - r0) / 4 / 25) * 25);
+    for (var r = r0; r <= r1; r += step) g += '<line class="gl" x1="' + L + '" x2="' + (W - R) + '" y1="' + y(r) + '" y2="' + y(r) + '"/><text class="ax" x="' + (L - 6) + '" y="' + (y(r) + 4) + '" text-anchor="end">' + r + "</text>";
+    g += '<text class="ax" x="' + L + '" y="' + (H - 6) + '">' + esc(day(t0)) + '</text><text class="ax" x="' + (W - R) + '" y="' + (H - 6) + '" text-anchor="end">' + esc(day(t1)) + "</text>";
+    series.forEach(function (k) {
+      var pts = hist[k], col = (kits[k] && kits[k].tierColor) || "var(--ink)";
+      g += '<polyline fill="none" stroke="' + esc(col) + '" stroke-width="2.5" stroke-linejoin="round" points="' + pts.map(function (p) { return x(p[0]).toFixed(1) + "," + y(p[1]).toFixed(1); }).join(" ") + '"/>';
+      pts.forEach(function (p) { g += '<circle cx="' + x(p[0]).toFixed(1) + '" cy="' + y(p[1]).toFixed(1) + '" r="4" fill="' + esc(p[3] || col) + '"><title>' + esc((kits[k] && kits[k].gametypeName || k) + " " + p[1] + " (" + (p[2] || "") + ") · " + day(p[0])) + "</title></circle>"; });
+    });
+    var legend = series.map(function (k) { return '<span class="tag">' + esc(kits[k] && kits[k].gametypeName || k) + "</span>"; }).join(" ");
+    return '<div class="chart"><svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Rating over time">' + g + '</svg><div class="strip">' + legend + "</div></div>";
+  }
+
+  function pvphq(d, upd) {
+    var kitKeys = Object.keys(d.kits || {}).filter(function (k) { return d.kits[k].gamesPlayed; })
+      .sort(function (a, b) { return (d.kits[a].unranked - d.kits[b].unranked) || (d.kits[b].rating - d.kits[a].rating); });
+    var kits = kitKeys.map(function (k) {
+      var x = d.kits[k], body;
+      if (x.unranked) {
+        body = '<div class="prog"><i style="width:' + (100 * (x.placementGames || 0) / (x.placementTarget || 10)) + '%;--tc:var(--muted)"></i></div>' +
+          '<div class="meta"><span>Placements ' + (x.placementGames || 0) + "/" + (x.placementTarget || 10) + "</span><span>" + x.wins + "-" + x.losses + "</span></div>";
+      } else {
+        body = '<div class="prog" title="' + (x.tierProgress || 0) + " / " + (x.trTarget || 100) + ' TR to ' + esc(x.nextTier || "") + '"><i style="width:' + Math.min(100, 100 * (x.tierProgress || 0) / (x.trTarget || 100)) + "%;--tc:" + esc(x.tierColor) + '"></i></div>' +
+          '<div class="meta"><span>' + (x.tierProgress || 0) + "/" + (x.trTarget || 100) + " TR → " + esc(x.nextTier || "") + "</span><span>" + x.wins + "-" + x.losses + " · " + pct(x.wins, x.losses) + "</span></div>" +
+          '<div class="meta"><span>Peak ' + (x.peakRating || "–") + (x.peakTier ? " (" + esc(x.peakTier) + ")" : "") + "</span><span>±" + (x.rd || "–") + "</span></div>";
+      }
+      return '<div class="kit"><div class="top"><span class="nm">' + esc(x.gametypeName || k) + "</span>" + tier(x.unranked ? "Unranked" : x.tier, x.tierColor) + "</div>" +
+        '<div class="rt"><b>' + x.rating + "</b> rating</div>" + body + "</div>";
+    }).join("");
+    var s = d.stats || {};
+    var mini = '<div class="mini"><div><small>Matches</small><b>' + (s.gamesPlayed || 0) + "</b></div><div><small>Record</small><b>" + (s.wins || 0) + "-" + (s.losses || 0) +
+      "</b></div><div><small>Win rate</small><b>" + (s.winRate != null ? Math.round(s.winRate) + "%" : "–") + "</b></div><div><small>K/D</small><b>" + (s.kdRatio != null ? s.kdRatio.toFixed(2) : "–") +
+      "</b></div><div><small>Kills</small><b>" + (s.kills || 0) + "</b></div><div><small>Points</small><b>" + (d.points || 0) + "</b></div></div>";
+    var recent = (d.matches || []).slice(0, 12).map(function (m) {
+      return "<tr><td>" + res(m[3]) + '</td><td class="dim">' + esc(day(m[0])) + "</td><td>" + esc(m[1]) + "</td><td>" + esc(m[2]) + "</td><td>" + (m[4] ? "" : '<span class="tag">casual</span>') + "</td></tr>";
+    }).join("");
+    var rivals = (d.rivals || []).slice(0, 8).map(function (r) {
+      return "<tr><td>" + esc(r.name) + '</td><td class="num">' + r.wins + "-" + r.losses + "</td></tr>";
+    }).join("");
+    var vs = Object.keys(d.breakdown || {}).map(function (k) {
+      return (d.breakdown[k] || []).map(function (b) {
+        return "<tr><td>" + esc(d.kits[k] && d.kits[k].gametypeName || k) + " vs " + tier(b.tier, b.tierColor) + '</td><td class="num">' + b.wins + "-" + b.losses + '</td><td class="num dim">' + Math.round(b.winRate) + "%</td></tr>";
+      }).join("");
+    }).join("");
+    return '<section class="src"><div class="src-h"><h2>PVPHQ</h2><a href="' + esc(d.url) + '" target="_blank" rel="noopener">Profile ↗</a><span class="upd">updated ' + ago(upd) + "</span></div>" +
+      '<p class="note">Ranked ladder: every ranked game moves your rating; tiers come from rating bands per kit.</p>' +
+      '<div class="kits">' + kits + "</div>" + mini + chart(d.history || {}, d.kits || {}) +
+      '<div class="cols"><div><h3 class="sub-h">Recent matches</h3>' + (recent ? '<table class="t"><tbody>' + recent + "</tbody></table>" : '<div class="empty">No matches yet.</div>') + "</div>" +
+      "<div>" + (rivals ? '<h3 class="sub-h">Rivals</h3><table class="t"><tbody>' + rivals + "</tbody></table>" : "") +
+      (vs ? '<h3 class="sub-h">By opponent tier</h3><table class="t"><tbody>' + vs + "</tbody></table>" : "") + "</div></div></section>";
+  }
+
+  function mcpvp(d, upd, hist) {
+    var kits = (d.kits || []).map(function (k) {
+      return '<div class="kit"><div class="top"><span class="nm">' + esc(k.label) + "</span>" + tier(k.tier) + "</div></div>";
+    }).join("");
+    var head = '<div class="mini"><div><small>Overall</small><b>' + tier(d.overall, null) + "</b></div>" +
+      (d.points ? "<div><small>Points</small><b>" + d.points[0] + "/" + d.points[1] + '</b><div class="prog" style="margin-top:6px"><i style="width:' + (100 * d.points[0] / d.points[1]) + "%;--tc:" + (MC[d.overall] || "var(--ink)") + '"></i></div></div>' : "");
+    var ms = d.matches || [], w = ms.filter(function (m) { return m[0] === "win"; }).length, l = ms.filter(function (m) { return m[0] === "loss"; }).length;
+    head += "<div><small>Last " + ms.length + "</small><b>" + w + "-" + l + "</b></div></div>";
+    var recent = ms.slice(0, 12).map(function (m) {
+      return "<tr><td>" + res(m[0] === "win" ? true : m[0] === "loss" ? false : "draw") + "</td><td>" + esc(m[1]) + '</td><td class="num">' + esc(m[3]) + "</td><td>" + esc(m[4]) + '</td><td class="dim">' + esc(m[2]) +
+        "</td><td>" + (m[5] && m[5] !== "ranked" ? '<span class="tag">' + esc(m[5] === "challenges" ? "challenge" : m[5]) + "</span>" : "") + "</td></tr>";
+    }).join("");
+    var changes = (hist || []).length > 1 ? '<h3 class="sub-h">Tier changes</h3><table class="t"><tbody>' + hist.slice().reverse().map(function (h) {
+      return '<tr><td class="dim">' + esc(day(h.t * 1000)) + "</td><td>" + tier(h.overall) + "</td><td>" + Object.keys(h.kits).map(function (k) { return esc(k) + " " + esc(h.kits[k]); }).join(" · ") + "</td></tr>";
+    }).join("") + "</tbody></table>" : "";
+    return '<section class="src"><div class="src-h"><h2>mcpvp</h2><a href="' + esc(d.url) + '" target="_blank" rel="noopener">Profile ↗</a><span class="upd">updated ' + ago(upd) + "</span></div>" +
+      '<p class="note">Tier list: kit tiers from tests and ranked play; the best kits add up to overall points.</p>' +
+      head + '<div class="kits">' + kits + "</div>" +
+      '<h3 class="sub-h">Recent matches</h3>' + (recent ? '<table class="t"><tbody>' + recent + "</tbody></table>" : '<div class="empty">No matches yet.</div>') + changes + "</section>";
+  }
+
+  fetch("data.json", {cache: "no-cache"}).then(function (r) { return r.json(); }).then(function (D) {
+    var hq = D.pvphq, mc = D.mcpvp, uuid = (hq && hq.uuid) || "";
+    var badges = "";
+    if (hq && hq.best) badges += '<a class="bdg" href="#pvphq">' + tier(hq.best.tier, hq.best.tierColor) + "<span><small>PVPHQ · " + esc(hq.best.gametypeName) + "</small><b>" + hq.best.rating + "</b></span></a>";
+    if (mc && mc.overall) badges += '<a class="bdg" href="#mcpvp">' + tier(mc.overall) + "<span><small>mcpvp overall</small><b>" + (mc.points ? mc.points[0] + "/" + mc.points[1] + " pts" : "") + "</b></span></a>";
+    document.getElementById("app").innerHTML =
+      '<div class="hero">' + (uuid ? '<img class="skin" src="https://mc-heads.net/body/' + esc(uuid) + '/120" width="92" alt="">' : "") +
+      '<div><p class="crumbs"><a href="../">Techrul</a> / Minecraft PvP</p><h1>' + esc(D.player) + "</h1><p>Minecraft PvP" + (hq && hq.region ? " · plays on " + esc(hq.region.charAt(0) + hq.region.slice(1).toLowerCase()) + " servers" : "") + "</p>" +
+      '<div class="badges">' + badges + "</div></div></div>" +
+      (hq ? '<div id="pvphq">' + pvphq(hq, D.updated && D.updated.pvphq) + "</div>" : "") +
+      (mc ? '<div id="mcpvp">' + mcpvp(mc, D.updated && D.updated.mcpvp, D.mcpvp_history) + "</div>" : "") +
+      (!hq && !mc ? '<div class="empty">No stats yet.</div>' : "");
+  }).catch(function () {
+    document.getElementById("app").innerHTML = '<div class="empty">Couldn’t load the stats right now.</div>';
+  });
+})();
+</script>
+</body>
+</html>

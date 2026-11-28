@@ -163,17 +163,24 @@ jobs:
         continue-on-error: true
         run: python scripts/cs2_site_data.py --data data/cs2 --valve vendor/vrs --current docs/rankings/cs2/data/rankings.json --out docs/rankings/cs2/data
 
+      # Techrul's own Minecraft PvP stats for /pvp/: PVPHQ's JSON API and the mcpvp.com profile page, about ten
+      # requests. A source that fails keeps its last good copy (data/pvp, committed below on main).
+      - name: Minecraft PvP stats (PVPHQ, mcpvp)
+        continue-on-error: true
+        timeout-minutes: 3
+        run: python -u scripts/fetch_pvp.py --player Techrul --keep data/pvp/techrul.json --out docs/pvp/data.json
+
       # Liquipedia's data is CC BY-SA: keeping it in the repo (not only in the Actions cache, which is dropped after
       # 7 days unused) means a lost cache never means fetching everything again.
-      - name: Save CS2 data and ATP rankings
+      - name: Save CS2 data, ATP rankings and PvP stats
         if: github.ref == 'refs/heads/main'
         continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/cs2 data/atp_rankings
+          git add data/cs2 data/atp_rankings data/pvp
           git diff --cached --quiet && { echo "no new data"; exit 0; }
-          git commit -m "CS2 data from Liquipedia, ATP ranking from ESPN"
+          git commit -m "CS2 data from Liquipedia, ATP ranking from ESPN, PvP stats"
           # --autostash: the cache step above replaces data/prize_money.json, which would otherwise block the pull
           git pull --rebase --autostash -q origin main && git push
 
