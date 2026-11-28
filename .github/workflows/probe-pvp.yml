@@ -7,9 +7,17 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Probe 3
+      - name: Save samples
         run: |
-          UA="techrul.github.io probe (one-off; contact via github.com/Techrul)"
+          UA="techrul.github.io (personal stats page; github.com/Techrul)"
           ID=b1ceb3ea-cc5c-4c9d-b129-c24439a9d9c1
-          for u in /api/v1/players/by-name/Techrul /api/v1/players/$ID "/api/v1/players/$ID/matches?page=0&size=3" "/api/v1/players/$ID/rating-history/sword?limit=5" "/api/v1/players/$ID/rivals?limit=3" "/api/v1/players/$ID/breakdown/sword?limit=3"; do
-            echo "=== $u"; curl -sSL -m 20 -A "$UA" -D h.txt "https://pvphq.com$u" | head -c 3500; echo; grep -i 'ratelimit' h.txt || true; done
+          mkdir s && cd s
+          curl -sSL -m 20 -A "$UA" "https://www.mcpvp.com/@Techrul" -o mcpvp.html
+          curl -sSL -m 20 -A "$UA" "https://pvphq.com/api/v1/players/by-name/Techrul" -o player.json
+          curl -sSL -m 20 -A "$UA" "https://pvphq.com/api/v1/players/$ID/matches?page=0&size=50" -o matches.json
+          for g in sword axe uhc; do curl -sSL -m 20 -A "$UA" "https://pvphq.com/api/v1/players/$ID/rating-history/$g?limit=200" -o hist_$g.json; done
+          curl -sSL -m 20 -A "$UA" "https://pvphq.com/api/v1/players/$ID/rivals?limit=10" -o rivals.json
+          curl -sSL -m 20 -A "$UA" "https://pvphq.com/api/v1/players/$ID/breakdown/sword?limit=50" -o breakdown_sword.json
+          ls -la
+      - uses: actions/upload-artifact@v4
+        with: {name: samples, path: s}
