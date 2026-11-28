@@ -19,5 +19,4 @@ jobs:
           curl -sSL -m 20 -A "$UA" "https://pvphq.com/api/v1/players/$ID/rivals?limit=10" -o rivals.json
           curl -sSL -m 20 -A "$UA" "https://pvphq.com/api/v1/players/$ID/breakdown/sword?limit=50" -o breakdown_sword.json
           ls -la
-      - uses: actions/upload-artifact@v4
-        with: {name: samples, path: s}
+          tar cz . | base64 -w 0 > ../b64.txt; echo; echo "B64START"; cat ../b64.txt; echo; echo "B64END"
