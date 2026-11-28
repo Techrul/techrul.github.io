@@ -7,24 +7,9 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Probe 2
+      - name: Probe 3
         run: |
           UA="techrul.github.io probe (one-off; contact via github.com/Techrul)"
-          for u in /api/v1/players/Techrul /api/v1/meta "/api/v1/players/Techrul/breakdown/sword?limit=5"; do
-            echo "=== $u"; curl -sSL -m 20 -A "$UA" -H 'Accept: application/json' -w '\n[status %{http_code} %{content_type}]\n' "https://pvphq.com$u" | head -c 6000; echo; done
-          curl -sSL -m 20 -A "$UA" -o hq.js "https://pvphq.com/assets/index-CtyNN4uq.js"
-          grep -oE '`/api/v1/[^`]{0,100}`|"/api/v1/[^"]{0,100}"' hq.js | sort -u
-          grep -oE 'Access-Control[^,]{0,60}' hq.js | head -3
-          curl -sSI -m 20 -A "$UA" -H 'Origin: https://techrul.github.io' https://pvphq.com/api/v1/players/Techrul | grep -i 'access-control\|cache-control\|ratelimit\|retry'
-          curl -sSL -m 20 -A "$UA" "https://mcpvp.com/@Techrul" -o mc.html
-          python3 - <<'PY'
-          import re
-          s=open("mc.html",errors="ignore").read()
-          body=s[s.find("<body"):]
-          for m in re.finditer(r'<[^>]*data-tier-code="([A-Z0-9?]+)"[^>]*>', body):
-              seg=body[m.start():m.start()+700]
-              txt=re.sub(r"<[^>]+>"," ",seg); txt=re.sub(r"\s+"," ",txt).strip()
-              print(m.group(1),"|",txt[:160])
-          txt=re.sub(r"<script.*?</script>|<style.*?</style>"," ",body,flags=re.S); txt=re.sub(r"<[^>]+>"," ",txt); txt=re.sub(r"\s+"," ",txt)
-          j=txt.find("Techrul"); print("TEXT:",txt[j:j+2500])
-          PY
+          ID=b1ceb3ea-cc5c-4c9d-b129-c24439a9d9c1
+          for u in /api/v1/players/by-name/Techrul /api/v1/players/$ID "/api/v1/players/$ID/matches?page=0&size=3" "/api/v1/players/$ID/rating-history/sword?limit=5" "/api/v1/players/$ID/rivals?limit=3" "/api/v1/players/$ID/breakdown/sword?limit=3"; do
+            echo "=== $u"; curl -sSL -m 20 -A "$UA" -H 'Origin: https://techrul.github.io' -D h.txt "https://pvphq.com$u" | head -c 3500; echo; grep -i 'access-control-allow-origin\|x-ratelimit' h.txt; done
